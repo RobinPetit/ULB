@@ -684,7 +684,7 @@
 		\subsubsection{Espérance d'un produit}
 			Tout comme pour la somme, montrons que l'espérance d'un produit correspond au produit des équivalences. Soient $X$, $Y$ et $Z \coloneqq XY$.
 
-			\[E(Z) = \int_{-\infty}^\infty zf_Z(z)\dif z = \int_{-\infty}^\infty z\left(\int_{-\infty}^\infty f_{(X, Y)}\left(z, \frac uz\right)\frac {\dif u}{\abs u}\right) \dif z\]
+			\[E(Z) = \int_{-\infty}^\infty zf_Z(z)\dif z = \int_{-\infty}^\infty z\left(\int_{-\infty}^\infty f_{(X, Y)}\left(u, \frac zu\right)\frac {\dif u}{\abs u}\right) \dif z\]
 
 			Posons donc à nouveau $u = \alpha$ et $z = \alpha\beta$ (le déterminant du jacobien vaut $\alpha$ en valeur absolue). On a donc :
 
