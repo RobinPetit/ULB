@@ -37,7 +37,7 @@
 		ces sous-parties est l'ensemble des opérations que l'on peut appliquer. Deux variables nominales ne peuvent qu'être comparées $=,\neq$, deux variables ordinales peuvent
 		\textbf{en plus} être ordonnées, deux variables intervalles acceptent \textbf{en plus} les opérations additives et les variables rations peuvent servir d'opérandes
 		pour des opérations multiplicatives.
-	
+
 	\subsection{Notations et définitions}
 		Il est important de commencer par déterminer les notations et les notions qui vont suivre afin de ne pas les confondre :
 
@@ -52,7 +52,7 @@
 			\item la fréquence cumulée (absolue ou relative) d'une valeur $x_i$ est la somme des fréquences $f_i + f_{i-1} + \ldots + f_1$ (dans le cas continu, la somme
 				  devient une intégrale, à voir plus tard) ;
 			\item la distribution de fréquences est l'ensemble des couples $(x_i, f_i)$ (donc une fonction $f_X(x_i)$ dans le cas d'une variable continue).
-		\end{itemize} 
+		\end{itemize}
 
 	\subsection{Représentations graphiques}
 		Une distribution de fréquences peut être totalement aléatoire mais il est assez fréquent de voir quatre différentes classes de graphiques :
@@ -63,14 +63,14 @@
 			\item les graphiques en \textit{i} décroissants de gauche à droite (nombre de gagnants du Lotto en fonction du montant) ;
 			\item les graphiques en \textit{j} croissant de gauche à droite (risque de panne en fonction de l'âge d'une machine).
 		\end{itemize}
-	
+
 	\subsection{Valeurs typiques d'une variable aléatoire}
 		Une variable aléatoire peut être représentée et manipulée au travers de certaines valeurs particulières. Ces valeurs sont réparties en \textit{paramètres de position}
 		et \textit{paramètres de dispersion}.
 
 		\subsubsection{Paramètres de position}
 			La moyenne (arithmétique) est définie par :
-			
+
 			\[\overline{x} = \frac 1n\sum_{i=1}^px_in_i = \sum_{i=1}^px_if_i.\]
 
 			La médiane et définie par :
@@ -101,7 +101,7 @@
 			écarts :
 
 			\[s^2 = \frac 1n\sum_{i=1}^p(x_i-\overline x)^2 \geq 0.\]
-			
+
 			Sur base de cette notion de variance, l'écart-type $s$ est défini par $s = \sqrt{s^2}$.
 
 			L'amplitude est la différence entre la plus petite et la plus grande valeur. Cependant, telle la moyenne, l'amplitude est très sensible aux valeurs dégénérées.
@@ -109,16 +109,16 @@
 			Les quartiles quant à eux représentent une division des valeurs en 4 grâce à trois séparateurs :
 
 			\[q_1 \tq F^*(q_1) = \frac 14, \;\;q_2 = \widetilde x,\;\; q_3 \tq F^*(q_3) = \frac 34.\]
-			
+
 			Les quartiles $q_1$ et $q_3$ servent à définir l'intervalle \textit{itnterquartile} $IQ = q_3-q_1$. Cet intervalle donne une manière de repérer les valeurs
 			aberrantes : si $x < q_1 - 2IQ$ ou si $x > q_3 + 2IQ$, alors on considère $x$ comme dégénéré.
-			
+
 	\subsection{Statistique descriptive à deux dimensions}
 		Soient $X(x_1, \ldots, x_p)$ et $Y(y_1, \ldots, y_q)$ avec un effectif de $n$ observations. On définit $n_{ij} \coloneqq$ la fréquence absolue du couple $(x_i, y_j)$.
 		On définit également les fréquences absolues restreintes $n_{i \cdot} = \sum_{j=1}^qn_{ij}$ et $n_{\cdot j} = \sum_{i=1}^pn_{ij}$.
-	   
+
 		Les valeurs typiques que l'on utilise pour caractériser une telle situation sont :
-		
+
 		\begin{itemize}
 			\item \textit{les moyennes marginales} définies par :
 
@@ -132,7 +132,7 @@
 
 			\[\overline{x_k} = \frac 1{n_{\cdot k}}\sum_{i=1}^pn_{ik}x_i, \overline{y_k} = \frac 1{n_{k\cdot}} \sum_{j=1}^qn_{kj}y_j.\]
 		\end{itemize}
-	   
+
 		Afin de déterminer s'il existe une relation linéaire entre ces deux variables aléatoires, on utilise la \textbf{covariance} :
 
 		\[m_{11} = \frac 1n\sum_{i=1}^p\sum_{j=1}^qn_{ij}(x_i-\overline x)(y_j-\overline y).\]
@@ -158,7 +158,7 @@
 			On a donc une équation du second degré en $u$ de discriminant $\Delta = (2m_{11})^2 - 4s_1^2s_2^2$. Or du fait que cette équation du second degré soit $\geq 0$, il
 			y a soit 1 soit 0 racine. Il faut donc $\Delta \leq 0$ ou encore $4m_{11}^2 - 4s_1^2s_2^2\leq 0$ dès lors, on a $m_{11}^2 \leq s_1^2s_2^2$. En prenant de part et
 			d'autre la racine carrée, on a $|m_{11}| \leq s_1s_2$.
-			
+
 			Plus précisément, si l'équation vaut 0, c'est que le discriminant est nul et qu'il y a une seule racine. Il faut donc avoir $\Delta = 0$, ou encore $m_{11} = s_1s_2$.
 			$\square$
 
@@ -284,7 +284,7 @@
 			\item toute probabilité est évaluée entre $0$ et $1$ compris : $\forall A \subseteq E : P(A) \in [0, 1]$ ;
 			\item La probabilité de l'événement certain est de $1$ : $P(E) = 1$ ;
 			\item Si $A \subseteq E$ et $B \subseteq E$ sont disjoints, la probabilité de leur union est la somme des probabilités :
-				
+
 				  \[\forall A, B \subseteq E : A \cap B = \emptyset \Rightarrow P(A \cup B) = P(A) + P(B).\]
 		\end{enumerate}
 
@@ -334,7 +334,7 @@
 		\[P(A_k \, | \, B) = \frac {P(B \, | \, A_k)P(A_k)}{\sum_{i=1}^mP(B \, | \, A_i)P(A_i)}.\]
 
 		Par exemple, en connaissant les données suivantes :
-		
+
 		\begin{itemize}
 			\item la probabilité qu'une personne soit un homme ou une femme (respectivement $P(H)$ et $P(F)$) ;
 			\item la probabilité qu'un gêne s'exprime chez une femme ($P(G \, | \, F)$) ;
@@ -463,7 +463,7 @@
 	\subsection{Opérations sur des variables aléatoires}
 		Lorsque l'on a deux variables aléatoires $X$ et $Y$ définies par leur fonction de densité respective ($f_X$ et $f_Y$), il serait intéressant de pouvoir définir une
 		nouvelle variable $Z$ définie par une opération sur les deux autres (par exemple $Z = X+Y$).
-		
+
 		\subsubsection{Variables aléatoires à deux dimensions}
 			Lorsque l'on passe à deux dimensions, on définit la fonction de répartition comme suit :
 
@@ -484,7 +484,7 @@
 				\item $\iff P(V \in [x_1, x_2] \land W \in [y_1, y_2]) = P(V \in [x_1, x_2])P(W \in [y_1, y_2])$
 				\item $\iff F_{(V, W)}(x_2, y_2) = F_V(x_2)F_W(y_2)$
 				\item %\vspace{1cm}
-				
+
 					  \begin{enumerate}
 						\item[disc.] $\iff P_{ij} = P_iP_j \forall i, j$
 						\item[cont.] $\iff f_{(V, W)}(x_2, y_2) = f_V(x_2)f_W(y_2)$
@@ -500,7 +500,7 @@
 				\item[$(i) \rightarrow (ii)$] Si la propriété $(i)$ est vraie pour tous $x_1, x_2, y_1, y_2$, alors plus précisément avec $x_1, x_2 = -\infty$ :
 
 					  \[P(V \in ]-\infty, x_2] \land W \in ]-\infty, y_2]) = P(V \in ]-\infty, x_2])P(W \in ]-\infty, y_2]) = P(V \leq x_2)P(W \leq y_2) = F_V(x_2)F_W(y_2).\]
-				
+
 				\item[$(ii) \rightarrow (iii)$] En utilisant la propriété $(ii)$, on a :
 
 					  \[\begin{aligned}
@@ -509,7 +509,7 @@
 					  \end{aligned}\]
 
 				\item[$(iii) \rightarrow (i)$] En intégrant doublement l'égalité $(iii)$ de part et d'autre, on obtient :
-				
+
 				\[\begin{aligned}
 					\int_{x_1}^{x_2}\int_{y_1}^{y_2}f_V(x)f_W(y)\dif x\dif y &= \int_{x_1}^{x_2}f_V(x)\left(\int_{y_1}^{y_2}f_W(y) \dif y\right)\dif x
 						= \int_{x_1}^{x_2}f_V(x)P(W \in [y_1, y_2])\dif x \\
@@ -536,7 +536,7 @@
 				&= \left(\int_{-\infty}^\infty y f_Y(y)\dif y - \int_{-\infty}^\infty\mu_Yf_Y(y)\dif y\right)\left(\int_{-\infty}^\infty x f_X(x)\dif x - \int_{-\infty}^\infty\mu_Xf_X(x)\dif x\right) \\
 				&= (E(Y) - \mu_Y1)(E(X) - \mu_X1) = (\mu_Y - \mu_Y)(\mu_X - \mu_X) = 0. \square
 			\end{aligned}\]
-		
+
 		\subsubsection{Transformée d'une variable aléatoire}
 			Soit $X$, une VAC avec une fonction de densité $f_X(x)$. Soit une nouvelle variable $Z \coloneqq G(X)$, une transformée croissante monotone de $X$. Comment peut-on
 			déterminer la fonction de densité $f_Z(z)$ ?
@@ -551,7 +551,7 @@
 
 			Posons $y(x) \coloneqq G^{-1}(x)$, donc $x = G(y)$, ou encore $\pd xx = \pd xG(y) \iff 1 = G'(y)y'$. Ce qui veut dire que $y' = \frac 1{G'(y)}$. Et par la définition
 			de $y$, on a : $y' = \frac 1{G'(G^{-1}(x))}$.
-			
+
 			Dès lors :
 
 			\[f_Z(x) = f_X(G^{-1}(x))y'(x) = f_X(G^{-1}(x))\frac 1{G'(G^{-1}(x))}.\]
@@ -684,7 +684,7 @@
 		\subsubsection{Espérance d'un produit}
 			Tout comme pour la somme, montrons que l'espérance d'un produit correspond au produit des équivalences. Soient $X$, $Y$ et $Z \coloneqq XY$.
 
-			\[E(Z) = \int_{-\infty}^\infty zf_Z(z)\dif z = \int_{-\infty}^\infty z\left(\int_{-\infty}^\infty f_{(X, Y)}\left(z, \frac zu\right)\frac {\dif u}{\abs u}\right) \dif z\]
+			\[E(Z) = \int_{-\infty}^\infty zf_Z(z)\dif z = \int_{-\infty}^\infty z\left(\int_{-\infty}^\infty f_{(X, Y)}\left(u, \frac zu\right)\frac {\dif u}{\abs u}\right) \dif z\]
 
 			Posons donc à nouveau $u = \alpha$ et $z = \alpha\beta$ (le déterminant du jacobien vaut $\alpha$ en valeur absolue). On a donc :
 
@@ -778,7 +778,7 @@
 			$P(X=k) \geq 0 \; \forall k$. En effet, $P(X=k)$ est donné par un produit de valeurs toutes positives. Dès lors, la probabilité en elle-même est positive.
 
 			$P(E) = 1.$ En effet :
-			
+
 			\[P(E) = P\left(\bigcup_{k=0}^nX=k\right) = \sum_{k=0}^nP(X=k) = \sum_{k=0}^n\binom nkp^k(1-p)^{n-k} = \left[p + (1-p)\right]^n = 1.\]
 
 		\subsubsection{Valeurs particulières}
@@ -901,9 +901,9 @@
 			= \exp(-\lambda)\exp(\exp(t)\lambda) = \exp(\lambda(\exp(t)-1)).\]
 
 			On peut vérifier l'espérance en dérivant une fois et en évaluant en $t=0$, maintenant regardons $E(X^2)$ :
-			
+
 			\[\begin{aligned}
-				\frac {\partial^2}{\partial t^2}\Psi_X(t)\sVert[3]_{t=0} &= \pd t\left[\exp(\lambda(\exp(t)-1))\lambda\exp(t)\right]\sVert[3]_{t=0} 
+				\frac {\partial^2}{\partial t^2}\Psi_X(t)\sVert[3]_{t=0} &= \pd t\left[\exp(\lambda(\exp(t)-1))\lambda\exp(t)\right]\sVert[3]_{t=0}
 					= \lambda\pd t\left[\exp(\lambda(\exp(t)-1) + t)\right]\sVert[3]_{t=0} \\
 				&= \lambda\left[\exp(\lambda(\exp(t) - 1) + t)(\lambda\exp(t)+1)\right]\sVert[3]_{t=0} = \lambda(\lambda+1).
 			\end{aligned}\]
@@ -1127,7 +1127,7 @@
 		\[\Psi_Z(t) = E\left[\exp\left(t\frac {V-E(V)}{D(V)}\right)\right].\]
 
 		On sait également que :
-	
+
 		\[E(V) = E\left(\sum_{i=1}^nV_i\right) = \sum_{i=1}^nE(V_i) = \sum_{i=1}^n\bar \mu = n\bar \mu.\]
 
 		Posons $W_i \coloneqq V_i - \bar \mu$. Dès lors, on sait que $E(W_i) = \bar \mu - \bar \mu = 0$. Donc :
@@ -1136,7 +1136,7 @@
 			\Psi_Z(t) &= E\left[ \exp\left(\frac t\sigma(V-E(V))\right) \right] = E\left[ \exp\left(\frac t\sigma \left(\sum_{i=1}^nV_i - \sum_{i=1}^n\bar\mu\right)\right) \right] \\
 	                  &= E\left[ \exp\left(\frac t\sigma \sum_{i=1}^n(V_i-\bar\mu)\right) \right] = E\left[ \exp\left(\frac t\sigma\sum_{i=1}^nW_i\right) \right].
 		\end{align*}
-	
+
 		On sait également que :
 
 		\[\sigma^2 = D^2(V) = D^2\left(\sum_{i=1}^nV_i\right) = \sum_{i=1}^nD^2(V_i) = \sum_{i=1}^n\bar\sigma^2 = n\bar\sigma^2.\]
@@ -1202,7 +1202,7 @@
 		\[P\left(\abs{X-E(X)} \geq kD(X)\right) \leq k^{-2}.\]
 
 		\underline{Démonstration : } Soient $X$ une variable aléatoire quelconque et $k$ un réel positif. On sait que :
-		
+
 		\begin{align*}
 			\sigma_X^2 &= D^2(X) = \int_{-\infty}^{+\infty}(x-\mu_X)^2f_X(x)\dif x \\
 			           &= \int_{-\infty}^{\mu_X-k\sigma_X} (x-\mu_X)^2f_X(fx)\dif x + \int_{\mu_X - k\sigma_X}^{\mu_X + k\sigma_X}(x-\mu_X)^2f_X(x)\dif x + \int_{\mu_X + k\sigma_X}^{+\infty}(x-\mu_X)^2f_X(x)\dif x \\
@@ -1233,7 +1233,7 @@
 
 	\subsection{Théorème de Bernoulli}
 		Si $F \sim B(n, p)$, alors :
-		
+
 		\[\forall \epsilon \geq 0 : P\left(\abs{\frac Fn - p} \geq \epsilon\right) \stackrel{n\to+\infty}{\longrightarrow}0.\]
 
 		\underline{Démonstration : } Soient $F \sim B(n, p)$, $V = \frac Fn, \mu_V = E(V) = \frac 1nE(F) = \frac 1nnp = p$. On sait que :
@@ -1243,7 +1243,7 @@
 		Or $D^2(V) = D^2\left(\frac Fn\right) = \frac 1{n^2}D^2(F) = \frac 1{n^2}np(1-p) = \frac {p(1-p)}n$. Posons $k \coloneqq \frac \epsilon{\sqrt {\frac {p(1-p)}n}}$. Dès lors :
 
 		\[\lim_{n\to+\infty}P\left(\abs{\frac Fn - p} \geq \epsilon\right) = \lim_{n\to+\infty}P\left(\abs{V-\mu_V} \geq k\sigma_V\right) \leq \lim_{n\to+\infty}\frac 1{\frac {\epsilon^2}{\sqrt{\frac {p(1-p)}n}^2}} = \frac {p(1-p)}{\epsilon^2}\lim_{n\to+\infty}\frac 1n = 0.\]
-	
+
 \section{Inférence statistique}
 	\textbf{La population} est l'ensemble des objets étudiés et n'est pas observable (soit pas en entier, soit pas directement). \textbf{Un échantillon} est un sous-ensemble (aléatoire et simple)
 	réellement observé de la population. Le sens de l'inférence statistique est de voir en quelle mesure il est possible inférer des conclusions venant de l'échantillon sur la population.
@@ -1363,7 +1363,7 @@
 		On y voit que en prenant $\epsilon$ de plus en plus petit, on s'attend à une probabilité de plus en plus grande de trouver $H0$ et donc pour $\epsilon \to 0$, $H0$ ne sera jamais rejetée.
 		Dès lors, $P(RH0 \, | \, H0) \to 0 = \epsilon$. À l'inverse, quand $\epsilon \to 1$, l'intervalle est réduit jusqu'à devenir le singleton $\{\mu\}$ et donc $H0$ sera toujours rejeté.
 		Donc $P(RH0 \, | \, H0) \to 1 = \epsilon$.
-	
+
 	\subsection{Student et $\chi^2$}
 		Soient $X_1, X_2, \ldots, X_n \sim \Nzo$ des variables aléatoires indépendantes. Alors :
 
@@ -1398,7 +1398,7 @@
 
 		Ce résultat permet de se débarrasser de l'hypothèse disant que l'on connait $\sigma$, l'écart type de la population. En effet, il est possible de faire un intervalle de
 		confiance et des tests d'hypothèses sans avoir à connaitre $\sigma$.
-	
+
 	\subsection{Analyse de deux populations distinctes}
 		Soient deux populations $P_1, P_2$ suivant des distributions normales $\mathcal N(\mu_1, \sigma_1)$ et $\mathcal N(\mu_2, \sigma_2)$. Soient deux échantillons $E_1 \subset P_1, E_2 \subset P_2$
 		d'effectif respectif $n_1$ et $n_2$. Soient $\overline X_1$ et $\overline X_2$ les variables aléatoires des moyennes de $E_1$ et $E_2$. On sait que
