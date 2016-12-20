@@ -19,3 +19,6 @@
 
 **/*/
 !*/résumé/
+
+#Mac file to ignore
+.DS_Store
