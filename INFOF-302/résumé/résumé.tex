@@ -55,6 +55,10 @@
 \pagenumbering{arabic}
 \setcounter{page}{1}
 
+\section*{Remarques et Notations}
+	Toutes les occurrences du symbole $\subset$ sont à comprendre au sens non-strict de l'inclusion, i.e. $A \subset B$ est à lire $A \subseteq B$.
+	Une inclusion non-stricte est notée $\subsetneq$ ou $\subsetneqq$.
+
 \section{Introduction et Logique}
 	\begin{déf} \textit{Réduire} un problème de décision $A$ en un problème de décision $B$ correspond à trouver un algorithme permettant d'encoder toute
 	entrée $I_A$ du problème $A$ en une entrée $I_B$ du problème $B$ telle que $I_A$ a une solution pour le problème $A$ si et seulement si $I_B$
@@ -292,7 +296,7 @@
 	\begin{prp} Toute formule $\phi$ sur $P$ est équivalente à un nombre fini de clauses.
 	\end{prp}
 
-	\begin{proof} Il existe $\phi_C$ telle que $\phi \equiv \phi_D$. Or $\phi_C$ est une conjonction de clauses.
+	\begin{proof} Il existe $\phi_C$ telle que $\phi \equiv \phi_C$. Or $\phi_C$ est une conjonction de clauses.
 	\end{proof}
 
 	\begin{déf} Soient $C_1, C_2$ deux clauses telles qu'il existe $p$, un littéral tel que~:
