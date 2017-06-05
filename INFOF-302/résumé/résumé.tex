@@ -131,7 +131,7 @@
 	\end{déf}
 
 	Pour déterminer la satisfaisabilité d'une formule, on peut créer son arbre sémantique par application des $\land$-règles et $\lor$-règles. Pour cela,
-	on part de de la formule, et on applique le pas de simplification soit dur une conjonction, soit sur une disjonction (en ayant transformé tous les
+	on part de de la formule, et on applique le pas de simplification soit sur une conjonction, soit sur une disjonction (en ayant transformé tous les
 	autres opérateurs en conjonctions/disjonctions au préalable).
 
 	\begin{ex}
@@ -194,14 +194,14 @@
 	1. & $x \Rightarrow y$ & prémisse \\
 	2. & $\lnot y$ & hyp. \\
 	3. & $\lnot x$ & MT 1, 2~; fin hyp. 2 \\
-	4. & $\lnot \Rightarrow \lnot y$ & $\Rightarrow_i$ 2, 3
+	4. & $\lnot y \Rightarrow \lnot x$ & $\Rightarrow_i$ 2, 3
 	\end{tabular}
 	\qquad On déduit donc $\lnot y \Rightarrow \lnot x$.
 
 	De manière plus générale, si en faisant l'hypothèse $\phi$, on arrive à la conclusion $\psi$, pour $\phi, \psi$ deux formules sur $P$, alors~:
 	\[\frac {\begin{tabular}{l l}$\phi$ & \text{hyp.}\\\vdots & \\$\psi$ & \text{fin hyp.}\end{tabular}}{\phi \Rightarrow \psi}\Rightarrow_i\]
 
-	\begin{rmq} Les prémisses et les hypothèses sont fondamentalement différentes~! Une hypothèse peut être émise même sans hypothèse, e.g.~:
+	\begin{rmq} Les prémisses et les hypothèses sont fondamentalement différentes~! Une hypothèse peut être émise même sans prémisse, e.g.~:
 
 	\begin{tabular}{l l l}
 	1. & $p$ & hyp. \\
@@ -235,7 +235,7 @@
 	Afin d'introduire la négation, on suppose une formule, et on en dérive $\bot$, ce qui permet d'en déduire sa négation. Cela se formule~:
 	\[\frac {\begin{tabular}{l l}$\phi$ & hyp. \\ \vdots &\\$\bot$ & fin hyp.\end{tabular}}{\lnot\phi}\lnot_i\]
 
-	Un raisonnement par l'absurde (reductio ad absurdum) se formalise par une introduction de double négation~:
+	Un raisonnement par l'absurde (\textit{reductio ad absurdum}) se formalise par une introduction de double négation~:
 
 	\[\frac {\begin{tabular}{l l}$\lnot \phi$ & hyp. \\ \vdots &\\ $\bot$ & fin hyp.\end{tabular}}{\lnot\lnot \phi}RAA,\]
 	qui se note~:
@@ -258,7 +258,7 @@
 	avec $\ell_{ij}$ des littéraux sur $P$.
 	\end{déf}
 
-	\begin{prp} Deux formules $\phi$ et $\psi$ sur $P$ sont équivalentes si et seulement si $\logeval \phi_\cdot \equiv \logeval \psi$ sur $\{0, 1\}^P$.
+	\begin{prp} Deux formules $\phi$ et $\psi$ sur $P$ sont équivalentes si et seulement si $\logeval \phi_\cdot = \logeval \psi_\cdot$ sur $\{0, 1\}^P$.
 	\end{prp}
 
 	\begin{thm} Soit $\phi$ une formule sur $P$. Il existe $\phi_C$ et $\phi_D$  respectivement sous forme conjonctive et disjonctive telles que~:
@@ -341,7 +341,7 @@
 	\begin{thm} S'il existe une réfutation de $S$, un ensemble de clauses, par coupure, alors $S$ est non-satisfaisable.
 	\end{thm}
 
-	Afin de prouver $\psi_1, \ldots, \psi_n \models \phi$ pour $\{\psi_i\}_{i \in \intint 1n}$ et $\phi$ des formules sur $R$, on construit $S$
+	Afin de prouver $\psi_1, \ldots, \psi_n \models \phi$ pour $\{\psi_i\}_{i \in \intint 1n}$ et $\phi$ des formules sur $P$, on construit $S$
 	l'ensemble de clauses équivalent à $\bigwedge_{i=1}^n\psi_i$, et $S'$ l'ensemble de clauses équivalent à $\lnot \phi$. Pour $D$ l'ensemble
 	des clauses dérivables depuis $S \cup S'$, si $\bot \in D$, alors $\bigwedge_{i=1}^n\psi_i \land \lnot \phi$ est non-satisfaisable, et donc~:
 	\[\psi_1, \ldots, \psi_n \models \phi.\]
@@ -430,9 +430,12 @@
 		Un principe souvent valable pour les SAT-solvers est qu'il est préférable d'ajouter des variables afin de minimiser le nombre de clauses.
 
 \section{Complexité}
-	\begin{déf} Un alphabet $\Sigma$ est un ensemble fini de symboles. On note $\Sigma^*$ l'ensemble des mots sur $\Sigma$, i.e.~:
-	\[\Sigma^* = \lim_{n \to +\infty}\bigsqcup_{\ell=1}^n\Sigma^\ell.\]
+	\begin{déf} Un alphabet $\Sigma$ est un ensemble fini de symboles (appelés \textit{lettres}). On note $\Sigma^*$ l'ensemble des mots sur $\Sigma$, i.e.~:
+	\[\Sigma^* = \bigsqcup_{n \in \N}\Sigma^n.\]
 	\end{déf}
+
+	Un mot $u = (a_1, \ldots, a_n) \in \Sigma^n \subset \Sigma^*$ se représente habituellement $u = a_1\ldots a_n$. On note $\abs u = n$ pour dire que $u$ est
+	de \textit{longueur $n$}, donc composé de $n$ lettres. Plus précisément, $\abs u$ est défini comme l'entier $n \in \N$ tel que $u \in \Sigma^n$.
 
 	\begin{déf} Tout alphabet permet de former un mot commun appelé le \textit{mot vide}, noté $\epsilon$.
 	\end{déf}
@@ -459,7 +462,7 @@
 
 	\begin{déf} La classe $\mathcal P$ définit les problèmes décidables en temps polynomial, i.e. $P \subset \Sigma^*$ est dans $\mathcal P$ s'il existe
 	$k \in \N^*$ et $A$, un algorithme tels que $\forall m \in \Sigma^n \subset \Sigma^* : A$ retourne 1 (resp. 0) en temps $O(n^k)$ si
-	$m \in P$ (resp. si $m \in \Sigma^* \setminus P$).
+	$m \in P$ (resp. si $m \in \Sigma^* \setminus P$), pour $n = \abs m$.
 	\end{déf}
 
 	\begin{déf} Un algorithme de vérification pour un problème $P \subseteq \Sigma^*$ est un algorithme~:
@@ -755,15 +758,14 @@
 	$\hat \delta(q_0, u) = q$.
 	\end{déf}
 
-	\begin{déf} On appelle \textit{transition} dans un automate $\mathcal A = \automaton$ une lettre $a \in \Sigma$ telle que $\exists q \in Q $ et $\delta(q, a)$
-	est défini.
+	\begin{déf} On appelle \textit{transition} dans un automate $\mathcal A = \automaton$ un couple $(a, q) \in \Sigma \times Q$ tel que $\delta(q, a)$	est défini.
 	\end{déf}
 
 	\begin{thm}\label{thm:langage vide} Soit $\mathcal A = \automaton$. On peut tester si $L(\mathcal A) = \emptyset$ en $O(n + m)$, avec $n = \abs Q$ et $m$
 	le nombre de transitions de $\mathcal A$.
 	\end{thm}
 
-	\begin{déf} On appelle \textit{pré-automate} un triplet $(Q, \Sigma, \delta, q_0)$, où $Q$ est un ensemble fini d'états, $\Sigma$ un alphabet, $\delta$
+	\begin{déf} On appelle \textit{pré-automate} un 4-uple $(Q, \Sigma, \delta, q_0)$, où $Q$ est un ensemble fini d'états, $\Sigma$ un alphabet, $\delta$
 	une fonction de transition, et $q_0 \in Q$, un état initial.
 	\end{déf}
 
@@ -773,7 +775,7 @@
 	\begin{déf} Soient $\mathcal A = (Q_A, \Sigma, \delta_A, q_{0,A}, F_A)$ et $\mathcal B = (Q_B, \Sigma, \delta_B, q_{0,B}, F_B)$ deux automates
 	sur un même alphabet. On définit leur produit par le pré-automate~:
 	\[\mathcal A \otimes \mathcal B = (Q_A \times Q_B, \Sigma, \delta_{AB}, (q_{0,A}, q_{0,B})),\]
-	avec $\delta_{AB} : (Q_A \times Q_B) \times \Sigma$ telle que $\forall (q_A, q_B, a) \in Q_A \times Q_B \times \Sigma$ tels que
+	avec $\delta_{AB} : (Q_A \times Q_B) \times \Sigma \to Q_A \times Q_B$ telle que $\forall (q_A, q_B, a) \in Q_A \times Q_B \times \Sigma$ tels que
 	$\delta_A(q_A, a)$ et $\delta_B(q_B, a)$ sont définis, $\delta_{AB}$ est définie par $\delta_{AB}((q_A, q_B), a) = (\delta_A(q_A, a), \delta_B(q_B, a))$.
 	\end{déf}
 
@@ -802,7 +804,8 @@
 
 	\begin{déf} Deux automates $\mathcal A = (Q_A, \Sigma, \delta_A, q_0^A, F_A)$ et $\mathcal B = (Q_B, \Sigma, \delta_B, q_0^B, F_B)$ sont dits \textit{isomorphes}
 	s'il existe $\alpha : Q_A \to Q_B$ bijective telle que~:
-	\[\forall (q_A, a) \in Q_A \times \Sigma : \alpha(\delta_A(q_A, a)) = \delta_B(\alpha(q_A), a).\]
+	\[\forall (q_A, a) \in Q_A \times \Sigma : \alpha(\delta_A(q_A, a)) = \delta_B(\alpha(q_A), a),\]
+	i.e. lorsqu'il existe une bijection sur l'ensemble des états qui conserve les transitions.
 	\end{déf}
 
 	\begin{déf} Deux automates $\mathcal A$ et $\mathcal B$ sont dits \textit{équivalents} lorsque $L(\mathcal A) = L(\mathcal B)$.
@@ -839,7 +842,7 @@
 	\end{déf}
 
 	\begin{prp} Soient $\Sigma$ un alphabet, $L \subseteq \Sigma^*$ un langage, et $u, v \in \Sigma^*$ deux mots équivalents sur $L$.
-	Alors pour tout automate minimal $\mathcal A = \automaton$ tel que $L(\mathcal A) = L$, $\hat \delta(q_0, u) = \hat \delta(q_0, v)$.
+	Alors pour tout automate minimal $\mathcal A = \automaton$ tel que $L(\mathcal A) = L$~: $\hat \delta(q_0, u) = \hat \delta(q_0, v)$.
 	\end{prp}
 
 	\begin{prp} Pour $L \subseteq \Sigma^*$, un langage sur un alphabet $\Sigma$, la relation $\equiv_L$ est une relation d'équivalence.
@@ -925,7 +928,7 @@
 	\[\mathcal B = (Q / \equiv_{\mathcal A}, \Sigma, \delta', [q_0], \{[q] \tq q \in F\}),\]
 	pour $\delta' : Q / \equiv_{\mathcal A} \times \Sigma \to Q / \equiv_{\mathcal A} : ([q], a) \mapsto [\delta(q, a)]$.
 
-	On remarque que la fonction $\delta'$ est bien définie car elle ne dépend pas du représentant de la classe d'équivalence ().
+	On remarque que la fonction $\delta'$ est bien définie car elle ne dépend pas du représentant de la classe d'équivalence.
 
 	\begin{déf} Soit $\Sigma$ un alphabet. Une \textit{expression rationnelle} sur $\Sigma$ est une expression qui suit la grammaire~:
 	\[E ::= \epsilon \mid a \mid \emptyset \mid (E+E) \mid (E.E) \mid E*,\]
