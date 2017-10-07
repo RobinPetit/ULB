@@ -82,6 +82,7 @@
 \DeclareMathOperator{\Conv}{Conv}
 \DeclareMathOperator{\dist}{dist}
 \DeclareMathOperator{\Res}{Res}
+\DeclareMathOperator{\sinc}{sinc}
 
 \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
 \DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
@@ -130,6 +131,7 @@
 \newcommand{\Com}{\ComT {2\pi}}
 
 \newcommand{\poles}{{\{\text{pôles}\}}}
+\newcommand{\polesf}[1]{{\{\text{pôles de }{#1}\}}}
 
 \setcounter{secnumdepth}{5}
 \setcounter{tocdepth}{5}
@@ -6465,7 +6467,7 @@
 			\end{déf}
 
 		\subsection{Indice d'un point par rapport à un chemin fermé}
-			\begin{déf} Soit $\gamma : [a, b] \to \C$, un chemin fermé. Posons $\Omega \setminus \gamma^*$. $\Omega$ est ouvert (car $\gamma^*$ est compact donc fermé).
+			\begin{déf} Soit $\gamma : [a, b] \to \C$, un chemin fermé. Posons $\Omega = \C \setminus \gamma^*$. $\Omega$ est ouvert (car $\gamma^*$ est compact donc fermé).
 			Pour $z \in \Omega$, on définit \textit{l'indice de $z$ par rapport à $\gamma$} par~:
 			\begin{equation}
 				\Ind_\gamma(z) \coloneqq \frac 1{2i\pi}\int_\gamma \frac {\dif \omega}{\omega - z}.
@@ -6488,7 +6490,7 @@
 
 			\begin{thm} Sous les notations de la définition ci-dessus, on a~:
 			\begin{enumerate}
-				\item la fonction $\Ind_\gamma$ est définie sur $\Omega$~;  % définie sur $\C$ ?
+				\item la fonction $\Ind_\gamma$ est définie sur $\Omega$~;
 				\item $\Ind_\gamma \in H(\Omega)$~;
 				\item $\Ind_\gamma$ est à valeurs dans $\Z$~;
 				\item $\Ind_\gamma$ est constante sur les composantes connexes de $\Omega$~;
@@ -6513,7 +6515,7 @@
 				\end{equation}
 				pour appliquer le Lemme~\ref{lem:e^z=1}.
 
-				Posons $\varphi : [a, b] \to \C^* : t \mapsto \int_a^t\frac {\gamma'(s)}{\gamma(s) - z}$ à $z \in \Omega$ fixé.
+				Posons $\varphi : [a, b] \to \C^* : t \mapsto \exp\left(\int_a^t\frac {\gamma'(s)}{\gamma(s) - z}\dif s\right)$ à $z \in \Omega$ fixé.
 
 				Observons que $\varphi \in C^0([a, b], \C) \cap C^{1,m}([a, b], \C)$,et sauf sur un nombre fini de points, on a~:
 				\begin{equation}\label{eq:phi'/phi = gamma'/gamma-z}
@@ -6696,7 +6698,7 @@
 				par Cauchy-Riemann.
 				\end{proof}
 
-			\begin{thm}[Théorème de Cauchy dans un convexe] Soient $\Omega \subset \C$ un connexe ouvert et $p \in \Omega$.
+			\begin{thm}[Théorème de Cauchy dans un convexe] Soient $\Omega \subset \C$ un convexe ouvert et $p \in \Omega$.
 			Soit $f \in C^0(\Omega, \C) \cap H(\Omega \setminus \{p\})$. Alors il existe $F \in H(\Omega)$ telle que $F' = f$ dans $\Omega$.
 			\end{thm}
 
@@ -6744,9 +6746,9 @@
 			avec $F' = f$ sur $\Omega$.
 			\end{proof}
 
-			\begin{cor} Pour tout $\gamma$ fermé tracé dans $\Omega$, on a~:
+			\begin{cor} Pour tout $\gamma$ fermé tracé dans $\Omega$, un ouvert connexe, on a~:
 			\begin{equation}
-				\int_\gamma f(\omega)\dif \omega = 0.
+				\forall f \in H(\Omega) : \int_\gamma f(\omega)\dif \omega = 0.
 			\end{equation}
 			\end{cor}
 
@@ -6861,7 +6863,7 @@
 
 			Pour $z \in U \setminus \{z_0\}$, on a~:
 			\begin{equation}
-				\frac {F(z) - F(z_0)}{z-z_0} - f(z_0) = \frac 1{z-z_0}\int_{[z_0, z]}\frac {f(\omega)}{\omega-z}\dif \omega.
+				\frac {F(z) - F(z_0)}{z-z_0} - f(z_0) = \frac 1{z-z_0}\int_{[z_0, z]}(f(\omega) - f(z_0))\dif \omega.
 			\end{equation}
 
 			Comme précédemment, la continuité en $z_0$ de $f$ assure que $F$ est $\C$-dérivable en $z_0$, avec $f(z_0) = F'(z_0)$.
@@ -7769,8 +7771,8 @@
 			est une homotopie entre $\gamma$ et le chemin fermé constant $\gamma' \equiv a$. $h$ est continue et est une homotopie.
 			\end{proof}
 
-			\begin{lem} Soient $\Omega \subset \C$, un ouvert, $\gamma_1, \gamma_2$ deux chemins fermés tracés dans $\Omega$, et $\alpha \in \C$ tels que~:
-			\begin{equation}\label{eq:|gamma1-gamma2| < alpha-gamma2}
+			\begin{lem}\label{lem:|gamma1-gamma2| < |alpha-gamma2|} Soient $\Omega \subset \C$, un ouvert, $\gamma_1, \gamma_2$ deux chemins fermés tracés dans $\Omega$, et $\alpha \in \C$ tels que~:
+			\begin{equation}\label{eq:|gamma1-gamma2| < |alpha-gamma2|}
 				\forall s \in [0, 1] : \abs {\gamma_1(s) - \gamma_2(s)} \lneqq \abs {\alpha - \gamma_2(s)}.
 			\end{equation}
 
@@ -7808,7 +7810,7 @@
 					= \frac {\gamma_2(s) - \gamma_1(s)}{\gamma_2(s) - \alpha}.
 			\end{equation}
 
-			Par~\eqref{eq:|gamma1-gamma2| < alpha-gamma2}, on a $\abs {1 - \gamma(s)} < 1$. Ainsi, $\gamma$ est un chemin fermé tracé dans $D(1, 1[$.
+			Par~\eqref{eq:|gamma1-gamma2| < |alpha-gamma2|}, on a $\abs {1 - \gamma(s)} < 1$. Ainsi, $\gamma$ est un chemin fermé tracé dans $D(1, 1[$.
 
 			Puisque $0$ est dans la composante connexe non-bornée de $\gamma$, on a~:
 			\begin{align}
@@ -7967,5 +7969,151 @@
 				\sum_{a \in A}\Ind_\Gamma(a)\Res(f, a).
 			\end{equation}
 			\end{rmq}
+
+			\begin{proof} Pour montrer que $\abs B$ est fini, procédons par l'absurde. Supposons qu'il existe $(a_n)_{n \in \N} \in B^\N$ injective.
+
+			Si la suite $(a_n)$ est bornée, alors il existe $z \in \C$ et $\varphi : \N \to \N$ strictement croissante telle que
+			$a_{\varphi(n)} \xrightarrow[n \to \pinfty]{} z$. Si $z \in \Omega$, alors $z$ est un point limite de $A$ dans $\Omega$, ce qui est une contradiction car
+			$f$ est méromorphe. Si $z \in \C \setminus \Omega$, on sait que $\dist(\Gamma^*, \C \setminus \Omega) > 0$ car $\Gamma^* \subset \Omega$, et donc il existe
+			$N \in \N$ tel que $\forall n > N : a_{\varphi(n)}$ appartient à une composante connexe de $\C \setminus \Gamma^*$ qui intersecte $\C \setminus \Omega$.
+
+			Dès lors, pour $n$ suffisamment grand, par hypothèse, $\Ind_\Gamma(a_{\varphi(n)}) = 0$, et donc $a_{\varphi(n)} \not \in B$, ce qui est une contradiction.
+
+			Si la suite $(a_n)$ n'est pas bornée, alors il existe $\varphi : \N \to \N$ strictement croissante telle que
+			$\abs {a_{\varphi(n)}} \xrightarrow[n \to \pinfty]{} \pinfty$. Par le même argument, il existe $N \in \N$ tel que $\forall n > N : a_{\varphi(n)}$ se trouve
+			dans la composante connexe non bornée de $\C \setminus \Gamma^*$, et donc $\Ind_\Gamma(a_{\varphi(n)}) = 0$, ce qui est une contradiction.
+
+			On en déduit que que $\abs B \lneqq \pinfty$. Notons alors $B = \{a_1, \ldots, a_m\}$ pour $m \coloneqq \abs B$. Puisque $B \subseteq A$, on a~:
+			\begin{equation}
+				\forall i \in \intint 1m : \exists Q_i = \sum_{k=1}^{m_i}\frac {c_{k,i}}{\left(\cdot - a_i\right)^k}
+			\end{equation}
+			tels que pour $i \in \intint 1m$~: $z \mapsto f(z)-Q_i(z)$ admet une singularité effaçable en $a_i$.
+
+			Par suite, on définit $g \coloneqq f - \sum_{k=1}^mQ_k$ qui est holomorphe sur $\Omega \setminus (A \setminus B)$. Puisque $\Gamma$ est un chemin
+			fermé dans $\Omega \setminus A$, il l'est également dans $\Omega \setminus (A \setminus B)$. Alors on peut appliquer le théorème de Cauchy global sur $g$~:
+			\begin{equation}
+				\int_\Gamma g(\omega)\dif \omega = 0.
+			\end{equation}
+
+			Par conséquent, par continuité de $f$ et des $Q_i$ sur $\Gamma^*$, on a~:
+			\begin{equation}
+				\int_\Gamma f(\omega)\dif \omega = \sum_{k=1}^m\int_\Gamma Q_i(\omega)\dif \omega,
+			\end{equation}
+			et donc~:
+			\begin{equation}
+				\frac 1{2i\pi}\int_\Gamma f(\omega)\dif \omega = \sum_{j=1}^m\frac 1{2i\pi}\int_\Gamma Q_j(\omega)\dif \omega = \sum_{j=1}^m\Res(f, a_j)\Ind_\Gamma(a_j).
+			\end{equation}
+			\end{proof}
+
+		\subsection{Deux applications du théorème des résidus}
+			\begin{thm} Soient $\Omega \subset \C$, un ouvert, $f \in H(\Omega)$ et $\gamma$ un chemin fermé tracé dans $\Omega$ tels que~:
+			\begin{itemize}
+				\item $\forall z \in \C \setminus \Omega : \Ind_\gamma(z) = 0$~;
+				\item $\forall z \in \Omega \setminus \gamma^* : \Ind_\gamma(z) \in \{0, 1\}$.
+			\end{itemize}
+
+			On note $\Omega_1 \coloneqq \{z \in \Omega_1 \tq \Ind_\gamma(z) = 1\}$. Alors~:
+			\begin{enumerate}
+				\item Si $f$ ne s'annule pas sur $\gamma^*$, alors~:
+				\begin{equation}
+					N_f = \frac 1{2i\pi}\int_\gamma\frac {f'(\omega)}{f(\omega)}\dif\omega = \Ind_\gamma(0),
+				\end{equation}
+				où $N_f$ est le nombre de zéros de $f$ dans $\Omega_1$ comptés avec leur multiplicité.
+				\item Si $g \in H(\Omega)$ avec $\forall z \in \gamma^* : \abs {f(z)-g(z)} \lneqq \abs {f(z)}$, alors $N_f = N_g$.
+			\end{enumerate}
+			\end{thm}
+
+			\begin{proof} $f$ n'est pas bornée donc $\varphi \coloneqq f'/f$ est méromorphe sur $\Omega$. Si $a \in \Omega$ est un zéro de $f$, alors il existe
+			$m_a \in \Ns$ et $h_a \in H(\Omega)$ tels que $h_a(a) \neq 0$ et $\forall z \in \Omega : f(z) = (z-a)^{m_a}h_a(z)$. Ainsi, dans un voisinage pointé de $a$,
+			on a~:
+			\begin{equation}
+				\varphi(z) = \frac {f'(z)}{f(z)} = \frac {m_a(z-a)^{m_a-1}h_a(z) + (z-a)^{m_a}h_a'(z)}{(z-a)^{m_a}h_a(z)} = \frac {m_a}{(z-a)} + \frac {h_a'(z)}{h_a(z)}.
+			\end{equation}
+
+			Puisque $z \mapsto h_a'(z)/h_a(z)$ n'a pas de singularité en $a$, on déduit que $\Res(f, a) = m_a$.
+
+			$\gamma$ est tracé dans $\Omega \setminus \polesf\varphi$ Puisque pour $z \in \C \setminus \Omega$, on a $\Ind_\gamma(z) = 0$, il vient par le théorème
+			des résidus appliqué à $\varphi$ que~:
+			\begin{equation}
+				\frac 1{2i\pi}\int_\gamma\varphi(\omega)\dif \omega = \sum_{a \in \polesf\varphi}\Res(\varphi, a)\Ind_\gamma(a) = \sum_{a \in \poles\varphi \cap \Omega_1}\Res(\varphi, a)
+					= \sum_{a \in \polesf\varphi \cap \Omega_1}m_a = N_f.
+			\end{equation}
+
+			Par l'inégalité d'hypothèse, on sait que $g$ ne s'annule pas sur $\gamma^*$. On en déduit~:
+			\begin{equation}
+				\Ind_{g \circ \gamma}(0) = \frac 1{2i\pi}\int_{g \circ \gamma}\frac {\dif \omega}{\omega} = \frac 1{2i\pi}\int_0^1\frac {(g' \circ \gamma)(s)\gamma'(s)}{(g \circ \gamma)(s)}
+					= \frac 1{2i\pi}\int_\gamma\frac {g'(\omega)}{g(\omega)}\dif \omega.
+			\end{equation}
+			Par le point précédent, on a $\Ind_{g \circ \gamma}(0) = N_g$. Puisque $f$ ne s'annule pas non plus sur $\gamma^*$ par l'inégalité d'hypothèse, par le même raisonnement,
+			on trouve $\Ind_{f \circ \gamma}(0) = N_f$. Posons~:
+			\begin{subnumcases}{}
+				\Gamma_0 = f \circ \gamma, \\
+				\Gamma_1 = g \circ \gamma.
+			\end{subnumcases}
+
+			Pour $s \in [0, 1]$, on a $\abs {\Gamma_0(s) - \Gamma_1(s)} \lneqq \abs {\Gamma_0(s) - 0}$. Par le Lemme~\eqref{lem:|gamma1-gamma2| < |alpha-gamma2|}, on a
+			$\Ind_{\Gamma_0}(0) = \Ind_{\Gamma_1}(0)$. Dès lors, on a~:
+			\begin{equation}
+				N_f = \Ind_{f \circ \gamma}(0) = \Ind_{\Gamma_0}(0) = \Ind_{\Gamma_1}(0) = \Ind_{g \circ \gamma}(0) = N_g.
+			\end{equation}
+			\end{proof}
+
+			\begin{thm} Soit $t \in \R$. Alors~:
+			\begin{subnumcases}
+				{\int_{-A}^A\frac {\sin(x)}xe^{-ixt}\dif x \xrightarrow[A \to \pinfty]{}}
+					\pi &si $\abs t < 1$ \\
+					\frac \pi2 &si $\abs t=1$ \\
+					0 &sinon
+			\end{subnumcases}
+			\end{thm}
+
+			\begin{proof} On introduit la fonction~:
+			\begin{subnumcases}
+				{\sinc : \C \to \C : z \mapsto}
+					\frac {\sin(z)}z &si $z\neq 0$ \\
+					1 &sinon
+			\end{subnumcases}
+
+			Prenons $A > 1$. La fonction $g : \C \to \C : z \mapsto \sinc(z)e^{-izt}$ est entière. On définit le chemin $\Gamma_A \coloneqq [-A, -1] + \gamma_0 + [1, A]$,
+			où $\gamma_0$ est défini par~:
+			\begin{equation}
+				\gamma_0 : [0, 1] \to \C : s \mapsto -e^{i\pi s}.
+			\end{equation}
+
+			Puisque $g \in H(\C)$ et $\Gamma_A$ est homotope à $[-A, A]$, on sait que~:
+			\begin{equation}
+				I_A(t) \coloneqq \int_{[-A, A]}\sinc(\omega)e^{-i\omega t}\dif \omega = \int_{\Gamma_A}\sinc(\omega)e^{-i\omega t}\dif \omega.
+			\end{equation}
+
+			Pour $z \in \Gamma_A^*$, on a~:
+			\begin{equation}
+				\sinc(z)e^{-izt} = \frac {e^{iz} - e^{-iz}}{2iz}e^{-izt} = \frac {e^{-iz(t-1)}}{2iz} - \frac {e^{-iz(t+1)}}{2iz}.
+			\end{equation}
+
+			Puisque $0 \not \in \Gamma_A^*$, on sait que $z \mapsto \sinc(z)e^{-izt} \in C^0(\Gamma_A^*)$. On pose alors~:
+			\begin{equation}
+				F_A : [0, 1] \to \C : s \mapsto \frac 1{2i}\int_{\Gamma_A}\frac {e^{-i\omega s}}\omega\dif \omega.
+			\end{equation}
+
+			Ainsi, on a $I_A(t) = F_A(t-1) - F_A(t+1)$. Pour $s$ fixé dans $[0, 1]$, on veut calculer $\lim_{A \to \pinfty}F_A(s)$ (sous réserve d'existence).
+
+			La fonction $h : z \mapsto \frac {e^{-izs}}z$ est méromorphe sur $\C$. Son seul pôle est $0$, et $\Res(h, 0) = 1$ car $z \mapsto \frac {e^{-izs}-1}z$
+			a une singularité effaçable ne $0$.
+
+			On définit alors $\Gamma_A^+$ et $\Gamma_A^-$, deux chemins définis par~:
+			\begin{subnumcases}{}
+				\Gamma_A^+ : [0, 1] \to \C : \sigma \mapsto Ae^{i\pi\sigma} \\
+				\Gamma_A^- : [0, 1] \to \C : \sigma \mapsto -Ae^{i\pi\sigma}
+			\end{subnumcases}
+
+			$\Gamma_A + \Gamma_A^+$ et $\Gamma_A + \Gamma_A^-$ sont deux chemins fermés dans $\C \setminus \{0\}$. Par le théorème des résidus, on a donc~:
+			\begin{equation}
+				\frac 1{2i\pi}\int_{\Gamma_A+\Gamma_A^+}h(\omega)\dif\omega = \Res(h, 0)\Ind_{\Gamma_A+\Gamma_A^+}(0) = 1 \cdot 1 = 1,
+			\end{equation}
+			et~:
+			\begin{equation}
+				\frac 1{2i\pi}\int_{\Gamma_A+\Gamma_A^-}h(\omega)\dif\omega = \Res(h, 0)\Ind_{\Gamma_A+\Gamma_A^-}(0) = 1 \cdot 0 = 0.
+			\end{equation}
+			\end{proof}
 
 \end{document}
