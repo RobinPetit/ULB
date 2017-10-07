@@ -280,7 +280,7 @@
 		On a alors la fonction de densité~:
 		\begin{align*}
 			f_\theta^{X_{(n)}}(x) &= \od {}xF_\theta^{X_{(n)}}\sVert[3]_x =
-			\begin{cases}0 &\text{ si } x < 0 \\\frac {nx^{n-1}}{\theta^n}\charfun{0 \leq x \leq \theta} &\text{ si } 0\leq x \leq \theta \\0 &\text{ sinon}\end{cases} \\
+			\begin{cases}0 &\text{ si } x < 0 \\\frac {nx^{n-1}}{\theta^n} &\text{ si } 0\leq x \leq \theta \\0 &\text{ sinon}\end{cases} \\
 			&= \frac {nx^{n-1}}{\theta^n}\charfun{0 \leq x \leq \theta}.
 		\end{align*}
 		\end{ex}
@@ -354,9 +354,11 @@
 		Il nous faut alors montrer que $\overline Z \sim \mathcal N\left(0, \frac 1n\right)$ et $ns_Z^2 \sim \chi^2_{n-1}$, avec $\overline Z \sqcup s_Z^2$.
 
 		Pour cela, on sait que le vecteur $Z^{(n)} = (Z_1, \ldots, Z_n)$ a pour densité~:
-		\[f^{Z^{(n)}}(z^{(n)}) = \prod_{i=1}^nf^{Z_i}(z_i) = \prod_{i=1}^n\left(\frac 1{\sqrt {2\pi}}\exp\left(\frac {z_i^2}2\right)\right)
-			= \left(\frac 1{\sqrt {2\pi}}\right)^n\exp\left(-\sum_{i=1}^n\frac {z_i^2}2\right)
-			= \left(\frac 1{\sqrt {2\pi}}\right)^n\exp\left(-\frac 12\norm {z^{(n)}}^2\right).\]
+		\begin{align*}
+			f^{Z^{(n)}}(z^{(n)}) &= \prod_{i=1}^nf^{Z_i}(z_i) = \prod_{i=1}^n\left(\frac 1{\sqrt {2\pi}}\exp\left(-\frac {z_i^2}2\right)\right)
+				= \left(\frac 1{\sqrt {2\pi}}\right)^n\exp\left(-\sum_{i=1}^n\frac {z_i^2}2\right) \\
+				&= \left(\frac 1{\sqrt {2\pi}}\right)^n\exp\left(-\frac 12\norm {z^{(n)}}^2\right).
+		\end{align*}
 
 		Soit $O$ une matrice orthogonale de dimension $n \times n$ telle que $\forall j \in \intint 1n$ : $O_{1j} = \frac 1{\sqrt n}$. On pose alors~:
 		\[(Y_1, \ldots, Y_n) = Y^{(n)} = OZ^{(n)}.\]
@@ -373,7 +375,7 @@
 		On peut alors en déduire que $\overline Z \sim \mathcal N(0, n^{-1})$.
 
 		Montrons alors que $ns_Z^2 \sim \chi^2_{n-1}$~:
-		\[ns_Z^2 = \sum_{i=1}^n(Z_i - \overline Z)^2 = \sum_{i=1}^nZ_i^2 - n(\overline Z)^2 = \norm {Z^{(n)}}^2 - (\sqrt n\overline Z)^2 = \norm{Y^{(n)}} - Y_1^2
+		\[ns_Z^2 = \sum_{i=1}^n(Z_i - \overline Z)^2 = \sum_{i=1}^nZ_i^2 - n(\overline Z)^2 = \norm {Z^{(n)}}^2 - (\sqrt n\overline Z)^2 = \norm{Y^{(n)}}^2 - Y_1^2
 			= \sum_{i=2}^nY_i^2.\]
 
 		Or, les $Y_i$ sont $\Nzo$. On a alors bien $ns_Z^2 \sim \chi^2_{n-1}$ (car la somme sur $i$ commence à $2$, il y a donc $(n-1)$ variables sommées).
@@ -571,7 +573,7 @@
 
 		\begin{déf} Soit $X^{(n)} = (X_1, \ldots, X_n)$. On appelle la \textit{fonction de vraisemblance de $X^{(n)}$} la fonction~:
 		\[L_\theta^{(n)} : \R^n \to \R : x^{(n)} \mapsto \begin{cases}\P[X^{(n)}
-			= x^{(n)}] &\text{ si $X^{(n)}$ est de loi discrète} \\f_\theta^{X^{(n)}}(x^{(n)} &\text{ sinon}\end{cases}.\]
+			= x^{(n)}] &\text{ si $X^{(n)}$ est de loi discrète} \\f_\theta^{X^{(n)}}(x^{(n)}) &\text{ sinon}\end{cases}.\]
 		\end{déf}
 
 		\begin{rmq} Dans le cas de variables $X_1, \ldots, X_n$ iid, la fonction de vraisemblance correspond toujours à un produit~:
@@ -712,17 +714,17 @@
 			\end{déf}
 
 			\begin{déf} On appelle l'erreur absolue moyenne la quantité~:
-			\[MAE_\theta[\TnXn] = \E_\theta\left[\abs {\TnXn - g(\theta)}\right]\]
+			\[\MAE_\theta[\TnXn] = \E_\theta\left[\abs {\TnXn - g(\theta)}\right]\]
 			\end{déf}
 
 			\begin{rmq}
 			\begin{align*}
 				\MSE_\theta[\TnXn] &= \E_\theta\left[\abs {\TnXn - g(\theta)}^2\right]
-					= \Var_\theta\left[\TnXn - g(\theta)\right] - \E_\theta\left[\TnXn - g(\theta)\right]^2 \\
-				&= \Var_\theta[\TnXn] - b_\theta^{(n)}(\TnXn)^2.
+					= \Var_\theta\left[\TnXn - g(\theta)\right] + \E_\theta\left[\TnXn - g(\theta)\right]^2 \\
+				&= \Var_\theta[\TnXn] + b_\theta^{(n)}(\TnXn)^2.
 			\end{align*}
 
-			Puisque $\Var_\theta(\TnXn) \geq 0$ et $b_\theta^{(n)}(\TnXn) \geq 0$, pour avoir $\MSE[\TnXn] \xrightarrow[n \to \pinfty]{} 0$, il faut~:
+			Puisque $\Var_\theta(\TnXn) \geq 0$ et $b_\theta^{(n)}(\TnXn)^2 \geq 0$, pour avoir $\MSE_\theta[\TnXn] \xrightarrow[n \to \pinfty]{} 0$, il faut~:
 			\[\begin{cases}&\Var_\theta(\TnXn) \xrightarrow[n \to \pinfty]{} 0, \\&b_\theta^{(n)}(\TnXn) \xrightarrow[n \to \pinfty]{} 0.\end{cases}\]
 
 			Cela dit que sous $\P_\theta^{(n)}$, on a $\TnXn \xrightarrow{L^2} g(\theta)$ (et également $\TnXn \cvgp g(\theta)$).
@@ -762,7 +764,7 @@
 			\[\MSE_\theta[T_1^{(n)}(\Xn)] = \frac {2(n-1)\sigma^4}{n^2}.\]
 
 			À nouveau, il existe un estimateur sans-biais~:
-			\[T_2^{(n)}(\Xn) = \frac 1{n-1}\sum_{i=1}^n(X_i - \overline X)^2 = \frac {n-1}nT_1^{(n)}(\Xn).\]
+			\[T_2^{(n)}(\Xn) = \frac 1{n-1}\sum_{i=1}^n(X_i - \overline X)^2 = \frac n{n-1}T_1^{(n)}(\Xn).\]
 			Dans ce cas, on trouve~:
 			\[\forall \theta \in \Theta : \MSE_\theta[T_2^{(n)}(\Xn)] = \frac {2\sigma^4}{n-1} \geq \MSE_\theta[T_1^{(n)}(\Xn)].\]
 			\end{ex}
@@ -785,7 +787,7 @@
 			\begin{rmq} On peut prendre $\mathcal C = \{\Tn \tq \E_\theta[\Tn^2] < \pinfty\}$, mais on n'en prend qu'un sous-ensemble strict bien souvent car dans un tel
 			$\mathcal C$, on peut prendre $T_{\theta_0}^{(n)}$, pour un certain $\theta_0 \in \Theta$ défini par $T_{\theta_0}^{(n)}(\Xn) = g(\theta_0)$.
 			On trouve donc~:
-			\[\MSE_\theta[T_{\theta_0}^{(n)}(\Xn)] = \E_\theta[(g(\theta_0) ) g(\theta))^2] = (g(\theta_0) - g(\theta))^2.\]
+			\[\MSE_\theta[T_{\theta_0}^{(n)}(\Xn)] = \E_\theta[(g(\theta_0) - g(\theta))^2] = (g(\theta_0) - g(\theta))^2.\]
 			La fonction d'erreur quadratique moyenne est donc une parabole qui s'annule en $\theta_0 = \theta$. Pour avoir un tel $T_*^{(n)}$, il faut que
 			$\MSE_{\theta_0}[T_*^{(n)}] \leq \MSE_{\theta_0}[T_{\theta_0}^{(n)}] = 0$. Et ce, pour tout $\theta_0 \in \Theta$. Il faut donc avoir~:
 			\[\forall \theta \in \Theta : T_*^{(n)} = g(\theta)\qquad\text{ sous }\P_\theta^{(n)}.\]
@@ -857,7 +859,7 @@
 			\end{proof}
 
 			\begin{déf} Soient $Z = (Z_1, \ldots, Z_m)^T$, et $Y = (Y_1, \ldots, Y_\ell)^T$. On définit la covariance de $Y$ et $Z$ par~:
-			\[\Cov[Y, Z] \coloneqq \E_\theta\left[(Y-\E_\theta[Y])(Z-\E_\theta[Z])\right].\]
+			\[\Cov[Y, Z] \coloneqq \E_\theta\left[(Y-\E_\theta[Y])(Z-\E_\theta[Z])^T\right].\]
 			\end{déf}
 
 			\begin{prp} Soient $Z = (Z_1, \ldots, Z_m)^T$, et $Y = (Y_1, \ldots, Y_\ell)^T$. Alors~:
@@ -873,7 +875,7 @@
 			\[\MSE_\theta[\TnXn] \coloneqq \E_\theta\left[(\TnXn - g(\theta))(\TnXn - g(\theta))^T\right] \in \Mat(m, m).\]
 			\end{déf}
 
-			\begin{rmq} $\MSE_\theta[\TnXn] = \E_\theta\left[\left(T_i^{(n)}(\Xn)-g(\theta)\right)\left(T_j^{(n)}(\Xn)-g(\theta)\right)^T\right]$. En particulier~:
+			\begin{rmq} $\MSE_\theta[\TnXn]_{ij} = \E_\theta\left[\left(T_i^{(n)}(\Xn)-g_i(\theta)\right)\left(T_j^{(n)}(\Xn)-g_j(\theta)\right)^T\right]$. En particulier~:
 			\[\MSE_\theta[\TnXn]_{ii} = \MSE_\theta[T_i^{(n)}].\]
 			\end{rmq}
 
@@ -933,7 +935,7 @@
 				\item[H1] $\Theta$ est ouvert~;
 				\item[H2] $\mathcal X^{(n)}$ ne dépend pas de $\theta$~;
 				\item[H3] $\forall x^{(n)} \in \mathcal X^{(n)} : \theta \mapsto L_\theta^{(n)}(x^{(n)})$ est différentiable sur $\theta$~;
-				\item[H4] l'expression $\int_{\mathcal X^{(n)}}L_\theta^{(n)}(x^{(n)})\dif x^{(n)}$ est différentiable sous le signe~;
+				\item[H4] l'expression $\theta \mapsto \int_{\mathcal X^{(n)}}L_\theta^{(n)}(x^{(n)})\dif x^{(n)}$ est différentiable sous le signe~;
 				\item[H5] $\forall \theta \in \Theta : I^{(n)}(\theta)$ existe, est finie, et est inversible.
 			\end{itemize}
 			\end{déf}
@@ -1021,7 +1023,7 @@
 			\[\forall \theta \in \Theta : \MSE_\theta(\TnXn) \geq {I^{(n)}(\theta)}^{-1}.\]
 			\end{rmq}
 
-			\begin{rmq} Dans le cas d'un modèle d'échantillonage, on a $(I^{(n)})^{-1} = n^{-1}{I^{(4)}(\theta)}^{-1}$, et donc~:
+			\begin{rmq} Dans le cas d'un modèle d'échantillonage, on a $(I^{(n)})^{-1} = n^{-1}{I^{(1)}(\theta)}^{-1}$, et donc~:
 			\[\forall \theta \in \Theta : \MSE_\theta(\TnXn) \geq n^{-1}\Delta_\theta{I^{(1)}(\theta)}^{-1}\Delta_\theta^T \xrightarrow[n \to \pinfty]{} 0.\]
 			\end{rmq}
 
@@ -1042,7 +1044,7 @@
 			On veut ensuite montrer~:
 			\begin{align*}
 				\MSE_\theta[\Tn] = \E_\theta\left[\left(\Tn - g(\theta)\right)\left(\Tn - g(\theta)\right)^T\right] &\overset {(1)}=
-					Var[\Tn] + \left(\psi(\theta)-g(\theta)\right)\left(\psi(\theta)-g(\theta)\right)^T \\
+					\Var_\theta[\Tn] + \left(\psi(\theta)-g(\theta)\right)\left(\psi(\theta)-g(\theta)\right)^T \\
 				&\overset{(2)}\geq \Var_\theta[\Tn] \\
 				&\overset{(3)}\geq \Delta_\theta{I^{(n)}(\theta)}^{-1}\Delta_\theta^T
 			\end{align*}
@@ -1108,8 +1110,8 @@
 			\begin{align*}
 				I^{(n)}(\theta) &= \Var_\mu\left[\od {}\mu \ln L_\mu^{(n)}(X^{(n)})\right]
 					= \Var_\mu\left[\od {}\mu\left(n\ln \frac 1{\sqrt {2\pi}\sigma_0} - \frac 1{2\sigma_0^2}\sum_{i=2}^n(X_i-\mu)^2\right)\right] \\
-				&=\frac 1{(2\sigma_0^2)^2}\Var_\mu\left[-2\sum_{i=1}^n(X_i-\mu)\right] = \frac 1{\sigma_0^4}\sum_{i=1}^n\Var_\mu(X_i)
-					= \frac {\sigma_0^2}{\sigma_0^4} = \frac n{\sigma_0^2} = {\Var[\TnXn]}^{-1} = \MSE_\theta[\TnXn].
+				&=\frac 1{(2\sigma_0^2)^2}\Var_\mu\left[-2\sum_{i=1}^n(X_i-\mu)\right] = \frac 1{\sigma_0^4}\sum_{i=1}^n\Var_\mu(X_i) \\
+				&= n\frac {\sigma_0^2}{\sigma_0^4} = \frac n{\sigma_0^2} = {\Var[\TnXn]}^{-1} = \MSE_\theta[\TnXn]^{-1}.
 			\end{align*}
 
 			On en déduit que l'estimateur $\overline X^{(n)}$ est efficace pour $g(\theta) = \mu$.
@@ -1153,7 +1155,7 @@
 			\end{align*}
 
 			On a alors la fonction $M$ donnée par~:
-			\[M : \Theta \to M(\Theta) = \Theta : \theta = \begin{pmatrix}\mu \\ \sigma\end{pmatrix} \mapsto \begin{pmatrix}\mu \\ \mu^2 + \sigma^2\end{pmatrix},\]
+			\[M : \Theta \to M(\Theta) = \Theta : \theta = \begin{pmatrix}\mu \\ \sigma^2\end{pmatrix} \mapsto \begin{pmatrix}\mu \\ \mu^2 + \sigma^2\end{pmatrix},\]
 			qui est bien inversible. Il faut alors résoudre le système~:
 			\[\left\{\begin{aligned}
 				\mu_1'(\theta) &= m_1' \\
@@ -1214,7 +1216,7 @@
 			\end{ex}
 
 			\begin{ex} Soient $X_1, \ldots X_n$ iid $\Unif(0, \theta)$, avec $\theta \in \Rp_0$. Ici, la fonction de vraisemblance ne vaut plus uniquement 0 ou 1~:
-			\[\L_\theta^\n(\Xn) = \frac 1{\theta^n}\charfun {0 \leq X_{(1)}}\charfun {X_\n \leq \theta} = \frac 1{\theta^n}\charfun {0 \lneqq \theta \leq X_\n}.\]
+			\[L_\theta^\n(\Xn) = \frac 1{\theta^n}\charfun {0 \leq X_{(1)}}\charfun {X_\n \leq \theta} = \frac 1{\theta^n}\charfun {0 \lneqq \theta \leq X_\n}.\]
 			Pour $\theta \in [0, X_\n]$, la fonction de vraisemblance est nulle, et puis vaut $\theta^{-n}$ pour $\theta \geq X_\n$. Le maximum est donc en
 			$\theta = X_\n$.
 
@@ -1245,14 +1247,15 @@
 			\[L_p^\n(\Xn) = \prod_{i=1}^np^{X_i}(1-p)^{1-X_i} = p^{\sum_{i=1}^nX_i}(1-p)^{n-\sum_{i=1}^nX_i} = p^{n\overline X}(1-p)^{n(1-\overline X)}.\]
 
 			Annulons ensuite le gradient de $\ln \circ L_p^\n$~:
-			\[0 = \pd {}p = n\overline X\pd {}p\ln p  + n(1-\overline X)\pd {}p\ln(1-p) = n\overline X\frac 1p + n(\overline X - 1)\frac 1{1-p}.\]
+			\[0 = \pd {}p \ln(L_p^\n(\Xn)) = n\overline X\pd {}p\ln p  + n(1-\overline X)\pd {}p\ln(1-p) = n\overline X\frac 1p + n(\overline X - 1)\frac 1{1-p}.\]
 			En multipliant par $p(1-p)$ de part et d'autre ,on obtient~:
 			\[0 = n\overline X(1-p) + n(\overline X - 1)p = n\overline X - n\overline Xp + n\overline Xp - np = n\overline X - np,\]
 			ou encore $p = \overline X$. Dès lors, $\widehat p = \overline X$ est un estimateur de $p$ par le maximum de vraisemblance.
 			\end{ex}
 
-			\begin{prp} Soit $g : \Theta \to g(\Theta)$. Alors~:
-			\[\forall \theta \in \Theta : \widehat {g(\theta)} = g(\widehat \theta).\]
+			\begin{prp} Soit $g : \Theta \to g(\Theta)$. Alors, pour $\widehat \theta$ l'estimateur de $\theta$ par la méthode du maximum de vraisemblance et
+			$\widehat {g(\theta)}$ l'estimateur de $g(\theta)$ par cette même méthode, on a~:
+			\[\widehat {g(\theta)} = g(\widehat \theta).\]
 			\end{prp}
 
 			\begin{proof} Distinguons les deux cas où $g$ est bijective, et où $g$ n'est pas bijective.
@@ -1301,8 +1304,8 @@
 				\item[H2] $\mathcal X = \{x \in \R \tq L_\theta^{(1)}(x) > 0\}$ ne dépend pas de $\theta$~;
 				\item[H3] $\forall x \in \mathcal X : \theta \mapsto L_\theta^{(1)}(x)$ est dérivable sur $\Theta$ et $\theta \mapsto \od {}\theta L_\theta^{(1)}(x)$ est
 				dérivable sur $\Theta$~;
-				\item[H4] l'expression $\int_{\mathcal X}L_\theta^{(1)}(x)\dif x$ peut être dérivée sous le signe deux fois~;
-				\item[H5] $I^{(1)}(\theta) = \int_{\mathcal X}\left(\od {}\theta\ln L_\theta^{(1)}(x)\right)^2\dif x$ est fini et $\neq 0$~;
+				\item[H4] l'expression $\theta \mapsto \int_{\mathcal X}L_\theta^{(1)}(x)\dif x$ peut être dérivée sous le signe deux fois~;
+				\item[H5] $I^{(1)}(\theta) = \int_{\mathcal X}\left(\od {}\theta\ln L_\theta^{(1)}(x)\right)^2L_\theta^{(1)}(x)\dif x$ est fini et $\neq 0$~;
 				\item[H6] Pour toute suite $(\theta_n)_n$ convergente en $\theta \in \Theta$, on a~:
 				\[\sup_{x \in \mathcal X}\abs {B_{\theta_n}^{(1)}(x) - B_\theta^{(1)}(x)} \xrightarrow[n \to \pinfty]{} 0,\]
 				avec $B_\theta^{(1)}(x) = \od[2]{}\theta \ln L_\theta^{(1)}(x)$.
@@ -1315,7 +1318,7 @@
 			\[I^{(1)}(\theta) = \E_\theta\left[\left(\od {}\theta \ln L_\theta^{(1)}(X_1)\right)^2\right] = \Var_\theta\left[\od {}\theta \ln L_\theta^{(1)}(X)\right].\]
 
 			Également, on sait~:
-			\[0 = \od {}\theta \int_{\mathcal X}\left(\ln L_\theta^{(1)}(x)\right)L_\theta^{(1)}(x)\dif x
+			\[0 = \od {}\theta \int_{\mathcal X}\left(\od {}\theta \ln L_\theta^{(1)}(x)\right)L_\theta^{(1)}(x)\dif x
 				= \int_{\mathcal X}\left(\left(\od[2]{}\theta\ln L_\theta^{(1)}(x)\right)L_\theta^{(1)}(x)
 					+ \left(\od {}\theta\ln L_\theta^{(1)}(x)\right)\od {}\theta L_\theta^{(1)}(x)\right)\dif x.\]
 
@@ -1358,9 +1361,9 @@
 			On en déduit~:
 			\[\forall n : 0 = A_{\TnXn}^{(n)}(\Xn) = A_\theta^{(n)}(\Xn) + \od {}\theta A_\theta^{(n)}(\Xn)\sVert[3]_{T_*^{(n)}(\Xn)}(\Xn) \cdot (\TnXn - \theta),\]
 			et donc (théorème des accroissements finis)~:
-			\[T_*^{(n)} = \frac {-A_\theta^{(n)}(\Xn)}{\od {}\theta A_\theta^{(n)}(\Xn)\sVert[3]_{\theta=T_*^{(n)}(\Xn)}}
+			\[\TnXn - \theta = \frac {-A_\theta^{(n)}(\Xn)}{\od {}\theta A_\theta^{(n)}(\Xn)\sVert[3]_{\theta=T_*^{(n)}(\Xn)}}
 				= \frac {-A_\theta^{(n)}(\Xn)}{B_{T_*^{(n)}(\Xn)}^{(n)}(\Xn)},\]
-			pour $T_*^{(n)}(\Xn) \in [0, \TnXn]$
+			pour $T_*^{(n)}(\Xn) \in [\theta, \TnXn]$
 
 			On a alors~:
 			\[\sqrt n\left(\TnXn - \theta\right) = \frac {-\sqrt nA_\theta^{(n)}(\Xn)}{B_{T_*^{(n)}(\Xn)}(\Xn)}.\]
@@ -1397,7 +1400,7 @@
 
 \chapter{Tests d'hypothèse}
 	En se plaçant dans le modèle statistique $\statmod \R\Brl{\mathcal P}n$, avec $\mathcal P^{(n)} = \{\P_\theta^{(n)} \tq \theta \in \Theta\}$. On partitionne
-	$\Theta$ en $\Theta_0 \subseteq \Theta$ et $\Theta = \Theta \setminus \Theta_0$.
+	$\Theta$ en $\Theta_0 \subseteq \Theta$ et $\Theta_1 = \Theta \setminus \Theta_0$.
 
 	On parle de \textit{problème de test d'hypothèse} pour~:
 	\begin{align}\label{eq:test_hyp_general}
@@ -1409,12 +1412,12 @@
 	Il y a deux choix possibles, à savoir RH0, le rejet de $H_0$, et \sout {RH0}, le non-rejet de $H_0$.
 
 	\begin{ex} Soient $X_1, \ldots, X_n$ iid $\Nms$, avec $\theta = [\mu, \sigma^2]^T \in \Theta \subsetneq \R^2$. Voici une partition de $\Theta$~:
-	\[\Theta : \Theta_0 \sqcup \Theta_1 = \left\{[\mu, \sigma^2]^T \in \Theta \tq \mu > 15\right\}
+	\[\Theta = \Theta_0 \sqcup \Theta_1 = \left\{[\mu, \sigma^2]^T \in \Theta \tq \mu > 15\right\}
 		\sqcup \left\{[\mu, \sigma^2]^T \in \Theta \tq \mu \leq 15\right\}.\]
 
 	\[\begin{cases}
-		&\theta \in \Theta_0 \\
-		&\theta \in \Theta_1
+		&H_0 : \theta \in \Theta_0 \\
+		&H_1 : \theta \in \Theta_1
 	\end{cases}\]
 	\end{ex}
 
@@ -1444,7 +1447,7 @@
 	Dans ce cas, on dit que $H_0 : \theta = \theta_0$ est l'\textit{hypothèse simple}, et $H_1 : \theta \neq \theta_0$ est l'\textit{hypothèse composée}.
 	\end{déf}
 
-	\begin{déf} Un test pur est une fonction mesurable $\phi^\n : \mathcal X^\n \to \{0, 1\}$, où $\mathcal X$ est l'ensemble des valeurs observables pour $X^\n$.
+	\begin{déf} Un test pur est une fonction mesurable $\phi^\n : \mathcal X^\n \to \{0, 1\}$, où $\mathcal X^\n$ est l'ensemble des valeurs observables pour $X^\n$.
 	\end{déf}
 
 	\begin{déf} On appelle \textit{zone critique} l'ensemble~:
@@ -1483,7 +1486,7 @@
 		\begin{déf} Le test $\phi_*$ est dit \textit{à puissance uniformément maximale} (PUM) dans la classe $C_\alpha$ lorsque~:
 		\begin{itemize}
 			\item $\phi_* \in C_\alpha$~;
-			\item $\forall \phi \in C_\alpha : \forall \phi \in \Theta_1 : \E_\theta^\n[\phi_*(X^\n)] \geq \E_\theta^\n[\phi^\n(X^\n)]$.
+			\item $\forall \phi \in C_\alpha : \forall \theta \in \Theta_1 : \E_\theta^\n[\phi_*(X^\n)] \geq \E_\theta^\n[\phi^\n(X^\n)]$.
 		\end{itemize}
 		\end{déf}
 
@@ -1509,20 +1512,20 @@
 			\end{cases}\]
 			vérifie $\E_{\theta_0}[\phi_*]$~;
 
-			\item $\phi_*$ est à puissance uniformément maximale dans $C_\alpha$.
+			\item[$(ii)$] $\phi_*$ est à puissance uniformément maximale dans $C_\alpha$.
 		\end{itemize}
 		\end{thm}
 
-		\begin{proof} Soit $F_{\theta_0}$ la fonction de répartition de la valeur aléatoire $Y^\n \coloneqq \frac {L_{\theta_1}^\n(\Xn)}{L_{\theta_0}^\n(\Xn)}$
-		sous $\P_{\theta_0}^\n$, et posons $L_{\theta_0}^\n(\Xn) = 0 \Rightarrow Y^\n = \pinfty$.
+		\begin{proof} Soit $F_{\theta_0}$ la fonction de répartition de la valeur aléatoire $Y \coloneqq \frac {L_{\theta_1}^\n(\Xn)}{L_{\theta_0}^\n(\Xn)}$
+		sous $\P_{\theta_0}^\n$, et posons $L_{\theta_0}^\n(\Xn) = 0 \Rightarrow Y = \pinfty$.
 
 		Pour $z \in \R$, on peut alors écrire~:
-		\[\E_{\theta_0}^\n[\phi_*] = \P_{\theta_0}[Y^\n > k_\alpha] + \gamma_\alpha\P[Y=k^\alpha]
+		\[\E_{\theta_0}^\n[\phi_*] = \P_{\theta_0}[Y > k_\alpha] + \gamma_\alpha\P[Y=k^\alpha]
 			= 1 - F_{\theta_0}(k_\alpha) + \lim_{\varepsilon \to 0}\gamma_\alpha\left(F_{\theta_0}(k_\alpha) - F_{\theta_0}(k_\alpha - \varepsilon)\right).\]
 
 		Distinguons deux cas~:
 		\begin{itemize}
-			\item s'il existe $x \in \R$ tel que $F_{\theta_0}(z) = 1-\alpha$, alors on pose=
+			\item s'il existe $z \in \R$ tel que $F_{\theta_0}(z) = 1-\alpha$, alors on pose~:
 			\[(k_\alpha, \gamma_\alpha) = (z, 0).\]
 			On a alors bien~:
 			\[\E_{\theta_0}^\n[\phi_*(X^\n)] = 1 - F_{\theta_0}(z) + 0 = \alpha.\]
@@ -1615,7 +1618,7 @@
 
 	\section{Tests unilatéraux à puissance uniformément maximale}
 		\begin{déf} Soit le modèle statistique $\statmod \R\Brl{\mathcal P}n$, avec $\mathcal P = \{\P_\theta \tq \theta \in \Theta \subseteq \R\}$.
-		Ce modèle est dit \textit{à vraisemblance monotone en la statistique $T(x^\n)$} lorsque~:
+		Ce modèle est dit \textit{à rapport de vraisemblance monotone (RVM) en la statistique $T(x^\n)$} lorsque~:
 		\[\forall \theta', \theta'' \in \Theta : \theta' < \theta'' \Rightarrow \exists h_{\theta', \theta''} \text{ strict. croissante } \tq
 			h_{\theta', \theta''}(T(x^\n)) = \frac {L_{\theta''}^\n(x^\n)}{L_{\theta'}^\n(x^\n)}.\]
 		\end{déf}
