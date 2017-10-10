@@ -65,5 +65,5 @@ Les résumés disponibles sont les suivants :
 
 #### Q1 et Q2
 
-+ [MATH-F-201 : Calcul différeniel et intégral II](https://github.com/RobinPetit/ULB/blob/master/MATHF-201/r%C3%A9sum%C3%A9/r%C3%A9sum%C3%A9.pdf) (**janvier complet**) ;
++ [MATH-F-201 : Calcul différeniel et intégral II](https://github.com/RobinPetit/ULB/blob/master/MATHF-201/r%C3%A9sum%C3%A9/r%C3%A9sum%C3%A9.pdf) (**complet**) ;
 + [MATH-F-203 : Algèbre et géométrie I](https://github.com/RobinPetit/ULB/blob/master/MATHF-203/r%C3%A9sum%C3%A9/r%C3%A9sum%C3%A9.pdf) (**janvier complet**).
