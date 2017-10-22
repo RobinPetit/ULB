@@ -1,0 +1,220 @@
+\documentclass{IEEEtran}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{url}
+
+\usepackage[linkcolor=blue]{hyperref}
+
+\usepackage{flushend}
+
+%% math
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{commath}
+\usepackage{mathtools}
+\usepackage{stmaryrd}
+\usepackage{eulervm}
+
+\newcommand{\private}[1]{{#1}_{\text{PR}}}
+\newcommand{\public}[1]{{#1}_{\text{PU}}}
+\newcommand{\intint}[2]{\left\llbracket#1, #2\right\llbracket}
+
+\title{INFOF-405 --- Homework\\On the use of the Elliptic Curve \textit{secp256k1} in an Elliptic Curve Digital Signature Algorithm in Bitcoin blocks}
+\author{Robin Petit$^1$\\
+\mbox{}
+$^1$Université Libre de Bruxelles, MA1-CS -- BA3-MATH}
+\date{Monday, October 23, 2017}
+
+\begin{document}
+\maketitle
+
+\section{Introduction to Cryptocurrencies}
+Cryptocurrencies are currencies built on the idea of \textit{decentralization}. Their goal is to
+avoid being dependant of an organization that handles authentication, wealth verification and
+ledger. In order to achieve such decentralization, these currencies use a peer-to-peer system called
+\textit{blockchain}. Blockchains copies are kept by users, and for every transaction, a new block is
+added to the blockchain. The intrinsic structure of these blocks depends on the currency.
+
+Also, as the blockchain system is distributed, it needs to be synchronized. This is why users need
+to provide some sort of proof before validating blocks. These proofs can take several
+forms~\cite{proofOfX,Bentov17}:
+\begin{itemize}
+	\item A proof of work (PoW) requires from the users that they solve mathematically complicated
+	tasks to solve (but easy to check). One can cite the HashCash~\cite{hashcash02} PoW used in
+	Bitcoin~\cite{bitcoin08}.
+	\item A proof of Stake (PoS) chooses a user to validate a transaction according to a random
+	distribution weighted by the wealth of each user~\cite{PoSvsPoW}.
+	\item A proof of Burn (PoB) requires from users that they \textit{burn} (i.e. \textit{pay}) a
+	given amount of their currency in order to validate a transaction.
+\end{itemize}
+
+Each of these methods have pros and cons and different goals and flaws. Yet, this is not what is of
+interest in this report.
+
+Although the users of such currencies don't want to have a single entity verifying and holding the
+data, they still want their transactions to be secure and their possessions to be protected. In order
+to prove the users' identity, Bitcoin blocks are signed using a Elliptic Curve Digital Signature Algorithm
+(ECDSA), in particular the curve \textit{secp256k1}~\cite{bitcoinsecp256k1}, a standard elliptic curve
+recommended by the Standards for Efficient Cryptography~\cite{SEC2}.
+
+\section{Use of secp256k1 ECDSA in Bitcoin block signature}
+
+	\subsection{Elliptic Curve Digital Signature}
+	To have verified transactions, in order that only the owner of some wealth is able to use it in a
+	payment, transactions are signed. The signature algorithm used in Bitcoin is an ECDSA.
+
+	An ECDSA works on elliptic curves on finite fields. \textit{secp256k1} can be separated in 5 parts:
+	\textit{sec} meaning that this curve is a standard according to SEC~\cite{SEC2}, \textit{p} meaning
+	that the finite field is a prime field $\mathbb F_p$ (more precisely $\mathbb Z_p = \mathbb Z/p\mathbb Z$
+	for a prime $p$), \textit{256} meaning that the elliptic curve parameters are 256-bits long, \textit{k}
+	meaning that this curve is a \textit{Koblitz} elliptic curve as opposed to \textit{random} elliptic
+	curves, and \textit{1} meaning that this curve is the first secp256kx standard curve (and is actually
+	the only one).
+
+	An elliptic curve is defined by:
+	\begin{equation}\label{eq:elliptic curve}
+		y^2 = x^3 + ax + b \mod p,
+	\end{equation}
+	where $a, b$ are the parameters of the curve, and $p$ is the size of the field $\mathbb F_p$.
+	\footnote{This expression is well defined since $x, y, a, p \in \mathbb F_p$ with $\mathbb F_p$ a field.
+	Therefore, stable addition and product are provided to $\mathbb F_p$.}
+	We denote by $E$ the set of all points $(x, y)$ satisfying~\eqref{eq:elliptic curve}, i.e.:
+	\[E = \left\{(x, y) \text{ s.t. } y^2 = x^3 + ax + b\right\} \subset \mathbb F_p \times \mathbb F_p.\]
+
+	Elliptic curves have as a trivial property that for every $(x, y)$ being in the curve, $(x, -y)$ is
+	also in the curve by horizontal symmetry induced by the only appearance of $y$ being in a squared
+	form. The other interesting property of such elliptic curves is that every for every non-vertical
+	line $L$:
+	\begin{itemize}
+		\item If $L$ is tangent to a point $P$ of the curve, then $\exists! Q \in E \setminus E$ such that $Q \in L$.
+		\item If $\exists P, Q \in E$ with $P \neq Q$ such that $\{P, Q\} \subset L$, then $\exists! R \in E \setminus \{P, Q\}$
+		such that $R \in L$.
+	\end{itemize}
+
+	These properties allow a definition of product and addition on $E$.
+
+	\subsection{Operators and structure of group on $E$}
+
+	Let's define the product:
+	\begin{equation}\label{eq:def prod}
+		\cdot_E : \mathbb Z_p \times E \to E : (k, P) \mapsto k \cdot_E P,
+	\end{equation}
+	as follows:
+	\[\forall (k, P) \in \mathbb Z_p \times E : \begin{cases}(2k) \cdot_E P &\coloneqq 2\left(k \cdot_E P\right) \\(2k+1) \cdot_E P &\coloneqq (2k) \cdot_E P + P\end{cases}\]
+
+	This definition requires then only the addition to be defined since $2 \cdot_E P = P + P$.
+
+	Let's define the sum:
+	\begin{equation}\label{eq:def sum}
+		+_E : E \times E \to E : (P, Q) \mapsto P +_E Q
+	\end{equation}
+	according to the following properties:
+	\begin{itemize}
+		\item If $P=Q$, then there exists a unique $R = (x_R, y_R) \in E$ such that the tangent line to
+		$P$ crosses $E$ at $R$. Therefore define $P +_E Q = P +_E P \coloneqq R' = (x_R, -y_R)$.
+		\item Else, there exists a unique $R = (x_R, y_R) \in E$ such that the line $\langle P, Q \rangle$
+		crosses $E$ at $R$. Therefore define $P +_E Q \coloneqq R' = (x_R, -y_R)$.
+	\end{itemize}
+
+	Note that these definitions are based on the elliptic curves defined on the field $\mathbb R$, but
+	these properties still hold when discretized on a finite field (such as $\mathbb Z_p$).
+
+	This structures provides a structure of Abelian group~\cite{Koblitz87} to $E$ with the point at infinity as $0_E$.\footnote{
+	The additive opposite of a point $(x, y) \in E$ being $(x, -y) \in E$.}
+
+	\subsection{Definition of secp256k1 as ECDSA}
+	secp256k1 is standardized in SEC2 with the following parameters (on 256 bits, i.e. 32 bytes):
+	\begin{itemize}
+		\item $p =$ \texttt{FFFF FFFF FFFF FFFF FFFF FFFF FFFF FFFF FFFF FFFF FFFF FFFF FFFF FFFE FFFF FC2F}
+		= $2^{256} - 2^{32} - 977$.
+		\item $a = 0$.
+		\item $b = 7$.
+	\end{itemize}
+
+	In addition to these parameters, the ECDSA also needs a point $G \in E$ called \textit{base point}
+	and $n$ its order (i.e. the value $n \in \mathbb N^*$ such that $n \cdot_E G = 0_E$ or also the
+	cardinality of the Abelian subgroup $\{n \cdot_E G\}_{n \in \mathbb N^*} \subset E$) with as
+	constraint that $n$ must be prime. secp256k1 uses:
+	\begin{itemize}
+		\item $G = (G_1, G_2)$ for:
+		\begin{itemize}
+			\item $G_1 =$ \texttt{79BE667E F9DCBBAC 55A06295 CE870B07 029BFCDB 2DCE28D9 59F2815B 16F81798},
+			\item $G_2 =$ \texttt{483ADA77 26A3C465 5DA4FBFC 0E1108A8 FD17B448 A6855419 9C47D08F FB10D4B8}.
+		\end{itemize}
+		\item $n = \abs {\left\{n \cdot_E G\right\}_{n \in \mathbb N^*}} =$ \texttt{FFFFFFFF FFFFFFFF FFFFFFFF
+		FFFFFFFE BAAEDCE6 AF48A03B BFD25E8C D0364141}.
+		\item $h = 1$.
+	\end{itemize}
+
+	Where $h$ is defined as the cardinality of the quotient group $E / \langle G \rangle$.\footnote{With $\langle G \rangle$
+	denoting the subgroup generated by $G$.} Note that $h = 1$ is equivalent to say that $E = \langle G \rangle$
+
+	The sextuple $T = (p, a, b, G, n, h)$ defines completely the elliptic curve~\cite{SEC2}.
+
+	Flaws of such curves and signatures and proposition for newer ones are described in~\cite{Bernstein11, RFC8032}.
+
+	\subsection{Signature}
+	The signature is based on asymmetric encryption: each user of the Bitcoin system has a unique couple:
+	\[(\private K, \public K) \in \intint 1n \times E\]
+	containing the private key $\private K$ and the public key $\public K$, with the following constraint:
+	\[\public K = \private K \cdot_E G.\]
+
+	This means that there exists a bijection $\pi_G : \intint 1n \to E : k \mapsto k \cdot_E G$ that
+	is a mapping between private and public keys. So \textit{theoretically} knowing the public key is
+	sufficient to find the private key associated to it. Yet, despite allowing to find $\public K = \pi_G(\private K)$
+	easily, the computational power doesn't allow yet to find easily $\private K = \pi_G^{-1}(\public K)$.
+
+	One can also deduce that the maximum amount of private keys is given by $n$ because:
+	\[\forall m \in \mathbb N^*: (n+m) \cdot_E = \left(n \cdot_E G\right) +_E \left(m \cdot_E G\right) = m \cdot_E G.\]
+
+	The \textit{final signature} is a couple $(r, s)$ defined on the data $D$ to be signed as follows.
+	Take $k \in \intint 1n$ at \textit{random} (see Subsection~\ref{subsec:security issues}) such that
+	for $(x, y) \coloneqq k \cdot_E G$, there is $r \coloneqq x \mod n \neq 0$ and
+	$s \coloneqq k^{-1}(D + r\private K) \mod n \neq 0$, and then	define the signature as
+	the couple $(r, s)$.~\cite{nist186-4}
+
+	Note that the operations are taken $\mod n$, meaning that all of these lie in $\mathbb Z_n$, which
+	is a field (since $n$ is required to be prime). Therefore $k^{-1} \in \mathbb Z_n$ is well defined.
+
+	For Bitcoin, the data $D$ to be signed is a SHA-256~\cite{nist180-4} hash of the block to sign.
+	$D$ is thus 256 bits long, which is a condition for the signature~\cite{nist186-4}.
+
+	\subsection{Verification of the signature}
+	The main objective of a signature is to be able to identify the user that has emitted a block.
+	So anyone should be able to verify that the signature is correct, even without the knowledge of
+	$\private K$ that has been used in the signature.
+
+	For a third party to check the validity of a signature, all that is needed is the signature
+	couple $(r, s)$ and the public key $\public K$ of the emitter. The procedure is the following:
+	with $(r, s) \in \mathbb Z_n \times \mathbb Z_n$ and $\public K \in E$, let's define:
+	\[(u, v) \coloneqq \left(Ds^{-1}, rs^{-1}\right) \in \mathbb Z_n \times \mathbb Z_n,\]
+	and:
+	\[(x, y) \coloneqq u \cdot_E G + v \cdot_E \public K \in E.\]
+
+	Then the signature is valid if and only if $r = x \in \mathbb Z_n$.
+
+	\subsection{Security issues}\label{subsec:security issues}
+	This method of signature relies on a hash function that must be cryptographically secured.
+	This is why SHA-256 is used and not SHA-1 which is now considered insecure.
+
+	The most important security issue is the generation of the random number $k \in \intint 1n$.
+	As the only parameters that are unknown to the network are the private key $\private K$ of the
+	signer and the random number $k$, if there is a flaw on this generation, the private key can be
+	found out, and then reused to falsify transactions.~\cite{rfc6979}
+
+\section{Conclusion}
+To be able to identify a user performing a transaction in order to prove that a transaction has
+accepted by them, Bitcoin uses a digital signature algorithm using an elliptic curve (secp256k1).
+Such ECDSA's use algebra on finite groups and fields to sign each transaction by two numbers $r$
+$s$ whose validity is easy to check to avoid malicious attacks on the Bitcoin network.
+
+Yet, despite being simple to perform and to verify, this signature process must be highly
+secure because if it were to be hacked, members of the Bitcoin network would not be assured of
+the safety of their \textit{wallet} because anyone could \textit{mimic} their signature.
+
+%%% references
+\bibliography{homework}{}
+\bibliographystyle{IEEEtran}
+
+\end{document}
