@@ -1,0 +1,643 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{mathrsfs}
+\usepackage{commath}
+\usepackage{mathtools}
+\usepackage{fullpage}
+\usepackage{float}
+\usepackage{lscape}
+
+\usepackage{palatino, eulervm}
+
+\usepackage{forest}
+
+\usepackage[parfill]{parskip}
+
+\renewcommand{\P}{\mathbb P}
+\newcommand{\E}{\mathbb E}
+\newcommand{\R}{\mathbb R}
+
+\tikzset {
+	cnode/.style={circle,draw=black,align=center,minimum size=1cm,scale=0.25,anchor=center}
+}
+
+\forestset{
+  every leaf node/.style={
+    if n children=0{#1}{}
+  },
+  every tree node/.style={
+    if n children=0{}{#1}
+  },
+}
+
+\title{INFOF-409 --- Learning Dynamics\\Assignment 1 --- Game Theory}
+\author{Robin Petit \\
+MA1-CS --- ULB}
+\date{Friday November 3, 2017}
+
+\begin{document}
+
+\maketitle
+
+\section*{Introduction}
+Subsections~\ref{subsec:Hawk-Dove Notations} and \ref{subsec:Social Dilemma Notations}
+do not contain answers to the explicit questions in the instructions. They are only used to
+expose the used notations and the assertions that will serve to answer the questions.
+
+\section{The Hawk-Dove Game}
+\subsection{Modeling and notations}\label{subsec:Hawk-Dove Notations}
+The Hawk-Dove game can be modeled as in Table~\ref{tab:Hawk-Dove} with parameters $V, D, T \in {\R^*}^+$.
+Let us denote by $\mathcal A^{(i)} \coloneqq \{H, D\}$ the available
+actions for player $i \in \mathcal I$ with $\mathcal I = \{1, 2\}$, the finite ordered set of players.
+\footnote{Even if $\mathcal I$ is not a set of numbers, as long as it is finite, we can consider
+it to be fully ordered by mapping it to $\{1, \ldots, N\}$ with $N \coloneqq \mathcal I$ the number
+of players by a projection principle explained a bit further.} We consider (without loss of generality)
+that $\mathcal I$ is ordered only to define a set product iterated on $\mathcal I$ in a unique
+way so that the order of the tuples of such a product is induced by the order relation on $\mathcal I$
+(mathematical formalism helps increasing sanity).
+
+Let us also denote:
+\[\mathcal A \coloneqq \prod_{i \in \mathcal I}\mathcal A^{(i)} = \mathcal A^{(1)} \times \mathcal A^{(2)} = \{H, D\}^2,\]
+the set of all profiles.
+
+Let us use the standard notations $\mathcal A^{-(i)}$ for $\prod_{j \in \mathcal I \setminus \{i\}} \mathcal A^{(j)}$
+the set of all profiles omitting player $i$'s choice, $a_{-i}$ for an element of $\mathcal A^{-(i)}$
+and $u^{(i)} : \mathcal A \to \R$ a utility function for each player $i \in \mathcal I$.
+
+\begin{table}[!h]
+\centering
+\begin{tabular}{c||c|c}
+& H & D \\ \hline \hline
+H & $\frac {V-D}2$ & $V$ \\ \hline
+D & $0$ & $\frac V2 - T$
+\end{tabular}
+\caption{Payoff of player 1 according to his actions (rows) and his opponent's actions (columns).\label{tab:Hawk-Dove}}
+\end{table}
+
+The payoff values in Table~\ref{tab:Hawk-Dove} can be viewed as a payoff matrix. To justify this, for
+$i \in \mathcal I$, consider somehow naturally a (quite arbitrary) bijection
+$\pi_i : \mathcal A^{(i)} \to \{1, \ldots, n_i\}$ with $n_i \coloneqq \abs {\mathcal A^{(i)}}$, the number of
+available actions for player $i$. Extend it to
+$\pi : \mathcal A \to \prod_{i \in \mathcal I}\{1, \ldots, n_i\}$
+by:
+\[\forall a \in \mathcal A : \pi(a) = \pi((a_i)_{i \in \mathcal I}) \coloneqq (\pi_i(a_i))_{i \in \mathcal I},\]
+which then associates each profile to an integer tuple.
+
+Then for every player $i \in \mathcal I$, there naturally exists a \textit{matrix} $U^{(i)} \in \R^{\prod_{j \in \mathcal I}n_j}$
+containing the utility value of each action profile. Note that the name \textit{matrix} is used only because
+$N=2$ but the notion generalizes easily to any finite value of $N$.
+\[\forall i \in \mathcal I : \forall (k_1, \ldots, k_N) \in \prod_{\ell \in \mathcal I}\{1, \ldots, n_\ell\} :
+	U^{(i)}_{(k_1, \ldots, k_N)} = u^{(i)}(\pi^{-1}(k_1, \ldots, k_N)).\]
+
+This notion of utility matrix needs to be explicit because in the case of this Hawk-Dove game, one can
+easily observe that the users' matrices are transpose of one another, i.e. $U^{(1)} = {U^{(2)}}'$ and both
+players have the same available actions. This \textit{symmetry} is important because it is used as
+an argument for proofs below.
+
+Note also that to avoid selecting such an arbitrary bijection $\pi$, the utility matrix can be directly indexed
+by the actions instead of numbers attached to them.
+
+Consider $A$ a discrete random variable on $\mathcal A$ with probability law $\P$. By independence:
+\[\forall \alpha \in \mathcal A : \P[A = \alpha] = \prod_{i \in \mathcal I}\P[A_i = \alpha_i].\]
+
+For player $i \in \{1, 2\}$, let us denote by $\E_i[A] \coloneqq \E[u^{(i)}(A)]$ the player $i$'s expected
+utility:
+\begin{align*}
+\E_i[A] &= \sum_{a \in \mathcal A}\P[A = a]u^{(i)}(a) =
+\sum_{a_i \in \mathcal A^{(i)}}\sum_{a_{-i} \in \mathcal A^{-(i)}}\P[A = (a_i, a_{-i})]u^{(i)}(a_i, a_{-i}) \\
+&= \sum_{a_i \in \mathcal A^{(i)}}\sum_{\alpha \in \mathcal A}\P[A = \alpha \land A_i = a_i]u^{(i)}(\alpha)
+= \sum_{a_i \in \mathcal A^{(i)}}\sum_{\alpha \in \mathcal A}\P[A_i = a_i]\P[A = \alpha \, | \, A_i = a_i]u^{(i)}(\alpha) \\
+&= \sum_{a_i \in \mathcal A^{(i)}}\P[A_i = a_i]\E_i[A \, | \, A_i = a_i].
+\end{align*}
+
+For all $a_i \in \mathcal A^{(i)}$, let us then denote
+$\E_i^{a_i}[A] \coloneqq \E_i[A \, | \, A_i = a_i] \coloneqq \E[u^{(i)}(A) \, | \, A_i = a_i]$ for sake
+of convenience.
+
+Define $p, q \in [0, 1]$ as follows:
+\begin{itemize}
+	\item $p \coloneqq \P[A_1 = H]$ (therefore $\P[A_1 = D] = 1-p$),
+	\item $q \coloneqq \P[A_2 = H]$ (therefore $\P[A_2 = D] = 1-q$).
+\end{itemize}
+
+\subsection{Game Equilibria}
+\subsubsection{Pure Strategy Nash Equilibria}
+We can split the problem in 3 cases according to the sign of $V-D$.
+
+\paragraph{First case} Let's start by assuming that $V > D$ and let $\delta$ be defined as $\delta \coloneqq \frac {V-D}2$.
+Therefore $u^{(1)}(H, H) = u^{(2)}(H, H) = \delta > 0$, which shows that $(H, H) \in \mathcal A$ is a Nash
+equilibrium because if player 1 switches to Dove, then $u^{(1)}(D, H) = 0 < \delta$ and by symmetry, we have
+$u^{(2)}(H, D) = 0 < \delta$ then player 2 wouldn't switch to Dove either.
+
+Under this assumption, there is no other equilibrium because Hawk strongly (strictly) dominates Dove. Let
+show prove this statement for player 1. By symmetry, this proof is valid for player 2 as well.
+
+If player 2 plays Dove, then $u^{(1)}(D, D) = \frac V2 - T < V = u^{(1)}(H, D)$ because $T > 0$. If player 2 plays
+Hawk, then $u^{(1)}(H, D) = 0 < \delta = u^{(1)}(H, H)$. We therefore deduce that no equilibrium can contain a player
+playing Dove. $(H, H)$ is then the only possible Nash equilibrium.
+
+\paragraph{Second case} Let's assume that $V = D$. We have then $\delta = 0$. In this case, $(H, H)$ stays
+a Nash equilibrium because $u^{(1)}(H, H) = 0 = u^{(1)}(D, H)$ and $u^{(2)}(H, H) = 0 = u^{(2)}(H, D)$, thus no player
+would strictly increase their payoff by switching to Dove.
+
+But this action is not the only Nash equilibrium: Hawk doesn't strongly dominate Dove anymore.
+$(H, D)$ and $(D, H)$ are 2 new Nash equilibria of the game. Let us show that $(D, H)$ is one,
+$(H, D)$ is one as well by symmetry.
+
+$u^{(1)}(D, H) = 0 = u^{(1)}(H, H)$  then player 1 wouldn't strictly increase his payoff by switching to Hawk, and
+$u^{(2)}(D, H) = V > \frac V2 - T = u^{(2)}(D, D)$ then player 2 wouldn't switch to Dove because it would lower
+his payoff.
+
+In this case, there are then 3 Nash equilibria: $\{(H, H), (D, H), (H, D)\}$. It is easy to show that $(D, D)$
+is not a Nash equilibrium because both players would want to switch to Hawk if their opponent plays Dove since
+$u^{(1)}(H, D) = V > \frac V2-T = u^{(1)}(D, D)$ (same for $u^{(2)}$).
+
+\paragraph{Third case} Let's finally assume that $V < D$, and then $\delta < 0$. This implies that $(H, H)$
+is no longer a Nash equilibrium because both players would want to switch to Dove to strictly increase
+their payoff from $\delta < 0$ to $0$. Nonetheless, $(D, H)$ and $(H, D)$ are still Nash equilibria
+since $u^{(1)}(D, H) = 0 > \delta = u^{(1)}(H, H)$ and $u^{(2)}(D, H) = V > \frac V2 - T = u^{(2)}(D, D)$.
+
+\paragraph{Remark} We can see that $T$ does not play an important role in this analysis: whether it is
+lower, equal or greater than $\frac V2$ doesn't affect the Nash equilibria, and never makes $(D, D)$
+a Nash equilibrium.
+
+\subsubsection{Mixed Strategy Nash Equilibrium}
+Let us evaluate the following values: $\E_1^H[A], \E_1^D[A], \E_2^H[A]$ and $\E_2^D[A]$:
+\begin{itemize}
+	\item $\E_1^H[A] = \frac q2(V-D) + (1-q)V$,
+	\item $\E_1^D[A] = (1-q)\left(\frac V2 - T\right)$.
+\end{itemize}
+
+By symmetry, we find that:
+\begin{itemize}
+	\item $\E_2^H[A] = \frac p2(V-D) + (1-p)V$,
+	\item $\E_2^D[A] = (1-p)\left(\frac V2 - T\right)$.
+\end{itemize}
+
+We find easily that $\E_1^D[A] - \E_1^H[A] = q\left(T + \frac D2\right) - \left(\frac V2 + T\right)$ and is then
+a linear increasing function in $q$. Therefore, $\E_1^D[A] = \E_1^H[A] \iff q = \frac {V+2T}{D+2T} \eqqcolon P$.
+
+By symmetry one more time, we get the exact same result for $p$, i.e. $\E_2^D[A] = \E_2^H[A] \iff p = P$.
+There exists therefore a Mixed Strategy Nash Equilibrium where each player plays Hawk with probability
+$p = q = P$ if and only if this value is between $0$ and $1$, for it to be a probability.
+
+This condition $P \in [0, 1]$ is equivalent to $V \leq D$ since all these parameters are $\geq 0$.\footnote{Note
+that $P$ is not defined if $D=T=0$ but as $0 \leq V \leq D = 0$, we have $V=D=T=0$ and then both players
+have a payoff of $0$, no matter what action they choose. Then any value $P \in [0, 1]$ suits.
+In particular, if $P \in \{0, 1\}$, then the strategy is a pure strategy, and thus is a Nash equilibrium
+since in constant utility games (a pathological situation because there is no interesting preference relation
+left due to the fact that $\forall a, b \in \mathcal A : \forall i \in \mathcal I : (a \succsim_i b) \land (b \succsim_i a)$),
+every pure strategy is a Nash equilibrium.}
+
+We can also deduce from these calculations that under this $V < D$ assumption, if a player ($i$) chooses Hawk with
+a probability lower than $P$, then the other player ($j$) optimal strategy becomes playing Hawk all the time because
+$\E_j^H[A] > \E_j^D[A]$. The opposite also stand: if player $i$ chooses Hawk with probability higher than $P$,
+then $\E_j^H[A] < \E_j^D[A]$ and player $j$'s optimal strategy becomes playing Dove.
+
+\section{Which Social Dilemma?}
+\subsection{Extension of Notations and Preliminary Results}\label{subsec:Social Dilemma Notations}
+First of all, to stay consistent with previous notations (and by a remark in the first section), we will
+consider that players are identified by numbers rather than letters. Just remark that $A \mapsto 1$ and
+$B \mapsto 2$ forms a bijection between $\{A, B\}$ and $\{1, 2\}$ (that we will denote by $\mathcal I$
+to stay consistent).
+
+Let $\mathcal G$ be set of games $\{PD, SH, SD\}$. Let's denote (arbitrarily) each of these games by a $g_j$
+with $j \in \mathcal J$, with $\mathcal J = \{1, 2, 3\}$ the ordered set of game indices so that we can refer
+to $\mathcal G$ as $\mathcal G = \{g_i\}_{i \in \mathcal J}$.
+
+Note that the remark on the order relation on $\mathcal I$ above also stands here for the order relation
+on $\mathcal J$.
+
+Let us also extend the utility function notation. The utility function of player $i \in \mathcal I$
+will be denoted by:
+\[u^{(i)} : \mathcal A = \prod_{i \in \mathcal I}A^{(i)} \coloneqq
+	\prod_{i \in \mathcal I}\prod_{j \in \mathcal J_i}A^{(i)}_j \to \R,\]
+with $\mathcal J_i \subset \mathcal J$ the set of playable games by player $i$, and $A^{(i)}_j$, the set of
+available actions for player $i \in \mathcal I$ in game $g_j$. In this precise case, player 1 only plays
+one game and has therefore only on set of possible actions ($\{C, D\}$) whereas player 2 has 3 games has
+then strategies composed of three actions: one for each game ($\abs {\mathcal J_1} = 1$ and
+$\abs {\mathcal J_2} = 3$ since $\mathcal J_2 = \mathcal J$). Note that $j \in \mathcal J$ such that
+$\mathcal J_1 = \{j\}$ can be chosen arbitrarily.
+
+This $u^{(i)}$ function requires $u^{(i)}_{(j_k)_k} : \prod_{k \in \mathcal I}\mathcal A^{(k)}_{j_k} \to \R$
+to be defined for every $(j_k)_k \in \prod_{k \in \mathcal I}\mathcal J_k$, which correspond to the
+utility function of player $i$ when each player $k$ is playing game $j_k \in \mathcal J_k \subset \mathcal J$.
+
+This extension also applies to the $U^{(i)}$ matrices. One can define:
+\[U^{(i)}_{((a_{ij})_{j \in \mathcal J_i})_{i \in \mathcal I}} \coloneqq
+	\sum_{(j_1, \ldots, j_N) \in \displaystyle \prod_{k \in \mathcal I} \mathcal J_k}\left(\prod_{k \in \mathcal I}\P[\mathscr G_k = g_{j_k}]\right)
+	u^{(i)}_{(j_1, \ldots, j_N)}(a_{1j_1}, \ldots, a_{Nj_N}).\]
+
+We will focus here on the expected payoff of each player according to the probability distribution of
+the played game according to each player. To formalize this, for every $i \in \mathcal I$, take
+$\mathscr G_i$ a discrete random variable on $\{g_j\}_{j \in \mathcal J_i} \subset \mathcal G$ with
+probability law $\P$.\footnote{It is precised in the instructions that $\mathscr G_2$ follows a discrete finite
+uniform distribution, i.e. $\forall j_2 \in \mathcal J_2 : \P[\mathscr G_2 = g_{j_2}] = \abs{\mathcal J_2}^{-1} = \frac 13$
+and that $\mathscr G_1$ has values in a singleton and then for $j \in \mathcal J$ such that $\mathcal J_1 = \{j\}$,
+$\P[\mathscr G_1 = g_j] = 1$.
+Nevertheless, the notations detailed below are extensible to any distribution $\P$ for the $\mathscr G_i$'s.
+Note also that these probability measure are not the same as the one for $A$ defined previously because
+they are not defined on the same set. Yet the context is clear enough to know which measure is used,
+there is no need to introduce new notations.}
+
+Now, let us remark that if there exist a player $i \in \mathcal I$ and $\widetilde {j_i} \in \mathcal J_i$ such
+that the game $g_{\widetilde {j_i}} \in \mathcal G$ contains an action $a^-$ strongly dominated by another action
+$a^+$ for player $i$, not matter what games $(g_{j_k})_{k \neq i}$ are played by other players, then any strategy of
+player $i$ that contains $a^-$ as action for game $g_{\widetilde {j_i}}$ cannot be a Nash equilibrium.
+This follows easily from the fact that the expected payoff of a strategy $a$ for player B with $a_i = a^-$ will
+be strictly less than the expected payoff of the strategy $(a^+, a_{-i})$.
+
+To proof this statement, take $a^{(1)} = (a_{ij})_{ij} = ((a_{1j})_j, \ldots, (a_{Nj})_j)$ such that $a_{i\widetilde {j_i}} = a^-$,
+and take $a^{(2)} = (a^{(1)}_{-i\widetilde {j_i}}, a^+)$, which is then the same action profile as $a^{(1)}$ except that
+player $i$ now plays $a^+$ instead of $a^-$ in game $g_{\widetilde {j_i}}$. Then:
+\[U^{(i)}_{a^{(1)}} - U^{(i)}_{a^{(2)}} =
+	\sum_{(j_1, \ldots, j_N) \text{ s.t. } j_i = \widetilde {j_i}}
+		\underbrace {\left(\prod_{k=1}^N\P[\mathscr G_k=g_{j_k}]\right)}_{\geq 0}
+		\underbrace {\left(u^{(i)}_{(j_1, \ldots, j_N)}(a^{(1)}) - u^{(i)}_{(j_1, \ldots, j_N)}(a^{(2)})\right)}_{< 0} \leq 0.
+\]
+
+This value is indeed negative since it is a sum of negative values. The second term of the product in the sum is
+always negative since this is exactly what being strongly dominated means. Therefore, if $a^{(1)}$ was a played
+strategy profile, player $i$ would prefer to switch from $a^-$ to $a^+$, which implies that $a^{(1)}$ cannot
+be a Nash equilibrium.
+
+\subsection{Resolution}
+\subsubsection{Pure Strategy Nash Equilibria}
+The previous statement about strictly dominated actions is used here. One can observe that in the prisoners dilemma,
+the \textit{Cooperate} action is strictly dominated by the \textit{Defect} action. Therefore, the situations where
+player 2 plays C on first game won't be relevant in the study of Nash equilibria and can therefore be discarded.
+
+Table~\ref{tab:expected payoff Bayes} shows the expected payoff of each player according to their strategy, without
+player 2 strategies containing C for the prisoners dilemma.
+
+\begin{table}[!h]
+\centering
+\begin{tabular}{c||c|c|c|c}
+& DCC & DCD & DDC & DDD \\ \hline \hline
+C & (7, 12) & (\textbf {6}, \textbf {13}) & (2, 9) & (1, 10) \\ \hline
+D & (\textbf {8}, 2) & (3, 1) & (\textbf {7}, \textbf {3}) & (\textbf{2}, 2)
+\end{tabular}
+\caption{Payoff of each player according to the strategies. Best responses are written in boldface, which allows
+to easily find out the Nash equilibria. Payoffs are multiplied by 3 to avoid handling fractions. This is still
+the same payoff table since the magnitude of the value of a utility function isn't important, what is important
+is the order relation on these values. Therefore, if $u^{(i)}$ is a utility function for player $i$, then
+for any non decreasing function $f : \R \to \R$, the function $f \circ u^{(i)}$ is still a utility function
+for player $i$ because it represents the same preference relation.\label{tab:expected payoff Bayes}}
+\end{table}
+
+2 Pure Strategy Nash Equilibria are present in this table: (C, DCD) and (D, DDC).
+
+\subsubsection{Mixed Strategy Nash Equilibria}
+In order to find Mixed Strategy Nash Equilibria, let's consider that player 1 plays C with probability $p \in [0, 1]$,
+and that player 2 plays C in the PD with probability $q_1 \in [0, 1]$, plays $C$ in the SH with probability
+$q_2 \in [0, 1]$ and plays C in SD with probability $q_3 \in [0, 1]$. Let again define $A$ a discrete random variable
+on $\mathcal A$ with probability law $\mathbb P$.
+
+One can not simply discard PD by stating that player 2 would always choose D because C is strongly dominated by D
+because in a Mixed Strategy Nash Equilibrium, a dominated action can be played with strictly positive probability.
+
+Yet by computing the expected values $\E_2^a[A]$ for $a \in \mathcal A^{(2)}$:
+\begin{itemize}
+	\item $\E_2^{CCC}[A] = 1+8p$,
+	\item $\E_2^{CCD}[A] = 10p$,
+	\item $\E_2^{CDC}[A] = 2+4p$,
+	\item $\E_2^{CDD}[A] = 1+6p$,
+	\item $\E_2^{DCC}[A] = 2+10p$,
+	\item $\E_2^{DCD}[A] = 1+12p$,
+	\item $\E_2^{DDC}[A] = 3+6p$,
+	\item $\E_2^{DDD}[A] = 2+8p$;
+\end{itemize}
+one can observe that:
+\begin{itemize}
+	\item $\E_2^{CDD}[A] \leq \E_2^{CCC}[A] \leq \E_2^{DCD}[A]$,
+	\item $\E_2^{CCD}[A] \leq \E_2^{DCD}[A]$,
+	\item and $\E_2^{CDC}[A] \leq \E_2^{DDC}[A]$.
+\end{itemize}
+
+Therefore any strategy for player 2 with action C in PD has lower expected payoff that the same strategy with
+D instead. We can conclude (in our equilibria analysis) that $q_1 = 0$ because no Mixed Strategy Nash Equilibrium
+could contain player 2 playing C in PD.
+
+Although stating that the first game (PD) can be discarded (in the equilibria analysis) because C is dominated
+by D is not true, in this study, the first game can be discarded. Only strategies DCC, DCD, DDC, and DDD need to be
+considered to appear in an equilibrium.
+
+Player 2's best response function varies according to the value of $p$ and gives the strategy (strategies) maximizing
+the expected payoff. As $\E_2^{DDD}[A] \leq \E_2^{DCC}[A]$, only DCC, DCD, and DDC should appear in the best response
+function yields. One can find:
+\begin{itemize}
+	\item if $p < \frac 14$, then player 2 should play DDC,
+	\item if $p = \frac 14$, then player 2 should play DDC or DCC with any probability distribution,
+	\item if $\frac 14 < p < \frac 12$, then player 2 should play DCC,
+	\item if $p = \frac 12$, then player 2 should play DCC or DCD with any probability distribution,
+	\item and if $p > \frac 12$, then player 2 should play DCD.
+\end{itemize}
+
+\paragraph{Remark} Note that, as expected, extreme cases of this result are still consistent with the Pure Strategy
+Nash Equilibria found before: if $p$ is sufficiently low, then player 1 would play D most of the time, and then player 2
+should play DDC ((D, DDC) is a Nash Equilibrium), and if $p$ is large enough, then player 1 would play C most of the time,
+and then player 2 should play DCD ((C, DCD) is a Nash Equilibrium).
+
+Let's now find player 1's best response function in order to find Mixed Strategy Nash Equilibria of the system.
+
+Let's compute the values of $\E_1^C[A]$ and $\E_1^D[A]$:
+\begin{itemize}
+	\item $\E_1^C[A] = 5q_2 + q_3 + 1$,
+	\item and $\E_2^D[A] = q_2 + 5q_2 + 2$.
+\end{itemize}
+
+Therefore $\E_1^C[A] = \E_1^D[A] \iff q_2 = q_3 + \frac 14$.
+
+\begin{itemize}
+	\item If $q_2 - q_3 \leq \frac 14$, then $\E_1^C[A] < \E_1^D[A]$ which implies that player 1 has no interest in playing
+	C and that he shall play D instead (i.e. $p=0$),
+	\item if $q_2 - q_3 = \frac 14$, then player 1 has no strict preference between C and D and that both can be played in
+	a given probability distribution,
+	\item otherwise, if $q_2-q_3 > \frac 14$, then $\E_1^D[A] < \E_1^C[A]$ which implies that player 1 has no interest in
+	playing D and that he shall play C instead (i.e. $p=1$).
+\end{itemize}
+
+To determine possible equilibria, just check mixed strategies of player 2 found above, and see if they can intersect
+player 1 mixed strategies found right above:
+\begin{itemize}
+	\item a possible Mixed Strategy Nash Equilibrium would be to have $p = \frac 14$ and $q_2, q_3$ set such that
+	$q_2 - q_3 = \frac 14$ . Yet this is impossible since $p = \frac 14$ implies that $q_3$ is set to 1 for player 2
+	to choose between DCC and DDC. In this case $q_2 - q_3 \leq 0$, in particular $q_2-q_3 \lneqq \frac 14$.
+	\item The other would be to have $p = \frac 12$ and $q_2, q_3$ set such that $q_2-q_3 = \frac 14$. But $p = \frac 12$
+	implies that $q_2$ is set to 1 for player 2 to choose between DCC and DCD. Therefore, the only triple $(p, q_2, q_3)$
+	that fulfills these requirements is $\left(\frac 12, 1, \frac 34\right)$.
+\end{itemize}
+
+\begin{figure}[!h]
+\centering
+\begin{tikzpicture}
+	\draw[-] (0,0) -- (5,0) node[right] {$q_2$};
+	\draw[red, dashed] (5,0) -- (5, 5);
+	\draw[blue, dashed] (5,5) -- (0,5);
+	\draw[-] (0,0) -- (0,5) node[above] {$q_3$};
+	\draw[-] (1.25,0) -- (5,3.75);
+
+	\node[circle,draw,fill=black,scale=.4] at (5,3.75) {};
+
+	\node[draw] at (2.25,3.5) {$p = 0$};
+	\node[draw] at (3.25,1) {$p = 1$};
+\end{tikzpicture}
+\caption{Mixed Strategy Diagram. The red dashed line represents all the probability distribution allowing
+player 2 to play either DCC or DCD ($q_2$ set to 1). The blue dashed line represents all the probability
+distribution allowing player 2 to play either DDC or DCC ($q_3$ set to 1). The black filled dot represents the only
+possibly Mixed Strategy Nash Equilibrium.\label{fig:Mixed Strategy Diagram}}
+\end{figure}
+
+Looking at Figure~\ref{fig:Mixed Strategy Diagram} makes obvious that the only area where $p \in (0, 1)$ is allowed
+is the line between the points $(.25, 0)$ and $(1, .75)$, and therefore a Mixed Strategy Nash Equilibrium needs to sit on it.
+Also an equilibrium should sit on one of the dashed lines since these are the only mixed strategies that player 2 can
+play rationally. Therefore, only one point fulfills both these criteria: the equilibrium described above.
+
+One can then deduce that in addition to the two Pure Strategy Nash Equilibria described above, a Mixed Strategy Nash
+Equilibrium exists for this system.
+
+\section{Sequential Truel}
+\subsection{Modelling and Notations}
+
+Figure~\ref{fig:Truel Diagram} shows the game tree of the truel. Chance moves are shown as nodes in the graph but are
+distinguishable from \textit{choice} nodes because such chance moves are represented by a circle node.
+
+One assumption is made in the resolution of this problem: as player C is the last one to play, no matter who he aims,
+player C will always survive, and then have a payoff of one if he is allowed to \textit{play}. Therefore, in order to
+evaluate the expected payoff of a subgame, if both actions that a player can take lead to identical payoffs,
+then the expected payoff of the players will be made by a simple arithmetic average of the expected payoffs of each
+available action.
+
+Otherwise, the expected payoff of an action made by player $i \in \mathcal I$ for each player is dependent on the
+action that maximizes player $i$'s expected payoff.
+
+Also, the expected payoff of a chance move is the average of the payoffs of each possible outcome of the chance move,
+weighted by the probabilities of each outcome occurring (usual definition of an expected value).
+
+\begin{landscape}
+\begin{figure}[!h]
+\centering
+\begin{forest}
+/tikz/my edge label/.style={inner sep=5pt, midway},
+for tree={s sep=1.5mm,font=\footnotesize,every leaf node={text=red,ellipse},anchor=center,
+before typesetting nodes={
+        if n'=1{
+          edge label/.wrap value={\noexpand node [my edge label,right] {#1} }
+        }{
+          edge label/.wrap value={\noexpand node [my edge label,left] {#1} }
+        },
+      }
+}
+[A
+	[{},cnode,edge label=B
+		[B,edge label=$\scriptstyle 1-p_A$
+			[{},l*=4,cnode,edge label=A
+				[C,edge label=$\scriptstyle p_B$
+					[{},cnode,edge label=B
+						[{$\scriptstyle (0,0,1)$},edge label=$\scriptstyle p_C$]
+						[{$\scriptstyle (0,1,1)$},edge label=$\scriptstyle 1-p_C$]
+					]
+				]
+				[C,edge label=$\scriptstyle 1-p_B$
+					[{},cnode,edge label=A
+						[{$\scriptstyle (0,1,1)$},edge label=$\scriptstyle p_C$]
+						[{$\scriptstyle (1,1,1)$},edge label=$\scriptstyle 1-p_C$]
+					]
+					[{},cnode,edge label=B
+						[{$\scriptstyle (1,0,1)$},edge label=$\scriptstyle p_C$]
+						[{$\scriptstyle(1,1,1)$},edge label=$\scriptstyle 1-p_C$]
+					]
+				]
+			]
+			[{},cnode,edge label=C
+				[{$\scriptstyle (1,1,0)$},edge label=$\scriptstyle p_B$]
+				[C,edge label=$\scriptstyle 1-p_B$
+					[{},cnode,edge label=A
+						[{$\scriptstyle (0,1,1)$},edge label=$\scriptstyle p_C$]
+						[{$\scriptstyle (1,1,1)$},edge label=$\scriptstyle 1-p_C$]
+					]
+					[{},cnode,edge label=B
+						[{$\scriptstyle (1,0,1)$},edge label=$\scriptstyle p_C$]
+						[{$\scriptstyle (1,1,1)$},edge label=$\scriptstyle 1-p_C$]
+					]
+				]
+			]
+		]
+		[C,edge label=$\scriptstyle p_A$
+			[{},cnode,edge label=A
+				[{$\scriptstyle (0,0,1)$},edge label=$\scriptstyle p_C$]
+				[{$\scriptstyle (1,0,1)$},edge label=$\scriptstyle 1-p_C$]
+			]
+		]
+	]
+	[{},cnode,edge label=C
+		[B,edge label=$\scriptstyle p_A$
+			[{},cnode,edge label=A
+				[{$\scriptstyle (0,1,0)$},edge label=$\scriptstyle p_B$]
+				[{$\scriptstyle (1,1,0)$},edge label=$\scriptstyle 1-p_B$]
+			]
+		]
+		[B,edge label=$\scriptstyle 1-p_A$
+			[{},cnode,edge label=A
+				[C,l*=2,edge label=$\scriptstyle p_B$
+					[{},cnode,edge label=B
+						[{$\scriptstyle (0,0,1)$},edge label=$\scriptstyle p_C$]
+						[{$\scriptstyle (0,1,1)$},edge label=$\scriptstyle 1-p_C$]
+					]
+				]
+				[C,edge label=$\scriptstyle 1-p_B$
+					[{},cnode,edge label=A
+						[{$\scriptstyle (0,1,1)$},edge label=$\scriptstyle p_C$]
+						[{$\scriptstyle (1,1,1)$},edge label=$\scriptstyle 1-p_C$]
+					]
+					[{},cnode,edge label=B
+						[{$\scriptstyle (1,0,1)$},edge label=$\scriptstyle p_C$]
+						[{$\scriptstyle (1,1,1)$},edge label=$\scriptstyle 1-p_C$]
+					]
+				]
+			]
+			[{},l*=2,cnode,edge label=C
+				[C,edge label=$\scriptstyle 1-p_B$
+					[{},cnode,edge label=A
+						[{$\scriptstyle (0,1,1)$},edge label=$\scriptstyle p_c$]
+						[{$\scriptstyle (1,1,1)$},edge label=$\scriptstyle 1-p_C$]
+					]
+					[{},cnode,edge label=B
+						[{$\scriptstyle (1,0,1)$},edge label=$\scriptstyle p_C$]
+						[{$\scriptstyle (1,1,1)$},edge label=$\scriptstyle 1-p_C$]
+					]
+				]
+				[{$\scriptstyle (1,1,0)$},edge label=$\scriptstyle p_B$]
+			]
+		]
+	]
+]
+\end{forest}
+\caption{Sequential diagram of the Truel. Circle nodes represent chance moves (occurrences of probability).
+Leaves of the tree (payoffs) are written in red.\label{fig:Truel Diagram}}
+\end{figure}
+\end{landscape}
+
+\subsection{Resolution}
+This game has to be solved by Backward Induction. To do this, the expected payoff of each player must be extracted of
+each subgame, starting from the bottom% (now we here)
+. The first step is then to start from the \textit{leaves} of the tree (which correspond to the moment where players
+get their payoff, or more precisely, the moment where each player still alive is sure to remain such way, and already
+dead player are also sure to remain this way) which are all preceded by a chance move, and to average those as described above.
+
+Second step is to average situations where last playing player has no preference on the actions that he may take. This leads to
+a reduced version of the tree of Figure~\ref{fig:Truel Diagram}, shown on Figure~\ref{fig:Truel Diagram Step 2}.
+
+\begin{figure}[!h]
+\centering
+\begin{forest}
+/tikz/my edge label/.style={inner sep=5pt, midway},
+for tree={s sep=.5mm,font=\footnotesize,every leaf node={text=red,ellipse},anchor=center,
+before typesetting nodes={
+        if n'=1{
+          edge label/.wrap value={\noexpand node [my edge label,right] {#1} }
+        }{
+          edge label/.wrap value={\noexpand node [my edge label,left] {#1} }
+        },
+      }
+}
+[A
+	[{},cnode,edge label=C
+		[{$\scriptstyle (1-p_B,1,0)$},edge label=$\scriptstyle p_A$]
+		[B,edge label=$\scriptstyle 1-p_A$
+			[{},cnode,edge label=C
+				[{$\scriptstyle (1,1,0)$},edge label=$\scriptstyle p_B$]
+				[{$\scriptstyle (1-\frac {p_C}2, 1-\frac {p_C}2, 1)$},edge label=$\scriptstyle 1-p_B$]
+			]
+			[{},cnode,edge label=A
+				[{$\scriptstyle (0, 1-p_C, 1)$},edge label=$\scriptstyle p_B$]
+				[{$\scriptstyle (1-\frac {p_C}2, 1-\frac {p_C}2, 1)$},edge label=$\scriptstyle 1-p_B$]
+			]
+		]
+	]
+	[{},l*=2,cnode,edge label=B
+		[{$\scriptstyle (1-p_C, 0, 1)$},edge label=$\scriptstyle p_A$]
+		[B,edge label=$\scriptstyle 1-p_A$
+			[{},cnode,edge label=A
+				[{$\scriptstyle (0, 1-p_C, 1)$},edge label=$\scriptstyle p_B$]
+				[{$\scriptstyle (1-\frac {p_C}2, 1-\frac {p_C}2, 1)$},edge label=$\scriptstyle 1-p_B$]
+			]
+			[{},cnode,edge label=C
+				[{$\scriptstyle (1,1,0)$},edge label=$\scriptstyle p_B$]
+				[{$\scriptstyle (1-\frac {p_C}2, 1-\frac  {p_C}2, 1)$},edge label=$\scriptstyle 1-p_B$]
+			]
+		]
+	]
+]
+\end{forest}
+\caption{Game tree of the Truel with last player's actions replaced by expected payoffs.\label{fig:Truel Diagram Step 2}}
+\end{figure}
+
+By weight-averaging again on this tree, one can clearly see that the expected payoff of player B by shooting A is $p_Bp_C$
+smaller than his expected payoff by shooting C. This is obvious since by shooting C, player B allows himself to live longer
+if he aims correctly, whereas shooting A won't prevent C from shooting him.
+
+By averaging values one more time (still from bottom to top), A needs to choose between shooting B or C, and the game tree becomes:
+\begin{figure}[!h]
+\centering
+\begin{forest}
+/tikz/my edge label/.style={inner sep=5pt, midway},
+for tree={s sep=.5mm,font=\footnotesize,every leaf node={text=red,ellipse},anchor=center,
+before typesetting nodes={
+        if n'=1{
+          edge label/.wrap value={\noexpand node [my edge label,right] {#1} }
+        }{
+          edge label/.wrap value={\noexpand node [my edge label,left] {#1} }
+        },
+      }
+}
+[A
+	[{$\scriptstyle \left(
+		\left(1-p_Ap_C - \frac {p_C}2 + \frac {p_Bp_C}2 + \frac {p_Ap_C}2 - \frac {p_Ap_Bp_C}2\right),
+		\left((1-p_A)(1-\frac {p_C}2(1-p_B))\right),
+		\left((1-p_A)(1-p_B)\right)\right)$},edge label=B]
+	[{$\scriptstyle \left(
+		\left(1-p_Ap_B-\frac {p_C}2 + \frac {p_Bp_C} + \frac {p_Ap_C}2 - \frac {p_Ap_Bp_C}2\right),
+		\left(1 - \frac {p_C}2 + \frac {p_Bp_C}2 + \frac {p_Ap_C}2 - \frac {p_Ap_Bp_C}2\right),
+		\left((1-p_A)(1-p_C)\right)
+	\right)$},l*=2,edge label=C]
+]
+\end{forest}
+\end{figure}
+
+Therefore, player A's action will be to aim B rather than C if and only if $p_B > p_C$ since player A's expected payoff
+for shooting C minus player A's expected payoff for shooting B is given by:
+\begin{align*}
+&\left(1 - p_Ap_B - \frac {p_C}2 + \frac {p_Bp_C}2 + \frac {p_Ap_C}2 - \frac {p_Ap_Bp_C}2\right)
+	- \left(1 - p_Ap_C - \frac {p_C}2 + \frac {p_Bp_C}2 + \frac {p_Ap_C}2 - \frac {p_Ap_Bp_C}2\right) \\
+&= p_Ap_C - p_Ap_B = p_A(p_C-p_B).
+\end{align*}
+
+If $p_B > p_C$, then shooting C yields a lower expected payoff than shooting B.
+
+There are then two possibilities:
+\begin{itemize}
+	\item either $p_B > p_C$, and then player A shoots B. If A misses, then B shoots C, and if B misses, then C shoots either A or B. If A didn't
+	miss, then C shoots A.
+	\item or $p_B < p_C$, and then player A shoots C, then B shoots C as well. If both missed, then C shoots either A or B.
+\end{itemize}
+
+This implies that if $p_C > p_B$, then A would shoot C, and B would also shoot C if still alive. Then, C's probability to stay alive
+is $(1-p_A)(1-p_B)$, and if $p_C < p_B$, then C's probability to stay alive is $p_A + (1-p_A)(1-p_B)$. Therefore, C's odds to stay alive
+are higher if $p_C < p_B$. C is thus more likely to survive if he is a worse shooter than B is.
+
+\subsection{Remark}
+Note that if $p_A = p_B = p_C = 1$, then A's best action, even though not stated as possible action, would be to shoot in the air
+so that B would be forced to kill C, otherwise, if A would shoot either B or C, then the alive one would shoot him dead.
+
+Note also that the game has been modeled with payoffs of either 0 or 1. This reflects the assumption that players only want
+to live. Another modelling could be to have payoffs of 0 if the player dies when shot by A, 1 when shot in second (thus either by B if still alive
+or by C if A killed B), 2 if player is killed by third shot (thus by C if still alive), and 4 if player doesn't die.
+
+The strategy would probably differ since for example player A would prefer to be shot by C by third shoot than by B in second shoot,
+whereas in the studied model above, player A has no \textit{preference} between being killed in second or third turn.
+
+\end{document}
