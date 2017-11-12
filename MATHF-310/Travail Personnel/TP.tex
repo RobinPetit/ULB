@@ -1,0 +1,309 @@
+\documentclass{article}
+
+%\usepackage[french]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{palatino}
+
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{mathtools}
+\usepackage{commath}
+
+\usepackage[parfill]{parskip}
+\usepackage[bottom]{footmisc}
+\usepackage{fullpage}
+
+\newcommand{\R}{\mathbb R}
+
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\Skew}{Skew}
+\DeclareMathOperator{\Sp}{Sp}
+\DeclareMathOperator{\Imf}{Im}
+
+\title{Géométrie Différentielle --- Travail Personnel}
+\author{Robin Petit}
+\date{13 novembre 2017}
+
+\begin{document}
+\maketitle
+
+\section{Fibré tangent}
+
+Considérons $M$ une variété lisse, $TM$, son fibré tangent, $\mathcal A \coloneqq \{(U_\alpha, \varphi_\alpha)\}_{\alpha \in A}$
+un atlas de $M$, et $\forall \alpha \in A : \widetilde U_\alpha, \widetilde \varphi_\alpha$ comme dans l'énoncé.
+
+\subsection*{Question 1}
+
+
+\subsubsection*{$(i)$}
+Montrons que pour $\alpha \in A$, $(\widetilde U_\alpha, \widetilde \varphi_\alpha)$ est une carte de $TM$. Pour cela, montrons
+que $\widetilde U_\alpha$ est un ouvert de $TM$ et que $\widetilde \varphi_\alpha$ est une bijection entre $\widetilde U_\alpha$
+et un ouvert de $\R^{2m}$.
+
+Puisque $\pi : TM \to M$ est une projection elle est continue, donc $\widetilde U_\alpha = \pi^{-1}(U_\alpha)$ est la préimage
+d'un ouvert de $M$ par une fonction continue, i.e. un ouvert de $TM$.
+
+De plus~:
+\[\widetilde \varphi_\alpha : \widetilde U_\alpha \to \R^{2m} : (x, v_x) \mapsto \left(\varphi_\alpha(x), \left(v^j\right)_{1 \leq j \leq m}\right)\]
+peut se séparer en deux applications $x \mapsto \varphi_\alpha(x)$ et $v_x \mapsto (v^j)_{1 \leq j \leq m}$.
+
+La première est une bijection par hypothèse car $\mathcal A$ est un atlas de $M$. La seconde est également bijective car elle
+représente l'application coordonnées d'un espace vectoriel réel sur une base. De plus, $\varphi_\alpha(U_\alpha)$ est un ouvert de $\R^m$
+car $(U_\alpha, \varphi_\alpha)$ est une carte de $M$, donc $\widetilde \varphi_\alpha(\widetilde U_\alpha) = \varphi_\alpha(U_\alpha) \times \R^m$
+est un ouvert de $\R^{2m}$.
+
+On en déduit que $(\widetilde U_\alpha, \widetilde \varphi_\alpha)$ est une carte de $TM$.
+
+\subsubsection*{$(ii)$}
+Montrons que $\widetilde {\mathcal A} \coloneqq \{(\widetilde U_\alpha, \widetilde \varphi_\alpha)\}_{\alpha \in A}$ est un atlas de $TM$.
+
+\begin{enumerate}
+	\item On sait que $\bigcup_{\alpha \in A} \widetilde U_\alpha \subseteq TM$ car $\forall \alpha \in A : \widetilde U_\alpha \subseteq TM$.
+		De plus, pour $(x, v_x) \in TM$, on sait qu'il existe $\alpha \in A$ tel que $x \in U_\alpha$ car $\mathcal A$ est un atlas de $M$.
+		Puisque $v_x \in T_xM$ et $\widetilde U_\alpha = \pi^{-1}(U_\alpha) = \bigsqcup_{y \in U_\alpha} \{y\} \times T_yM$\footnote{Où $\sqcup$ est
+		équivalent à $\cup$ mais met l'emphase sur le fait que dans $A \sqcup B$, $A \cap B = \emptyset$.}, on trouve que
+		$(x, v_x) \in \widetilde U_\alpha$.
+
+		On en déduit que $\bigcup_{\alpha \in A} \widetilde U_\alpha = TM$.
+
+	\item Soient $\alpha, \beta \in A$. Pour montrer que $\widetilde \varphi_\alpha(\widetilde U_\alpha \cap \widetilde U_\beta)$ est un ouvert
+		de $\R^{2m}$, il suffit d'observer que~:
+		\[\widetilde \varphi_\alpha(\widetilde U_\alpha \cap \widetilde U_\beta) = \varphi_\alpha(U_\alpha \cap U_\beta) \times \R^m,\]
+		qui est un produit de deux ouverts de $\R^m$ (car $(U_\alpha, \varphi_\alpha)$ et $(U_\beta, \varphi_\beta)$ sont des cartes de
+		l'atlas $\mathcal A$), et est donc un ouvert de $\R^{2m}$.
+
+	\item Prenons à nouveau $\alpha, \beta \in A$. Afin que $\widetilde {\mathcal A}$ soit un atlas lisse, il faut encore uniquement que
+		\[\widetilde \varphi_\beta \circ \widetilde \varphi_\alpha^{-1} \in
+			\mathcal C^\infty\left(\widetilde \varphi_\alpha(\widetilde U_\alpha \cap \widetilde U_\beta) \subset \R^{2m},
+				\widetilde \varphi_\beta(\widetilde U_\alpha \cap \widetilde U_\beta) \subset \R^{2m}\right).
+		\]
+
+		Pour cela, observons que $\exists B \in \GL(m, \R)$ telle que~:
+		\[\forall (\tilde x^1, \ldots, \tilde x^m, \tilde v^1, \ldots, \tilde v^m) \in \widetilde \varphi_\alpha(\widetilde U_\alpha \cap \widetilde U_\beta) :
+			(\widetilde \varphi_\beta \circ \widetilde \varphi_\alpha^{-1})(\tilde x^1, \ldots, \tilde x^m, \tilde v^1, \ldots, \tilde v^m)
+				= \left((\varphi_\beta \circ \varphi_\alpha^{-1})(\tilde x), B\tilde v\right),\]
+		pour $\tilde x = (\tilde x^1, \ldots, \tilde v^1, \ldots, \tilde v^m)$ et $\tilde x = (\tilde x^1, \ldots, \tilde x^m)$.
+		Notons que $B$ n'est autre qu'une matrice de changement de base (et l'identité $I_m$ pour être précis). On sait que
+		$\varphi_\beta \circ \varphi_\alpha^{-1} \in 	\mathcal C^\infty(\varphi_\alpha(U_\alpha \cap U_\beta), \varphi_\beta(U_\alpha \cap U_\beta))$
+		car $\mathcal A$ est un atlas lisse.
+
+		Puisque $B$ est une matrice de changement de base, on sait que l'application induite $v \mapsto Bv$ est linéaire, et donc de
+		classe $\mathcal C^\infty$ sur $\R^m$.
+\end{enumerate}
+
+De ces 3 points, on conclut que $\widetilde {\mathcal A}$ est un atlas lisse pour $TM$.
+
+\subsubsection*{$(iii)$}
+$TM$ peut être muni d'un atlas lisse $\widetilde {\mathcal A}$ de dimension $2m$. Par la relation d'équivalence usuelle sur les atlas
+(i.e. deux atlas lisses $\mathcal A$ et $\mathcal B$ de dimension $m$ sur une variété lisse $M$ sont en relation ssi
+$\mathcal A \cup \mathcal B$ est un atlas lisse de dimension $m$ sur $M$), $\widetilde {\mathcal A}$ fait partie d'une classe d'équivalence
+$[\widetilde {\mathcal A}]$ d'atlas lisses de dimension $2m$ sur $TM$. Dès lors, $[\widetilde {\mathcal A}]$ est une structure différentiable
+sur $TM$.
+
+\subsection*{Question 2}
+La projection canonique $\pi : TM \to M : (x, v_x) \mapsto x$ est trivialement surjective car $TM = \bigsqcup_{x \in M} \{x\} \times T_xM$,
+ce qui implique que $\forall x \in M : \exists v_x \in T_xM \text{ t.q. } (x, v_x) \in TM$ et $\pi(x, v_x) = x$.
+
+Afin de montrer que $\pi$ est une submersion, il faut montrer que sa différentielle est surjective en tout point $(x, v_x) \in TM$.
+
+Soit $(x, v_x) \in TM$. La différentielle de $\pi$ en $(x, v_x)$ est définie par~:
+\[\pi_{*_{(x, v_x)}} : T_{(x, v_x)}TM \to T_{\pi(x, v_x)}M = T_xM : X_{(x, v_x)} \mapsto \pi_{*_{(x, v_x)}}(X_{(x, v_x)}),\]
+avec~:
+\[\forall ((x, v_x), f) \in TM \times \mathcal C^\infty(M, \R) : \pi_{*_{(x, v_x)}}(X_{(x, v_x)})(f) = X_{(x, v_x)}(f \circ \pi) \in \R.\]
+
+Fixons $(x, v_x) \in TM$. Pour montrer que $\pi_{*_{(x, v_x)}}$ est surjective, montrons qu'elle contient une base de $T_xM$ dans son image.
+Puisque $\pi_{*_{(x, v_x)}}$ est linéaire, elle est un morphisme d'espaces vectoriels, et donc~:
+\[\forall I \subset \Imf \pi_{*_{(x, v_x)}} : \langle I \rangle \subset \Imf \pi_{*_{(x, v_x)}}.\]
+
+Dès lors, si on montre qu'une base de $T_xM$ est dans l'image de $\pi_{*_{(x, v_x)}}$, alors l'espace engendré par cette base (donc $T_xM$)
+est dans l'image. Or l'image est contenue dans $T_xM$ par définition de l'application. On en déduira alors $\Imf \pi_{*_{(x, v_x)}} = T_xM$,
+et donc la surjectivité de la différentielle.
+
+Prenons $\alpha \in A$ tel que $(U_\alpha, \varphi_\alpha)$ est une carte de $M$ en $x$, et $(\widetilde U_\alpha, \widetilde \varphi_\alpha)$
+est une carte de $TM$ en $(x, v_x)$.
+
+On cherche une préimage de $\pd {}{{x^\ell}}\sVert[2]_{x}$ pour $1 \leq \ell \leq m$ par $\pi_{*_{(x, v_x)}}$.
+
+On observe que pour $\left\{\pd {}{{(x, v)^\ell}}\sVert[2]_{(x, v_x)}\right\}_{1 \leq \ell \leq 2m}$\footnote{Où~:
+\[(x, v)^\ell = \begin{cases}x^\ell &\text{ si } 1 \leq \ell \leq m \\v^{\ell-m} &\text{ si } m < \ell \leq 2m\end{cases}.\]}, une base de $T_{(x, v_x)}TM$,
+à $1 \leq \ell \leq 2m$ fixé~:
+\[\forall f \in \mathcal C^\infty(M, \R) : \pi_{*_{(x, v_x)}}\left(\pd {}{{(x, v)^\ell}}\sVert[3]_{(x, v_x)}\right)(f) =
+	\pd {}{{(x, v)^\ell}}\sVert[3]_{(x, v)}\left(f \circ \pi\right) =
+	\pd {(f \circ \pi \circ \widetilde \varphi_\alpha^{-1})(\tilde x, \tilde v)}{{(\tilde x, \tilde v)^\ell}}\sVert[3]_{(\widetilde \varphi_\alpha(x, v))}.\]
+
+Or $f \circ \pi \circ \widetilde \varphi_\alpha^{-1}$ est défini comme~:
+\[f \circ \pi \circ \widetilde \varphi_\alpha^{-1} : \widetilde \varphi_\alpha(\widetilde U_\alpha) \subset \R^{2m} \to \R : (\tilde x^1, \ldots, \tilde x^m, \tilde v^1, \ldots, \tilde v^m) \mapsto \left(f \circ \varphi_\alpha^{-1}\right)(\tilde x^1, \ldots, \tilde x^m),\]
+car $\pi \circ \widetilde \varphi_\alpha^{-1} : (\tilde x, \tilde v) \mapsto \varphi_\alpha^{-1}(\tilde x)$.
+
+On en déduit que pour $m < \ell \leq 2m$, on a~:
+\[\pi_{*_{(x, v_x)}}\left(\pd {}{{(x, v)^\ell}}\sVert[3]_{(x, v_x)}\right)(f) = \pd {}{{(x, v)^\ell}}\sVert[3]_{(x, v)}(f \circ \pi) = 0,\]
+la fonction identiquement nulle, et pour $1 \leq \ell \leq m$~:
+\[\pi_{*_{(x, v_x)}}\left(\pd {}{{(x, v)^\ell}}\sVert[3]_{(x, v_x)}\right)(f) = \pd {}{{(x, v)^\ell}}\sVert[3]_{(x, v)}(f \circ \pi) = \pd {}{{x^\ell}}\sVert[3]_xf.\]
+
+Dès lors, $\left\{\pd {}{{(x, v)^\ell}}\sVert[2]_{(x, v)}\right\}_{1 \leq \ell \leq m}$ est préimage de la base $\left\{\pd {}{{x^\ell}}\sVert[2]_x\right\}_{1 \leq \ell \leq m}$.
+
+\subsection*{Question 3}
+Pour $(x, y) \in \mathbb S^1$, l'application constante $(-y, x) \in T_{(x, y)}\mathbb S^1$ est un vecteur tangent à $\mathbb S^1$ en $(x, y)$. Puisque
+$T_{(x, y)}\mathbb S^1$ est un espace vectoriel réel de dimension 1, $\{\lambda \cdot (-y, x)\}_{\lambda \in \R} = T_{(x, y)}\mathbb S^1$ car $(-y, x)$
+est un vecteur de base de $T_{(x, y)}\mathbb S^1$. On peut alors établir l'application~:
+\[\alpha : \mathbb S^1 \times \R \to T\mathbb S^1 : ((x, y), \lambda) \mapsto ((x, y), (-\lambda y, \lambda x)).\]
+
+$\alpha$ est bijective par la remarque ci-dessus, trivialement lisse. De plus, son inverse peut s'écrire explicitement~:
+\[\alpha^{-1} : T\mathbb S^1 \to \mathbb S^1 \times \R : ((x, y), (v^1, v^2)) \mapsto ((x, y), v^2/x),\]
+qui est également trivialement lisse.
+
+On a alors le difféomorphisme canonique $\beta : \R^2 \times \R \to \R^3 : ((x, y), z) \mapsto (x, y, z)$ tel que~:
+\[\beta\sVert[3]_{\mathbb S^1 \times \R}(\mathbb S^1 \times \R) = \left\{(x, y, z) \in \R^3 \text{ t.q. } (x, y) \in \mathbb S^1\right\} = C.\]
+
+\section{Sous-variétés et sous-variétés plongées}
+\subsection*{Question 4}
+\subsubsection*{(a)}
+Pour une sous-variété lisse $[(N, \iota)]$ de $M$, on prend un représentant $(N, \iota)$ de la sous-variété. On veut montrer qu'il existe une immersion injective
+$\tilde \iota : TN \to TM$ tel que $[(TN, \tilde \iota)]$ est une sous-variété de $TM$. Notons que l'on réserve ici la lettre $y$ aux éléments de $N$ et $x$ aux
+éléments de $M$. On définit alors~:
+\[\tilde \iota : TN \to TM : \left(y, v_y = \sum_{j=1}^nv_y^j\pd {}{{y^j}}\sVert[3]_y\right) \mapsto \left(x = \iota(y), v_x = \sum_{j=1}^nv_y^j\pd {}{{x^j}}\sVert[3]_x\right).\]
+
+$\tilde \iota$ est trivialement injective par injection de $\iota$ et par injection de $v_y^j\pd {}{{y^j}}\sVert[2]_y \mapsto v_y^j\pd {}{{x^j}}\sVert[2]_{\iota(x)}$
+pour $1 \leq j \leq n$.
+
+Montrons que sa différentielle $\tilde \iota_{*_{(y, v_y)}} = T_{(y, v_y)}TN \to T_{(x, v_x)}TM$ est injective en tout $(y, v_y) \in TN$. Fixons alors $(y, v_y) \in TN$.
+Fixons également $\ell \in \{1, \ldots, m\}$, prenons $f \in \mathcal C^\infty(TM, \R)$. Soit $(\widetilde U_\alpha, \widetilde \varphi_\alpha)$ une carte de $TM$ en
+$\tilde \iota(y, v_y)$ et $(\widetilde V_\beta, \widetilde \psi_\beta)$ une carte de $TN$ en $(y, v_y)$ et observons~:
+\[
+	\tilde \iota_{*_{(y, v_y)}}\left(\pd {}{{y^\ell}}\sVert[3]_{(y, v_y)}\right)(f) = \pd {}{{y^\ell}}\sVert[3]_{(y, v_y)}(f \circ \tilde \iota)
+		= \pd {(f \circ \tilde \iota \circ \widetilde \psi_\beta^{-1})}{{(\tilde y, \tilde v)^\ell}}\sVert[3]_{\widetilde \psi_\beta(y, v_y)}
+		= \pd {(f \circ \widetilde \varphi_\alpha^{-1} \circ \widetilde \varphi_\alpha \circ \tilde \iota \circ \widetilde \psi_\beta^{-1})}
+			    	{{(\widetilde y, \widetilde v)^\ell}}\sVert[3]_{\widetilde \psi_\beta(y, v_y)}.
+\]
+
+Or, par dérivation en chaîne, on trouve~:
+\[
+	\tilde \iota_{*_{(y, v_y)}}\left(\pd {}{{(y, v_y)^\ell}}\sVert[3]_{(y, v_y)}\right)(f) =
+		\sum_{j=1}^{2m}\pd {(f \circ \widetilde \varphi_\alpha^{-1})}{{(\tilde x, \tilde v)^j}}\sVert[3]_{\widetilde \varphi_\alpha (\tilde \iota(y, v_y))}
+			\pd {(\widetilde \varphi_\alpha \circ \tilde \iota \circ \widetilde \psi_\beta^{-1})^j}{{(\tilde y, \tilde v)^\ell}}\sVert[3]_{\widetilde \psi_\beta(y, v_y)}.
+\]
+
+On y reconnait alors $\pd {}{{(x, v)^j}}\sVert[2]_{\tilde \iota(y, v_y)}f$ dans le premier facteur, et on observe que pour
+$v_y = \sum_{k=1}^nv_y^k\pd {}{{(y, v)^k}}\sVert[2]_{(y, v_y)} \in TN$~:
+\begin{align*}
+(\widetilde \varphi_\alpha \circ \tilde \iota \circ \widetilde \psi_\beta^{-1})(y, v_y^1, \ldots, v_y^n)
+	&= \widetilde \varphi_\alpha\left(\tilde \iota\left(\psi_\beta^{-1}(y), v_y\right)\right)
+	= \widetilde \varphi_\alpha\left(\iota(\psi_\beta^{-1}(y)), \sum_{k=1}^nv_y^k\pd {}{{x^k}}\sVert[3]_{\iota(\psi_\beta^{-1}(y))}\right) \\
+	&= \left(\underbrace {(\varphi_\alpha \circ \iota \circ \psi_\beta^{-1})(y)}_{\in \R^m}, v_y^1, \ldots, v_y^n, \underbrace {0, \ldots, 0}_{m-n}\right).
+\end{align*}
+
+De là, il est possible de déduire que $\left\{\tilde \iota_{*_{(y, v_y)}}\left(\pd {}{{(y, v)^\ell}}\sVert[2]_{(y, v_y)}\right)\right\}_{1 \leq \ell \leq 2n}$
+est une famille libre et de cardinalité $2n$ car $\iota$ est une immersion et~:
+\[
+	\forall 1 \leq j \leq 2m : \pd {(\widetilde \varphi_\alpha \circ \tilde \iota \circ \widetilde \psi_\beta^{-1})^j}{{(\tilde y, \tilde v)^\ell}}\sVert[3]_{\widetilde \psi_\beta(y, v_y)}
+	=
+		\begin{cases}
+			\pd {(\varphi_\alpha \circ \iota \circ \psi_\beta^{-1})^j}
+			    {{\left.{\tilde y}\right.^\ell}}\sVert[3]_{\psi_\beta(y)} &\text{ si } 1 \leq j \leq m, 1 \leq \ell \leq n \\
+			0 &\text{ si } 1 \leq j \leq m, n < \ell \leq 2n \text{ ou } m < j \leq 2m, 1 \leq \ell \leq n \\
+			0 &\text{ si } m < j \leq 2m, n < \ell \leq 2n, j-m \neq \ell-n \\
+			1 &\text{ sinon.}
+		\end{cases}
+\]
+
+Cela implique que $\tilde \iota$ est une immersion, et donc que $[(TN, \tilde \iota)]$, la classe d'équivalence de $(TN, \tilde \iota)$ selon la relation d'équivalence
+pour les sous-variétés exposée au cours, est une sous-variété de $TM$.
+
+\subsubsection*{(b)}
+Soit $F : TM \to T\R^p : (x, v_x) \mapsto (f(x), f_{*_x}(v_x))$. Fixons $x \in N \subset M$ et $v_x \in T_xN \subset T_xM$. Montrons que $F(x, v_x) = (0, 0)$.
+
+Par linéarité de la différentielle, fixons $1 \leq j \leq \dim(N) \eqqcolon n$, prenons $g \in \mathcal C^\infty(\R^p, \R)$ et considérons $\pd {}{{x^j}}\sVert[2]_x$~:
+\[f_{*_x}\left(\pd {}{{x^j}}\sVert[3]_x\right)(g) = \pd {}{{x^j}}\sVert[3]_x(g \circ f).\]
+
+Soit $(U_\alpha, \varphi_\alpha)$, une carte de $N$ en $x$. Alors~:
+\[\pd {}{{x^j}}\sVert[3]_x(g \circ f) = \pd {(g \circ f \circ \varphi_\alpha^{-1})}{{\left.\tilde x\right.^j}}\sVert[3]_{\varphi_\alpha(x)}.\]
+
+Or $g \circ f \circ \varphi_\alpha^{-1}$ est définie comme suit~:
+\[g \circ f \circ \varphi_\alpha^{-1} : \varphi_\alpha(U_\alpha) \subset \R^n \to \R : \tilde x \mapsto (g \circ f \circ \varphi_\alpha^{-1})(\tilde x)
+	= g(f(\underbrace {\varphi_\alpha^{-1}(\tilde x)}_{\in N})) = g(0).\]
+
+Donc $g \circ f \circ \varphi_\alpha^{-1}$ est constante sur $\varphi_\alpha(U_\alpha)$. On en conclut que~:
+\[\pd {(g \circ f \circ \varphi_\alpha^{-1})}{{\left.\tilde x\right.^j}}\sVert[3]_{\varphi_\alpha(x)} = 0.\]
+
+Dès lors~:
+\[f_{*_x}(v_x) = \sum_{j=1}^nv_x^jf_{*_x}\left(\pd {}{{x^j}}\sVert[3]_x\right) = 0,\]
+et $f(x) = 0$. Donc $F(x, v_x) = (0, 0)$.
+
+Montrons maintenant que $\forall (x, v_x) \in TN : F_{*_{(x, v_x)}} : T_{(x, v_x)}TM \to T_0T\R^p$ est surjective. Fixons $(x, v_x) \in TN, 1 \leq \ell \leq 2m$,
+$(\widetilde U_\alpha, \widetilde \varphi_\alpha)$ carte de $TM$ en $(x, v_x)$ et $(\widetilde V_\beta, \widetilde \psi_\beta)$
+carte de $T\R^p$ en $F(x, v_x)$. Observons alors que par la notation \textit{Jacobienne}~:
+\[F_{*_{(x, v_x)}}\left(\pd {}{{(x, v)^\ell}}\sVert[3]_{(x, v_x)}\right)
+	= \sum_{j=1}^{2p}\pd {}{{y^j}}\sVert[3]_{F(x, v_x)}
+	                 \pd {(\widetilde \psi_\beta \circ F \circ \widetilde \varphi_\alpha^{-1})^j}
+									     {{(\tilde x, \tilde v)^\ell}}\sVert[3]_{\widetilde \varphi_\alpha(x, v_x)}.\]
+
+Dès lors, il faut que la matrice jacobienne
+$\pd {(\widetilde \psi_\beta \circ F \circ \widetilde \varphi_\alpha^{-1})^j}{{(\tilde x, \tilde v)^\ell}}\sVert[2]_{\widetilde \varphi_\alpha(x, v_x)}$ soit
+de rang $2p = \dim(T_0T\R^p) = \dim(T\R^p)$. De là, on pourra déduire la surjectivité de $F_{*_{(x, v_x)}}$.
+
+Or~:
+\[\forall (\tilde x, \tilde v) \in TM : (\widetilde \psi_\beta \circ F \circ \widetilde \varphi_\alpha^{-1})(\tilde x, \tilde v)
+	= ((\psi_\beta \circ f \circ \varphi_\alpha^{-1})(\tilde x), A\tilde v),\]
+pour $A$ une matrice à $p$ lignes et $m$ colonnes. Donc~:
+
+\[J_{F_{*_{(x, v_x)}}} = \left[\pd {(\widetilde \psi_\beta \circ F \circ \widetilde \varphi_\alpha^{-1})^j}
+            {{(\tilde x, \tilde v)^\ell}}\sVert[3]_{\widetilde \varphi_\alpha(x, v_x)}\right]_{1 \leq j \leq 2p, 1 \leq \ell \leq 2m}
+	= \begin{bmatrix}
+			J_{f_{*_x}} = \pd {(\psi_\beta \circ f \circ \varphi_\alpha^{-1})^j}{{\left.\tilde x\right.^\ell}}\sVert[3]_{\varphi_\alpha(x)} & 0 \qquad \\
+			0 & A\qquad
+		\end{bmatrix}.
+\]
+où $A$ et $J_{f_{*_x}}$ sont de rang $p$ par surjectivité de $f_{*_x}$. On déduit alors que $F_{*_{(x, v_x)}}$ est surjective en tout $(v, v_x) \in TN$.
+Dès lors, $TN$ a bien une structure de sous-variété lisse de $TM$ pour l'inclusion.
+
+\subsubsection*{(c)}
+$\emptyset$
+
+\subsubsection*{(d)}
+Posons $f : \R^3 \to \R : (x, y, z) \mapsto x^2 + y^2 - z^2 = 1$. On observe alors que $N = f^{-1}(\{1\})$. De plus, observons que $\forall (x, y, z) \in N :
+x = 0 \Rightarrow y \neq 0$. Montrons alors que la différentielle de $f$ est surjective en tout point de $N$.
+
+Fixons $(x, y, z) \in N$ tel que $x \neq 0$. Alors~:
+\[f_{*_{(x, y, z)}} : T_{(x, y, z)}\R^3 \to T_1\R : X \mapsto f_{*_{(x, y, z)}}(X).\]
+
+Prenons $v = v^1\od {}{x}\sVert[2]_1 \in T_1\R$. Calculons alors~:
+\[f_{*_{(x, y, z)}}\left(\frac {v^1}{2x}\pd {}{\tilde x}\sVert[3]_{(x, y, z)}\right) = \frac {v^1}{2x}\pd {}{\tilde x}\sVert[3]_{(x, y, z)}(\cdot \circ f)
+	= \frac {v^1}{2x}\od {}{\tilde x}\sVert[3]_1\pd f{\tilde x}\sVert[3]_{(x, y, z)} = \frac {v^1}{2x}2x\od {}{\tilde x}\sVert[3]_1 = v.\]
+
+Notons que si on prend $(x, y, z) \in N$ tel que $x = 0$, alors $y \neq 0$, et par le même raisonnement~:
+\[f_{*_{(x, y, z)}}\left(v^1\left(\pd f{\tilde y}\sVert[3]_{(x, y, z)}\right)^{-1}\pd {}{\tilde y}\sVert[3]_{(x, y, z)}\right) = v^1\od {}{\tilde x}\sVert[3]_1 = v.\]
+
+On en déduit la surjectivité de $f_{*_{(x, y, z)}}$ en tout point $(x, y, z) \in N$. Par le fait que $N$ admet une structure de sous-variété plongée
+de $\R^3$ et par le point \textbf{(b)} ci-dessus, on sait que $TN$ admet une structure de sous-variété plongée de $T\R^3 \simeq \R^6$.
+
+De plus, on sait que $\dim(N) = \dim(\R^3) - \dim(\R) = 2$, et donc que $\dim(TN) = 4$.
+
+
+\subsection*{Question 5}
+Posons $\Skew(2n, \R)$ l'ensemble des matrices réelles antisymétriques de dimension $2n \times 2n$. En admettant que $\Skew(2n, \R)$ est une sous-variété
+plongée de $\GL(2n, \R)$ de dimension $n(2n-1) = 2n(2n-1)/2$.\footnote{Où la dimension est donnée par le nombre de degrés de liberté~:
+\[\sum_{k=1}^{2n}(k-1) = \sum_{k=1}^{2n-1}k = 2n(2n-1)/2,\]
+ce qui correspond à la sous-matrice triangulaire supérieure (ou inférieure par symétrie) de taille $2n(2n+1)/2$ à laquelle on retire la diagonale qui doit
+être nulle et qui est de taille $2n$. Donc la dimension vaut $n(2n+1)-2n = n(2n+1-2)= n(2n-1)$.}
+
+Posons la fonction~:
+\[f : \GL(2n, \R) \to \Skew(2n, \R) : A \mapsto A'\Omega_0A.\]
+
+On voit donc que $\Sp(2n, \R) = f^{-1}(\{\Omega_0\})$, et pour $A \in \Sp(2n, \R)$~:
+\[f_{*_A} : T_A\GL(2n, \R) \to T_{\Omega_0}\Skew(2n, \R) : V = \sum_{i,j=1}^{2n}V^{ij}\pd {}{{a^{ij}}}\sVert[3]_A \mapsto
+	\sum_{k=1}^{2n}\sum_{\ell=k+1}^{2n}\pd {}{{y^{k\ell}}}\sVert[3]_{\Omega_0}\sum_{i,j=1}^{2n}V^{ij}\pd {\left(\psi \circ f \circ \varphi^{-1}\right)^{k\ell}}{{a^{ij}}}\sVert[3]_A,\]
+pour $\psi : \Skew(2n, \R) \to \R^{n(2n-1)}$ est une application de coordonnées de $\Skew(2n, \R)$, et $\varphi : \GL(2n, \R) \to \R^{4n^2}$ est une application
+de coordonnées de $\GL(2n, \R)$. On calcule aisément que~:
+\[\pd {(\psi \circ f \circ \varphi^{-1})^{k\ell}}{{a^{ij}}}\sVert[3]_A = \pd {(A'\Omega_0A)_{k\ell}}{{A_{ij}}} =
+	\begin{cases}
+		\sum_{\lambda=n+1}^{2n}\left(\delta_{jk}A_{\lambda \ell} - \delta_{j\ell}A_{\lambda k}\right) &\text{ si } 1 \leq \lambda \leq n \\
+		\sum_{\lambda=1}^n\left(\delta_{j\ell}A_{\lambda k} - \delta_{jk}A_{\lambda \ell}\right) &\text{ si } n < \lambda \leq 2n
+	\end{cases}\]
+
+Dès lors, $J_{f_{*A}}$ est une matrice à $4n^2$ colonnes et $n(2n-1) = 2n^2-n$ lignes contenant une grande proportion de 0 (une proportion $p(n) =(n-1)/n$ qui donc
+tend vers 1 quand $n \to +\infty$) mais qui est de rang $n(2n-1)$ car toutes les lignes sont non-nulles et linéairement indépendantes.
+
+Dès lors, $f_{*_A}$ est surjective. On peut alors déduire que $\Sp(2n, \R)$ est un sous-variété de $\GL(2n, \R)$ de dimension $4n^2 - (2n^2 - n) = 2n^2 + n$.
+
+
+\end{document}
