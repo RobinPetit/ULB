@@ -1,11 +1,6 @@
-TEX_FILES=assignment1.tex assignment2.tex
-PDF_FILES=$(TEX_FILES:.tex=.pdf)
-
-all: $(PDF_FILES)
-
-%.pdf: %.tex
-	pdflatex $<
-	pdflatex $<
+all: 
+	make -C assignment1
+	make -C assignment2
 
 clean:
-	rm -f *.aux *.log *.pdf
+	rm -f **/*.aux **/*.log **/*.pdf
