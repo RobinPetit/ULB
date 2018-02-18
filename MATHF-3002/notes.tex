@@ -1,0 +1,265 @@
+\documentclass{report}
+
+\usepackage[french]{babel}
+\usepackage{commath}
+\usepackage{palatino, eulervm}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fullpage}
+\usepackage{hyperref}
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{stmaryrd}
+
+\usepackage[parfill]{parskip}
+
+\newcommand{\C}{{\mathbb C}}
+\newcommand{\R}{{\mathbb R}}
+\newcommand{\N}{{\mathbb N}}
+\newcommand{\scpr}[2]{\left\langle#1, #2\right\rangle}
+\newcommand{\tq}{\text{ t.q. }}
+\newcommand{\pinfty}{{+\infty}}
+\newcommand{\minfty}{{-\infty}}
+\newcommand{\intint}[2]{\left\llbracket#1, #2\right\rrbracket}
+\newcommand{\cste}{\text{c}^{\text{ste}}}
+\newcommand{\dx}{\dif x}
+
+\newcommand{\TODO}{TODO}
+
+\newtheorem{thm}{Théorème}[chapter]
+\newtheorem{prp}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollaire}
+\newtheorem{lem}[thm]{Lemme}
+\addto\captionsfrench{\renewcommand\proofname{\underline{Démonstration}}}
+\theoremstyle{definition}
+\newtheorem{déf}[thm]{Définition}
+\theoremstyle{remark}
+\newtheorem*{rmq}{Remarque}
+\newtheorem{ex}{Exemple}[chapter]
+
+\title{Espaces fonctionnels et séries de Fourier --- Notes de cours de Pr. P. Godin}
+\author{Robin Petit}
+\date{Année académique 2017-2018}
+
+\begin{document}
+
+\pagenumbering{Roman}
+\maketitle
+\tableofcontents
+\setcounter{page}{1}
+\pagenumbering{arabic}
+
+\chapter{Transformation de Fourier}
+
+\section{Définitions}
+
+On considère $\R^n$ à $n$ fixé en tant qu'espace de mesure $(\R^n, \mathcal M, \lambda)$ avec $\mathcal M$ la famille des ensembles Lebesgue-mesurables et $\lambda$
+la mesure de Lebesgue sur $\R^n$.
+
+\begin{déf} Pour $f \in L^1(\R^n)$, on définit sa \textit{transformée de Fourier} par~:
+\begin{equation}
+	\hat f : \R^n \to \R : \xi \mapsto \int e^{-i\scpr x\xi}f(x)\dif x.
+\end{equation}
+\end{déf}
+
+Cette fonction est bien définie car $x \mapsto e^{-i\scpr x\xi}$ est continue, et $f$ est intégrable, donc $x \mapsto e^{-i\scpr x\xi}f(x)$ est intégrable
+
+\begin{prp} Pour $f \in L^1$, $\hat f$ est continue.
+\end{prp}
+
+\begin{proof} Soient $\xi_0 \in \R^n$ et $(h_k)_{k \in \N} \in {\R^n}^\N \tq h_k \xrightarrow[k \to \pinfty]{} 0$.
+\[\hat f(\xi_0 + h_k) = \int e^{-i\scpr x{\xi_0}}e^{-i\scpr x{h_k}}f(x)\dif x.\]
+
+Puisque $\abs {e^{-i\scpr x{\xi_0}}e^{-i\scpr x{h_k}}f(x)} = \abs {f(x)}$ et $x \mapsto e^{-i\scpr x{\xi_0}}e^{-i\scpr x{h_k}}f(x)$ converge partout
+(en particulier presque partout), par le théorème de la convergence dominée~:
+\[\hat f(\xi_0 + h_k) \xrightarrow[k \to \pinfty]{} \int e^{-i\scpr x{\xi_0}}f(x)\dif x = \hat f(\xi_0).\]
+\end{proof}
+
+\begin{prp} Pour $f \in L^1 \tq \forall j \in \intint 1n : x_jf \in L^1$~: $\hat f \in C^1$ et~:
+\begin{equation}\label{eq:pd transformée Fourier}
+	\forall j \in \intint 1n : \pd {\hat f}{\xi_j}\sVert[3]_\xi = \int e^{-i\scpr x\xi}(-ix_j)f(x)\dif x.
+\end{equation}
+\end{prp}
+
+\begin{proof} Soit $(h_k)_{k \in \N} \in \R^\N \tq h_k \xrightarrow[k \to \pinfty]{} 0$, et prenons $\{e_j\}_{j=1}^n$ la base canonique de $\R^n$.
+\[\frac {\hat f(\xi + h_ke_j) - \hat f(\xi)}{h_k} = \int e^{-i\scpr x\xi}\underbrace {\frac {e^{-ih_kx_j}-1}{h_k}}_{\xrightarrow[k \to \pinfty]{} -ix_j}\dif x.\]
+
+En module~:
+\[\abs {e^{-i\scpr x\xi}\frac {e^{-ih_kx_j}-1}{h_k}f(x)} = \abs {e^{-i\scpr x\xi}}\abs {\frac {e^{-ih_kx_j}-1}{h_k}}\abs {f(x)} \leq C\abs {x_j}\abs {f(x)},\]
+qui est intégrable par hypothèse.
+
+En effet, si $x_j = 0$, alors tout est nul et l'inégalité devient une égalité~; et si $x_j \neq 0$, alors $\frac {\abs {e^{-ih_kx_j}-1}}{\abs {x_jh_k}}$ est borné.
+
+Dès lors, par le théorème de convergence dominée, la limite passe sous l'intégrale et on a~\eqref{eq:pd transformée Fourier}.
+\end{proof}
+
+\begin{cor} Pour $m \in \N^*$, si $(1+\abs x)^mf \in L^1$, alors $f \in C^m$ et on peut dériver $m$ fois sous le signe.
+\end{cor}
+
+\begin{proof} Exercice (récurrence sur $m$).
+\end{proof}
+
+\begin{déf} On définit l'ensemble de Schwartz~:
+\begin{equation}
+	\mathcal S(\R^n) \coloneqq \left\{u \in C^\infty(\R^n) \tq \forall \alpha, \beta \in \N^n : x^\alpha\partial^\beta u \text{ est borné dans } \R^n\right\}.
+\end{equation}
+\end{déf}
+
+\begin{prp} $\mathcal S(\R^n)$ est un $\R$-espace vectoriel.
+\end{prp}
+
+\begin{proof} \TODO
+\end{proof}
+
+\begin{prp} $C^\infty_0(\R^n) \subseteq \mathcal S(\R^n) \subseteq \bigcap_{1 \leq p < \pinfty} L^p(\R^n)$.
+\end{prp}
+
+\begin{proof} Pour $u \in \mathcal S$ et $\pinfty > p \geq 1$~:
+\[\int \abs u^p\dif x = \int \Big(\underbrace{\abs u(1+\abs x)^N}_{\text{borné pour tout $N$}}\Big)^p(1+\abs x)^{-Np}\dif x
+	\leq \int (C_N)^p\underbrace {(1+\abs x)^{-Np}}_{\text{intégrable pour $Np > n$}}\dif x.\]
+
+Dès lors, pour $N$ suffisamment grand ($Np>n$), on a $\int \abs u\dif x \leq \cste$
+\end{proof}
+
+\begin{prp} Pour $u \in \mathcal S$ et $\alpha, \beta \in \N^n$, alors~: $x^\alpha\partial^\beta u \in \mathcal S$.
+\end{prp}
+
+\begin{proof} Soient $\lambda, \mu \in \N^n$. Par Leibniz~:
+\[\partial^\mu(fg) = \sum_{\sigma \leq \mu}\binom \mu\sigma\partial^\sigma f \partial^{\mu-\sigma} g.\]
+
+Donc~:
+\[x^\lambda\partial^\mu(x^\alpha\partial^\beta u) = \sum_{\sigma \leq \mu}\binom \mu\sigma x^\lambda\partial^\sigma(x^\alpha)\partial^{\mu-\sigma}u,\]
+où $x^\lambda\partial^\sigma(x^\alpha) \leq \cste x^\gamma$. On en déduit que $x^\lambda\partial^\mu(x^\alpha\partial^\beta u)$ est une somme finie de termes
+bornés et est donc bornée.
+\end{proof}
+
+À défaut de définir une topologie sur $\mathcal S(\R^n)$, on définit uniquement une notion de convergence.
+
+\begin{déf} Soit $(u_k)_{k \in \N} \in \mathcal S^\N$, $u \in \mathcal S$, on dit que $u_k$ converge vers $u$ lorsque $k \to \pinfty$
+(noté $u_k \xrightarrow[k \to \pinfty]{\mathcal S} u$) lorsque~:
+\begin{equation}
+	\forall \alpha, \beta \in \N^n : \sup_{x \in \R^n}\abs {x^\alpha\partial^\beta(u-u_k)} \xrightarrow[k \to \pinfty]{} 0.
+\end{equation}
+\end{déf}
+
+\begin{thm} Soit $u \in \mathcal S$. Alors~:
+\begin{enumerate}
+	\item $\hat u \in \mathcal S$. De plus si $u_k \xrightarrow[k \to \pinfty]{\mathcal S} u$, alors $\hat {u_k} \xrightarrow[k \to \pinfty]{\mathcal S} \hat u$.
+	\item $\widehat {D_ju}(\xi) = \xi_j\hat u(\xi)\quad$ (de plus $\widehat {x_ju} = D_j \hat u$).
+\end{enumerate}
+\end{thm}
+
+\begin{proof} Pour le premier point, on calcule~:
+\[D^\alpha_\xi\hat u(\xi) = \int D^\alpha_\xi(e^{-i\scpr x\xi})u(x)\dif x = \int e^{-i\scpr x\xi}(-x)^\alpha u(x)\dif x.\]
+
+Donc~:
+\[\xi^\beta D^\alpha_\xi\hat u(\xi) = \int \xi^\beta e^{-i\scpr x\xi}(-x)^\alpha u(x)\dif x = \int (-D_x)^\beta(e^{-i\scpr x\xi})(-x)^\alpha u(x)\dif x
+	= \int e^{-i\scpr x\xi} D^\beta_x\left((-x)^\alpha u(x)\right)\dif x.\]
+
+Pour montrer cette dernière égalité, intégrons par partie. D'abord observons pour $\phi \in \mathcal S$ et $j \in \intint 1n$~:
+\[\int \partial_j\phi\dx = \int\ldots\int\left(\int \partial_j\phi\dx_j\right)\dx_1\ldots\dx_{j-1}\dx_{j+1}\ldots\dx_n.\]
+Or~:
+\[\int \partial_j\phi\dx_j = \lim_{N \to \pinfty}\int_{-N}^N\partial_j\phi(x)\dx_j
+	= \lim_{N \to \pinfty}\left(\underbrace {\phi(x_1, \ldots, x_{j-1}, N, x_{j+1}, \ldots, x_n)}_{\xrightarrow[N \to \pinfty]{} 0} - \underbrace {\phi(x_1, \ldots, x_{j-1}, N, x_{j+1}, \ldots, x_n)}_{\xrightarrow[N \to \pinfty]{} 0}\right) = 0,\]
+puisque $\phi \in \mathcal S$.
+
+On en déduit donc que $\int\partial_j\phi\dx = 0$.
+
+Dès lors, puisque $e^{-i\scpr x\xi}(-x)^\alpha u(x) \in \mathcal S$ et par récurrence~:
+\[\int (-D_x)^\beta(e^{-i\scpr x\xi})(-x)^\alpha u(x)\dif x	= \int e^{-i\scpr x\xi} D^\beta_x\left((-x)^\alpha u(x)\right)\dif x.\]
+
+Montrons alors que $\forall N \in \N : \exists C_N \geq 0 \tq \abs {D_x^\beta((-x)^\alpha u(x))} \leq C_N(1 + \abs x)^{-N}$. Par Leibniz~:
+\[(1 + \abs x)^N\partial^\beta (x^\alpha u(x)) = (1 + \abs x)^N\sum_{\gamma \leq \beta} \binom \beta\gamma\partial^\gamma x^\alpha\partial^{\beta-\gamma}u(x)\]
+est borné car $u \in \mathcal S$. Dès lors~:
+\[\abs {\xi^\beta D_\xi^\alpha \hat u(x)} \leq C_N\int(1 + \abs x)^{-N}\dx.\]
+
+Pour $N$ suffisamment grand ($N > n$), on a $\abs {\xi^\beta D_\xi^\alpha \hat u(x)} \leq \cste$.
+
+Dès lors, on trouve~:
+\[\abs {\xi^\beta D_\xi^\alpha\hat u(x)} \leq \sup_{x \in \R^n}(1 + \abs x)^{-N}\abs {D_x^\beta((-x)^\alpha(u - u_k))} \xrightarrow[k \to \pinfty]{} 0.\]
+On en déduit donc $\hat {u_k} \xrightarrow[k \to \pinfty]{\mathcal S} \hat u$.
+
+Pour le second point, la seconde formule découle directement du premier pour $\alpha = e_j$~:
+\[D_j\hat u(\xi) = \int e^{-i\scpr x\xi}(-x_j)u(x)\dx = \widehat {x_ju}(\xi).\]
+
+La première égalité se démontre par~:
+\[\widehat {D_ju}(\xi) = \int e^{-i\scpr x\xi} D_ju(x)\dx = -\int D_{x,j}\left(e^{-i\scpr x\xi}\right)u(x)\dx = \xi_j\int e^{-i\scpr x\xi}u(x)\dx = \xi_j\hat u(\xi).\]
+\end{proof}
+
+\section{Formule d'inversion}
+
+\begin{thm} Soit $u \in \mathcal S$. Alors~:
+\begin{equation}\label{eq:inversion Fourier}
+	u(x) = (2\pi)^{-n}\int e^{i\scpr x\xi}\hat u(\xi)\dif\xi.
+\end{equation}
+\end{thm}
+
+La fonction $(y, \xi) \mapsto e^{i\scpr x\xi}e^{-i\scpr y\xi}u(y)$ n'est pas intégrable pour $(y, \xi)$. On ne va donc pas pouvoir appliquer Fubini.
+
+\begin{proof} Pour $\chi \in \mathcal S$, $(y, \xi) \mapsto e^{-i\scpr y\xi}e^{i\scpr x\xi}\chi(\xi)u(y)$ est intégrable. Donc par Fubini~:
+\[\int e^{i\scpr x\xi}\chi(\xi)\hat u(\xi)\dif\xi = \int e^{i\scpr x\xi}\chi(\xi)\int e^{-i\scpr y\xi}u(y)\dif y\dif\xi
+	= \int u(y)\int e^{-i\scpr {y-x}\xi}\chi(\xi)\dif\xi \dif y = \int u(y)\hat \chi(y-x)\dif y.\]
+
+Pour $\psi \in \mathcal S$, $\delta > 0$ tels que $\chi(\xi) = \psi(\delta\xi)$~:
+\[\hat \chi(\xi) = \int e^{-i\scpr y\xi}\psi(\delta\xi)\dif\xi = \delta^{-n}\hat \psi(\xi/\delta).\]
+
+Alors~:
+\[\int e^{i\scpr x\xi}\psi(\delta\xi)\hat u(\xi)\dif\xi = \int u(x+y)\delta^{-n}\psi(y/\delta)\dif y = \int u(x+\delta y)\hat \psi(y)\dif y.\]
+
+Par le théorème de convergence dominée~:
+\[\int u(x+\delta y)\hat \psi(y)\dif y \xrightarrow[\delta \to \pinfty]{} u(x)\int \hat \psi(y)\dif y,\]
+or~:
+\[\int e^{i\scpr x\xi}\psi(\delta \xi)\hat u(\xi)\dif\xi \xrightarrow[\delta \to \pinfty]{} \psi(0)\int e^{i\scpr x\xi}\hat u(\xi)\dif\xi.\]
+
+Par unicité de la limite, si $\int \hat \psi \dif y\neq 0$~:
+\[u(x) = \frac {\psi(0)}{\int\hat \psi(y)\dif y}\int e^{i\scpr x\xi}\hat u(\xi)\dif\xi\]
+
+Dans le cas $n=1$, on prend $\psi_1 : x \mapsto e^{-x^2/2}$. En intégrant $z \mapsto e^{-z^2/2}$ sur un chemin rectangulaire $[a,b,c,d] \subset \C$, on trouve~:
+\[\int_a^b e^{-x^2/2}\dx + \int_b^c e^{-z^2/2}\dif z + \int_c^d e^{-z^2/2}\dif z + \int_d^a e^{-z^2/2}\dif z = 0\]
+par Cauchy. Pour $(a, b) \to (\minfty, \pinfty)$, on trouve que $\int_b^c e^{-z^2/2}$ et $\int_d^a e^{-z^2/2}$ tendent vers $0$. Donc à la limite~:
+\[\int_a^b e^{-x^2/2}\dx = \int_{\Im z = t}e^{-z^2/2}\dif z = \int e^{(x^2-t^2)/2}e^{-itx}\dx.\]
+
+Donc $\hat \psi(t) = \psi(t)\int\psi\dx$. On en déduit~:
+\[\int \hat \psi(t)\dif t = \left(\int \psi(x)\dx\right)^2 = \left(\int e^{-x^2/2}\right)^2 = 2\pi.\]
+
+Dès lors $\psi(0) = 1$ et $\int\hat\psi\dx = 2\pi$, qui donne bien la formule.
+
+Dans le cas général $n > 1$, on prend $\psi(x) = e^{-\abs x^2/2} = \prod_{j=1}^n\psi_1(x_j)$. Donc~:
+\[\hat\psi(\xi) = \int e^{-i\scpr x\xi}\psi(x)\dx = \int e^{-i\scpr x\xi}\prod_{j=1}^ne^{-x_j^2/2}\dx = \int\prod_{j=1}^ne^{-ix_j\xi_j}\prod_{j=1}^ne^{-x_j^2/2}\dx
+	= \int\prod_{j=1}^n\left(e^{-ix_j\xi_j}e^{-x_k^2/2}\right)\dx.\]
+
+Par Fubini~:
+\[\hat\psi(\xi) = \prod_{j=1}^n\int e^{-ix_j\xi_j}e^{-x_j^2/2}\dx = \prod_{j=1}^n\hat \psi_1(\xi_j).\]
+
+On trouve alors~:
+\[\int \hat \psi(\xi)\dif\xi = \int \prod_{j=1}^n\hat\psi_j(\xi_j)\dif\xi = \prod_{j=1}^n\int\hat \psi_1(\xi_j)\dif\xi_j = (2\pi)^{-n},\]
+où l'avant dernière égalité s'obtient en appliquant Fubini.
+
+Puisque $\hat \psi(0) = 1$, on a bien~\eqref{eq:inversion Fourier}.
+\end{proof}
+
+On définit une application \textit{transformée de Fourier} $\mathcal F : \mathcal S \to \mathcal S : u \mapsto \mathcal Fu \coloneqq \hat u$.
+
+\begin{prp} $\mathcal F$ est une bijection linéaire.
+\end{prp}
+
+\begin{proof} Par la formule d'inversion, $\mathcal F$ est injective~: si $\mathcal Fu = 0$, alors $u = 0$.
+
+De plus, $\mathcal F$ est surjective. Pour $f \in \mathcal S$, montrons qu'il existe $u \in \mathcal S \tq \mathcal Fu = f$.
+Prenons $u(x) = (2\pi)^{-n}\int e^{i\scpr x\xi}f(\xi)\dif\xi$. Alors~:
+\[\mathcal Ff(x) = \int e^{-i\scpr x\xi}f(\xi)\dif\xi = (2\pi)^nu(-x).\]
+
+De plus~:
+\[\hat {\hat u}(\xi) = \int e^{-i\scpr x\xi}\hat u(x)\dx = (2\pi)^n(2\pi)^{-n}\int e^{-i\scpr x\xi}\hat u(x)\dx = (2\pi)^nu(-\xi),\]
+donc $\hat f = \hat {\hat u}$ pour tout $x$, et puisque $\mathcal F$ est injective, $f = \hat u$. Donc $\mathcal F$ est surjective, et donc surjective.
+
+La linéarité est triviale~:
+\[\mathcal F(f+\lambda g)(\xi) = \int e^{-i\scpr x\xi}(f+\lambda g)(x)\dx = \int e^{-i\scpr x\xi}f(x)\dx = \lambda\int e^{-i\scpr x\xi}g(x)\dx
+	= \left(\hat f + \lambda \hat g\right)(\xi).\]
+\end{proof}
+
+\end{document}
