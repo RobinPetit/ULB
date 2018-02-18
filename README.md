@@ -44,7 +44,7 @@ Les résumés disponibles sont les suivants :
 
 ### BA1 Mathématique
 
-### Q1
+#### Q1
 
 #### Q1 et Q2
 
@@ -67,3 +67,9 @@ Les résumés disponibles sont les suivants :
 
 + [MATH-F-201 : Calcul différeniel et intégral II](https://github.com/RobinPetit/ULB/blob/master/MATHF-201/r%C3%A9sum%C3%A9/r%C3%A9sum%C3%A9.pdf) (**complet**) ;
 + [MATH-F-203 : Algèbre et géométrie I](https://github.com/RobinPetit/ULB/blob/master/MATHF-203/r%C3%A9sum%C3%A9/r%C3%A9sum%C3%A9.pdf) (**janvier complet**).
+
+### BA3 Mathématique
+
+#### Q2
+
++ [MATH-F-3002 : Espaces fonctionnels et analyse de Fourier](https://github.com/RobinPetit/ULB/blob/master/MATHF-3002/notes/notes.pdf).
