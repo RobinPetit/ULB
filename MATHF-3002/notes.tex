@@ -27,6 +27,7 @@
 \newcommand{\intint}[2]{\left\llbracket#1, #2\right\rrbracket}
 \newcommand{\cste}{\text{c}^{\text{ste}}}
 \newcommand{\dx}{\dif x}
+\newcommand{\Id}{\mathrm {Id}}
 
 \newcommand{\TODO}{TODO}
 
@@ -192,7 +193,7 @@ La première égalité se démontre par~:
 
 \section{Formule d'inversion}
 
-\begin{thm} Soit $u \in \mathcal S$. Alors~:
+\begin{thm}\label{thm:inversion Fourier} Soit $u \in \mathcal S$. Alors~:
 \begin{equation}\label{eq:inversion Fourier}
 	u(x) = (2\pi)^{-n}\int e^{i\scpr x\xi}\hat u(\xi)\dif\xi.
 \end{equation}
@@ -258,8 +259,249 @@ De plus~:
 donc $\hat f = \hat {\hat u}$ pour tout $x$, et puisque $\mathcal F$ est injective, $f = \hat u$. Donc $\mathcal F$ est surjective, et donc surjective.
 
 La linéarité est triviale~:
-\[\mathcal F(f+\lambda g)(\xi) = \int e^{-i\scpr x\xi}(f+\lambda g)(x)\dx = \int e^{-i\scpr x\xi}f(x)\dx = \lambda\int e^{-i\scpr x\xi}g(x)\dx
+\[\mathcal F(f+\lambda g)(\xi) = \int e^{-i\scpr x\xi}(f+\lambda g)(x)\dx = \int e^{-i\scpr x\xi}f(x)\dx + \lambda\int e^{-i\scpr x\xi}g(x)\dx
 	= \left(\hat f + \lambda \hat g\right)(\xi).\]
 \end{proof}
+
+En posant $\tilde {\mathcal F} : \mathcal S \to \mathcal S : u \mapsto \tilde {\mathcal F}u$ où $\tilde {\mathcal F}u(x) = (2\pi)^{-n}\int e^{i\scpr x\xi}u(\xi)\dif\xi$.
+Par un raisonnement similaire à la Proposition précédente, on trouve $\tilde {\mathcal F}$ est une bijection linéaire. De plus $\mathcal F^{-1} = \tilde {\mathcal F}$.
+
+De plus, puisque $\mathcal F$ transforme des suites convergentes en suites convergentes sur $\mathcal S$, $\tilde {\mathcal F}$ fait de même.
+
+Cela veut dire que $\mathcal F$ est une homéomorphisme linéaire de $\mathcal S$ dans $\mathcal S$ pour la topologie non définie ici.
+
+\begin{prp} Pour $u, v \in \mathcal S$~:
+\begin{enumerate}
+	\item $\int u\hat v = \int\hat uv$~;
+	\item $\int u\overline v = (2\pi)^{-n}\int \hat u\hat {\overline v}$. Cette égalité est appelée \textit{identité de Parseval}.
+\end{enumerate}
+\end{prp}
+
+\begin{proof} Le premier point se montre par la formule de la preuve du Théorème~\ref{thm:inversion Fourier} pour $u,\chi \in \mathcal S$~:
+\[\int e^{i\scpr x\xi}\chi(\xi)\hat u(\xi)\dif\xi = \int u(x+y)\hat \chi(y)\dif y\]
+en $x=0$.
+
+Le second point, prenons $u, w \in \mathcal S$ et posons $v \coloneqq (2\pi)^{-n}\overline {\hat w}$. Par le premier point~:
+\[\int \hat uv = \int u\hat v = \int u(2\pi)^{-n}\hat {\overline {\hat w}}.\]
+
+On peut voir que~:
+\[(2\pi)^{-n}\hat {\overline {\hat w}}(\xi) = (2\pi)^{-n}\int e^{-i\scpr x\xi}\overline {\hat w}(x)\dx =
+	(2\pi)^{-n}\overline {\int e^{i\scpr x\xi}\hat w(x)\dx} = \overline {w(\xi)}.\]
+
+Dès lors~:
+\[\int \hat u(2\pi)^{-n}\overline {\hat w} = \int u\overline w.\]
+\end{proof}
+
+\begin{cor}[Formule de Plancherel] Pour $u \in \mathcal S$, on a~:
+\begin{equation}\label{eq:Plancherel}
+	\int \abs u^2\dx = (2\pi)^{-n}\int\abs {\hat u}^2\dif\xi
+\end{equation}
+\end{cor}
+
+\section{Discussion sur la définition de la transformée}
+
+On peut définir la transformée de Fourier de plusieurs manières, paramétrisé par $a, b \in \R$~:
+\[\mathcal F_{a,b}u(\xi) = a\int e^{-ib\scpr x\xi}u(x)\dx.\]
+
+La théorie reste la même à homothétie près puisque~:
+\[\mathcal Fu(\xi) = \frac 1a\mathcal F_{a,b}u(\xi/b).\]
+
+\[(2\pi)^{-n}\int \hat u(\xi)\overline {\hat v}(\xi)\dif\xi = \frac {(2\pi)^{-n}b^n}{a^n}\int\mathcal F_{a,b}u(\eta)\overline {\mathcal F_{a,b}v(\eta)}\dif\eta.\]
+Donc on peut choisir $a=1$ et $b=2\pi$ ou encore $a=(2\pi)^{n/2}$ et $b=1$ afin de simplifier la formule de Parseval qui devient~:
+\[\int u\overline v = \int \mathcal Fu\overline {\mathcal Fv}.\]
+
+Cependant le choix $a=b=1$ permet de ne pas avoir de terme $b^k$ lors des dérivations sous le signe intégral.
+
+\section{Extension de la transformée à $L^1 \cap L^2$}
+
+\begin{prp} Il existe une unique application linéaire continue $\mathbb F : L^2 \to L^2$ tel que $\mathbb F\sVert[2]_{\mathcal S} = \mathcal F$ et~:
+\[\int u\overline v = (2\pi)^{-n}\int \mathbb Fu\overline {\mathbb Fv}\dif\xi,\]
+i.e. $\mathbb F$ préserve l'identité de Parseval.
+\end{prp}
+
+\begin{proof} Admettons que $C_0^\infty(\R^n)$ est dense dans $L^2(\R^n)$. Puisque $C_0^\infty(\R^n) \subseteq \mathcal S(\R^n)$, on a $\mathcal S(\R^n)$ dense dans $L^2(\R^n)$.
+Par cette densité, pour $u \in \mathcal S$, il existe $(u_k)_{k \in \N} \in \mathcal S^\N$ tel que $u_k \xrightarrow[k \to \pinfty]{L^2} u$, et donc $(u_k)$ est de Cauchy
+pour cette norme. $(\hat {u_k})_{k \in \N}$ est également de Cauchy car~:
+\[\norm {\hat {u_k} - \hat {u_m}} = (2\pi)^{n/2}\norm {u_k - u_m}.\]
+
+Par cette complétude, il existe $z \in \mathcal S \tq \hat {u_k} \xrightarrow[k \to \pinfty]{L^2} z$. On pose alors $\mathbb Fu \coloneqq z$. Montrons que $z$ ne dépend pas
+de la suite $(\hat {u_k})$ choisie pour montrer que $\mathbb F$ est bien définie.
+
+Soit $(v_k)_{k \in \N} \tq v_k \xrightarrow[k \to \pinfty]{L^2} z$. Alors $v_k-u_k \xrightarrow[k \to \pinfty]{L^2} 0$. Par Plancherel,
+$\hat {v_k}-\hat {u_k} \xrightarrow[k \to \pinfty]{L^2} 0$. Dès lors $\hat {v_k} \xrightarrow[k \to \pinfty]{L^2} z$.
+
+Montrons alors que $\mathbb F$ est linéaire.
+
+Soient $u, v \in L^2$. Soient $(u_k)_{k \in \N}, (v_k)_{k \in \N} \in \mathcal S^\N$ telles que $u_k \xrightarrow[k \to \pinfty]{L^2} u$ et $v_k \xrightarrow[k \to \pinfty]{L^2} v$.
+Alors $u_k+v_k \xrightarrow[k \to \pinfty]{L^2} u+v$. Par linéarité de $\mathcal F$, $\hat {u_k} + \hat {v_k} = \widehat {u_k + v_k} \xrightarrow[k \to \pinfty]{L^2} \mathbb F(u+v)$.
+
+Donc $\hat {u_k} + \hat {v_k} \xrightarrow[k \to \pinfty]{L^2} \mathbb Fu + \mathbb Fv$ et $\hat {u_k} + \hat {v_k} \xrightarrow[k \to \pinfty]{L^2} \mathbb F(u+v)$.
+On en déduit $\mathbb F u + \mathbb F v = \mathbb F(u+v)$. Il est également trivial que pour $\lambda \in \R : \mathbb F(\lambda u) = \lambda \mathbb Fu$.
+
+Pour montrer que $\mathbb F\sVert[2]_{\mathcal S} = \mathcal F$, prenons $u \in \mathcal S$, et la suite $(u_k)_{k \in \N}$ constante $u_k = u$. Par définition de $\mathbb F$,
+on a $\mathbb Fu = \hat u$ car $\forall k \in \intint 1n : \hat {u_k} = \hat u$, donc $\hat {u_k} \xrightarrow[k \to \pinfty]{} \hat u$.
+
+Montrons finalement que $\mathbb F$  vérifie Parseval.
+
+Premier cas~: $u \in L^2$ et $v \in \mathcal S$. Il existe $\mathcal S^\N \ni (u_k)_{k \in \N} \xrightarrow[k \to \pinfty]{L^2} u$. Donc~:
+\[\int u\overline v = \int u_k\overline v + \int (u-u_k)\overline v.\]
+
+Puisque~:
+\[\abs {\int (u-u_k)\overline v} \leq \underbrace {\norm {u-u_k}_{L^2}}_{\xrightarrow[k \to \pinfty]{} 0} \norm v \xrightarrow[k \to \pinfty]{} 0,\]
+on sait~:
+\[\int u_k\overline v \xrightarrow[k \to \pinfty]{} \int u\overline v.\]
+
+Or $u_k, v \in \mathcal S$. Donc pour $k \to \pinfty$, par Cauchy-Schwartz et par Parseval pour $\mathcal F$~:
+\[\int u\overline v = \int u_k\overline v \xrightarrow[k \to \pinfty]{L^2} (2\pi)^{-n}\int\mathbb Fu\overline {\hat v}.\]
+
+Dans le cas général $u, v \in L^2$, par le premier point pour $(v_k)_{k \in \N} \tq v_k \xrightarrow[k \to \pinfty]{} v$~:
+\[\int u\overline {v_k} = (2\pi)^{-n}\int \mathbb Fu\overline {\hat {v_k}}.\]
+
+Or $v_k \xrightarrow[k \to \pinfty]{L^2} \mathbb Fv$. Par Cauchy-Schwartz, on a~:
+\begin{enumerate}
+	\item $\int u\overline {v_k} \xrightarrow[k \to \pinfty]{L^2} \int u\overline v$~;
+	\item et $\int \mathbb Fu\overline {\hat {v_k}} \xrightarrow[k \to \pinfty]{L^2} \int \mathbb Fu\overline {\mathbb Fv}$.
+\end{enumerate}
+
+L'identité de Parseval est donc bien vérifiée pour $\mathbb F$. Il reste à vérifier que $\mathbb F$ est continue et qu'elle est unique.
+
+La continuité découle de Parseval~:
+\[\norm u_{L^2} = (2\pi)^{-n/2}\norm {\mathbb Fu}_{L^2},\]
+donc pour $\varepsilon > 0$, pour $\delta = (2\pi)^{-n/2}\varepsilon$, on a que si $\norm {u-v}_{L^2} < \delta$, alors $\norm {\mathbb Fu - \mathbb Fv}_{L^2} < \varepsilon$.
+
+Si il existe $\mathbb F_1 : L^2 \to L^2$ continue et linéaire telle que $\mathbb F_1\sVert[2]_{\mathcal S} = \mathcal F$, alors par densité, pour $u \in L^2$, il existe
+$(u_k)_{k \in \N} \in \mathcal S^\N \tq u_k \xrightarrow[k \to \pinfty]{} u$, et donc, par continuité~:
+\[\underbrace {\mathbb F(u_k)}_{\xrightarrow[k \to \pinfty]{} \mathbb F(u)} = \underbrace {\mathbb F_1(u_k)}_{\xrightarrow[k \to \pinfty]{} \mathbb F_1(u)}.\]
+
+Donc puisque deux application continues qui coïncident sur une sous-ensemble dense coïncident partout, on a bien que $\mathbb F = \mathbb F_1$.
+\end{proof}
+
+De la même manière, $\tilde {\mathcal F}$ se prolonge sur $L^2$ en $\tilde {\mathbb F}$
+
+\begin{prp} $\mathbb F \circ \tilde {\mathbb F} = \Id_{L^2} = \tilde {\mathbb F} \circ \mathbb F$.
+\end{prp}
+
+\begin{proof} Ceci vient directement de la même propriété sur $\mathcal F$ et $\tilde {\mathbb F}$. Soit $u \in L^2$ et soit
+$\mathcal S^\N \ni (u_k)_{k \in \N} \xrightarrow[k \to \pinfty]{L^2} u$. On sait~:
+\[\mathcal S \ni \tilde {\mathcal F}(u_k) = \tilde {\mathbb F}(u_k) \xrightarrow[k \to \pinfty]{L^2} \tilde {\mathbb F}(u)\]
+par continuité de $\tilde {\mathbb F}$. Par continuité de $\mathbb F$, on a~:
+\[\mathcal F \circ \tilde {\mathcal F}(u_k) = \mathbb F \circ \tilde {\mathbb F}(u_k) \xrightarrow[k \to \pinfty]{L^2} \mathbb F \circ \tilde {\mathbb F}(u).\]
+
+Or $\mathcal F \circ \tilde {\mathcal F}(u_k) = u_k \xrightarrow[k \to \pinfty]{L^2} u$. Par unicité de la limite, on a $\mathbb F \circ \tilde {\mathbb F}(u)$.
+L'autre égalité se démontre de la même manière.
+\end{proof}
+
+À ce stade, il est légitime de se demander si les définitions que l'on a sur $L^1$ (la formule intégrale définie depuis $\mathcal S$) et sur $L^2$ (la définition de $\mathbb F$)
+sont compatibles, i.e. si pour $u \in L^1 \cap L^2$ on a bien $\hat u = \mathbb Fu$. Cette égalité tient bien (démonstration à venir).
+
+\section{Exemple d'application de la théorie de Fourier}
+
+Pour $\Delta = \sum_{j=1}^n\partial_j^2$ le Laplacien sur $\R^n$ et $f \in \mathcal S$, soit la PDE suivante~:
+\begin{equation}
+	(1+\sum_{j=1}^nD_j^2)u = u-\Delta u = f,
+\end{equation}
+ou plus généralement, pour des $a_\alpha \in \C$~:
+\begin{equation}\label{eq:PDE générale Fourier}
+	\underbrace {\sum_{\abs \alpha \leq m}a_\alpha D^\alpha}_{P(D) \text{ polynôme}} u = f,
+\end{equation}
+dans le cas du Laplacien, ce polynôme est $P(\xi) = 1+\abs \xi^2$.
+
+Sous l'hypothèse $\inf_{\xi \in \R^n}\abs {P(\xi)} \gneqq 0$, trouvons $u \tq P(D)u = f$.
+
+Formellement~:
+\begin{align*}
+	\widehat {P(D)u}(\xi) &= \hat f(\xi) \\
+	P(\xi)\hat u(\xi) &= \hat f(\xi) \\
+	\hat u(\xi) &= \frac {\hat f(\xi)}{P(\xi)} \\
+	u(x) &= (2\pi)^{-n}\int e^{i\scpr x\xi}\frac {\hat f(\xi)}{P(\xi)}\dif\xi.
+\end{align*}
+
+Plus rigoureusement, puisque $f \in \mathcal S$, on sait $\hat f \in \mathcal S$. De plus, $P$ est borné par dessous. Donc $\abs {\hat f/P} \leq C_N(1+\abs \xi)^{-N}$,
+et du coup la fonction sous l'intégrale ($\xi  \mapsto e^{i\scpr x\xi}\frac {\hat f(\xi)}{P(\xi)}$) est $L^1$, et cette intégrale est bien définie pour $N > n$.
+
+De plus, puisque la dérivation selon $x$ sur $u$ fait juste descendre du $\xi$ de l'exponentielle, par récurrence avec le théorème de convergence dominée et par la borne supérieure
+ci-dessus, on trouve que $u \in C^\infty(\R^n)$. On peut alors vérifier que la fonction $u$ ainsi trouvée est bien une solution de~\eqref{eq:PDE générale Fourier}~:
+\[\sum_{\abs \alpha \leq m}a_\alpha D^\alpha u = (2\pi)^{-n}\int e^{i\scpr x\xi}\underbrace {\sum_{\abs \alpha \leq m}a_\alpha \xi^\alpha}_{=P(\xi)} \frac {\hat f(\xi)}{P(\xi)}\dif\xi
+	= (2\pi)^{-n} \int e^{i\scpr x\xi}\hat f(\xi)\dif\xi = f(x).\]
+
+\chapter{Espaces de Hilbert}
+
+\begin{déf} Soit $H$ un $\C$-espace vectoriel. Un produit scalaire (forme hermitienne définie positive) sur $H$ est une application $\scpr \cdot\cdot : H \times H \to \C \tq$~:
+\begin{itemize}
+	\item[$(i)$]   à $y \in \C$ fixé~: $x \mapsto \scpr xy$ est une application linéaire de $H$ dans $\C$~;
+	\item[$(ii)$]  pour $x, y \in \C$~: $\scpr xy = \overline {\scpr yx}$~;
+	\item[$(iii)$] pour $x \in \C$~: $\scpr xx \geq 0$ où $\scpr xx = 0 \iff x = 0$.
+\end{itemize}
+
+Sur un produit scalaire, on peut définir une norme $\norm x \coloneqq \scpr xx^{1/2}$.
+\end{déf}
+
+\begin{prp} $\norm \cdot : H \to \R^+$ est une norme.
+\end{prp}
+
+\begin{prp} $\norm \cdot$ vérifie Cauchy-Schwartz, i.e.~:
+\[\forall x, y \in H : \abs {\scpr xy} \leq \norm x\norm y.\]
+\end{prp}
+
+\begin{proof} Soit $\alpha \in \C \tq \abs \alpha = 1$ et $\alpha\scpr xy \in \R^+$ ($\alpha\scpr xy = \abs {\scpr xy}$). Soit $r \in \R$.
+
+\[0 \leq \scpr {x-r\alpha y}{x-r\alpha y} = \scpr xx - r\alpha\scpr yx - r\overline \alpha\scpr xy + r^2\scpr yy = A - 2Br + Cr^2,\]
+pour $A = \scpr xx \in \R^+$, $B = \alpha\scpr xy = \abs {\scpr xy} \in \R^+$, $C = \scpr yy \in \R^+$.
+
+Si $C = 0$, alors $B = 0$, et donc $\scpr yx = 0$ et Cauchy-Schwartz est vérifié.
+
+Si $C \gneqq 0$, alors pour $r = B/C$~: $0 \leq A - 2Br + Cr^2 = \frac {AC-B^2}C$, donc $B^2 \leq AC$, donc Cauchy-Schwartz est vérifié.
+\end{proof}
+
+\begin{prp} $\norm \cdot$ vérifie l'inégalité triangulaire, i.e.~:
+\[\norm {x+y}^2 \leq \norm x^2 + \norm y^2.\]
+\end{prp}
+
+\begin{proof} $\norm {x+y}^2 = \scpr xx + \scpr xy + \scpr yx + \scpr yy \leq \norm x^2 + 2\norm x\norm y + \norm y^2 = (\norm x + \norm y)^2$.
+\end{proof}
+
+On a donc $(H, \norm \cdot)$ un e.v. normé, depuis lequel on peut alors définir une distance~: $d(x, y) \coloneqq \norm {x-y}$.
+
+\begin{déf} Si $H$ est complet pour $d$, on dit que $H$ est un espace de Hilbert.
+\end{déf}
+
+Quelques exemples d'espaces de Hilbert~:
+\begin{itemize}
+	\item[(0)] $\C^n$ pour $\scpr xy \coloneqq \sum_{j=1}^nx_j\overline {y_j}$~;
+	\item[(1)] Pour $(\Omega, \mathcal A, \mu)$ un espace de mesure, $L^2(\Omega, \mathcal A, \mu)$ muni du produit scalaire $\scpr fg \coloneqq \int f\overline g\dif\mu$~;
+	\item[(2)] Pour $(\N, \mathcal P(\N), \abs \cdot)$ comme espace de mesure, on a l'équivalent dénombrable de l'exemple (0)~: $\int f\overline g = \sum_{k \geq 1}f_k\overline {g_k}$.
+	On note $\ell^2(\N) \coloneqq L^2(\N, \mathcal P(\N), \abs \cdot)$.
+\end{itemize}
+
+Un dernière exemple bien moins trivial~: les espaces de Sobolev.
+
+\begin{déf} Soit $s \geq 0$ un paramètre, on définit l'espace de Sobolev d'ordre $s$ sur $\R^n$ par~:
+\begin{equation}
+	H^s(\R^n) \coloneqq \left\{u \in L^2(\R^n) \tq (2\pi)^{-n}\int \abs {\mathbb Fu(\xi)}^2(1+\abs \xi)^s\dif\xi \lneqq \pinfty\right\}.
+\end{equation}
+
+On y définit le produit scalaire suivante pour $u, v \in H^s(\R^n)$~:
+\begin{equation}
+	\scpr uv_s \coloneqq (2\pi)^{-n}\int\mathbb Fu\overline {\mathbb Fv}(1+\abs\xi)^s\dif\xi.
+\end{equation}
+\end{déf}
+
+% Montrer que cette intégrale est bien définie
+
+\begin{prp} $(u, v) \mapsto \scpr uv_s$ est un produit scalaire.
+\end{prp}
+
+\begin{proof} À $v$ fixé, $u \mapsto \scpr uv_s$ est linéaire par linéarité de $\mathbb F$ et par linéarité de l'intégrale.
+
+Soient $u, v \in H^s$.
+\[\scpr uv_s = (2\pi)^{-n}\int \mathbb Fu\overline {\mathbb Fv}\underbrace {(1+\abs \xi)^s}_{\in \R^+}\dif\xi
+	= (2\pi)^{-n}\overline {\int \mathbb Fv\overline {\mathbb Fu}(1+\abs \xi)^s\dif\xi} = \overline {\scpr vu_s}.\]
+
+Finalement, pour $u \in H^s$~:
+\[\scpr uu_s = (2\pi)^{-n}\int\underbrace {\abs {\mathbb Fu}^2}_{\geq 0}\underbrace {(1+\abs\xi)^s}_{\geq 0}\dif\xi \geq 0,\]
+et de plus, il est évident que $\scpr uu_s = 0 \iff u = 0$.
+\end{proof}
+
+Par linéarité de Fourier, $H^s(\R^n)$ est un espace vectoriel, et de plus il est normé par le produit scalaire défini ci-dessus. C'est donc un espace de Hilbert.
 
 \end{document}
