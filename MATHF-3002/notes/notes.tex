@@ -17,8 +17,12 @@
 
 \usepackage[parfill]{parskip}
 
+\DeclareMathOperator{\Vect}{Vect}
+\DeclareMathOperator{\Ker}{Ker}
+
 \newcommand{\C}{{\mathbb C}}
 \newcommand{\R}{{\mathbb R}}
+\newcommand{\Z}{{\mathbb Z}}
 \newcommand{\N}{{\mathbb N}}
 \newcommand{\scpr}[2]{\left\langle#1, #2\right\rangle}
 \newcommand{\tq}{\text{ t.q. }}
@@ -30,6 +34,8 @@
 \newcommand{\Id}{\mathrm {Id}}
 
 \newcommand{\TODO}{TODO}
+\newcommand{\unic}{\underline {\textbf{unicité}~:}}
+\newcommand{\exis}{\underline {\textbf{existence}~:}}
 
 \newtheorem{thm}{Théorème}[chapter]
 \newtheorem{prp}[thm]{Proposition}
@@ -486,6 +492,9 @@ On y définit le produit scalaire suivante pour $u, v \in H^s(\R^n)$~:
 \end{equation}
 \end{déf}
 
+\begin{rmq} Remarquons que $u \in H^s \iff \xi \mapsto (1+\abs \xi^2)^{s/2}\mathbb Fu(\xi)$ est dans $L^2$.
+\end{rmq}
+
 % Montrer que cette intégrale est bien définie
 
 \begin{prp} $(u, v) \mapsto \scpr uv_s$ est un produit scalaire.
@@ -502,6 +511,208 @@ Finalement, pour $u \in H^s$~:
 et de plus, il est évident que $\scpr uu_s = 0 \iff u = 0$.
 \end{proof}
 
-Par linéarité de Fourier, $H^s(\R^n)$ est un espace vectoriel, et de plus il est normé par le produit scalaire défini ci-dessus. C'est donc un espace de Hilbert.
+Par linéarité de Fourier, $H^s(\R^n)$ est un espace vectoriel, et de plus il est normé par le produit scalaire défini ci-dessus. Montrons alors que c'est un espace ce Hilbert.
+
+Soit $(u_k)_{k \in \N} \in H^s$ une suite de Cauchy. $(1+\abs\xi^2)^{s/2}\mathbb Fu_k$ est de Cauchy dans $L^2$, qui est complet. Donc il en existe une limite
+$V \in L^2 \tq (1+\abs\xi^2)^{s/2}\mathbb Fu_k \xrightarrow[k \to \pinfty]{L^2} V$. Il existe $u \in L^2 \tq (1+\abs\xi^2)^{s/2}\mathbb Fu = V$ car $(1+\abs\xi^2)^{-s/2}V \in L^2$,
+et $\mathbb F$ est une bijection sur $L^2$. De plus, $u \in H^s$ car $V = (1+\abs\xi^2)^{s/2}\mathbb Fu \in L^2$. Puisque $u_k \xrightarrow[k \to \pinfty]{H^s} u$,
+on a que $H^s$ est complet.
+
+Pour un contre-exemple, on a $C^\infty_0(\R^n)$ muni du produit scalaire $\scpr fg \coloneqq \int f\overline g\dx$ n'est pas un Hilbert. En effet, pour $f \in L^2 \setminus C^\infty_0$,
+par densité de $D^\infty_0$ dans $L^2$, $\exists (f_k)_{k \in \N} \in {C^\infty_0}^\N \tq f_k \xrightarrow[k \to \pinfty]{L^2} f$. De plus, $(f_k)$ est de Cauchy dans $C^\infty_0$.
+Par l'absurde, si $\exists g \in C^\infty_0 \tq f_k \xrightarrow[k \to \pinfty]{L^2} g$, par unicité de la limite, $g=f$, or $f \not \in C^\infty_0$.
+
+À partir d'ici, $H$ désigne un espace de Hilbert quelconque.
+
+\begin{déf} Soit $y \in H$. On définit~:
+\[\begin{cases}
+	&f_1 : x \mapsto \scpr xy \\
+	&f_2 : x \mapsto \scpr yx \\
+	&f_3 : x \mapsto \norm x
+\end{cases}\]
+\end{déf}
+
+\begin{prp} $f_i$ est continue pour $i=1,2,3$.
+\end{prp}
+
+\begin{proof}
+\begin{enumerate}
+	\item $\abs {f_1(x_1) - f_1(x_2)} = \abs {\scpr {x_1-x_2}y} \leq \norm {x_1-x_2}\norm y \xrightarrow[x_1 \to x_2]{} 0$. ($f_1$ est même uniformément continue et Lipschitzienne).
+	\item Idem pour $f_2$, à permutation près.
+	\item La continuité vient directement de $\abs {\norm x-\norm z} \leq \norm {x-z}$.
+\end{enumerate}
+\end{proof}
+
+\begin{prp} Pour $F \leq H$, $\overline F \leq H$.
+\end{prp}
+
+\begin{proof} Pour $x, y \in \overline F$, il existe $(x_k), (y_k) \in F^\N \tq x_k \xrightarrow[k \to \pinfty]{} x$ et $y_k \xrightarrow[k \to \pinfty]{} y$.
+Donc $\underbrace {x_k+y_k}_{\in F} \xrightarrow[k \to \pinfty]{} x+y$.
+
+De plus, pour $\lambda \in \C$, $\underbrace {\lambda x_k}_{\in F} \xrightarrow[k \to \pinfty]{} \lambda x \in \overline F$.
+\end{proof}
+
+\begin{rmq} Contrairement aux e.v. de dimension finie, en dimension infinie, il est possible d'avoir un sous-e.v. \textit{strict} dense (e.g. $C^\infty_0$ dans $L^2$).
+\end{rmq}
+
+\begin{prp} $F \coloneqq \{f \in L^2 \tq f=0 \text{ sur } x_n > 0\}$ est un e.v. fermé dans $L^2$.
+\end{prp}
+
+\begin{proof} Soit $g \in \overline F$. Il existe $(f_k)_{k \in \N} \in F^\N \tq f_k \xrightarrow[k \to \pinfty]{L^2} g$. Pour $k \in \N$~:
+\[\int_{x_n > 0}\abs g^2\dx = \int_{x_n > 0}\abs {g-f_k}^2\dx \leq \abs {g-f_k}^2_{L^2} \xrightarrow[k \to \pinfty]{} 0\]
+car $f_k \in F$ et $f_k \xrightarrow[k \to \pinfty]{L^2} g$. Dès lors $\int_{x_n > 0}\abs g^2\dx = 0$, i.e. $g \in F$. Donc $\overline F = F$.
+\end{proof}
+
+\section{Orthogonalité}
+
+\begin{déf} Pour $x, y \in H$, $x$ et $y$ sont \textit{orthogonaux}, noté $x \perp y$ lorsque $\scpr xy = 0$.
+
+Pour $x \in H$, on définit $x^\perp \coloneqq \{y \in H \tq \scpr xy = 0\}$, et pour $M \subset H$, on définit
+$M^\perp \coloneqq \{y \in H \tq \forall x \in M : \scpr xy = 0\} = \bigcap_{x \in M}x^\perp$.
+\end{déf}
+
+\begin{prp} Pour $x \in H$, $x^\perp \leq H$, et $x^\perp$ est fermé.
+\end{prp}
+
+\begin{proof} À $x \in H$ fixé, on remarque que $x^\perp = f_2^{-1}(\{0\})$, or $f_2$ est continue. Donc $x^\perp$ est fermé. Vérifier que $x^\perp$ est un sous-e.v. est trivial.
+\end{proof}
+
+\begin{cor} Pour $M \leq H$, $M^\perp$ est un sous-e.v. fermé de $H$.
+\end{cor}
+
+Ce résultat découle directement du fait que $M^\perp$ est une intersection d'e.v. fermés.
+
+\begin{déf} $E \subseteq H$ est dit \textit{convexe} lorsque $\forall x, y \in E : \forall t \in [0, 1] : (1-t)x + ty \in E$.
+\end{déf}
+
+\begin{ex}
+\begin{itemize}
+	\item tout sous-e.v. de $H$ est convexe~;
+	\item toute boule (ouverte ou fermée) dans $H$ est convexe~;
+	\item pour $\Omega \subseteq \R^n, u \in L^2(\Omega)$, $E = \{v \in L^2 \tq u=v \text{ sur } \Omega\}$ est convexe.
+\end{itemize}
+
+Montrons également que ce dernier ensemble est fermé dans $L^2$. Soit $f \in \overline E$. Il existe $(f_k)_{k \in \N} \in E^\N \tq f_k \xrightarrow[k \to \pinfty]{L^2} f$.
+\[\int_\Omega \abs {u-f}^2\dx = \int_\Omega\abs {f_k-f} \leq \int_{\R^n}\abs {f_k-f}^2\dx \xrightarrow[k \to \pinfty]{} 0.\]
+\end{ex}
+
+\begin{thm} Soit $E \neq \emptyset$ convexe fermé dans $H$. Alors $\exists! x \in E \tq \norm x = \min_{z \in E}\norm z = \in_{z \in E}\norm z \eqqcolon \delta$.
+\end{thm}
+
+\begin{proof} \unic soient $x, y \in E \tq \norm x = \norm y = \delta$. Par la formule du parallélogramme~:
+\[\norm {x+y}^2 = \norm {x-y}^2 = 2(\norm x^2+\norm y^2).\]
+
+Par convexité de $E$, $(x+y)/2 \in E$, donc $\norm {(x+y)/2} \geq \delta$. En multipliant de part et d'autre par $1/4$ au préalable, on trouve alors~:
+\[\norm {x-y}^2 \leq 2(\norm x^2 + \norm y^2) - 4\delta^2 = 0.\]
+
+On en déduit $\norm {x-y} = 0$, i.e. $x=y$.
+
+\exis Soit $(y_k)_{k \in \N} \in E^\N \tq y_k \xrightarrow[k \to \pinfty]{} \delta$ qui existe par définition de l'infimum.
+\[\norm {y_k - y_m}^2 \leq 2(\underbrace {\norm {y_k}^2+\norm {y_m}^2)}_{\to 2\delta^2} - 4\delta^2.\]
+Donc $(y_k)$ est de Cauchy. Par complétude de $H$, $\exists x_0 \in H \tq y_k \xrightarrow[k \to \pinfty]{} x_0$, et par fermeture de $E$, $x_0 \in E$.
+
+De plus, par continuité de la norme, $\norm {y_k} \xrightarrow[k \to \pinfty]{} \norm {x_0}$, et par unicité de la limite, $\norm {x_0} = \delta$.
+\end{proof}
+
+\begin{ex} Si $\Omega \subseteq \R^n$ est un ouvert, $u \in L^2(\Omega)$, $E = \{v \in L^2 \tq u=v \text{ sur } \Omega\}$ est un convexe fermé, donc par ce théorème,
+il existe un unique $u^* \in E$ qui minimise la norme~: $u^* = u$ sur $\Omega$ et $u^*=0$ sur $\R^n \setminus \Omega$.
+\end{ex}
+
+\begin{thm}[Décomposition orthogonale] Soit $M \leq H$ fermé. Alors~:
+\begin{enumerate}
+	\item $\forall x \in H : \exists! (y, z) \in M \times M^\perp \tq x=y+z$~;
+	\item ces valeurs $y, z$ sont les points les plus proches de $x$ dans $M$ et $M^\perp$ respectivement~;
+	\item Les applications $P : x \mapsto y$ et $Q : x \mapsto z$ sont linéaires~;
+	\item $\norm x^2 = \norm {Px}^2 + \norm {Qx}^2$ (et donc $P,Q$ sont continues)~;
+	\item $P$ et $Q$ sont les projections orthogonales de $x$ sur $M$ et $M^\perp$ respectivement.
+\end{enumerate}
+\end{thm}
+
+\begin{proof}~
+\begin{enumerate}
+	\item \unic si $x = y_1+z_1 = y_2+z_2$, pour $y_1,y_2 \in M$ et $z_1,z_2 \in M^\perp$, on a
+	$\underbrace {y_1-y_2}_{\in M} = \underbrace {z_2-z_1}_{\in M^\perp}$. Or $M \cap M^\perp = \{0\}$. Donc $y_1=y_2$ et $z_1=z_2$.
+
+ 	\exis $x+M$ est convexe (trivial par le fait que $M \leq H$). Montrons que $x+M$ est fermé. Soit $u \in \overline {x+M}$.
+	Il existe $(u_k)_{k \in \N} \in {(x+M)^\N} \tq u_k \xrightarrow[k \to \pinfty]{} u$. $\forall k \in \N : x+M \ni u_k = x + y_k$. On en déduit
+	$y_k \xrightarrow[k \to \pinfty] u-x$. Par fermeture de $M$, on a $u-x \in M$, et donc $u \in x+M$ (i.e.$ x+M$ est fermé).
+
+	Soit $z \in x+M$ l'élément qui minimise la norme. On pose $y \coloneqq x-z \in M$. Montrons alors que $z \in x+M$. Soit $w \in M$~; WLOG, supposons $\norm w = 1$.
+	Puisque $z \in x+M$, $\forall \alpha \in \C : z-\alpha w \in x+M$. Donc~:
+	\[\norm z^2 \leq \norm {z-\alpha w}^2 = \norm z^2 - 2\Re\alpha\scpr wz + \abs\alpha^2.\]
+
+	$0 = 2\Re\alpha\scpr wz - \abs\alpha^2$. En particulier, pour $\alpha = \scpr zw$~: $0 = \norm {\scpr zw}^2$, donc $\scpr zw = 0$. Dès lors $z \in M^\perp$.
+
+	\item Soit $Y \in M$. Montrons que $\norm {x-Y} \geq \norm {x-y} = \norm z$~:
+	\[\norm {x-Y} = \norm {y+z-Y} = \norm {(y-Y) + z} = \norm {y-Y} + \norm z \geq \norm z.\]
+
+	Idem pour $Z \in M^\perp$~: $\norm {x-Z} \geq \norm {x-z} = y$.
+
+	\item Soient $x_1, x_2 \in H, \alpha_1, \alpha_2 \in \C$. On a $\alpha_1x_1 = \alpha_1Px_1 + \alpha_1Qx_1$, et $\alpha_2x_2 = \alpha_2Px_2 + \alpha_2Qx_2$. Donc~:
+	\[P(\alpha_1x_1+\alpha_2x_2) + Q(\alpha_1x_1 + \alpha_2x_2) = \alpha_1x_1 + \alpha_2x_2 = \alpha_1Px_1 + \alpha_1Qx_1 + \alpha_2Px_2 + \alpha_2Qx_2,\]
+	et donc~:
+	\[\underbrace {P(\alpha_1x_1+\alpha_2x_2) - \alpha_1Px_1 - \alpha_2px_2}_{\in M} = \underbrace {\alpha_1Qx_1 + \alpha_2Qx_2 - Q(\alpha_1x_1 + \alpha_2x_2)}_{\in M^\perp}.\]
+	Or $M \cap M^\perp = \{0\}$, donc $P(\alpha_1x_1+\alpha_2x_2) = \alpha_1Px_1 - \alpha_2px_2$, et $\alpha_1Qx_1 + \alpha_2Qx_2 = Q(\alpha_1x_1 + \alpha_2x_2)$.
+
+	\item Par Pythagore $\norm x^2 = \norm {Px}^2 + \norm {Qx}^2$. Donc $\norm {Px} \leq \norm x$ et $\norm {Qx} \leq \norm x$, i.e. $P$ et $Q$ sont Lipschitziennes,
+	donc en particulier continues.
+\end{enumerate}
+\end{proof}
+
+\begin{cor} Si $M \leq H$, avec $M \neq H$, il existe $y \in H \tq y \perp M$.
+\end{cor}
+
+\begin{proof} Pour $x \in H \setminus M$, $x = Px+Qx$, où $Qx \neq 0$, et $Qx \perp M$.
+\end{proof}
+
+%\begin{rmq} TODO: Commenter l'hypothèse de fermeture...
+%\end{rmq}
+
+\begin{cor} Si $M \leq H$ est fermé, alors $M = {M^\perp}^\perp$.
+\end{cor}
+
+\begin{proof} La première inclusion est triviale~: si $x \in M$, alors $x \perp M^\perp$.
+
+La seconde inclusion se démontre comme suit~: soit $x \in {M^\perp}^\perp \subseteq H$. $x = y+z$ où $y \in M$ et $z \in M^\perp$.
+Or $0 = \scpr xz = \scpr {y+z}z = \scpr yz + \norm z^2$, et $\scpr yz = 0$ par définition d'orthogonalité. Donc $\abs z = 0$ et $z=0$, i.e. $x=y \in M$.
+\end{proof}
+
+\begin{lem}[Lemme de Riesz] Soit $L : H \to \C$, une forme linéaire continue. Alors $\exists! y \in H \tq L = \scpr \cdot y$.
+\end{lem}
+
+\begin{proof} \unic pour $y_1, y_2 \in H \tq \forall x \in H : \scpr x{y_1} = \scpr x{y_2}$, on a $\scpr x{y_1-y_2} = 0$, donc $y_1-y_2 \in H^\perp = \{0\}$, i.e. $y_1=y_2$.
+
+\exis si $L \equiv 0$, alors $y=0$. Supposons alors que $L$ n'est pas identiquement nulle. $\Ker L \lneqq H$ et est fermé par continuité de $L$. Dès lors, il existe $z \in H$,
+$z \neq 0 \tq z \perp \Ker L$. WLOG, supposons $\norm z = 1$. Posons $y \coloneqq \overline {Lz}z$ et $u \coloneqq (Lx)z - (Lz)x$. Calculons~:
+\[Lu = (Lx)Lz - (Lz)Lx = 0,\]
+donc $u \in \Ker L$, et donc $0 = \scpr uz = (Lx)\scpr zz - (Lz)\scpr xz = Lx-(Lz)\scpr xz$. Dès lors, $Lx = (Lx)\scpr xz = \scpr xy$.
+\end{proof}
+
+\section{Systèmes orthonormaux}
+
+\begin{déf} Pour $V$ un e.v. et $S \subseteq V$, on note $\Vect S$ l'e.v. engendré par $S$.
+
+$(e_\alpha)_{\alpha \in A} \subset V$ est appelé \textit{orthonormal} lorsque $\forall \alpha, \beta \in A : \scpr {e_\alpha}{e_\beta} = \delta_{\alpha,\beta}$.
+
+Pour $x \in H$, on définit $\hat x(\alpha) \coloneqq \scpr x{e_\alpha}$.
+\end{déf}
+
+Les $\hat x(\alpha)$ sont les coefficients de Fourier relativement au système $(e_\alpha)_{\alpha \in A}$.
+
+\begin{ex} Sur $L^2(\R^n)$, les $(e_\alpha)_{\alpha \in \Z}$ sont les $e_\alpha : [0, 2\pi) \to \C : t \mapsto \frac {e^{i\alpha t}}{\sqrt {2\pi}}$.
+\end{ex}
+
+\begin{thm} Pour $H$ un espace de Hilbert et $(e_\alpha)_{\alpha \in A}$ un système orthonormal, $F \subset A$ fini, et $M_F \coloneqq \Vect {e_\alpha}_{\alpha \in F}$, on a~:
+\begin{enumerate}
+	\item si $\varphi : A \to \C$ est nulle sur $A \setminus F$, pour $y = \sum_{\alpha \in F}\varpi(\alpha)e_\alpha$, alors~:
+	\[\forall \alpha \in A : \varphi(\alpha) = \hat y(\alpha).\]
+	De plus, $\norm y^2 = \sum_{\alpha \in F}\abs {\varphi(\alpha)}$.
+
+	\item Si $x \in H$, $s_F(x) \coloneqq \sum_{\alpha \in F}\hat x(\alpha)e_\alpha \in M_F$. Si $s \in M_F \setminus \{s_F(x)\}$, alors~:
+	\[\norm {x-s_F(x)} \lneqq \norm {x-s}.\]
+
+	De plus~: $\sum_{\alpha \in F}\abs {\hat x(\alpha)}^2 \leq \norm x^2$.
+\end{enumerate}
+\end{thm}
 
 \end{document}
