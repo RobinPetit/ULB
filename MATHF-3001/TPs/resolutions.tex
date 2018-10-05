@@ -1,0 +1,197 @@
+\documentclass{article}
+
+\usepackage[french]{babel}
+\usepackage{commath}
+\usepackage{palatino, eulervm}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{fullpage}
+\usepackage{amsmath, amsthm, amssymb, amsfonts}
+\usepackage{mathtools}
+\usepackage{cases}
+\usepackage{stmaryrd}
+\usepackage[bottom]{footmisc}
+\usepackage[parfill]{parskip}
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{hyperref}
+
+\title{MATHF-3001 --- Théorie de la mesure \\Résolution des TPs}
+\author{R. Petit}
+\date{Année académique 2018 - 2019}
+
+\newtheorem{ex}{Exercice}[section]
+\theoremstyle{definition}
+%\newtheorem{proof}{Résolution}[section]
+\addto\captionsfrench{\renewcommand\proofname{\underline{Résolution}}}
+
+% link amsthm and mdframed
+\iftrue
+%\iffalse
+	% pre-amsthm
+	\mdfdefinestyle{resultstyle}{%
+		hidealllines=true,%
+		leftline=true,%
+		rightline=true,%
+		innerleftmargin=10pt,%
+		innerrightmargin=10pt,%
+		innertopmargin=10pt,%
+		innerbottommargin=8pt,%
+	}
+
+	\surroundwithmdframed[style=resultstyle]{ex}
+\fi
+
+\newcommand{\st}{\text{ s.t. }}
+\newcommand{\C}{\complement}
+\newcommand{\N}{{\mathbb N}}
+
+\newcommand{\intint}[2]{\left\llbracket#1, #2\right\rrbracket}
+
+\begin{document}
+\maketitle
+
+\section{Séance 1}
+
+\begin{ex} Soient $(X, \mathcal F)$ un espace mesurable et $Y \subset X$. Mq $\mathcal F_Y \coloneqq \mathcal F \cap Y$ est une $\sigma$-algèbre sur $Y$.
+\end{ex}
+
+\begin{proof}~
+\begin{enumerate}
+	\item $\emptyset \in \mathcal F$, donc $\emptyset \cap Y = \emptyset \in \mathcal F_Y$.
+	\item Soit $F \in \mathcal F$. $F \cap Y \in \mathcal F_Y$ et donc~:
+	\[Y \setminus (F \cap Y) = Y \setminus F \cup \emptyset = Y \cap F^\C \in \mathcal F_Y\]
+	car $F^\C \in \mathcal F$.
+	\item Soit $(F_n)_{n \geq 0} \in \mathcal F^\N$. On sait que $\bigcup_{n \geq 0}F_n \in \mathcal F$. De plus $(F_n \cap Y)_{n \geq 0} \in \mathcal F^\N$. Donc~:
+	\[\bigcup_{n \geq 0}(F_n \cap Y) = \bigcup_{n \geq 0}F_n \cap Y \in \mathcal F_Y.\]
+\end{enumerate}
+\end{proof}
+
+\begin{ex}~
+\begin{enumerate}
+	\item Soit $X$ un ensemble fini. Décrire la $\sigma$-algèbre engendrée par la classe des parties finies de $X$. Que peut-on dire si $X$ est fini~?
+	\item Dans $X = \intint 0n$, on considère $\mathcal A = \{0\}$ et $\mathcal B = \{\{0\}, \{1, 2\}\}$. Décrire $\sigma(\mathcal A)$ et $\sigma(\mathcal B)$.
+\end{enumerate}
+\end{ex}
+
+\begin{proof}~
+\begin{enumerate}
+	\item Soit $\mathcal F = \sigma(\{Y \in \mathcal P(X) \st \text{ $Y$ est fini }\})$. Alors~:
+	\[\mathcal F = \{Y \in \mathcal P(X) \st \text{ $Y$ est au plus dénombrable ou $Y^\C$ est au plus dénombrable}\}\]
+	car la famille doit être stable par complémentaire (d'où la définition symétrique par complémentarité) et par union dénombrable (d'où le fait
+	que $Y$ ou $Y^\C$ soit \text{au plus dénombrable}). Si $X$ est fini, alors l'ensemble des parties finies de $X$ est exactement $\mathcal P(X)$
+	qui est une $\sigma$-algèbre. Donc $\mathcal F = \sigma(\mathcal P(X)) = \mathcal P(X)$.
+	\item $\sigma(\mathcal A)$ est la $\sigma$-algèbre engendrée par un unique élément donc~: $\sigma(\mathcal A) = \{\emptyset, \{0\}, \{0\}^\C, \intint 0n\}$
+	où $\{0\}^\C = \intint 1n$.
+
+	$\sigma(\mathcal B) = \{\emptyset, \{0\}, \{1, 2\}, \{0, 1, 2\}, \intint 3n, \intint 1n, \{0\} \cup \intint 3n, \intint 0n\}$.
+\end{enumerate}
+\end{proof}
+
+\begin{ex} Soient $X, Y$ deux ensembles, et $f : X \to Y$.
+\begin{enumerate}
+	\item Si $\mathcal F$ est une $\sigma$-algèbre sur $Y$, mq $f^{-1}(\mathcal F)$ est une $\sigma$-algèbre sur $X$.
+	\item Soit $\mathcal A$ une $\sigma$-algèbre sur $X$.
+	\begin{enumerate}
+		\item Mq $\mathcal F \coloneqq \{B \in \mathcal P(Y) \st f^{-1}(B) \in \mathcal A\}$ est une $\sigma$-algèbre sur $Y$.
+		\item Que peut-on dire de $f(\mathcal A)$~?
+	\end{enumerate}
+\end{enumerate}
+\end{ex}
+
+\begin{proof}~
+\begin{enumerate}
+	\item~
+	\begin{itemize}
+		\item $\emptyset \in \mathcal F$ donc $\emptyset = f^{-1}(\emptyset) \in f^{-1}(\mathcal F)$.
+		\item Soit $A \in \mathcal A$. Il existe $F \in \mathcal F \st f(A) = B$. $f(X \setminus A) = Y \setminus B \in \mathcal F$.  % TODO: fix using only f^{-1} and never f
+		\item Soit $(A_n)_{n \geq 0} \in \mathcal A^\N$. Il existe $(B_n)_{n \geq 0} \in \mathcal F^\N \st \forall n \geq 0 : A_n = f^{-1}(B_n)$.
+		$\bigcup_{n \geq 0}A_n = \bigcup_{n \geq 0}f^{-1}(B_n) = f^{-1}\left(\bigcup_{n \geq 0}B_n\right) \in f^{-1}(\mathcal F)$.
+	\end{itemize}
+	\item~
+	\begin{enumerate}
+		\item~
+		\begin{itemize}
+			\item $\emptyset \in \mathcal A$ donc $\emptyset \in \mathcal F$.
+			\item Soient $B \in \mathcal F$, $A \coloneqq f^{-1}(B)$. $f^{-1}(B^\C) = f^{-1}(Y) \setminus f^{-1}(B) = f^{-1}(B)^\C \in \mathcal A$.
+			\item Soit $(B_n)_{n \geq 0} \in \mathcal F^\N$. On pose $B \coloneqq \bigcup_{n \geq 0}B_n$.
+			\[f^{-1}(B) = \bigcup_{n \geq 0}f^{-1}(B_n) = \bigcup_{n \geq 0}A_n \in \mathcal A\]
+			où $\forall n \geq 0 : A_n = f^{-1}(B_n) \in \mathcal A$. Donc $B \in \mathcal F$.
+		\end{itemize}
+		\item $f(\mathcal A)$ n'est pas nécessairement une $\sigma$-algèbre~: l'égalité $f(A^\C) = f(A)^\C$ n'est pas vraie en général. Par exemple pour
+		$f : [\pm\varepsilon] \to [0, \varepsilon^2] : x \mapsto x^2$, on a~:
+		\[[0, \varepsilon^2] = f([-\varepsilon, 0]) = f([\pm\varepsilon] \setminus [0, +\varepsilon])
+		  \neq f([\pm\varepsilon]) \setminus f([0, \varepsilon]) = [0, \varepsilon^2] \setminus [0, \varepsilon^2] = \emptyset.\]
+		Donc rien ne garantit que $f(\mathcal A)$ est stable par passage au complémentaire.
+	\end{enumerate}
+\end{enumerate}
+\end{proof}
+
+\begin{ex} Soient $(X, \mathcal A), (Y, \mathcal B)$ espaces mesurables. Soit $\mathcal F \subset \mathcal P(Y)$. Si $\mathcal B = \sigma(\mathcal F)$, mq $f : X \to Y$
+est mesurable ssi $f^{-1}(\mathcal B) \subseteq \mathcal A$.
+\end{ex}
+
+\begin{proof} $\underline \Rightarrow$: en supposant $f$ mesurable, si $B \in \mathcal F$, alors $B \in \mathcal B$ et donc $f^{-1}(B) \in \mathcal A$.
+
+$\underline \Leftarrow$: on pose $\mathcal B' \coloneqq \{B \in \mathcal B \st f^{-1}(B) \in \mathcal A\}$. Par le point précédent, $\mathcal B'$ est une $\sigma$-algèbre.
+Par hypothèse~: $\mathcal F \subset \mathcal B'$, et donc $\sigma(\mathcal F) \subset \sigma(\mathcal B') = \mathcal B'$. Or $\mathcal B = \sigma(\mathcal F)$. De plus,
+puisque $\mathcal B' \subset \mathcal B$, on a $\mathcal B \subset \mathcal B' \subset \mathcal B$, ce qui implique $\mathcal B = \mathcal B'$, i.e.~:
+\[\forall B \in \mathcal B : f^{-1}(B) \in \mathcal A.\]
+\end{proof}
+
+\begin{ex}~
+\begin{enumerate}
+	\item Mq toute intersection (non-vide) de classes de Dynkin est une classe de Dynkin.
+	\item Mq pour tout $\mathcal F \subset \mathcal P(X)$ il existe une plus petite classe de Dynkin au sens de l'inclusion (notée $\lambda(\mathcal F)$).
+	\item Mq si $\mathcal D$ est une classe de Dynkin stable par intersections finies, alors $\mathcal D$ est une $\sigma$-algèbre.
+	\item Mq si $\mathcal F \subset \mathcal P(X)$ est stable par intersections finies, alors $\lambda(\mathcal F) = \sigma(\mathcal F)$.
+\end{enumerate}
+\end{ex}
+
+\begin{proof}~
+\begin{enumerate}
+	\item~[Exactement même raisonement que pour les $\sigma$-algèbres] Soit $(\mathcal D_i)_{i \in I}$ une famille non-vide de classes de Dynkin et soit
+	$\mathcal D \coloneqq \bigcap_{i \in I}\mathcal D_i$.
+
+	\begin{itemize}
+		\item $\forall i \in I : \emptyset \in \mathcal D_i$ donc $\emptyset \in \mathcal D$.
+		\item Soit $D \in \mathcal D$. Puisque $\forall i \in I : D \in \mathcal D_i$ et que les $\mathcal D_i$ sont des classes de Dynkin, on a $\forall i \in I : D^\C \in \mathcal D_i$
+		et donc $D^\C \in \mathcal D$.
+		\item Soit $(D_n)_{n \geq 0} \in \mathcal D^\N$. On sait que $\forall i \in I : \bigsqcup_{n \geq 0}D_n \in \mathcal D_i$ et donc $\bigsqcup_{n \geq 0}D_n \in \mathcal D$.
+	\end{itemize}
+
+	\item Comme pour les $\sigma$-algèbres, on peut définir~:
+	\[\lambda(\mathcal F) \coloneqq \bigcap_{\overset{\mathcal D \text{ Dynkin}}{\mathcal F \subset \mathcal D}}\mathcal D.\]
+	Par le point ci-dessus, $\lambda(\mathcal F)$ est une classe de Dynkin et toute classe de Dynkin $\mathcal D' \supset \mathcal F$ contient $\lambda(\mathcal F)$ par définition.
+
+	\item Soit $\mathcal D$ une classe de Dynkin stable par intersections finies et soit $(D_n)_{n \geq 0} \in \mathcal D^\N$. Montrons donc que $\bigcup_{n \geq 0}D_n \in \mathcal D$.
+	On pose $B_0 \coloneqq D_0$ et pour $n > 0$, on pose $B_n \coloneqq A_n \cap (\bigcap_{j=1}^{n-1}B_j)$. Par récurrence, on observe que les $B_n$ sont dans $\mathcal D$ par
+	stabilité sous intersections finies. De plus les $B_n$ sont disjoints deux à deux et leur union est égale à l'union des $D_n$. Donc $\bigcup_{n \geq 0}D_n \in \mathcal D$.
+
+	\item Soit $D \in \lambda(\mathcal F)$. On pose $\mathcal D_D \coloneqq \{Q \in \lambda(\mathcal F) \st Q \cap D \in \lambda(\mathcal F)\} \subset \lambda(\mathcal F)$.
+	Montrons que $\mathcal D_D$ est une classe de Dynkin.
+	\begin{itemize}
+		\item $\emptyset \in \mathcal D_D$ puisque $\lambda(\mathcal F) \ni \emptyset = \emptyset \cap D$.
+		\item Soit $Q \in \mathcal D_D$. $Q^\C \cap D = (D^\C \cup Q)^\C = (D^\C \sqcup (\underbrace {Q \cap D}_{\in \lambda(\mathcal F)}))^\C \in \lambda(\mathcal F)$ par
+		stabilité par passage au complément, stabilité par union disjointe.
+		\item Soit $(Q_n)_{n \geq 0} \in {\mathcal D_D}^\N$ deux à deux disjoints. On a~:
+		\[\bigsqcup_{n \geq 0}Q_n \cap D = \bigsqcup_{n \geq 0}(\underbrace {Q_n \cap D}_{\in \lambda(\mathcal F)}) \in \lambda(\mathcal F).\]
+	\end{itemize}
+
+	On remarque également que si $D \in \mathcal F$~: $\mathcal F \subset \mathcal D_D \subset \lambda(\mathcal F)$, ce qui implique $\lambda(\mathcal F) = \mathcal D_D$.
+
+	Or par symétrie de l'intersection, pour $D, Q \in \lambda(\mathcal F)$ on a~: $Q \in \mathcal D_D \iff D \in \mathcal D_Q$. Dès lors on a une équivalence entre les deux
+	assertions suivantes~:
+	\begin{itemize}
+		\item $\forall (D, Q) \in \mathcal F \times \lambda(\mathcal F) : Q \in \mathcal D_D$ (autrement dit $\forall D \in \mathcal F : \lambda(\mathcal F) = \mathcal D_D$)~;
+		\item $\forall (D, Q) \in \mathcal F \times \lambda(\mathcal F) : D \in \mathcal D_Q$ (autrement dit $\forall Q \in \lambda(\mathcal F) : \mathcal F \subset \mathcal D_Q$).
+	\end{itemize}
+
+	On peut alors en déduire que $\forall Q \in \lambda(\mathcal F) : \lambda(\mathcal F) = \mathcal D_Q$. Dès lors, montrer que $\lambda(\mathcal F)$ est stable par
+	instersections finies revient à montrer que $\forall D, Q \in \lambda(\mathcal F) : D \cap Q \in \lambda(\mathcal F)$, i.e. $D \in \mathcal D_Q = \lambda(\mathcal F)$.
+	On a donc bien la stabilité de $\lambda(\mathcal F)$ sous intersections finies, on peut donc déduire que $\lambda(\mathcal F)$ est une $\sigma$-algèbre qui contient $\mathcal F$,
+	donc $\sigma(\mathcal F) \subset \lambda(\mathcal F)$. Or toute $\sigma$-algèbre est une classe de Dynkin, donc $\lambda(\mathcal F) \subset \sigma(\mathcal F)$, ce qui permet
+	de conclure.
+\end{enumerate}
+\end{proof}
+
+\end{document}
