@@ -24,6 +24,8 @@
 %\newtheorem{proof}{Résolution}[section]
 \addto\captionsfrench{\renewcommand\proofname{\underline{Résolution}}}
 
+\newcommand{\TODO}[1]{\textcolor{red}{TODO: #1}}
+
 % link amsthm and mdframed
 \iftrue
 %\iffalse
@@ -61,7 +63,7 @@
 	\item Soit $F \in \mathcal F$. $F \cap Y \in \mathcal F_Y$ et donc~:
 	\[Y \setminus (F \cap Y) = Y \setminus F \cup \emptyset = Y \cap F^\C \in \mathcal F_Y\]
 	car $F^\C \in \mathcal F$.
-	\item Soit $(F_n)_{n \geq 0} \in \mathcal F^\N$. On sait que $\bigcup_{n \geq 0}F_n \in \mathcal F$. De plus $(F_n \cap Y)_{n \geq 0} \in \mathcal F^\N$. Donc~:
+	\item Soit $(F_n)_{n \geq 0} \in \mathcal F^\N$. On sait que $\bigcup_{n \geq 0}F_n \in \mathcal F$. De plus $(F_n \cap Y)_{n \geq 0} \in {\mathcal F_Y}^\N$. Donc~:
 	\[\bigcup_{n \geq 0}(F_n \cap Y) = \bigcup_{n \geq 0}F_n \cap Y \in \mathcal F_Y.\]
 \end{enumerate}
 \end{proof}
@@ -89,7 +91,7 @@
 
 \begin{ex} Soient $X, Y$ deux ensembles, et $f : X \to Y$.
 \begin{enumerate}
-	\item Si $\mathcal F$ est une $\sigma$-algèbre sur $Y$, mq $f^{-1}(\mathcal F)$ est une $\sigma$-algèbre sur $X$.
+	\item Si $\mathcal F$ est une $\sigma$-algèbre sur $Y$, mq $\mathcal A \coloneqq f^{-1}(\mathcal F)$ est une $\sigma$-algèbre sur $X$.
 	\item Soit $\mathcal A$ une $\sigma$-algèbre sur $X$.
 	\begin{enumerate}
 		\item Mq $\mathcal F \coloneqq \{B \in \mathcal P(Y) \st f^{-1}(B) \in \mathcal A\}$ est une $\sigma$-algèbre sur $Y$.
@@ -103,7 +105,7 @@
 	\item~
 	\begin{itemize}
 		\item $\emptyset \in \mathcal F$ donc $\emptyset = f^{-1}(\emptyset) \in f^{-1}(\mathcal F)$.
-		\item Soit $A \in \mathcal A$. Il existe $F \in \mathcal F \st f(A) = B$. $f(X \setminus A) = Y \setminus B \in \mathcal F$.  % TODO: fix using only f^{-1} and never f
+		\item Soit $A \in \mathcal A$. Il existe $B \in \mathcal F \st f^{-1}(B) = A$. $f^{-1}(Y \setminus B) = X \setminus A \in \mathcal A$.
 		\item Soit $(A_n)_{n \geq 0} \in \mathcal A^\N$. Il existe $(B_n)_{n \geq 0} \in \mathcal F^\N \st \forall n \geq 0 : A_n = f^{-1}(B_n)$.
 		$\bigcup_{n \geq 0}A_n = \bigcup_{n \geq 0}f^{-1}(B_n) = f^{-1}\left(\bigcup_{n \geq 0}B_n\right) \in f^{-1}(\mathcal F)$.
 	\end{itemize}
@@ -122,12 +124,14 @@
 		\[[0, \varepsilon^2] = f([-\varepsilon, 0]) = f([\pm\varepsilon] \setminus [0, +\varepsilon])
 		  \neq f([\pm\varepsilon]) \setminus f([0, \varepsilon]) = [0, \varepsilon^2] \setminus [0, \varepsilon^2] = \emptyset.\]
 		Donc rien ne garantit que $f(\mathcal A)$ est stable par passage au complémentaire.
+
+		\TODO{Donner un contre-exemple avec des $\sigma$-algèbres finies sur de petits ensembles.}
 	\end{enumerate}
 \end{enumerate}
 \end{proof}
 
 \begin{ex} Soient $(X, \mathcal A), (Y, \mathcal B)$ espaces mesurables. Soit $\mathcal F \subset \mathcal P(Y)$. Si $\mathcal B = \sigma(\mathcal F)$, mq $f : X \to Y$
-est mesurable ssi $f^{-1}(\mathcal B) \subseteq \mathcal A$.
+est mesurable ssi $f^{-1}(\mathcal F) \subseteq \mathcal A$.
 \end{ex}
 
 \begin{proof} $\underline \Rightarrow$: en supposant $f$ mesurable, si $B \in \mathcal F$, alors $B \in \mathcal B$ et donc $f^{-1}(B) \in \mathcal A$.
@@ -164,7 +168,7 @@ puisque $\mathcal B' \subset \mathcal B$, on a $\mathcal B \subset \mathcal B' \
 	Par le point ci-dessus, $\lambda(\mathcal F)$ est une classe de Dynkin et toute classe de Dynkin $\mathcal D' \supset \mathcal F$ contient $\lambda(\mathcal F)$ par définition.
 
 	\item Soit $\mathcal D$ une classe de Dynkin stable par intersections finies et soit $(D_n)_{n \geq 0} \in \mathcal D^\N$. Montrons donc que $\bigcup_{n \geq 0}D_n \in \mathcal D$.
-	On pose $B_0 \coloneqq D_0$ et pour $n > 0$, on pose $B_n \coloneqq A_n \cap (\bigcap_{j=1}^{n-1}B_j)$. Par récurrence, on observe que les $B_n$ sont dans $\mathcal D$ par
+	On pose $B_0 \coloneqq D_0$ et pour $n > 0$, on pose $B_n \coloneqq A_n \cap (\bigcap_{j=1}^{n-1}B_j^\C)$. Par récurrence, on observe que les $B_n$ sont dans $\mathcal D$ par
 	stabilité sous intersections finies. De plus les $B_n$ sont disjoints deux à deux et leur union est égale à l'union des $D_n$. Donc $\bigcup_{n \geq 0}D_n \in \mathcal D$.
 
 	\item Soit $D \in \lambda(\mathcal F)$. On pose $\mathcal D_D \coloneqq \{Q \in \lambda(\mathcal F) \st Q \cap D \in \lambda(\mathcal F)\} \subset \lambda(\mathcal F)$.
