@@ -12,6 +12,13 @@
 *.bak
 *.synctex.gz
 
+# Images
+*.png
+*.eps
+*.jpg
+*.gif
+*.tiff
+
 # Archives
 *.zip
 *.7z
