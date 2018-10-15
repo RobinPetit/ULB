@@ -43,9 +43,14 @@
 	\surroundwithmdframed[style=resultstyle]{ex}
 \fi
 
+\newcommand{\pinfty}{{+\infty}}
+\newcommand{\minfty}{{-\infty}}
+
 \newcommand{\st}{\text{ s.t. }}
 \newcommand{\C}{\complement}
 \newcommand{\N}{{\mathbb N}}
+\newcommand{\R}{{\mathbb R}}
+\renewcommand{\P}{{\mathbb P}}
 
 \newcommand{\intint}[2]{\left\llbracket#1, #2\right\rrbracket}
 
@@ -142,7 +147,7 @@ puisque $\mathcal B' \subset \mathcal B$, on a $\mathcal B \subset \mathcal B' \
 \[\forall B \in \mathcal B : f^{-1}(B) \in \mathcal A.\]
 \end{proof}
 
-\begin{ex}~
+\begin{ex}\label{ex:1.5}~
 \begin{enumerate}
 	\item Mq toute intersection (non-vide) de classes de Dynkin est une classe de Dynkin.
 	\item Mq pour tout $\mathcal F \subset \mathcal P(X)$ il existe une plus petite classe de Dynkin au sens de l'inclusion (notée $\lambda(\mathcal F)$).
@@ -196,6 +201,279 @@ puisque $\mathcal B' \subset \mathcal B$, on a $\mathcal B \subset \mathcal B' \
 	donc $\sigma(\mathcal F) \subset \lambda(\mathcal F)$. Or toute $\sigma$-algèbre est une classe de Dynkin, donc $\lambda(\mathcal F) \subset \sigma(\mathcal F)$, ce qui permet
 	de conclure.
 \end{enumerate}
+\end{proof}
+
+\newpage
+\section{Séance 2}
+
+\begin{ex} Soient $(X, \mathcal F)$ un espace mesurable et $\mu$ une fonction additive sur $\mathcal A$ à valeurs dans $\mathbb R^+$. Mq les conditions suivantes sont équivalentes~:
+\begin{enumerate}
+	\item $\mu$ est $\sigma$-additive~;
+	\item $\mu$ est continue à gauche~;
+	\item $\mu$ est continue à droite.
+\end{enumerate}
+
+Donner un exemple de mesure $\mu : \mathcal A \to [0, \pinfty]$ qui ne satisfait pas le point 3. Que faut-il ajouter comme hypothèse pour ce résultat~?
+\end{ex}
+
+\begin{proof}~
+\begin{itemize}
+	\item[\underline {$1. \Rightarrow 2.$}] Soit $(B_n)_{n \geq 0} \in \mathcal A^\N$. On pose $A_0 \coloneqq B_0$ et $\forall n > 0 : A_n \coloneqq B_n \setminus B_{n-1}$,
+	ce qui donne (car les $A_n$ sont dans $\mathcal A$)~:
+	\[\mu\left(\bigcup_{n \geq 0}B_n\right) = \mu\left(\bigsqcup_{n \geq 0}A_n\right) = \sum_{n \geq 0}\mu(A_n)
+	  = \lim_{N \to \pinfty}\underbrace {\sum_{n=0}^N\mu(A_n)}_{= \mu(B_N)} = \lim_{N \to \pinfty}\mu(B_N).\]
+	\item[\underline {$2. \Rightarrow 1.$}] Soit $(A_n)_{n \geq 0} \in \mathcal A^\N$ deux à deux disjoints.
+	On pose $B_0 \coloneqq A_0$ et $\forall n > 0 : B_n \coloneqq A_n \cup B_{n-1}$. Les $B_n$ forment une suite croissante dans $\mathcal A$. On a alors~:
+	\[\mu\left(\bigsqcup_{n \geq 0}A_n\right) = \mu\left(\bigcup_{n \geq 0}B_n\right) = \lim_{n \to \pinfty}\mu(B_n) = \lim_{n \to \pinfty}\mu\left(\bigsqcup_{j=0}^nA_j\right)
+	  = \lim_{n \to \pinfty}\sum_{j=0}^n\mu(A_j) = \sum_{n \geq 0}\mu(A_n).\]
+	\item[\underline {$2. \Rightarrow 3.$}] Soit $(C_n)_{n \geq 0} \in \mathcal A^\N$ une suite décroissante. On a alors que $({C_n}^\C)_{n \geq 0}$ est une suite croissante dans
+	$\mathcal A$. Donc~:
+	\[\mu\left(\bigcup_{n \geq 0}{C_n}^\C\right) = \lim_{n \to \pinfty}\mu({C_n}^\C) = \mu(X) - \lim_{n \to \pinfty}\mu({C_n}^\C)\]
+	car $\mu(X) < \pinfty$. De plus~:
+	\[\mu\left(\bigcup_{n \geq 0}{C_n}^\C\right) = \mu\left(\left(\bigcap_{n \geq 0}C_n\right)^\C\right) = \mu(X) - \mu\left(\bigcap_{n \geq 0}C_n\right).\]
+	Par finitude de $\mu$, on conclut~:
+	\[\mu\left(\bigcap_{n \geq 0}C_n\right) = \lim_{n \to \pinfty}\mu(C_n).\]
+	\item[\underline {$3. \Rightarrow 2.$}] Exactement même raisonnement par passage au complémentaire.
+\end{itemize}
+
+Si la mesure n'est pas finie, on peut construire une suite $(C_n)_n$ telle que $\forall n \geq 0 : \mu(C_n) = \pinfty$ et $\bigcap_{n \geq 0}C_n = \emptyset$. Par exemple,
+dans l'espace mesuré $(\N, \mathcal P(\N), \# = \abs \cdot)$~: $\forall n \geq 0 : C_n \coloneqq \{m \in \N \st m > n\}$ est de mesure $\pinfty$ et
+$\bigcap_{n \geq 0}C_n = \emptyset$. On a donc~:
+\[\mu\left(\bigcap_{n \geq 0}C_n\right) = \mu(\emptyset) = 0 \neq \pinfty = \lim_{n \to \pinfty}\pinfty = \lim_{n \to \pinfty}\mu(C_n).\]
+
+Il faut donc supposer que pour la suite $(C_n)_n$, il existe $n_0 \in \N \st \mu(C_n) \lneqq \pinfty$ afin d'éviter le cas où $(\mu(C_n))_{n \geq 0}$ est infinie pour tous les termes.
+\end{proof}
+
+\begin{ex} Soit $X$ un ensemble non dénombrable et $\mathcal A = \{A \in \mathcal P(X) \st A \text{ ou } A^\C \text{ est dénombrable}\}$. Soit $\mu : \mathcal A \to \{0, 1\}$
+où $\mu(A) = 0 \iff A$ est dénombrable. Mq $\mu$ est une mesure sur $(X, \mathcal A)$.
+\end{ex}
+
+\begin{proof} $\mathcal A$ est une $\sigma$-algèbre (voir cours).
+\begin{itemize}
+	\item $\mu(\emptyset) = 0$ car $\emptyset$ est fini.
+	\item Soit $(A_n)_{n \geq 0} \in \mathcal A^\N$ deux à deux disjoints. On note $A \coloneqq \bigsqcup_{n \geq 0}A_n$. On a soit $\mu(A) = 0$ ou $\mu(A) = 1$, et~:
+	\[\mu(A) = 0 \iff \underbrace {\forall n \geq 0 : \mu(A_n) = 0}_{\text{i.e. tous les $A_n$ dénombrables}},\]
+	et donc~:
+	\[\mu(A) = 0 = \sum_{n \geq 0}0 = \sum_{n \geq 0}\mu(A_n)\]
+	pour le premier cas. Pour le second cas, si $\mu(A) = 1$, il existe $n_0 \in \N \st {A_{n_0}}^\C$ est dénombrable (ou $\mu(A_{n_0}) = 1$), donc $\mu(A) \leq \sum_{n \geq 0}\mu(A_n)$.
+	Supposons par l'absurde qu'il existe $n_1 \neq n_0 \st {A_{n_1}}^\C$ est dénombrable ($\mu(A_{n_1}) = 1$). On a donc ${A_{n_0}}^\C$ et ${A_{n_1}}^\C$ dénombrables.
+	Or $A_{n_0} \cap A_{n_1} = \emptyset$, donc 	$A_{n_0} \subseteq {A_{n_1}}^\C$ ou $A_{n_1} \subseteq {A_{n_0}}^\C$, ce qui implique $A_{n_0}$ ou $A_{n_1}$ dénombrable,
+	ce qui est une contradiction car $X$ est non-dénombrable.
+\end{itemize}
+\end{proof}
+
+\begin{ex} Soit $(X, \mathcal A, \P)$ un espace de probabilité. Mq $\mathcal T \coloneqq \{A \in \mathcal A \st \P(A) \in \{0, 1\}\}$ est une $\sigma$-algèbre.
+\end{ex}
+
+\begin{proof}~
+\begin{itemize}
+	\item $\P(\emptyset) = 0$ donc $\emptyset \in \mathcal T$.
+	\item Soit $A \in \mathcal T$. En particulier $A \in \mathcal A$ et $\P(A) \in \{0, 1\}$. Puisque $\P$ est une mesure (finie), on a
+	$\P(A^\C) = \P(X) - \P(A) = 1 - \P(A) \in \{0, 1\}$. Donc $A^\C \in \mathcal T$.
+	\item Soit $(A_n)_{n \geq 0} \in \mathcal T^\N$. On note $A \coloneqq \bigcup_{n \geq 0}A_n$. Mq $\P(A) \in \{0, 1\}$.
+	\begin{itemize}
+		\item si $\forall n \geq 0 : \P(A_n) = 0$, alors par $\sigma$-sous-additivité $0 \leq \P(A) \leq \sum_{n \geq 0}P(A_n) = 0$.
+		\item si $\exists n_0 \in \N \st \P(A_{n_0}) = 1$, alors par monotonie, puisque $A_{n_0} \subseteq A \subseteq X$~:
+		\[1 = \P(A_{n_0}) \leq \P(A) \leq \P(X) = 1.\]
+	\end{itemize}
+\end{itemize}
+\end{proof}
+
+\begin{ex} Soient $(X, \mathcal A, \mu)$ un espace mesuré, $(Y, \mathcal B)$ un espace mesurable et $g : X \to Y$ une application mesurable. On pose~:
+\[\nu : \mathcal B \to [0, \pinfty] : B \mapsto \mu(g^{-1}(B)).\]
+Mq $\nu$ est une mesure sur $(Y, \mathcal B)$.
+\end{ex}
+
+\begin{proof} On sait que $\forall B \in \mathcal B : g^{-1}(B) \in \mathcal A$ puisque $g$ est mesurable. Donc $\nu$ est bien définie. Mq $\nu$ est une mesure.
+\begin{itemize}
+	\item $\nu(\emptyset) = \mu(g^{-1}(\emptyset)) = \mu(\emptyset) = 0$ car $\mu$ est une mesure.
+	\item Soient $(B_n)_{n \geq 0} \in \mathcal B^\N$ deux à deux disjoints. Mq $\nu$ est $\sigma$-additive.
+	\[\nu\left(\bigsqcup_{n \geq 0}B_n\right) = \mu\left(g^{-1}\left(\bigsqcup_{n \geq 0}B_n\right)\right) = \mu\left(\bigsqcup_{n \geq 0}g^{-1}(B_n)\right)
+	  = \sum_{n \geq 0}\mu(g^{-1}(B_n)) = \sum_{n \geq 0}\nu(B_n).\]
+\end{itemize}
+\end{proof}
+
+\begin{ex} Soit $(X, \mathcal A)$ un espace mesurable.
+\begin{enumerate}
+	\item Pour $x \in X$, mq $\delta_x$ est une mesure.
+	\item Mq si $\mu$ est une mesure sur $(X, \mathcal A) \st \forall A \in \mathcal A : \mu(A) = 0 \iff x \not \in A$ alors $\exists C \gneqq 0 \st \mu = C\delta_x$.
+\end{enumerate}
+\end{ex}
+
+\begin{proof}~
+\begin{enumerate}
+	\item Mq $\delta_x$ est une mesure.
+	\begin{itemize}
+		\item $\delta_x(\emptyset) = 0$ car $x \not \in \emptyset$.
+		\item Soit $(A_n)_{n \geq 0} \in \mathcal A^\N$ 2 à 2 disjoints. Mq $\delta_x(\bigsqcup_{n \geq 0}A_n) = \sum_{n \geq 0}\delta_x(A_n)$.
+		\begin{itemize}
+			\item Si $\delta_x(\bigsqcup_{n \geq 0}A_n) = 0$, alors $\forall n \geq 0 : x \not \in A_n$, i.e. $\forall n \geq 0 : \delta_x(A_n) = 0$.
+			\item Si $\delta_x(\bigsqcup_{n \geq 0}A_n) = 1$, alors $\exists n_0 \st x \in A_{n_0}$. Et puisque les $A_n$ sont disjoints, $\forall n \neq n_0 : x \not \in A_n$.
+		\end{itemize}
+	\end{itemize}
+	\item Soient $B, C \in \mathcal A \st \mu(B) \neq 0 \neq \mu(C)$. Alors $\delta_x(B) = 1 = \delta_x(C)$. Mq $\mu(B) = \mu(C)$. $B \cap C \neq \emptyset$ puisque $x \in B \cap C$.
+	On pose $\tilde C \coloneqq C \cap B^\C$ et $\tilde B \coloneqq C^\C \cap B$. On a alors que $B$ et $\tilde C$ sont disjoints ($C$ et $\tilde B$ également).
+	De plus, $x \not \in \tilde B$ et $x \not \in \tilde C$, et donc $\mu(\tilde B) = \mu(\tilde C) = 0$. On a donc~:
+	\[\mu(C) = \mu(C) + \mu(\tilde B) = \mu(C \sqcup \tilde B) = \mu(B \cup C) = \mu(B \sqcup \tilde C) = \mu(B) + \mu(\tilde C) = \mu(B).\]
+	On a donc $\mu : \mathcal A \to \{0, C\}$ où $\mu(A) \iff \delta_x(A) = 1$.
+\end{enumerate}
+\end{proof}
+
+\begin{ex} Soit $(X, \mathcal A)$ un espace mesurable. Mq la mesure de comptage est une mesure.
+\end{ex}
+
+\begin{proof}~
+\begin{itemize}
+	\item $\abs \emptyset = 0$.
+	\item La $\sigma$-additivité est triviale~: $\abs {\bigsqcup_{n \geq 0}A_n} = \sum_{n \geq 0}\abs A_n$.
+\end{itemize}
+\end{proof}
+
+\begin{ex} Soit $X$ un ensemble fini non-vide. Mq $\mu = \frac {\abs \cdot}{\abs X}$ est une mesure de proba sur $(X, \mathcal P(X))$.
+\end{ex}
+
+\begin{proof}~
+\begin{itemize}
+	\item $\mu(\emptyset) = 0/\abs X = 0$.
+	\item Soient $(A_n)_{n \geq 0} \in \mathcal P(X)^\N$ 2 à 2 disjoints.
+	\[\mu(\bigsqcup_{n \geq 0}A_n) = \frac {\sum_{n \geq 0}\abs {A_n}}{\abs X} = \sum_{n \geq 0}\frac {\abs {A_n}}{\abs X}.\]
+\end{itemize}
+
+\underline {\textit{Note:}} si $(X, \mathcal A, \mu)$ est un espace mesuré, alors $\forall \alpha > 0 : \alpha\mu : \mathcal A \to [0, \pinfty] : A \mapsto \alpha \cdot \mu(A)$
+est une mesure sur $(X, \mathcal A)$. Donc l'exercice peut être simplement résolu par le fait que $\mu$ est la mesure de comptage normalisée par $\abs X \in {\R^+}^*$
+\end{proof}
+
+\begin{ex} Soit $(X, \mathcal A)$ un espace de mesure.
+\begin{enumerate}
+	\item Soit $(\mu_n)_{n \geq 0}$ une suite croissante de mesures sur $(X, \mathcal A)$. Mq $\mu \coloneqq \lim_{n \to \pinfty}\mu_n$ est une mesure.
+	\item Soit $(\mu_n)_{n \geq 0}$ une suite de mesures. Est-ce que $\mu \coloneqq \sum_{n \geq 0}\mu_n$ est une mesure~?
+	\item Pour $n \geq 0$, on définit la mesure $\mu_n$ sur $(\N, \mathcal P(\N))$ par $\mu_n(A) = \abs {A \cap [n, \pinfty)}$.
+	\begin{itemize}
+		\item Mq $\forall n \geq 0 : \mu_n$ est bien une mesure et que la suite $(\mu_n)_n$ est décroissante.
+		\item Est-ce que $\mu = \lim_{n \to \pinfty}\mu_n$ est une mesure sur $(\N, \mathcal P(\N))$~? Caractériser entièrement $\mu$.
+	\end{itemize}
+\end{enumerate}
+\end{ex}
+
+\begin{proof}~
+\begin{enumerate}
+	\item On note que puisque la suite des $\mu_n$ est croissante, pour tout $A \in \mathcal A$, $\mu(A)$ est bien définie car soit la suite $(\mu_n(A))_n$ converge vers une
+	valeur réelle, soit elle diverge vers $\pinfty$.
+	\begin{itemize}
+		\item $\mu(\emptyset) = \lim_{n \to \pinfty}\mu_n(\emptyset) = 0$.
+		\item Soient $(A_n)_{n \geq 0}$ 2 à 2 disjoints.
+		\begin{align*}
+			\mu\left(\bigsqcup_{n \geq 0}A_n\right) &= \lim_{k \to \pinfty}\mu_k\left(\bigsqcup_{n \geq 0}A_n\right) = \lim_{k \to \pinfty}\lim_{N \to \pinfty}\sum_{n=0}^N\mu_k(A_n) \\
+				&= \lim_{N \to \pinfty}\sum_{n=0}^N\lim_{k \to \pinfty}\mu_k(A_n) = \sum_{n \geq 0}\lim_{k \to \pinfty}\mu_k(A_n) = \sum_{n \geq 0}\mu(A_n).
+		\end{align*}
+	\end{itemize}
+	\item~
+	\begin{itemize}
+		\item $\mu(\emptyset) = \sum_{n \geq 0}\mu_n(\emptyset) = 0$.
+		\item Soient $(A_n)_{n \geq 0} \in \mathcal A^\N$ 2 à 2 disjoints. On note $A \coloneqq \bigsqcup_{n \geq 0}A_n$. Par non-négativité des $(\mu_k(A_n))_{n,k}$,
+		on a que les sommes sur $k$ et $n$ commutent, i.e.~:
+		\[\sum_{k \geq 0}\sum_{n \geq 0}\mu_k(A_n) = \sum_{n \geq 0}\sum_{k \geq 0}\mu_k(A_n),\]
+		et donc $\mu(A) = \sum_{n \geq 0}\mu(A_n)$.
+	\end{itemize}
+	On en déduit donc que $\mu = \sum_{k \geq 0}\mu_k$ est une mesure sur $(X, \mathcal A)$. De plus, puisque $\alpha \cdot \mu$ (pour $\alpha > 0$, $\mu$ mesure sur $(X, \mathcal A)$)
+	est également une mesure sur $(X, \mathcal A)$, on a que pour $(\alpha_n)_{n \geq 0} \in \left({\R^+}^*\right)^\N$~: $\mu = \sum_{n \geq 0}\alpha_n\mu_n$ est une mesure également.
+	\item~
+	\begin{itemize}
+		\item Soit $n \in \N$.
+		\begin{itemize}
+			\item $\mu_n(\emptyset) = \abs \emptyset = 0$.
+			\item La $\sigma$-additivité est triviale par la $\sigma$-additivité de la mesure de comptage.
+		\end{itemize}
+		De plus, pour $A \in \mathcal P(\N)$ et $n \in \N$: $\mu_n(A) = \big|\underbrace  {A \cap [n, \pinfty)}_{\supseteq A \cap [n+1, \pinfty)}\big| \geq \mu_{n+1}(A)$.
+		\item Soit $A \in \mathcal P(\N)$. Deux cas sont à distinguer~:
+		\begin{enumerate}
+			\item Soit $A$ est fini, en quel cas $\max A$ est fini et donc $\forall n > \max A : \mu_n(A) = 0$, et donc $\mu(A) = 0$.
+			\item Soit $A$ est infini, et donc dénombrable. On a alors $\forall n \geq 0 : A \cap [n, \pinfty) \neq \emptyset$ car si il existe un $n \geq 0$ tel que
+			$A \cap [n, \pinfty) = \emptyset$, alors $A \subset [0, n) \cap \N$, et donc $A$ est fini. Dès lors $\mu(A) > 0$.
+
+			De plus~: $\forall n \geq 0 : \mu_n(A) = \pinfty$. Car si $\exists n \geq 0 \st \mu_n(A) \lneq \pinfty$, alors $\mu_n(A) = \abs {A \cap [n, \pinfty)} = k \in \N$
+			et donc $A \cap [n, \pinfty) = \{m_1, \ldots, m_k\}$. Dans ce cas~: $\mu_{m_k+1}(A) = 0$, ce qui est une contradiction.
+
+			On en déduit que si $A$ est infini (dénombrable), alors $\mu(A) = \pinfty$.
+		\end{enumerate}
+		$\mu$ vaut donc $0$ sur les parties finies de $\N$ et $\pinfty$ sur les parties dénombrables. $\mu$ n'est donc pas une mesure car~:
+		$\mu(\N) = \sum_{n \in \N}\mu(\{n\}) = \sum_{n \geq 0}0 = 0 \neq \pinfty$.
+	\end{itemize}
+\end{enumerate}
+\end{proof}
+
+\begin{ex} Soient $(X, \mathcal A, \mu)$ un espace mesuré et $(A_n)_{n \geq 0} \in {\mathcal A}^\N$.
+\begin{enumerate}
+	\item Mq~:
+	\[\mu\left(\liminf_{n \to \pinfty}A_n\right) \leq \liminf_{n \to \pinfty}\mu(A_n).\]
+	\item Si $\exists n_0 \in \N \st \mu\left(\bigcup_{n \geq n_0}A_n\right) \leq \pinfty$, mq~:
+	\[\mu\left(\limsup_{n \to \pinfty}A_n\right) \geq \limsup_{n \to \pinfty}\mu(A_n).\]
+\end{enumerate}
+\end{ex}
+
+\begin{proof}~
+\begin{enumerate}
+	\item Pour $n \geq 0$~: on pose $B_n \coloneqq \cap_{m \geq n}A_m$. La suite $(B_n)_{n \geq 0}$ est trivialement croissante. On a donc~:
+	\[\mu\left(\liminf_{n \to \pinfty}A_n\right) = \mu\left(\bigcup_{n \geq 0}B_n\right) = \lim_{n \to \pinfty}\mu(B_n),\]
+	et~:
+	\[\liminf_{n \to \pinfty}\mu(A_n) = \lim_{n \to \pinfty}\inf_{k \geq n}\mu(A_k).\]
+
+	De plus~: $\mu(B_n) = \mu\left(\bigcap_{k \geq n}A_k\right) \leq \mu(A_m)$ pour $m \geq n$ par monotonie de $\mu$, et donc en particulier $\mu(B_n) \leq \inf_{k \geq n}\mu(A_k)$.
+	Dès lors la suite $\mu(B_n)_n$ est dominée par $(\inf_{k \geq n}\mu(A_k))_n$. Dès lors~:
+	\[\mu\left(\liminf_{n \to \pinfty}A_n\right) = \lim_{n \to \pinfty}\mu(B_n) \leq \lim_{n \to \pinfty}\inf_{k \geq n}\mu(A_k) = \liminf_{n \to \pinfty}\mu(A_n).\]
+	\item On pose $C_n \coloneqq \bigcup_{m \geq n}A_m$. On sait qu'il existe $n_0 \in \N \st \mu\left(C_{n_0}\right) \lneqq \pinfty$. Les $C_n$ forment une suite décroissante.
+	On a donc~:
+	\[\mu\left(\limsup_{n \to \pinfty}A_n\right) = \mu\left(\bigcap_{n \geq 0}C_n\right) = \lim_{n \to \pinfty}\mu(C_n).\]
+	De plus~:
+	\[\limsup_{n \to \pinfty}\mu(A_n) = \lim_{n \to \pinfty}\sup_{k \geq n}\mu(A_k).\]
+	Or $\forall k \geq n : C_n \supseteq A_k$ et donc $\forall k \geq n : \mu(C_n) \geq \mu(A_k)$, et en prticulier $\mu(C_n) \geq \sup_{k \geq n}\mu(A_k)$. Dès lors on conclut~:
+	\[\mu\left(\limsup_{n \to \pinfty}A_n\right) = \lim_{n \to \pinfty}\mu(C_n) \geq \lim_{n \to \pinfty}\sup_{k \geq n}\mu(A_k) = \limsup_{n \to \pinfty}\mu(A_n).\]
+\end{enumerate}
+\end{proof}
+
+\begin{ex} Soit $(X, \mathcal A)$ un espace mesurable. Soient $\mu, \nu$ deux mesures finies sur $(X, \mathcal A)$ telles que
+$\forall A \in \mathcal A : \mu(A) \leq \frac 12 \Rightarrow \mu(A) = \nu(A)$.
+\begin{enumerate}
+	\item Mq $\mu = \nu$.
+	\item Mq le résultat est faux si l'inégalité est changée en inégalité stricte.
+\end{enumerate}
+\end{ex}
+
+\begin{proof}~
+\begin{enumerate}
+	\item Soit $B \in \mathcal A \st \mu(B) \gneqq \frac 12$. Alors $\mu(B^\C) = \mu(X) - \mu(B) = 1 - \mu(B) < \frac 12$. Dès lors $\mu(B^\C) = \nu(B^\C)$ par hypothèse,
+	et on en déduit $\mu(B) = 1 - \mu(B^\C) = 1 - \nu(B^\C) = \nu(B)$, et donc $\mu = \nu$.
+	\item Si l'inégalité devient stricte, on peut choisir, sur l'espace mesurable $(\{0, 1\}, \mathcal P(\{0, 1\}))$, $\mu$ la mesure d'une Bernoulli de proba
+	$\frac 12$ et $\nu$ la mesure d'une Bernoulli de proba $\frac 13$. On a alors~:
+
+	\begin{tabular}{c|c|c}
+		$A$ & $\mu(A)$ & $\nu(A)$ \\
+		\hline
+		$\emptyset$ & $0$ & $0$ \\
+		$\{0\}$ & $\frac 12$ & $\frac 23$ \\
+		$\{1\}$ & $\frac 12$ & $\frac 13$ \\
+		$\{0, 1\}$ & $1$ & $1$
+	\end{tabular}
+
+	Puisque $\mathcal B \coloneqq \{A \in \mathcal P(\{0, 1\}) \st \mu(A) \lneqq \frac 12\} = \{\emptyset\}$, on a bien $\mu = \nu$ sur $\mathcal B$, mais $\mu \neq \nu$.
+\end{enumerate}
+\end{proof}
+
+\begin{ex} Soient $(X, \mathcal A)$ un espace mesurable et une partie stable par intersections finies $\mathcal F \subset \mathcal P(X) \st \sigma(\mathcal F) = \mathcal A$.
+Si $\mu$ et $\nu$ sont deux mesures finies sur $(X, \mathcal A)$ telles que $\nu(X) = \mu(X)$ et $\mu = \nu$ sur $\mathcal F$. Mq $\mu = \nu$.
+\end{ex}
+
+\begin{proof} On pose $\mathcal D \coloneqq \{A \in \mathcal A \st \mu(A) = \nu(A)\}$. Mq $\mathcal D$ est une classe de Dynkin~:
+\begin{itemize}
+	\item $\emptyset \in \mathcal D$ car $\mu(\emptyset) = 0 = \nu(\emptyset)$.
+	\item Soit $A \in \mathcal D$. $\mu(A^\C) = \mu(X) - \mu(A) = \nu(X) - \nu(A) = \nu(A^\C)$ et donc $A^\C \in \mathcal D$.
+	\item Soient $(A_n)_{n \geq 0} \in {\mathcal A}^\N$ 2 à 2 disjoints et $A \coloneqq \bigsqcup_{n \geq 0}A_n$.
+	\[\mu(A) = \sum_{n \geq 0}\mu(A_n) = \sum_{n \geq 0}\nu(A_n) = \nu(A).\]
+	On en conclut $A \in \mathcal D$.
+\end{itemize}
+
+De plus par hypothèse $\mathcal F \subset \mathcal D$, et donc par l'exercice~\ref{ex:1.5} on a $\mathcal D = \sigma(\mathcal F) = \mathcal A$. Dès lors $\mu = \nu$ sur $\mathcal A$,
+et donc $\mu = \nu$.
 \end{proof}
 
 \end{document}
