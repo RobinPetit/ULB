@@ -49,10 +49,14 @@
 \newcommand{\st}{\text{ s.t. }}
 \newcommand{\C}{\complement}
 \newcommand{\N}{{\mathbb N}}
+\newcommand{\Q}{{\mathbb Q}}
 \newcommand{\R}{{\mathbb R}}
+\newcommand{\B}{{\mathbb B}}
 \renewcommand{\P}{{\mathbb P}}
 
 \newcommand{\intint}[2]{\left\llbracket#1, #2\right\rrbracket}
+
+\DeclareMathOperator{\Vol}{Vol}
 
 \begin{document}
 \maketitle
@@ -474,6 +478,129 @@ Si $\mu$ et $\nu$ sont deux mesures finies sur $(X, \mathcal A)$ telles que $\nu
 
 De plus par hypothèse $\mathcal F \subset \mathcal D$, et donc par l'exercice~\ref{ex:1.5} on a $\mathcal D = \sigma(\mathcal F) = \mathcal A$. Dès lors $\mu = \nu$ sur $\mathcal A$,
 et donc $\mu = \nu$.
+\end{proof}
+
+\newpage
+\section{Séance 3}
+\begin{ex} Soient $\B$ la tribu borélienne sur $\R$ et $\mathcal L$ la mesure de Lesbesgue sur $\B$.
+\begin{enumerate}
+	\item Mq $\forall x \in \R : \{x\} \in \B$.
+	\item Mq $\Q \in \B$ et $\mathcal L(\Q) = 0$.
+	\item Mq une union non-dénombrable d'ensembles négligeables n'est pas nécessairement négligeable.
+	\item Mq $N \in \B$ est un ensemble négligeable ssi $\forall \varepsilon > 0 : \exists U_\varepsilon \st N \subseteq U_\varepsilon$ et $\mathcal L(U_\varepsilon) < \varepsilon$.
+\end{enumerate}
+\end{ex}
+
+\begin{proof}~
+\begin{enumerate}
+	\item $\{x\} = [x, x]$ est fermé dans $\R$, et $\mathcal L(\{x\}) = x-x = 0$.
+	\item $\mathcal L(\Q) = \mathcal L(\bigsqcup_{q \in \Q}\{q\}) = \sum_{q \in \Q}\mathcal L(\{q\}) = 0$.
+	\item $\mathcal L(\R) = \pinfty$, or~: $\bigsqcup_{x \in \R}\{x\}$.
+	\item $\underline {\Leftarrow}$~: par monotonie, si $\forall \varepsilon > 0 : N \subseteq U_\varepsilon$, alors $\mathcal L(N) \leq \mathcal L(U_\varepsilon) < \varepsilon$.
+	On en déduit $\mathcal L(N) = 0$, et donc $N$ est négligeable.
+
+	$\underline {\Rightarrow}$~: Soit $N \in \B \st \mathcal L(N) = 0$. Pour $\varepsilon > 0$~: mq $\exists U_\varepsilon$ ouvert $\st \mathcal L(U_\varepsilon) < \varepsilon$.
+	Rappelons la mesure extérieure de Lebesgue~: $\mathcal L^*(A) \coloneqq \inf_{(I_n)_{n \geq 0} \in \mathcal C_A}\sum_{n \geq 0}\Vol(I_n)$.
+
+	Soit $(I_n)_{n \geq 0} \in \mathcal C_N$. Les $I_n$ sont compacts. On peut prendre une nouvelle suite $(J_n)_{n \geq 0} \st \forall n \geq 0 :
+	\Vol(\overline {J_n}) < \Vol(I_n) + \frac \varepsilon{2^{n+1}}$ et $I_n \subseteq J_n$. Par $\sigma$-sous-additivité (parce que les $J_n$ ne sont pas forcément
+	mutuellement disjoints), pour $J = \bigcup_{n \geq 0}J_n \supseteq N$~:
+	\[\mathcal L^*(N) \leq \mathcal L^*(\bigcup_{n \geq 0}J_n) \leq \sum_{n \geq 0}\mathcal L^*(J_n).\]
+
+	Or, pour $n \geq 0$~: $\mathcal L^*(J_n) \leq \Vol(I_n) + \frac \varepsilon{2^{n+1}}$. Finalement~:
+	\[\mathcal L^*(N) < \sum_{n \geq 0}\left(\Vol(I_n) + \frac \varepsilon{2^{n+1}}\right) = 0 + \varepsilon\]
+\end{enumerate}
+\end{proof}
+
+\begin{ex} Montrer qu'une droite $E$ dans $\R^2$ est de mesure nulle pour $\mathcal L$.
+\end{ex}
+
+\begin{proof} À $x = (x_1, x_2), y = (y_1, y_2) \in \R^2$ fixés, $E = \{x + ty\}_{t \in \R}$. Pour $\alpha < \beta \in \R$, on définit
+$E_\alpha^\beta \coloneqq \{x+ty\}_{t \in [\alpha, \beta]}$. Mq $\mathcal L(E_\alpha^\beta) = 0$.
+
+Si $y = (0, \lambda)$ (ou si $y = (\lambda, 0)$ par symétrie), on peut recouvrir $E_\alpha^\beta$ par l'intervalle compact
+$[x_1 \pm \varepsilon] \times [x_2+\alpha\lambda, x_2+\beta\lambda]$ de volume arbitrairement petit (pour $\varepsilon$ aussi petit que nécessaire), et donc
+$\mathcal L(E_\alpha^\beta) = 0$.
+
+Sinon, soit $(I_n)_{n \geq 0}$ un recouvrement de $E_\alpha^\beta$ par des intervalles compacts. Pour $n \geq 0 : I_n = [a_n^1, b_n^1] \times [a_n^2, b_n^2]$ et
+$\Vol(I_n) = (b_n^1-a_n^1)(b_n^2-a_n^2)$.
+
+Montrons qu'il existe $(J_n)_{n \geq 0} \st \sum_{n \geq 0}\Vol(J_n) < \frac 12\sum_{n \geq 0}\Vol(I_n)$.
+
+Soit $n \geq 0$. $I_n = [a_n^1, b_n^1] \times [a_n^2, b_n^2]$ où les 4 \textit{coins} sont $C_1 = (a_n^1, a_n^2), C_2 = (a_n^1, b_n^2), C_3 = (b_n^1, a_n^2), C_4 = (b_n^1, b_n^2)$.
+WLOG supposons $\abs {E_\alpha^\beta \cap \{C_i\}_{i=1}^4} = 2$, i.e. $E$ passe par deux coins de $I_n$ (soit $C_1$ et $C_3$, soit $C_2$ et $C_4$)\footnote{En effet, si ce n'est pas
+le cas, on peut "réduire" $I_n$ afin que ce soit le cas (et qui est donc de volume strictement inférieur).}. On définit alors~:
+\[\begin{cases}
+	J_{2n}   \coloneqq [a_n^1, \frac 12(b_n^1 + a_n^1)] \times [a_n^2, \frac 12(b_n^2 + a_n^2)]
+	J_{2n+1} \coloneqq [\frac 12(b_n^1 + a_n^1), b_n^1] \times [\frac 12(b_n^2 + a_n^2), b_n^2]
+\end{cases}\]
+si $E \cap \{C_1, C_3\}$~; et~:
+\[\begin{cases}
+	J_{2n}   \coloneqq [a_n^1, \frac 12(b_n^1 + a_n^1)] \times [\frac 12(b_n^2 + a_n^2), b_n^2]
+	J_{2n+1} \coloneqq [\frac 12(b_n^1 + a_n^1), b_n^1] \times [a_n^2, \frac 12(b_n^2 + a_n^2)]
+\end{cases}\]
+sinon.
+
+On a bien $\Vol(I_n) = 2\left(\Vol(J_{2n} + \Vol(J_{2n+1}))\right)$, et donc $\sum_{n \geq 0}\Vol(I_n) = 2\sum_{n \geq 0}\Vol(J_n)$.
+
+Et donc~:
+\[\mathcal L^*(E_\alpha^\beta) = \inf_{(I_n)_n \in \mathcal C_{E_\alpha^\beta}}\sum_{n \geq 0}\Vol(I_n) = 0.\]
+
+On a alors que $E_\alpha^\beta$ est mesurable et de mesure de Lebesgue nulle. Et on trouve que~:
+\[\mathcal L^*(E) = \mathcal L^*(\bigcup_{n \geq 0}E_{-n}^{+n}) = \lim_{n \to \pinfty}\mathcal L^*(E_{-n}^{+n}) = 0.\]
+
+Donc $E$ est également mesurable pour $\mathcal L$ et est de mesure nulle.
+\end{proof}
+
+\begin{ex} Pour $B \in \B^n$ et $\lambda > 0$, on définit $\lambda B = \{\lambda b\}_{b \in B}$.
+\begin{enumerate}
+	\item Mq $\forall \lambda > 0, B \in \B^n : \lambda B \in \B^n$.
+	\item Mq $\mathcal L(\lambda B) = \lambda^n\mathcal L(B)$.
+\end{enumerate}
+\end{ex}
+
+\begin{proof} On note $\mathcal B_\lambda \coloneqq \{B \in \B^n \st \lambda B \in \B^n\}$.
+\begin{enumerate}
+	\item~
+	\begin{enumerate}
+		\item Mq $\mathcal B_\lambda$ est une $\sigma$-algèbre.
+		\begin{itemize}
+			\item $\emptyset \in \mathcal B_\lambda$ car $\lambda \emptyset = \emptyset$.
+			\item Soit $B \in \mathcal B_\lambda$. $\lambda B^\C = (\lambda B)^\C \in \B^n$ par stabilité par passage au complémentaire.
+			\item Soit $(B_n)_{n \geq 0} \in {\B^n}^\N$. $\lambda\bigcup_{n \geq 0}B_n = \{\lambda b \st \exists n \geq 0, b \in B_n\} = \bigcup_{n \geq 0}\lambda B_n \in \B^n$ par
+			stabilité d'unions dénombrables.
+		\end{itemize}
+		\item Mq $\left\{\prod_{k=1}^n(\minfty, b_k]\right\}_{(b_1, \ldots, b_n) \in \R^n} \subset \mathcal B_\lambda$. Soit $(b_1, \ldots, b_n) \in \R^n$.
+		On sait que $\prod_{k=1}^n(\minfty, b_k] \in \B^n$ et donc $\lambda\prod_{k=1}^n(\minfty, b_k] = \prod_{k=1}^n(\minfty, \lambda b_k] \in \B^n$.
+		On a donc $\left\{\prod_{k=1}^n(\minfty, b_k]\right\}_{(b_1, \ldots, b_n) \in \R^n} \subseteq \mathcal B_\lambda$.
+		Et donc $\B^n \subseteq \sigma\left(\left\{\prod_{k=1}^n(\minfty, b_k]\right\}_{(b_1, \ldots, b_n) \in \R^n}\right) \subseteq \mathcal B_\lambda \subseteq \B^n$,
+		et donc $\mathcal B_\lambda = \B^n$.
+	\end{enumerate}
+	\item On voit que $(I_n)_{n \geq 0}$ recouvre $B$ ssi $(\lambda I_n)_{n \geq 0}$ recouvre $\lambda B$. Et donc~:
+	\[\mathcal L^*(\lambda B) = \inf_{(I_n)_n \in \mathcal C_B}\sum_{n \geq 0}\Vol(\lambda I_n) = \inf_{(I_n)_n \in \mathcal C_B}\sum_{n \geq 0}\lambda^n\Vol(I_n)
+	= \lambda^n\inf_{(I_n)_n \in \mathcal C_B}\sum_{n \geq 0}\Vol(I_n) = \lambda^n\mathcal L^*(B).\]
+\end{enumerate}
+\end{proof}
+
+\begin{ex}[Vrai ou Faux] Justifier les affirmations suivantes~:
+\begin{enumerate}
+	\item Si $E \subseteq \R^n$ est négligeable, alors $\overline E$ est négligeable.
+	\item Il existe un ensemble non-mesurable sur $\R^n$ de complémentaire de mesure extérieure de Lebesgue nulle.
+	\item Il existe des ensemble non-mesurables dont l'union est mesurable.
+	\item Si $A \subset \R^n$ satisfait $\mathcal L(\mathring A) = \mathcal L(\overline A)$, alors $A$ est mesurable.
+\end{enumerate}
+\end{ex}
+
+\begin{proof}~
+\begin{enumerate}
+	\item Faux~: $\Q$ est négligeable et $\overline \Q = \R$ n'est pas négligeable.
+	\item Faux~: si $A^\C$ est de mesure extérieure de Lebesgue nulle, alors $A^\C$ est mesurable, et donc $A^\C \in \mathcal M_{\mathcal L^*}$. Or l'ensemble des mesurables
+	est une $\sigma$-algèbre, et donc $A = {A^\C}^\C \in \mathcal M_{\mathcal L^*}$.
+	\item Vrai~: si $A$ est non-mesurable, alors $A^\C$ ne l'est pas non plus. Or $\mathcal M_{\mathcal L^*} \ni X = A \cup A^\C$.
+	\item Vrai~: par définition de complétion de mesure. Si $\mathring A$ et $\overline A$ sont mesurables et de même mesure, alors $\mathring A \subseteq A \subseteq \overline A$
+	et $\mathcal L(\overline A \setminus \mathring A) = 0$. Dès lors $A \in \mathcal M_{\mathcal L^*}$ et par monotonie~:
+	$\mathcal L(A) = \mathcal L(\mathring A) = \mathcal L(\overline A)$.
+\end{enumerate}
 \end{proof}
 
 \end{document}
