@@ -499,16 +499,21 @@ et donc $\mu = \nu$.
 	\item $\underline {\Leftarrow}$~: par monotonie, si $\forall \varepsilon > 0 : N \subseteq U_\varepsilon$, alors $\mathcal L(N) \leq \mathcal L(U_\varepsilon) < \varepsilon$.
 	On en déduit $\mathcal L(N) = 0$, et donc $N$ est négligeable.
 
-	$\underline {\Rightarrow}$~: Soit $N \in \B \st \mathcal L(N) = 0$. Pour $\varepsilon > 0$~: mq $\exists U_\varepsilon$ ouvert $\st \mathcal L(U_\varepsilon) < \varepsilon$.
-	Rappelons la mesure extérieure de Lebesgue~: $\mathcal L^*(A) \coloneqq \inf_{(I_n)_{n \geq 0} \in \mathcal C_A}\sum_{n \geq 0}\Vol(I_n)$.
+	$\underline {\Rightarrow}$~: Soit $N \in \B \st \mathcal L(N) = 0$. Pour $\varepsilon > 0$~: mq $\exists U_\varepsilon$ ouvert $\st \mathcal L(U_\varepsilon) < \varepsilon$
+	et $N \subset U_\varepsilon$. Rappelons la mesure extérieure de Lebesgue~:
+	\[\mathcal L^*(A) \coloneqq \inf_{(I_n)_{n \geq 0} \in \mathcal C_A}\sum_{n \geq 0}\Vol(I_n).\]
 
 	Soit $(I_n)_{n \geq 0} \in \mathcal C_N$. Les $I_n$ sont compacts. On peut prendre une nouvelle suite $(J_n)_{n \geq 0} \st \forall n \geq 0 :
-	\Vol(\overline {J_n}) < \Vol(I_n) + \frac \varepsilon{2^{n+1}}$ et $I_n \subseteq J_n$. Par $\sigma$-sous-additivité (parce que les $J_n$ ne sont pas forcément
-	mutuellement disjoints), pour $J = \bigcup_{n \geq 0}J_n \supseteq N$~:
+	\Vol(\overline {J_n}) < \Vol(I_n) + \frac \varepsilon{2^{n+1}}$\footnote{Par exemple en prenant l'intervalle ouvert $J_n = (a-\varepsilon/2^{n+2}, b+\varepsilon/2^{n+2})$
+	pour $I_n = [a, b]$.} et $I_n \subseteq J_n$. Par $\sigma$-sous-additivité (parce que les $J_n$ ne sont pas forcément mutuellement disjoints),
+	pour $J = \bigcup_{n \geq 0}J_n \supseteq N$~:
 	\[\mathcal L^*(N) \leq \mathcal L^*(\bigcup_{n \geq 0}J_n) \leq \sum_{n \geq 0}\mathcal L^*(J_n).\]
 
 	Or, pour $n \geq 0$~: $\mathcal L^*(J_n) \leq \Vol(I_n) + \frac \varepsilon{2^{n+1}}$. Finalement~:
-	\[\mathcal L^*(N) < \sum_{n \geq 0}\left(\Vol(I_n) + \frac \varepsilon{2^{n+1}}\right) = 0 + \varepsilon\]
+	\[\mathcal L^*(J) < \sum_{n \geq 0}\left(\Vol(I_n) + \frac \varepsilon{2^{n+1}}\right) = 0 + \varepsilon.\]
+
+	\underline {Note~:} si on définit un ensemble négligeable comme étant inclus dans un ensemble de mesure nulle (et pas comme étant un ensemble de mesure nulle, comme considéré
+	ci-dessus), l'implication $\Leftarrow$ est triviale.
 \end{enumerate}
 \end{proof}
 
