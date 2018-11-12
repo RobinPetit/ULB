@@ -7,6 +7,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{fullpage}
 \usepackage{amsmath, amsthm, amssymb, amsfonts}
+\usepackage{mathrsfs}
 \usepackage{mathtools}
 \usepackage{cases}
 \usepackage{stmaryrd}
@@ -57,6 +58,7 @@
 \newcommand{\intint}[2]{\left\llbracket#1, #2\right\rrbracket}
 
 \DeclareMathOperator{\Vol}{Vol}
+\DeclareMathOperator{\Id}{Id}
 
 \begin{document}
 \maketitle
@@ -536,17 +538,17 @@ Soit $n \geq 0$. $I_n = [a_n^1, b_n^1] \times [a_n^2, b_n^2]$ où les 4 \textit{
 WLOG supposons $\abs {E_\alpha^\beta \cap \{C_i\}_{i=1}^4} = 2$, i.e. $E$ passe par deux coins de $I_n$ (soit $C_1$ et $C_3$, soit $C_2$ et $C_4$)\footnote{En effet, si ce n'est pas
 le cas, on peut "réduire" $I_n$ afin que ce soit le cas (et qui est donc de volume strictement inférieur).}. On définit alors~:
 \[\begin{cases}
-	J_{2n}   \coloneqq [a_n^1, \frac 12(b_n^1 + a_n^1)] \times [a_n^2, \frac 12(b_n^2 + a_n^2)]
-	J_{2n+1} \coloneqq [\frac 12(b_n^1 + a_n^1), b_n^1] \times [\frac 12(b_n^2 + a_n^2), b_n^2]
+	J_{2n}   &\coloneqq [a_n^1, \frac 12(b_n^1 + a_n^1)] \times [a_n^2, \frac 12(b_n^2 + a_n^2)] \\
+	J_{2n+1} &\coloneqq [\frac 12(b_n^1 + a_n^1), b_n^1] \times [\frac 12(b_n^2 + a_n^2), b_n^2]
 \end{cases}\]
 si $E \cap \{C_1, C_3\}$~; et~:
 \[\begin{cases}
-	J_{2n}   \coloneqq [a_n^1, \frac 12(b_n^1 + a_n^1)] \times [\frac 12(b_n^2 + a_n^2), b_n^2]
-	J_{2n+1} \coloneqq [\frac 12(b_n^1 + a_n^1), b_n^1] \times [a_n^2, \frac 12(b_n^2 + a_n^2)]
+	J_{2n}   &\coloneqq [a_n^1, \frac 12(b_n^1 + a_n^1)] \times [\frac 12(b_n^2 + a_n^2), b_n^2] \\
+	J_{2n+1} &\coloneqq [\frac 12(b_n^1 + a_n^1), b_n^1] \times [a_n^2, \frac 12(b_n^2 + a_n^2)]
 \end{cases}\]
 sinon.
 
-On a bien $\Vol(I_n) = 2\left(\Vol(J_{2n} + \Vol(J_{2n+1}))\right)$, et donc $\sum_{n \geq 0}\Vol(I_n) = 2\sum_{n \geq 0}\Vol(J_n)$.
+On a bien $\Vol(I_n) = 2\left(\Vol(J_{2n}) + \Vol(J_{2n+1})\right)$, et donc $\sum_{n \geq 0}\Vol(I_n) = 2\sum_{n \geq 0}\Vol(J_n)$.
 
 Et donc~:
 \[\mathcal L^*(E_\alpha^\beta) = \inf_{(I_n)_n \in \mathcal C_{E_\alpha^\beta}}\sum_{n \geq 0}\Vol(I_n) = 0.\]
@@ -607,5 +609,114 @@ Donc $E$ est également mesurable pour $\mathcal L$ et est de mesure nulle.
 	$\mathcal L(A) = \mathcal L(\mathring A) = \mathcal L(\overline A)$.
 \end{enumerate}
 \end{proof}
+
+\newpage
+\section{Séance 4}
+
+\begin{ex} Soit $f : (X, \mathcal A) \to \R$. Mq si $\forall q \in \Q : f^{-1}((q, \pinftyà) \in \mathcal A$, alors $f$ est mesurable.
+\end{ex}
+
+\begin{proof} Pour cela, montrons que $f^{-1}((r, \pinfty)) \in \mathcal A$ pour $r \in \R \setminus \Q$. Par densité de $\Q$ dans $\R$, on sait que pour $r \in \R$~:
+\[(r, \pinftyà) = \bigcup_{q \in (r, \pinfty) \cap \Q}(q, \pinfty).\]
+
+Dès lors, pour $r \in \R$~: $f^{-1}((r, \pinfty)) = \bigcup_{q \in (r, \pinfty) \cap \Q}\underbrace {f^{-1}((q, \pinfty))}_{\in \mathcal A} \in \mathcal A$.
+\end{proof}
+
+\begin{ex} Mq les fonctions $f$ et $g$ sont mesurables sur $(\R, \B)$.
+\end{ex}
+
+\begin{proof} Pour cela, on utilise le fait qu'un produit de fonctions mesurables est mesurable et que~:
+\begin{itemize}
+	\item les fonctions caractéristiques sur des boréliens sont mesurables~;
+	\item $\alpha : \R \to \R : x \mapsto x^2$ est mesurable car $\alpha = \Id \cdot \Id$~;
+	\item $(\R \setminus \Q) \cap [0, 1]$ est mesurable car $[0, 1]$ est mesurable et $\Q^\C$ est mesurable aussi.
+\end{itemize}
+
+Donc puisque $f = \alpha\chi_{[0, 1]} + \chi_{(1, 2)}$ et $g = \alpha\chi_{\Q^\C \cap [0, 1]}$, on a $f$ et $g$ mesurables.
+\end{proof}
+
+\begin{ex} Soient $(X, \mathcal A)$ un espace mesurable et $(f_k)_{k \geq 0}$ une suite de fonctions mesurables de $X$ dans $\R$. Mq
+l'ensemble $A \coloneqq \{x \in X \st \lim_{k \to \pinfty}f_k(x) \textit{ existe}\}$ est mesurable.
+\end{ex}
+
+\begin{proof} La limite de la suite $(f_k(x))_{k \geq 0}$ existe ssi $f_1 \coloneqq \limsup_{k \to \pinfty}f_k$ et $f_2 \coloneqq \liminf_{k \to \pinfty}f_k$ existent en $x$
+et sont identiques. On sait que $f_1$ et $f_2$ sont mesurables, et donc que $f_1 - f_2$ l'est également. Or $A = (f_1-f_2)^{-1}(\{0\})$, donc $A \in \mathcal A$.
+\end{proof}
+
+\begin{proof}[Résolution alternative par les suites de Cauchy] À $x \in X$ fixé, la suite $(f_k(x))_{k \geq 0}$ est une suite réelle et donc converge ssi elle est de Cauchy,
+i.e. $\lim_{k \to \pinfty}f_k(x)$ existe ssi
+\[\forall \varepsilon > 0 : \exists N \in \N \st \forall m, n \geq N : \abs {f_m(x) - f_n(x)} < \varepsilon.\]
+
+Donc $A$ peut s'écrire comme union/intersection de Boréliens. Pour $m, n \in \N$, posons $f_{m,n} \coloneqq \abs {f_m-f_n}$. Par mesurabilité des $f_{m,n}$, on observe~:
+\[A = \left\{x \in X \st \forall \varepsilon > 0 : \exists N \in \N \st \forall m, n \geq N : f_{m,n}(x) < \varepsilon\right\}
+	= \bigcap_{\varepsilon \in {\Q^*}^+}\bigcup_{N \in \N}\bigcap_{m,n \geq N}f_{m,n}^{-1}((\pm \varepsilon)) \in \B.\]
+\end{proof}
+
+\begin{ex} Soient $f : \R \to \R$ Borel-mesurable et $g : \R \to \R \st g \neq f$ sur un ensemble $D$ au plus dénombrable. Mq $g$ est Borel-mesurable.
+\end{ex}
+
+\begin{proof} Rappelons d'abord que les singletons sont des fermés et donc des Boréliens. Dès lors, $D \in \B$ et $\mathcal L(D) = 0$. De plus, par passage au complémentaire,
+on sait que $D^\C \in \B$ également. Pour $b \in \R$~:
+\[g^{-1}((\minfty, b]) = \left[\underbrace {f^{-1}((\minfty, b]) \cap D^\C}_{\eqqcolon A}\right] \sqcup \left[\underbrace {g^{-1}((\minfty, b]) \cap D}_{\eqqcolon B}\right].\]
+Puisque $B \subseteq D$, on a $B$ au plus dénombrable, et en particulier $B \in \B$. Par mesurabilité de $f$, on sait que $f^{-1}((\minfty, b]) \in \B$, et puisque $D^\C \in \B$,
+on déduit que $A \in \B$. Dès lors $g^{-1}((\minfty, b])$ est union de deux Boréliens, et est donc un Borélien.
+\end{proof}
+
+\begin{ex} Sur un espace mesurable $(X, \mathcal A)$, mq $\chi_A$ est mesurable ssi $A \in \mathcal A$.
+\end{ex}
+
+\begin{proof} \underline {$\Rightarrow$}~: si $\chi_A$ est mesurable, alors $A = \chi_A^{-1}(\{1\}) \in \mathcal A$.
+
+\underline {$\Leftarrow$}~: si $A \in \mathcal A$, alors~:
+\begin{itemize}
+	\item $\chi_A^{-1}(\{0, 1\}) = X \in \mathcal A$ et $\chi_A^{-1}(\emptyset) = \emptyset \in \mathcal A$ puisque $\mathcal A$ est une $\sigma$-algèbre sur $X$~;
+	\item $\chi_A^{-1}(\{1\}) = A \in \mathcal A$ par hypothèse~;
+	\item et $\chi_A^{-1}(\{0\}) = A^\C \in \mathcal A$ par passage au complémentaire.
+\end{itemize}
+\end{proof}
+
+\begin{ex} Soient $(X, \mathcal A)$ un espace mesurable et $f : X \to \R$ une fonction mesurable. Mq $f^+$ et $f^-$ sont mesurables.
+\end{ex}
+
+\begin{proof} Trivial~: $\min$ et $\max$ de fonctions mesurables sont mesurables et la fonction $\mathbf 0 : X \to \{0\} : x \mapsto 0$ est constante donc mesurable.
+\end{proof}
+
+\begin{ex} Mq $f : [0, 1) \to [0, 1) : x \mapsto \begin{cases}2x & \text{ si } x \in [0, 1/2) \\ 2x-1 & \text{ si } x \in [1/2, 1)\end{cases}$ est mesurable.
+
+Mq pour tout $E \subseteq [0, 1)$ mesurable~: $\mathcal L(E) = \mathcal L(f^{-1}(E))$.
+\end{ex}
+
+\begin{proof} Soit $M \subseteq [0, 1)$ mesurable.
+\[f^{-1}(M) = (f^{-1}(M) \cap [0, 1/2)) \sqcup (f^{-1}(M) \cap [1/2, 1)) = \{x \in [0, 1/2) \st f(x) \in M\} \sqcup \{x \in [1/2, 1) \st f(x) \in M\}.\]
+Notons respectivement $M_1$ et $M_2$ ces deux ensembles. $M_1 = \{x \in [0, 1/2) \st 2x \in M\} = \{x/2\}_{x \in M} \in \mathcal M$ et
+$M_2 = \{x \in [1/2, 1) \st 2x-1 \in M\} = \{(1+x)/2\}_{x \in M} \in \mathcal M$ car la transformation affine d'un ensemble $\mathcal L$-mesurable
+est $\mathcal L$-mesurable. Donc $f^{-1}(M) = M_1 \sqcup M_2 \in \mathcal M$ car $\mathcal M$ est une $\sigma$-algèbre.
+
+De plus, $\mathcal L(f^{-1}M) = \mathcal L(M_1 \sqcup M_2) = \mathcal L(M_1) + \mathcal L(M_2)$. Par invariance par translation de $\mathcal L$, on a
+$\mathcal L(M_2) = \mathcal L(M_1) = \frac 12\mathcal L(M)$. Donc $\mathcal L(f^{-1}M) = 2\mathcal L(M_1) = \mathcal L(M)$.
+\end{proof}
+
+\begin{ex}[Vrai ou Faux] Justifier~:
+\begin{enumerate}
+	\item Soit $f : \R \to \R \st f \circ f$ est mesurable. Alors $f$ est mesurable.
+	\item Soit $f : \R \to \R \st \abs f$ est mesurable. Alors $f$ est mesurable.
+	\item Soient $f : \R \to \R$ mesurable et $g : \R \to \R$ continue. Alors $g \circ f$ est mesurable.
+	\item Si $f : \R \to \R$ est continue presque partout, alors $f$ est mesurable.
+\end{enumerate}
+\end{ex}
+
+\begin{proof}~
+\begin{enumerate}
+	\item Faux. Prenons $N \not \in \mathcal M \st N \cap \{0, 1\} = \emptyset$. Alors $\chi_N$ n'est pas mesurable, mais $\chi_N \circ \chi_N = \mathbf 0$
+	est constante donc mesurable.
+	\item aux. Prenons à nouveau $N \not \in \mathcal M$. On pose $f \coloneqq \chi_N - \chi_{N^\C} : \R \to \{-1, +1\}$ où donc $f(x) = 1$ si $x \in N$ et $f(x) = -1$ sinon.
+	$f$ n'est pas mesurable, mais $\abs f = \mathbf 1 : \R \to \{1\} : x \mapsto 1$ est constante donc mesurable.
+	\item Mq continuité implique Borel-mesurabilité. Soit $f \in \mathcal C^0(\R, \R)$. Pour $b \in \R$~: $f^{-1}((\minfty, b))$ est ouvert et est donc borélien.
+	Donc ici $g$ et $f$ sont toutes deux Borel-mesurables et la composition d'applications Borel-mesurables est Borel-mesurable.
+	\item On pose $N \coloneqq \{x \in \R \st f \text{ n'est pas continue en } x\}$. $N$ est négligeable et $f$ est continue sur $\R \setminus N$. On trouve pour $b \in \R$~:
+	\[f^{-1}((\minfty, b)) = \left(f^{-1}((\minfty, b)) \cap N^\C\right) \sqcup \underbrace {\left(f^{-1}((\minfty, b)) \cap N\right)}_{\subseteq N \text{ donc } \in \mathcal M}.\]
+\end{enumerate}
+\end{proof}
+
 
 \end{document}
