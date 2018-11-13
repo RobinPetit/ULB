@@ -718,5 +718,125 @@ $\mathcal L(M_2) = \mathcal L(M_1) = \frac 12\mathcal L(M)$. Donc $\mathcal L(f^
 \end{enumerate}
 \end{proof}
 
+\newpage
+\section{Séance 5}
+\begin{ex}
+\begin{enumerate}
+	\item Mq la relation $\sim$ définie sur $[0, 1]$ par $x \sim y \iff x-y \in \Q$ est une relation d'équivalence.
+	\item On note $\hat x \coloneqq \R / \sim$. On pose $F \coloneqq \bigcup_{x \in \R}\rho(\hat x)$ où $\rho(\hat x)$ est un représentant de $\hat x$ ($\rho$ est bien
+	définie par l'axiome du choix). Mq~:
+	\[[0, 1] \subseteq \underbrace {\bigcup_{q \in \Q \cap [-1, 1]}(F+q)}_{\eqqcolon \tilde F} \subseteq [-1, 2].\]
+	\item Mq si $q_1 \neq q_2 \in \Q \cap [-1, 1]$, alors $(F+q_1) \cap (F+q_2) = \emptyset$.
+	\item Mq $F$ n'est pas $\mathcal L$-mesurable par l'absurde.
+\end{enumerate}
+\end{ex}
+
+\begin{proof}~
+\begin{enumerate}
+	\item $\sim$ est trivialement une relation d'équivalence.
+	\item $\underline {[0, 1] \subseteq \tilde F}$~: soit $x \in [0, 1]$. Par définition de $F$~: $\exists \tilde x \in \hat x \cap F$ et $x-\tilde x \in \Q$.
+	On a alors $x \in (\Q \cap [-1, 1]) + \tilde x \subseteq (\Q \cap [-1, 1]) + F = \bigcup_{q \in \Q \cap [-1, 1]}(F+q)$.
+
+	$\underline {\tilde F \subseteq [-1, 2]}$~: $F \subseteq [0, 1]$, et donc~:
+	\[\tilde F = \bigcup_{q \in \Q \cap [-1, 1]}(F+q) \subseteq \bigcup_{y \in [-1, 1]}(F+y) \subseteq [-1, 2].\]
+	\item Supposons par l'absurde $\exists \tilde x \in (F+q_1) \cap (F+q_2)$. On a alors $\exists y_1, y_2 \in F \st y_1+q_1 = \tilde x = y_2+q_2$. Donc
+	$\tilde x - y_1 \in \Q \ni \tilde x - y_2$, ou encore $\tilde x \sim y_1$ et $\tilde x \sim y_2$, et donc par transitivité~: $y_1 \sim y_2$, i.e. $\hat y_1 = \hat y_2$,
+	or $F$ contient exactement un seul représentant de chaque classe d'équivalence, ce qui est une contradiction. Donc $F+q_1$ et $F+q_2$ sont disjoints.
+	\item Supposons que $F$ soit $\mathcal L$-mesurable. On a (par le point 2)~:
+	\[1 \leq \mathcal L\left(\bigsqcup_{q \in \Q \cap [-1, 1]}(F+q)\right) \leq 3.\]
+
+	Or $\forall q \in \Q : \mathcal L(F+q) = \mathcal L(F)$ car $\mathcal L$ est invariante par translations.
+	\begin{itemize}
+		\item Si $\mathcal L(F) = 0$, alors $\sum_{q \in \Q \cap [-1, 1]}\mathcal L(F+q) = 0 \lneqq 1$, ce qui est une contradiction.
+		\item Donc $\mathcal L(F) \gneqq 0$, et donc $\sum_{q \in \Q \cap [-1, 1]}\mathcal L(F+q) = \sum_{q \in \Q \cap [-1, 1]}\mathcal L(F) = \pinfty \gneqq 3$, ce qui est également
+		une contradiction.
+	\end{itemize}
+
+	On en déduit que $F$ n'est pas $\mathcal L$-mesurable.
+\end{enumerate}
+\end{proof}
+
+\begin{ex}[Ensemble triadique de Cantor] Pour $k \geq 0$, on pose~:
+\[A_k \coloneqq \bigcup_{\alpha \in \{0, 2\}^k}\left(\sum_{i=1}^k\frac {\alpha_i}{3^i}\right) + [0, 3^{-k}].\]
+On définit l'\textit{ensemble triadique de Cantor} par $\mathscr C \coloneqq \bigcap_{k \geq 0}A_k$.
+\begin{enumerate}
+	\item Mq $\forall k \geq 0$~: $A_k$ est formé de $2^k$ intervalles fermés disjoints deux à deux et $\mathcal L(A_k) = (2/3)^k$.
+	\item Mq $\mathscr C$ est un borélien non vide et de mesure de Lebesgue nulle.
+	\item Mq le développement infini en base 3 est unique ssi les chiffres de la décomposition (notés $a_k : [0, 1] \to \{0, 1, 2\}$ pour le $k$ème chiffre)
+	sont soit 0 soit 2. Mq $x \in \mathscr C \iff \forall k \geq 0 : a_k(x) \neq 1$.
+	\item En déduire que $\mathscr C$ est en bijection avec $[0, 1]$.
+\end{enumerate}
+\end{ex}
+
+\begin{proof}~
+\begin{enumerate}
+	\item $\abs {\{0, 2\}^k} = 2^k$ , donc $A_k$ est bien composé de $2^k$ intervalles fermés. Soient $\alpha \neq \beta \in \{0, 2\}^k$ et mq~:
+	\[\left[\left(\sum_{i=1}^k\frac {\alpha_i}{3^i}\right) + [0, 3^{-k}]\right] \cap \left[\left(\sum_{i=1}^k\frac {\beta_i}{3^i}\right) + [0, 3^{-k}]\right] = \emptyset.\]
+
+	Puisque $\alpha \neq \beta$, on sait que $\exists j \in \intint 1k \st \alpha_j \neq \beta_j$. On pose $\gamma_k : \{0, 2\}^k \to [0, 1] :
+	\alpha \mapsto \sum_{i=1}^k\frac {\alpha_i}{3^i}$. Par écriture (\textbf{finie~!}) en base 3, on a~:
+	\[\gamma(\alpha) = 0.\alpha_1|\alpha_2|\ldots|\alpha_k \qquad \text{ et } \qquad \gamma(\beta) = 0.\beta_1|\beta_2|\ldots|\beta_k\]
+	où $|$ désigne la concaténation, ce qui implique que $\abs {\gamma(\alpha) - \gamma(\beta)} \gneqq 3^{-k}$. WLOG, on suppose $\gamma(\alpha) < \gamma(\beta)$.
+	On en déduit finalement $\gamma(\alpha) + 3^{-k} \lneqq \gamma(\beta)$, or~:
+	\[\forall x \in \gamma(\alpha) + [0, 3^{-k}] : \gamma(\alpha) \leq x \leq \gamma(\alpha) + 3^{-k}.\]
+	Et~:
+	\[\forall x \in \gamma(\beta) + [0, 3^{-k}] : \gamma(\beta) \leq x \leq \gamma(\beta) + 3^{-k}.\]
+
+	On en déduit que $\left(\gamma(\alpha) + [0, 3^{-k}]\right) \cap \left(\gamma(\beta) + [0, 3^{-k}]\right) = \emptyset$.
+
+	Et finalement, par additivité de $\mathcal L$, on a~:
+	\[\mathcal L(A_k) = \sum_{\alpha \in \{0, 2\}^k}\mathcal L(\gamma(\alpha)+[0, 3^{-k}]) = \sum_{\alpha \in \{0, 2\}^k}\mathcal L([0, 3^{-k}]) = 2^k3^{-k} = (2/3)^k.\]
+
+	\item $\forall k \geq 0 : \{0, 1\} \subset A_k$, donc $\mathscr C \neq \emptyset$. De plus, $\forall k \geq 0 : A_k$ est une union de boréliens et est donc borélien.
+	$\mathscr C$ est intersection de boréliens et est donc également un borélien.
+
+	De plus la suite $(A_k)_{k \geq 0}$ est décroissante, donc par continuité de la mesure~: $\mathcal L(\mathscr C) = \lim_{k \to \pinfty}\mathcal L(A_k) = 0$.
+	Mq $(A_k)_{k \geq 0}$ est décroissante. Fixons $k \geq 0$. Soit $x \in A_{k+1}$, mq $x \in A_k$. On sait que $\exists! \alpha \in \{0, 2\}^{k+1} \st x \in \gamma(\alpha)+[0, 3^{-k}]$.
+	On pose $\tilde \alpha \in \{0, 2\}^k \st \forall j \in \intint 1k : \tilde \alpha_j = \alpha_j$. On a donc~:
+	\[\gamma_k(\tilde \alpha) \leq \gamma_{k+1}(\alpha).\]
+	Mais on a également~:
+	\[\gamma_k(\tilde \alpha) + 3^{-k} \geq \gamma_{k+1}(\alpha) + 3^{-k-1}\]
+	car~:
+	\[(\underbrace {\gamma_k(\tilde \alpha) - \gamma_{k+1}(\alpha)}_{\geq -2 \cdot 3^{-k-1}}) + (\underbrace {3^{-k} - 3^{-k-1}}_{=2\cdot 3^{-k-1}}) \geq 0.\]
+
+	Donc les $A_k$ forment bien une suite décroissante.
+
+	\item On remarque que pour $\alpha \in \{0, 2\}^k : x \in A_k \iff \{a_j(x)\}_{j=1}^k \subseteq \{0, 2\}$. Et puisque $\mathscr C = \bigcap_{k \geq 0}A_k$~:
+	\[x \in \mathscr C \iff x \in \bigcap_{k \geq 0}A_k \iff \forall k \geq 0 : \{a_j(x)\}_{j=1}^k \subseteq \{0, 2\} \iff \{a_j(x)\}_{j \geq 0} \subseteq \{0, 2\}.\]
+
+	\item On a alors $x \in \mathscr C \iff x = \sum_{k \geq 1}\frac {a_k(x)}{3^k}$ où les $a_k(x) \neq 1$, i.e. $a_k(x) \in \{0, 2\}$. On peut alors poser~:
+	\[\theta : \mathscr \to [0, 1] : x = \sum_{k \geq 1}\frac {a_k(x)}{3^k} \mapsto \sum_{k \geq 1}\frac {a_k(x)}{2^{k+1}},\]
+	qui est une bijection entre $\mathscr C$ et $[0, 1]$. On en déduit que $\abs {\mathscr C} = \abs {[0, 1]}$, et donc $\mathscr C$ est non-dénombrable.
+\end{enumerate}
+\end{proof}
+
+\begin{ex} On définit la bijection $f = \theta^{-1}$ (inverse de la bijection ci-dessus).
+\begin{enumerate}
+	\item Mq $f$ est strictement croissante et est non-continue.
+	\item Soit $E \subset [0, 1]$ un ensemble non-mesurable au sens de Lebesgue. Mq $f(E)$ est $\mathcal L$-mesurable mais non Borélien.
+\end{enumerate}
+\end{ex}
+
+\begin{proof}~
+\begin{enumerate}
+	\item $f$ est trivialement strictement croissante par construction, et $f$ n'est pas continue car $\mathscr C$ n'est pas connexe donc $\mathscr C$ n'est pas homéomorphe à $[0, 1]$.
+
+	Mq $\mathscr C$ n'est pas connexe~: il faut trouver $U, V$ ouverts pour la topologie induite de $\mathscr C$ par la topologie usuelle de $\R$ tels que $U \cap V = \emptyset$ et
+	$U \cup V = \mathscr C$. Pour cela on prend arbitrairement $x \in [0, 1] \setminus \mathscr C$ (par exemple $x = 1/2$) et on définit~:
+	\begin{itemize}
+		\item $U \coloneqq (-1, x) \cap \mathscr C$~;
+		\item $V \coloneqq (x, 2) \cap \mathscr C$.
+	\end{itemize}
+
+	$U$ et $V$ sont bien des ouverts pour la topologie induite car $(-1, x)$ et $(x, 2)$ sont des ouverts de $\R$. De plus~:
+	\begin{itemize}
+		\item $U \cap V = (-1, x) \cap \mathscr C \cap (x, 2) \cap \mathscr C = \emptyset$~;
+		\item $U \cup V = \left((-1, x) \cup (x, 2)\right) \cap \mathscr C = (-1, 2) \cap \mathscr C \setminus \{x\} = \mathscr C$.
+	\end{itemize}
+
+	{\small \color{white}{Notons qu'il était franchement pas facile celui-là~: il a fallu pas mal réfléchir...}}
+	\item Soit $E \subseteq [0, 1]$ quelconque. $f(E) \subseteq \mathscr C$ donc $f(E)$ est $\mathcal L$-négligeable. Or $\mathcal L$ est complète donc $f(E)$ est mesurable.
+\end{enumerate}
+\end{proof}
 
 \end{document}
