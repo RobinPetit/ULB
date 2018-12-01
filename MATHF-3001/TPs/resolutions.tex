@@ -44,12 +44,15 @@
 	\surroundwithmdframed[style=resultstyle]{ex}
 \fi
 
+\newcommand{\restr}[2]{\left.#1\vphantom{\big|}\right|_{#2}}
+
 \newcommand{\pinfty}{{+\infty}}
 \newcommand{\minfty}{{-\infty}}
 
 \newcommand{\st}{\text{ s.t. }}
 \newcommand{\C}{\complement}
 \newcommand{\N}{{\mathbb N}}
+\newcommand{\Z}{{\mathbb Z}}
 \newcommand{\Q}{{\mathbb Q}}
 \newcommand{\R}{{\mathbb R}}
 \newcommand{\B}{{\mathbb B}}
@@ -818,6 +821,7 @@ On définit l'\textit{ensemble triadique de Cantor} par $\mathscr C \coloneqq \b
 \end{ex}
 
 \begin{proof}~
+\textcolor{red}{Attention~: résolution erronée. Il est montré que $[0, 1]$ et $\mathscr C$ ne sont pas homéomorphes, et pas que $f$ n'est pas continue.}
 \begin{enumerate}
 	\item $f$ est trivialement strictement croissante par construction, et $f$ n'est pas continue car $\mathscr C$ n'est pas connexe donc $\mathscr C$ n'est pas homéomorphe à $[0, 1]$.
 
@@ -839,4 +843,159 @@ On définit l'\textit{ensemble triadique de Cantor} par $\mathscr C \coloneqq \b
 \end{enumerate}
 \end{proof}
 
+\newpage
+\section{Séance 6}
+
+\begin{ex} Soient $X \neq \emptyset$, $a \in X$ et $\mathcal A = \mathcal P(X)$. Dans l'espace mesuré $(X, \mathcal A, \delta_a)$, montrons que pour $f : X \to \R^+$ mesurable~:
+\[\int_X f\dif\delta_a = f(a).\]
+\end{ex}
+
+\begin{proof} Supposons d'abord $f$ positive. Soit $g \in \mathcal S^+(X, \mathcal A)$. Pour $(a_i)_{i=1}^k$ les valeurs prises par $g$, par définition on a~:
+\[\int g\dif\delta_a = \sum_{i=1}^ka_i\mu(g^{-1}(\{a_i\})) = a_\ell\delta_a(g^{-1}(\{a_\ell\})) = a_\ell = g(a)\]
+où $a_\ell = g(a)$. Dès lors, par définition de l'intégrale d'une fonction positive mesurable~:
+\[\int f\dif\delta_a = \sup_{\begin{subarray}{l} g \in \mathcal S^+ \\ g \leq f \end{subarray}}\int g\dif\delta_a.\]
+
+On sait que $f(a)$ majore tous les $g(a)$ pour $g \in \mathcal S^+ \st g \leq f$ donc $\int f\dif\delta_a \leq f(a)$. De plus pour $\tilde g = f(a)\chi_{\{a\}}$, on a
+$\tilde g \in \mathcal S^+$ et $\tilde g \leq f$, or $\int \tilde g\dif\delta_a = \tilde g(a) = f(a)$. Donc $\int f\dif\delta_a \geq f(a)$. On a alors bien l'égalité.
+
+Dans le cas général où $f$ n'est pas non-négative, soit $f(a) \geq 0$ et donc $f$ est égale à une fonction positive $\delta_a$-pp, soit $f(a) < 0$ et donc $\int f^+\dif\delta_a = 0$,
+donc $\int f\dif\delta_a = -\int f^-\dif\delta_a = -f^-(a) = f(a)$.
+\end{proof}
+
+\begin{ex} Sur l'espace mesurable $(\R, \B)$, on définit la mesure de Lebesgue $\mathcal L$ et la mesure $\mu$ suivante~:
+\[\mu : \B \to \overline \R^+ : B \mapsto \sum_{k \in B \cap \Z}\frac 1{1 + (k+1)^2}.\]
+
+Déterminer si les fonctions suivantes sont intégrables~:
+\begin{align*}
+	f(x) &=
+	\begin{cases}
+		\pinfty &\text{ si } x=0 \\
+		\ln\abs x & \text{ si } 0 < \abs x < 1 \\
+		0 &\text{ sinon}
+	\end{cases} \\
+	g(x) &=
+	\begin{cases}
+		\frac 1{x^2-1} &\text{ si } \abs x < 1 \text{ et } x \in \Q \\
+		\frac 1{\sqrt {\abs x}} &\text{ si } \abs x < 1 \text{ et } x \in \Q^\C\\
+		\frac 1{x^2} & \text{ si }\abs x \geq 1
+	\end{cases} \\
+	h(x) &\equiv 1
+\end{align*}
+pour les mesures $\mathcal L$ et $\mu$ comme défini ci-dessus (pour $f$ et $h$).
+\end{ex}
+
+\begin{proof}~
+\begin{itemize}
+	\item Pour la fonction $f$~:
+	\begin{itemize}
+		\item[$\mathcal L$] Utilisons le théorème de convergence monotone, i.e. construisons une suite croissante $(f_n)_{n \geq 1}$ d'applications mesurables telle que
+		$f_n \xrightarrow[n \to \pinfty]{} \tilde f$ (où $\tilde f = \restr f{(0, 1)} = f\chi_{(0, 1)}$). Pour $n \geq 1$, posons~:
+		\[f_n : \R \to \R : x \mapsto -\chi_{(\frac 1n, 1)}(x)\ln x.\]
+
+		$f_n$ est majorée par $x \mapsto \chi_{(1/n, 1)}(x)\sup_{y \in (1/n, 1)}-\ln(y) = \chi_{(1/n, 1)}\ln(n)$ qui est intégrable. On en déduit que $f_n$ est intégrable.\footnote{
+		Ainsi, toute fonction bornée définie sur un ensemble de mesure finie est intégrable.} Par l'exercice~\ref{ex:7.1}, une fonction bornée Riemann-intégrable est Lebesgue-intégrable et
+		les intégrales coïncident. On a donc~:
+		\[\int f_n\dif\mathcal L = \int_{\frac 1n}^1-\ln(x)\dif x = 1 - \frac {\ln n+1}n.\]
+
+		En appliquant le théorème de convergence monotone, on trouve~:
+		\[\int f\dif\mathcal L = \lim_{n \to \pinfty}\int f_n\dif\mathcal L = \lim_{n \to \pinfty}\left(1 - \frac {1+\ln n}n\right) = 1.\]
+
+		De manière similaire, on trouve que $\int f\chi_{(-1, 0)}\dif\mathcal L = 1$, et on en déduit~:
+		\[\int f\dif\mathcal L = \int f\chi_{(-1, 0)}\dif\mathcal L + \int f\chi_{(0, 1)}\dif\mathcal L = 1+1 = 2.\]
+		\item[$\mu$:]       $f = \chi_{(-1, 1) \setminus \{0\}}\ln\abs \cdot + (\pinfty)\chi_{\{0\}}$. Donc $f \equiv 0$ sur $\R \setminus (-1, 1)$. Or $(-1, 1) \cap \Z = \{0\}$.
+		Donc $f = \pinfty\chi_{\{0\}}$ $\mu$-pp où $x \mapsto \pinfty\chi_{\{0\}}(x) \in \mathcal S^+$. On trouve donc~:
+		\[\int f\dif\mu = \int \pinfty\chi_{\{0\}}\dif\mu = \pinfty\mu(\{0\}) = \pinfty \cdot \frac 1{1+1} = \pinfty.\]
+
+		On peut également remarquer que pour $g \in \mathcal S^+ \st g \lneqq f$~:
+		\[\int g\dif\mu = \int g\chi_{\{0\}}\dif\mu = g(0)\frac 12.\]
+		Donc $\sup\{\int g\dif\mu \st g \in \mathcal S^+, g \lneqq f\}$ n'est pas borné.
+	\end{itemize}
+	\item Pour la fonction $g$~: $g = \abs x^{-1/2}\chi_{(-1, +1)} + x^{-2}\chi_{(\minfty, 1] \cup [1, \pinfty)}$ $\mathcal L$-pp et ces deux fonction sont Riemann-intégrables. Donc
+	$g$ est $\mathcal L$-intégrable et~:
+	\[\int g\dif \mathcal L = 2\left(\int_0^1x^{-1/2}\dif x + \int_1^\pinfty x^{-2}\dif x\right) = 2(2+1) = 6.\]
+	\item Pour la fonction $h \in \mathcal S^+(\R, \B)$~:
+	\begin{itemize}
+		\item[$\mathcal L$:] $h$ n'est pas $\mathcal L$-intégrable car $\int h\dif\mathcal L = 1\mathcal L(\R) = \pinfty$.
+		\item[$\mu$:]        $h$ est $\mu$-intégrable car~:
+		\begin{align*}
+			\int h\dif\mu &= \mu(\R) = \sum_{k \in \Z}\frac 1{1+(k+1)^2} = \sum_{k \in \N^*}\frac 1{1+(k-1)^2} + \sum_{k \in \N}\frac 1{1+(k+1)^2} \\
+				&= \frac 12 + \sum_{k \in \N^*}\frac 1{1+k^2} + \sum_{k \in \N^*}\frac 1{1+k^2} = \frac 12 + 2\sum_{k \in \N^*}\frac 1{1+k^2} \leq \frac 12 + 2\sum_{k \in \N^*}k^{-2} \\
+				&= \frac 12 + 2\zeta(2) = \frac 12 + \frac {\pi^2}3 < \pinfty.
+		\end{align*}
+	\end{itemize}
+\end{itemize}
+\end{proof}
+
+\begin{ex} Soient $(X, \mathcal A, \mu)$ un espace mesuré et $(f_k)_{k \geq 1}$ une suite de fonctions mesurables telles que~:
+\[f_1 \geq f_2 \geq f_3 \geq \ldots \geq 0.\]
+
+On définit $f \coloneqq  \lim_{k \to \pinfty}f_k$ la limite point par point. Mq si $f_1 \in L^1(X, \mathcal A, \mu)$, alors~:
+\[\lim_{k \to \pinfty}\int_Xf_k\dif\mu = \int_Xf\dif\mu.\]
+
+Donner un contre-exemple avec $f_1 \not \in L^1(X, \mathcal A, \mu)$.
+\end{ex}
+
+\begin{proof} Pour $n \geq 2 : f_n \leq f_1$ donc $f_n$ est intégrable car majorée par une fonction intégrable. Par la convergence dominée, on a $f$ intégrable
+également et $\int f_k\dif\mu \xrightarrow[k \to \pinfty]{} \int f\dif\mu$.
+
+Pour un contre-exemple, prenons la suite constante $f_k : x \mapsto x^{-1}$. $\forall x \in X : f_k(x) \xrightarrow[k \to \pinfty]{} x^{-1}$ qui n'est pas intégrable.
+\end{proof}
+
+\begin{ex} Supposons $\mu(X) \lneqq \pinfty$. Soit $(f_k)_{k \geq 0}$ une suite de fonctions mesurables positives sur $X$ telles que
+$f_k \xrightarrow[k \to \pinfty]{CVU \text{ sur }X} f$. Mq si $\forall k \geq 0 : f_k \in L^1(X, \mathcal A, \mu)$, alors~:
+\[f \in L^1(X, \mathcal A, \mu) \qquad \text{ et } \qquad \lim_{k \to \pinfty}\int_Xf_k\dif\mu = \int_Xf\dif\mu.\]
+\end{ex}
+
+\begin{proof} À $n > 0$ fixé, on a~:
+\[f = \abs f = \abs {f_n + f - f_n} \leq \abs {f_n} + \abs {f - f_n}.\]
+Dès lors, par monotonie de l'intégrale~:
+\[\int f\dif \mu \leq \int f_n\dif \mu + \int \abs {f-f_n}\dif\mu.\]
+
+La convergence uniforme revient à dire~:
+\[\forall \varepsilon > 0 : \exists N > 0 \st \forall n > N : \sup_{x \in X}\abs {f - f_n}(x) < \varepsilon.\]
+En particulier, il existe $N > 0 \st \forall n > N : \sup_{x \in X}\abs {f - f_n}(x) < 1$. Dès lors pour $n > N$~:
+\[\int f\dif\mu \leq \int f_n\dif \mu + \int \abs {f - f_n}\dif \mu \leq \int f_n \dif\mu + \mu(X) < \pinfty\]
+car $f_n \in L^1$ et $\mu(X) < \pinfty$.
+
+On en déduit $f \in L^1(X, \mathcal A, \mu)$. De plus~:
+\[\abs {\int f_n\dif\mu - \int f\dif\mu} = \abs {\int (f_n-f)\dif\mu} \leq \int \abs {f_n - f}\dif\mu \xrightarrow[n \to \pinfty]{} 0,\]
+i.e. $\int f_n\dif\mu \xrightarrow[n \to \pinfty]{} \int f\dif\mu$.
+\end{proof}
+
+\begin{ex} On définit pour $k \geq 0$~:
+\[\alpha_k \coloneqq \int_0^k\left(1 - \frac xk\right)^k\exp(x/2)\dif x \qquad \text{ et } \qquad \beta_k \coloneqq \int_0^k\left(1 + \frac xk\right)^k\exp(-2x)\dif x.\]
+Calculer $\alpha \coloneqq \lim_{k \to \pinfty}\alpha_k$ et $\beta \coloneqq \lim_{k \to \pinfty} \beta_k$.
+\end{ex}
+
+\begin{proof} On pose $f_k(x) \coloneqq \left(1-\frac xk\right)^ke^{x/2}\chi_{[0, k]}(x)$ et $g_k(x) = \left(1+\frac xk\right)^ke^{-2x}\chi_{[0, k]}(x)$.
+Puisque $f_k(x) \nearrow e^{-x/2}\chi_{\R^+}(x)$ et $g_k(x) \nearrow e^{-x}\chi_{\R^+}(x)$ (deux limites $\in L^1$), par la convergence dominée, on a~:
+\[\lim_{k \to \pinfty} \alpha_k = \lim_{k \to \pinfty}\int f_k\dif\mu = \int\lim_{k \to \pinfty}f_k\dif\mu = [2e^{x/2}]_{\minfty}^0 = 2,\]
+et~:
+\[\lim_{k \to \pinfty}\beta_k = \lim_{k \to \pinfty}\int g_k\dif\mu = \int\lim_{k \to \pinfty}g_k\dif\mu = [-e^{-x}]_0^\pinfty = 1.\]
+\end{proof}
+
+\begin{ex} Soit $f \in L^1(X, \mathcal A, \mu)$. Mq~:
+\[\forall \varepsilon > 0 : \exists \delta > 0 \st \forall A \in \mathcal A : \mu(A) < \delta \Rightarrow \int_A\abs f\dif\mu < \varepsilon.\]
+\end{ex}
+
+\begin{proof} Par l'absurde, supposons qu'il existe $\varepsilon > 0 \st$~:
+\[\forall n > 0 : \exists A_n \in \mathcal A \st \mu(A_n) < \frac 1n \text{ et } \int_{A_n}f\dif \mu \geq \varepsilon.\]
+
+Posons $f_n \coloneqq f\chi_{A_n}$. $\forall n > 0 : \abs {f_n} \leq \abs f$ et $\abs {\lim_{n \to \pinfty}f_n} \leq \abs f$ et ces applications sont mesurables. Donc par
+la convergence dominée, on a~:
+\[\lim_{n \to \pinfty}\int f_n\dif\mu = \int\lim_{n \to \pinfty}f_n\dif \mu.\]
+
+Mq $\lim_{n \to \pinfty}f_n = 0$ $\mu$-pp. Soit $N \coloneqq \{\lim_{n \to \pinfty}f_n \neq 0\}$. Sur $N^\C$, on a $\lim_{n \to \pinfty}f_n = f$. Dès lors~:
+\[\exists K > 0 \st \forall x \in N : \forall n > K : x \in A_n,\]
+et donc~: $\forall n > K : N \subset A_n$, ce qui implique $\forall n > K : \mu(N) \leq \mu(A_n) < \frac 1K$, i.e. $\mu(A) = 0$.
+
+Finalement, on déduit~:
+\[\varepsilon \geq \lim_{n \to \pinfty}\int f_n\dif \mu = \int\lim_{n \to \pinfty}f_n\dif \mu = 0,\]
+ce qui est une contradiction.
+\end{proof}
+
+\newpage
+\section{Séance 7}
+\begin{ex}\label{ex:7.1}
+\end{ex}
 \end{document}
