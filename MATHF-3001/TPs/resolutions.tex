@@ -620,7 +620,7 @@ Donc $E$ est également mesurable pour $\mathcal L$ et est de mesure nulle.
 \end{ex}
 
 \begin{proof} Pour cela, montrons que $f^{-1}((r, \pinfty)) \in \mathcal A$ pour $r \in \R \setminus \Q$. Par densité de $\Q$ dans $\R$, on sait que pour $r \in \R$~:
-\[(r, \pinftyà) = \bigcup_{q \in (r, \pinfty) \cap \Q}(q, \pinfty).\]
+\[(r, \pinfty) = \bigcup_{q \in (r, \pinfty) \cap \Q}(q, \pinfty).\]
 
 Dès lors, pour $r \in \R$~: $f^{-1}((r, \pinfty)) = \bigcup_{q \in (r, \pinfty) \cap \Q}\underbrace {f^{-1}((q, \pinfty))}_{\in \mathcal A} \in \mathcal A$.
 \end{proof}
@@ -1195,4 +1195,224 @@ Soit $f : [a, b] \to \R$ bornée. Mq~:
 	Donc par la convergence dominée, on a bien $\int f\dif\mathcal L = 0$.
 \end{enumerate}
 \end{proof}
+
+\newpage
+\section{Séance 8}
+\begin{ex} Soit $(X, \mathcal A, \mu)$ un espace mesuré.
+\begin{enumerate}
+	\item Si $\mu(X) \lneqq \pinfty$, mq si $p$ et $q$ sont des réels tels que $1 \leq q \lneqq p \lneqq \pinfty$, alors~:
+	\[L^\infty(X, \mathcal A, \mu) \subseteq L^p(X, \mathcal A, \mu) \subset L^q(X, \mathcal A, \mu) \subset L^1(X, \mathcal A, \mu).\]
+	\item Considérons la fonction suivante~:
+	\[u : \R \to \R : x \mapsto \begin{cases}x^{\frac {-1}q} &\text{ si } x \geq 1 \\0 &\text{ sinon}.\end{cases}\]
+	Mq $u \in L^p(\R) \setminus L^q(\R)$.
+	\item Considérons la fonction suivante~:
+	\[v : \R \to \R : x \mapsto \begin{cases}x^{\frac {-1}p} &\text{ si } x \in (0, 1] \\0 &\text{ sinon}.\end{cases}\]
+	Mq $u \in L^q(\R) \setminus L^p(\R)$.
+\end{enumerate}
+\end{ex}
+
+\begin{proof}~
+\begin{enumerate}
+	\item~
+	\begin{itemize}
+		\item[$L^\infty \subseteq L^p$~:] Soit $f \in L^\infty$. $\mu$ étant une mesure finie, les ensembles $\mu$-négligeables et localement-$\mu$-négligeables coïncidente.
+		Il existe donc $C \geq 0 \st \mu(\{x \in X \st \abs {f(x)} > C\}) = 0$. Notons cet ensemble $N$. On a alors~:
+		\[\int \abs f^p\dif\mu = \int_N\abs f^p\dif\mu + \int_{N^\C}f^p\dif\mu \leq C^p\mu(N^\C) = C^p\mu(X) < \pinfty.\]
+
+		\item[$L^p \subseteq L^q$~:] Soit $f \in L^p$. On remarque que $\abs f^q \in L^{\frac pq}$ avec $\frac pq > 1$. De plus, puisque $\mu(X) < \pinfty$, les fonctions constantes
+		sont intégrables  (car dans $L^\infty$). En particulier $\mathbf 1 : x \mapsto 1$ est dans $L^{\frac p{p-q}}$. Par Hölder~:
+		\[\int\abs f^q\dif\mu = \int\abs f^q\abs {\mathbf 1}\dif\mu \leq \norm {\abs f^q}_{L^{\frac pq}}\underbrace {\norm {\mathbf 1}_{L^{\frac p{p-q}}}}_{= \mu(X) < \pinfty}.\]
+		Or~:
+		\[\left[\int \left(\abs f^q\right)^{\frac pq}\dif\mu\right]^{\frac qp} = \left[\int \abs f^p\dif\mu\right]^{\frac qp} = \left[\left(\int \abs f^p\dif\mu\right)^{\frac 1p}\right]^q
+		= \norm f_{L^p}^q < \pinfty.\]
+
+		Donc $f \in L^q$.
+
+		\item[$L^q \subseteq L^1$~:] Soit $f \in L^q$. $f = f\chi_A + f\chi_{A^\C}$ où $A = \{x \in X \st \abs {f(x)} \geq 1\}$. Donc~:
+		\[\int \abs f\dif\mu = \int_A\abs f\dif\mu + \int_{A^\C}\abs f\dif\mu \leq \int_A\abs f^q\dif\mu + \int_{A^\C}1\dif\mu \leq \norm f_{L^q}^q + \mu(A^\C) < \pinfty.\]
+	\end{itemize}
+
+	\item $u \in L^p$ pour $p > q$ car~:
+	\[\int u^p\dif\mathcal L = \lim_{t \to \pinfty}\int_1^tx^{-\frac pq}\dif x = \frac {-q}{p-q}\lim_{t \to \pinfty}\left(t^{-\frac {p-q}q} - 1\right) = \frac q{p-q}\]
+	car $\frac {p-q}q > 0$ et donc $t^{-\frac {p-q}q} \xrightarrow[t \to \pinfty]{} 0$.
+
+	De plus $u \not \in L^q$ car~:
+	\[\int u^q\dif\mathcal L = \lim_{t \to \pinfty}\int_1^tx^{-1}\dif x = \lim_{t \to \pinfty}\ln(t) = \pinfty.\]
+
+	\item $v \in L^q$ pour $q < p$ car~:
+	\[\int v^q\dif\mathcal L = \lim_{\varepsilon \to 0}\int_\varepsilon^1x^{-\frac qp}\dif x = \frac q{p-q}\lim_{\varepsilon \to 0}\left(1 - \varepsilon^{\frac {p-q}q}\right)
+	= \frac q{p-q}\]
+	car $\frac {p-q}q > 0$.
+
+	De plus $v \not \in L^p$ car~:
+	\[\int v^p\dif\mathcal L = \lim_{\varepsilon \to 0}\int_\varepsilon^1x^{-1}\dif x = \lim_{\varepsilon \to 0}\ln\varepsilon = \pinfty.\]
+\end{enumerate}
+\end{proof}
+
+\begin{ex}[Inégalité de Chebycshev] Soient $(X, \mathcal A, \mu)$ un espace mesuré et $f : X \to [0, \pinfty)$ une application mesurable. Mq
+\[\forall \alpha > 0 : \mu\left(\left\{x \in X \st f(x) \geq \alpha\right\}\right) \leq \frac 1\alpha\int f\dif\mu.\]
+
+De plus, si $\Phi : \R^+ \to \R^+$ est une application mesurable croissante, alors~:
+\[\forall \alpha > 0 : \mu\left(\left\{x \in X \st f(x) \geq \alpha\right\}\right) \leq \frac 1{\Phi(\alpha)}\int \Phi(f(x))\dif\mu(x).\]
+\end{ex}
+
+\begin{proof} à $\alpha > 0$ fixé, notons $A_\alpha(f) \coloneqq \{x \in X \st f(x) \geq \alpha\}$. L'inégalité découle simplement du fait que~:
+\[\int_Xf\dif\mu \geq \int_{A_\alpha(f)}f\dif\mu \geq \int_{A_\alpha(f)}\alpha\dif\mu = \alpha\mu(A_\alpha(f)).\]
+
+Pour le second point, il suffit de remarquer que $A_\alpha(f) \subset A_{\Phi(\alpha)}(\Phi \circ f)$ puisque $\Phi$ est croissante. Donc en appliquant le premier point~:
+\[\mu(A_\alpha(f)) \leq \mu(A_{\Phi(\alpha)}(\Phi \circ f)) \leq \frac 1{\Phi(\alpha)}\int\Phi\circ f\dif\mu.\]
+\end{proof}
+
+\begin{ex} Soient $(X, \mathcal A, \mu)$ un espace mesuré et $f : X \to \R$ une application mesurable.
+\begin{enumerate}
+	\item Mq~:
+	\[\liminf_{p \to \pinfty}\norm f_{L^p} \geq \norm f_{L^\infty},\]
+	et donner un exemple où l'inégalité est infinie à gauche et finie à droite.
+	\item Supposions qu'il existe $q \in [1, \pinfty) \st f \in L^q(X)$.
+	\begin{enumerate}
+		\item Mq $f$ est finie $\mu$-ae.
+		\item Supposons que $0 \lneqq \norm f_{L^\infty} \lneqq \pinfty$. Mq si $p \in (q, \pinfty)$, alors~:
+		\[\norm f_{L^p} \leq \norm f_{L^\infty}^{1-\frac qp} \cdot \norm f_{L^q}^{\frac qp},\]
+		et en déduire que~:
+		\[\limsup_{p \to \pinfty} \norm f_{L^p} \leq \norm f_{L^\infty}.\]
+		\item Conclure.
+	\end{enumerate}
+\end{enumerate}
+\end{ex}
+
+\begin{proof}~
+\begin{enumerate}
+	\item Séparons les cas $(i)~\norm f_{L^\infty} = 0~; \, (ii)~\norm f_{L^\infty} \lneqq \pinfty$ et $(iii)~\norm f_{L^\infty} = \pinfty$.
+	\begin{itemize}
+		\item Dans le premier cas, puisque $\forall p \geq 1 : \norm f_{L^p} \geq 0$, l'inégalité est triviale.
+		\item Dans le second cas, l'inégalité est\ldots~moins triviale.
+
+		Séparons à nouveau deux cas ici~: soit $\forall p \geq 1 : f \not \in L^p(X)$ soit $\exists p \geq 1 \st f \in L^p$. Dans le premier cas, on a donc
+		$\forall p \geq 1 : \norm f_{L^p} = \pinfty \geq \norm f_{L^\infty}$, donc ok. Supposons donc alors qu'il existe $\widetilde p \geq 1 \st f \in L^{\widetilde p}$.
+		On pose alors une suite $(\varepsilon_n)_{n \geq 0}$ telle que $\forall n \geq 0 : 0 < \varepsilon_n < \norm f_{L^\infty}$ et $\varepsilon_n \searrow 0$.
+		Pour tout $n \geq 0$, on pose~:
+		\[\Omega_{\varepsilon_n} \coloneqq \{x \in X \st \abs {f(x)} \geq \norm f_{L^\infty}-\varepsilon_n\} = f^{-1}\left((\norm f_{L^\infty}-\varepsilon_n, \pinfty)\right).\]
+
+		Puisque $(\varepsilon_n)_{n \geq 0}$ décroit, la suite $(\Omega_{\varepsilon_n})_{n \geq 0}$ décroit également. De plus, par définition du supremum essentiel ($\norm f_{L^\infty}$),
+		on déduit $\mu(\Omega_{\varepsilon_n}) \gneqq 0$. Maintenant observons que, à $p \geq 1$ et $n \geq 0$ fixés~:
+		\[\norm f_{L^p} = \left(\int_X\abs f^p\dif\mu\right)^{\frac 1p} \geq \left(\int_{\Omega_{\varepsilon_n}}\abs f^p\dif\mu\right)^{\frac 1p}
+		\geq \left(\int_{\Omega_{\varepsilon_n}}\left(\norm f_{L^\infty}-\varepsilon_n\right)^p\dif\mu\right)^\frac 1p
+		= \left(\norm f_{L^\infty}-\varepsilon_n\right)\mu(\Omega_{\varepsilon_n})^{\frac 1p}.\]
+
+		Montrons alors que $\mu(\Omega_{\varepsilon_n}) \lneqq \pinfty$. Puisque $\norm f_{L^{\widetilde p}} \lneqq \pinfty$, on sait~:
+		\[\pinfty \gneqq \norm f_{L^{\widetilde p}} \geq \underbrace {\left(\norm f_{L^\infty}-\varepsilon_n\right)}_{\lneqq \pinfty}\mu\left(\Omega_{\varepsilon_n}\right)^{\frac 1{\widetilde p}}.\]
+		On a donc obligatoirement $\mu(\Omega_{\varepsilon_n}) \lneqq \pinfty$.
+
+		Dès lors, puisque $\forall x \in \R_+^* : x^{\frac 1p} \xrightarrow[p \to \pinfty]{} 1$, par passage à la limite pour $n$, on a~:
+		\[\forall p \geq 1 : \norm f_{L^p} \geq \norm f_{L^\infty}.\]
+
+		Dès lors, par passage à la limite (à la $\liminf$ car on ne sait pas si $\norm f_{L^p}$ converge pour $p \to \pinfty$)~:
+		\[\liminf_{p \to \pinfty} \norm f_{L^p} \geq \norm f_{L^\infty}.\]
+
+		\item Dans le dernier cas, montrons que $\liminf_{p \to \pinfty}\norm f_{L^p} = \pinfty$. On sait que $\norm f_{L^\infty} = \pinfty$, i.e.~:
+		\[\forall M \geq 0 : \exists A_M \in \mathcal A \st f \geq M \text{ sur } A_M \text{ et } \mu(A_M) \gneqq 0.\]
+
+		À nouveau, deux cas sont à distinguer~: soit $\forall A \in \mathcal A : A \neq \emptyset \Rightarrow \mu(A) = \pinfty$, soit $\exists A \in \mathcal A \st A \neq \emptyset$
+		et $\mu(A) \lneqq \pinfty$.
+		\begin{enumerate}
+			\item Dans le premier cas, $f \neq \mathbf 0$ dans $L^p$ (où $\mathbf 0$ est la fonction constante nulle) implique $\forall p \geq 1 : \norm f_{L^p} = \pinfty$ car
+			$\norm f_{L^\infty} > 0$ et donc pour $p \geq 1$~:
+			\[\int \abs f^p\dif\mu \geq \int_{\left\{x \in X \st \abs {f(x)} > \frac {\norm f_{L^\infty}}2\right\}}\abs f^p\dif\mu
+			\geq \frac {\norm f_{L^\infty}}2\underbrace {\mu\left(\left\{x \in X \st \abs {f(x)} > \frac {\norm f_{L^\infty}}2\right\}\right)}_{= \pinfty} = \pinfty.\]
+
+			\item Dans le second cas, pour tout $M \geq 0$, il existe $A_M \st f \geq M$ sur $A_M$ et $0 \lneqq \mu(A_M) \lneqq \pinfty$. Dans ce cas~:
+			\[\forall p \geq 1 : \forall M \geq 0 : \norm f_{L^p} \geq \left(\int_{A_M}\abs f^p\dif\mu\right)^{\frac 1p} \geq \left(\int_{A_M}M^p\dif\mu\right)^{\frac 1p}
+			= M\mu(A_M)^{\frac 1p}.\]
+
+			Pour $p \to \pinfty$~: $\mu(A_M)^{\frac 1p} \to 1$. Dès lors on a~:
+			\[\forall M \geq 0 : \liminf_{p \to \pinfty} \norm f_{L^p} \geq M,\]
+			i.e.~:
+			\[\liminf_{p \to \pinfty} = \pinfty = \norm f_{L^\infty}.\]
+		\end{enumerate}
+	\end{itemize}
+
+	Mais remarquons que l'inégalité peut être stricte. En effet, dans $(\R, \B, \mathcal L)$, l'application $\mathbf 1 : \R \to \R : x \mapsto 1$ est bien mesurable
+	avec $\norm {\mathbf 1}_{L^\infty} = 1$ (et même $\sup_{x \in \R}\mathbf 1(x) = 1$). Or pour tout $p \geq 1$~:
+	\[\norm {\mathbf 1}_{L^p} = \left(\int_\R 1\dif\mathcal L\right)^{\frac 1p} = \pinfty.\]
+
+	{\small \color{white}{On dit merci \texttt{math.stackexchange pour celui-ci...}}}
+
+	\item~
+	\begin{enumerate}
+		\item On sait que $f \in L^1 \Rightarrow \abs f \lneqq \pinfty$ $\mu$-ae. Or~:
+		\[f \in L^q \iff \int \abs f^q\dif\mu < \pinfty \iff \abs f^q \in L^1.\]
+		Donc si $f \in L^q$, $\abs f^q \lneqq \pinfty$ $\mu$-ae, et donc $f \lneqq \pinfty$ $\mu$-ae.
+
+		\item Notons $S \coloneqq \{x \in X \st \abs {f(x)} \leq \norm f_{L^\infty}\}$. On sait que $\mu(S^\C) = 0$. Donc à $p > q$ fixé~:
+		\[\norm f_{L^p} = \left(\int_S \abs f^p\dif\mu\right)^{\frac 1p} = \left(\int_S \abs f^q\abs f^{p-q}\dif\mu\right)^{\frac 1p}.\]
+		or puisque $\abs f \leq \norm f_{L^\infty}$ sur $S$, on a~:
+		\[\norm f_{L^p} \leq \left(\int_S\abs f^q\norm f_{L^\infty}^{p-q}\dif\mu\right)^{\frac 1p} = \left(\norm f_{L^\infty}^{p-q}\int_S\abs f^q\dif\mu\right)^{\frac 1p}
+		= \norm f_{L^\infty}^{\frac {p-q}p}\left(\left(\int_S \abs f^q\right)^{\frac 1q}\right)^{\frac qp} = \norm f_{L^\infty}^{\frac {p-q}p}\norm f_{L^q}^{\frac qp}.\]
+
+		Montrons alors que l'on peut en déduire~:
+		\[\limsup_{p \to \pinfty}\norm f_{L^p} \leq \norm f_{L^\infty}.\]
+
+		Puisque $f \in L^q$, on sait que $\norm f_{L^q} \lneqq \pinfty$ (et $\norm f_{L^q} \gneqq 0$ puisque $\norm f_{L^\infty} \gneqq 0$). Dès lors~:
+		\[\lim_{p \to \pinfty}\norm f_{L^q}^{\frac qp} = \lim_{t \to 0}\norm f_{L^q}^t = 1,\]
+		car $\frac qp \xrightarrow[p \to \pinfty]{} 0$ (dont on déduit également $\norm f_{L^\infty}^{1-\frac qp} \xrightarrow[p \to \pinfty]{} \norm f_{L^\infty}$). Cela donne
+		finalement~:
+		\[\limsup_{p \to \pinfty}\norm f_{L^p} \leq \norm f_{L^\infty}.\]
+
+		\item On déduit de tout cela que si $\norm f_{L^\infty} = \pinfty$, alors $\lim_{p \to \pinfty}\norm f_{L^p}$ existe et vaut $\pinfty = \norm f_{L^\infty}$ car~:
+		\[\pinfty \geq \limsup_{p \to \pinfty}\norm f_{L^p} \geq \liminf_{p \to \pinfty}\norm f_{L^p} \geq \norm f_{L^\infty} = \pinfty.\]
+
+
+		De plus, si $\norm f_{L^\infty} \lneqq \pinfty$, alors si $\exists q \geq 1 \st f \in L^q$, alors $\lim_{p \to \pinfty} \norm f_{L^p}$ existe et vaut $\norm f_{L^\infty}$.
+
+		\end{enumerate}
+\end{enumerate}
+\end{proof}
+
+\begin{ex}[Inégalité d'interpolation] Soient $(X, \mathcal A, \mu)$ un espace mesuré, $1 \leq p \leq r \leq q \leq \pinfty$ et $\theta \in (0, 1)$ tels que~:
+\[\frac 1r = \frac \theta p + \frac {1-\theta}q.\]
+Mq si $u \in L^p(X, \mathcal A, \mu) \cap L^q(X, \mathcal A, \mu)$, alors $u \in L^r(X, \mathcal A, \mu)$ et~:
+\[\norm u_{L^r} \leq \norm u_{L^p}^\theta \cdot \norm u_{L^q}^{1-\theta}.\]
+\end{ex}
+
+\begin{proof} Mq $f \in L^p \iff f^q \in L^{\frac pq}$ pour $q \geq 0$. Soient $p \geq 1$ et $q \in [1/p, \pinfty)$. Soit $f \in L^p$. Si $p \lneqq \pinfty$~:
+\[f^q \in L^{\frac pq} \iff \pinfty \gneqq \int \abs {f^q}^{\frac pq}\dif\mu = \int \abs {f}^p\dif\mu \lneqq \pinfty \iff f \in L^p.\]
+
+Si $p = \pinfty$, alors $f \in L^\infty \iff \norm f_{L^\infty} \lneqq \pinfty$. Donc on observe
+$\norm {f^q}_{L^\infty} = {\norm f_L^\infty}^q \lneqq \pinfty \iff \norm f_{L^\infty} \lneqq \pinfty$.
+
+Dès lors, on a~:
+\begin{itemize}
+	\item $u \in L^q \Rightarrow u^{r\theta} \in L^{\frac p{r\theta}}$~;
+	\item $u \in L^q \Rightarrow u^{r(1-\theta)} \in L^{\frac q{r(1-\theta)}}$.
+\end{itemize}
+
+Or $\frac p{r\theta}$ et $\frac q{r(1-\theta)}$ sont conjugués par hypothèse. Par l'inégalité de Hölder, on a alors que $u^r = u^{r\theta}u^{r(1-\theta)} \in L^1$, et donc
+$u \in L^r$.
+
+Finalement, toujours par Hölder~:
+\[\norm {u^r}_{L^1} \leq \norm {u^{r\theta}}_{L^{\frac p{r\theta}}}\norm {u^{r(1-\theta)}}_{L^{\frac q{r(1-\theta)}}}.\]
+Deux cas sont à distinguer~:
+\begin{itemize}
+	\item si $\frac p{r\theta}, \frac q{r(1-\theta)} \in (1, \pinfty)$~:
+	\begin{align*}
+		\norm {u^r}_{L^1} &= \int \abs {u^r}\dif\mu = \int\abs u^r\dif\mu = \norm u_{L^r}^r \\
+		\norm {u^r\theta}_{L^{\frac p{r\theta}}} &= \left(\int\abs {{u}^{r\theta}}^{\frac p{r\theta}}\dif\mu\right)^{\frac {r\theta}p} = \left(\int\abs u^p\dif\mu\right)^{\frac {r\theta}p}
+			= \norm u_{L^p}^{r\theta} \\
+		\norm {u^{r(1-\theta)}}_{L^{\frac q{r(1-\theta)}}} &= \left(\int\abs u^q\dif\mu\right)^{\frac {r(1-\theta)}q} = \norm u_{L^q}^{r(1-\theta)}.
+	\end{align*}
+	\item Et si $\frac p{r\theta} = 1, \frac q{r(1-\theta)} = \pinfty$, on a également~:
+	\begin{align*}
+		\norm {u^r}_{L^1} &= \norm u_{L^r}^r \\
+		\norm {u^{r\theta}}_{L^1} &= \norm u_{L^{r\theta}}^{r\theta} = \norm u_{L^p}^{r\theta} \\
+		\norm {u^{r(1-\theta)}}_{L^\infty} &= \norm u_{L^\infty}^{r(1-\theta)},
+	\end{align*}
+\end{itemize}
+
+En mettant les deux membres à la puissance $\frac 1r$, on trouve bien~:
+\[\norm u_{L^r} \leq \norm u_{L^p}^\theta\norm u_{L^q}^{1-\theta}.\]
+
+\end{proof}
+
+\underline {\textbf {Remarque}~:} En corolaire de ce théorème, on déduit que si $f \in L^1 \cap L^\infty$ (i.e. si $f$ est $\mu$-intégrable et essentiellement bornée), alors
+$f \in L^p$ pour tout $p$. Et ça, c'est chouette.
 \end{document}
