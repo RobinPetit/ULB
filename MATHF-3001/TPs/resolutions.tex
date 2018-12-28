@@ -1415,4 +1415,90 @@ En mettant les deux membres à la puissance $\frac 1r$, on trouve bien~:
 
 \underline {\textbf {Remarque}~:} En corolaire de ce théorème, on déduit que si $f \in L^1 \cap L^\infty$ (i.e. si $f$ est $\mu$-intégrable et essentiellement bornée), alors
 $f \in L^p$ pour tout $p$. Et ça, c'est chouette.
+
+\newpage
+\section{Séance 9}
+
+\begin{ex} Soient $(X, \mathcal A, \mu)$ un espace mesuré, $p \in [1, \pinfty)$, $(f_k)_{k \geq 0} \in {L^p}^\N \st f_k \xrightarrow[k \to \pinfty]{\mu\text{-ae}} f$. Mq
+les deux assertions suivantes sont équivalentes~:
+\begin{itemize}
+	\item[a)] $\norm {f-f_k}_{L^p} \xrightarrow[k \to \pinfty]{} 0$.
+	\item[b)] $f \in L^p$ et $\norm {f_k}_{L^p} \xrightarrow[k \to \pinfty]{} \norm f_{L^p}$.
+\end{itemize}
+\end{ex}
+
+\begin{proof} \underline {a) $\Rightarrow$ b)~:} À $k$ fixé, on a $f = (f-f_k) + f_k$ et donc~:
+\[\int \abs f^p\dif\mu \leq \int\abs {f-f_k}^p\dif\mu + \int \abs {f_k}^p\dif\mu.\]
+
+Or par hypothèse~: $\forall \varepsilon > 0 : \exists K_\varepsilon > 0 \st \forall k \geq K_\varepsilon : \int \abs {f-f_k}^p\dif\mu < \varepsilon$. En particulier
+pour $\varepsilon = 1$, on trouve~:
+\[\int \abs f^p\dif\mu \leq \int \abs {f-f_{K_1}}^p\dif\mu + \int\abs {f_{K_1}}^p\dif\mu \leq 1 + \int \abs{f_{K_1}}^p\dif\mu < \pinfty\]
+car $f_{K_1} \in L^p$. Donc $f \in L^p$.
+
+De plus, $\norm f_{L^p} \leq \norm {f-f_k}_{L^p} + \norm {f_k}_{L^p}$ donc $\norm f_{L^p} \leq \liminf_{k \to \pinfty}\norm {f_k}_{L^p}$. De même, dans l'autre sens on a
+$\norm {f_k}_{L^p} \leq \norm {f-f_k}_{L^p} + \norm f_{L^p}$ et donc $\limsup_{k \to \pinfty}\norm {f_k}_{L^p} \leq \norm f_{L^p}$. On en déduit
+$\lim_{k \to \pinfty}\norm {f_k}_{L^p} = \norm f_{L^p}$.
+
+\underline {b) $\Rightarrow$ a)~:} On pose $g_k \coloneqq 2^{p-1}\left(\abs f^p + \abs {f_k}^p\right) - \abs {f-f_k}^p$.
+Puisque $p \geq 1 \Rightarrow 2^{p-1} \geq 1$, on a $g_k \geq 0$. On peut donc appliquer le lemme de Fatou qui dit~:
+\[\int\liminf_{k \to \pinfty}g_k\dif\mu \leq \liminf_{k \to \pinfty}\int f_k\dif\mu.\]
+
+Or $g_k \xrightarrow[k \to \pinfty]{\mu\text{-ae}} 2^p\abs f$ donc $\liminf_{k \to \pinfty}g_k = \lim_{k \to \pinfty}g_k = 2^p\abs f^p$. On a alors~:
+\begin{align*}
+	2^p\norm f_{L^p}^p &= \int 2^p\abs f^p\dif\mu \leq \liminf_{k \to \pinfty}\left[\int (2^{p-1}\abs f^p + 2^{p-1}\abs {f_k}^p - \abs {f-f_k}^p)\right] \\
+  	&= 2^p\norm f_{L^p}^p + \liminf_{k \to \pinfty}-\int\abs {f-f_k}^p\dif\mu = 2^p\norm f_{L^p}^p + \liminf_{k \to \pinfty}-\norm {f-f_k}_{L^p}^p.
+\end{align*}
+
+$\norm f_{L^p}$ étant finie, on trouve alors~:
+\[0 \leq \liminf_{k \to \pinfty}-\norm {f-f_k}_{L^p} = -\limsup_{k \to \pinfty}\norm {f-f_k}_{L^p},\]
+i.e. $\limsup_{k \to \pinfty}\norm {f-f_k}_{L^p} = 0$. De plus~: $0 \leq \liminf_{k \to \pinfty}\norm {f-f_k}_{L^p} \leq \limsup_{k \to \pinfty}\norm {f-f_k}_{L^p} = 0$,
+on déduit $\lim_{k \to \pinfty}\norm {f-f_k}_{L^p} = 0$.
+\end{proof}
+
+\begin{ex}[Lemme de Brézis-Lieb] Soient $X$ un ouvert de $\R^n$, $p \in [1, \pinfty)$ et $(u_k)_{k \geq 0} \in {L^p(X, \mathcal B(X), \mathcal L)}^\N$ où $\mathcal L$
+est la mesure de Lebesgue sur $X$. On suppose que $(u_k)_k$ est bornée dans $L^p$ et que $u_k \xrightarrow[k \to \pinfty]{\mathcal L\text{-ae}} u$.
+Montrons que $u \in L^p(X)$ et~:
+\[\lim_{k \to \pinfty}\left(\norm {u_k}_{L^p}^p - \norm {u-u_k}_{L^p}^p\right) = \norm u_{L^p}^p.\]
+
+\begin{enumerate}
+	\item Pour tout $\varepsilon > 0$, mq $\exists C_\varepsilon = C(\varepsilon, p) > 0 \st \forall a, b \in \R :$
+	\[\abs {\abs {a+b}^p - \abs a^p - \abs b^p} \leq \varepsilon\abs a^p + C_\varepsilon\abs b^p.\]
+
+	\item À $\varepsilon > 0$ fixé, on pose~:
+	\[f_k^\varepsilon \coloneqq \left(\abs {\abs {u_k}^p - \abs {u-u_k}^p - \abs u^p} - \varepsilon\abs {u_k-u}^p\right)^+.\]
+	Calculer~:
+	\[\lim_{k \to \pinfty}\int f_k^\varepsilon\dif\mathcal L.\]
+
+	\item Conclure.
+\end{enumerate}
+\end{ex}
+
+\begin{proof}
+	\TODO{Trouver comment faire.}
+\end{proof}
+
+\begin{ex} Soit $p \in [1, \pinfty)$. Montrer les affirmations suivantes~:
+\begin{enumerate}
+	\item L'espace des fonctions simples est dense dans $L^p(\R^n)$.
+	\item L'espace des fonctions en escalier est dense dans $L^p(\R^n)$.
+	\item L'espace des fonctions continues à support compact $C^0_c(\R^n)$ est dense dans $L^p(\R^n)$.
+	\item Si $f \in L^p(\R^n)$ et $f \in \R^n$, alors~:
+	\[\norm {f(\cdot+h)-f(\cdot)}_{L^p} \xrightarrow[\abs h \to \pinfty]{} 0.\]
+
+	Que dire du cas $p = \pinfty$~?
+\end{enumerate}
+\end{ex}
+
+\begin{proof}~
+\begin{enumerate}
+	\item Soit $f \in L^p$. Pour $n \geq 0$, on pose l'application~:
+	\[f_n : \R^n \to \R : x \mapsto \sum_{k=0}^{n^2-1}\frac k{n^2}\chi_{f^{-1}\left(\left[\frac k{n^2}, \frac {k+1}{n^2}\right)\right)}\]
+	\item
+	\item
+	\item
+\end{enumerate}
+\end{proof}
+
+\newpage
+\section{Séance 10}
 \end{document}
