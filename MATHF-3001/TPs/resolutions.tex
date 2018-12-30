@@ -974,7 +974,7 @@ et~:
 \[\lim_{k \to \pinfty}\beta_k = \lim_{k \to \pinfty}\int g_k\dif\mu = \int\lim_{k \to \pinfty}g_k\dif\mu = [-e^{-x}]_0^\pinfty = 1.\]
 \end{proof}
 
-\begin{ex} Soit $f \in L^1(X, \mathcal A, \mu)$. Mq~:
+\begin{ex}\label{ex:6.6} Soit $f \in L^1(X, \mathcal A, \mu)$. Mq~:
 \[\forall \varepsilon > 0 : \exists \delta > 0 \st \forall A \in \mathcal A : \mu(A) < \delta \Rightarrow \int_A\abs f\dif\mu < \varepsilon.\]
 \end{ex}
 
@@ -1491,9 +1491,79 @@ Montrons que $u \in L^p(X)$ et~:
 
 \begin{proof}~
 \begin{enumerate}
-	\item Soit $f \in L^p$. Pour $n \geq 0$, on pose l'application~:
-	\[f_n : \R^n \to \R : x \mapsto \sum_{k=0}^{n^2-1}\frac k{n^2}\chi_{f^{-1}\left(\left[\frac k{n^2}, \frac {k+1}{n^2}\right)\right)}\]
-	\item
+	\item Supposons $f$ positive. Soit $f \in L^p(X, \mathcal A, \mu)$. Pour $n \geq 0$, on pose l'application~:
+	\[f_n : \R^n \to \R : x \mapsto \sum_{k=0}^{2^{2n}-1}\frac k{2^n}\chi_{f^{-1}\left(\left[\frac k{2^n}, \frac {k+1}{2^n}\right)\right)}.\]
+
+	Si $p=1$, alors par le théorème de la convergence dominée (puisque $f \in L^1$ et $\abs {f_n} \leq f$) on a $\norm {f_n-f}_{L^1} \xrightarrow[n \to \pinfty]{} 0$.
+
+	Si $p \gneqq 1$, alors ${f_n}^p$ est toujours une fonction simple, et $\abs {f_n}^p \xrightarrow[n \to \pinfty]{\mu\text{-ae}} f^p \in L^1$. Donc ok par le cas $p=1$.
+
+	Une autre manière de démontrer le cas $p \gneqq 1$ (parce qu'on n'est plus à une démonstration près)~:
+	\[\norm {f_n-f}_{L^p}^p = \sum_{k=0}^{2^{2n}-1}\int_{f^{-1}\left(\left[\frac k{2^n}, \frac {k+1}{2^n}\right)\right)}(f-f_n)^p\dif\mu + \int_{f^{-1}([2^n, \pinfty))}f^p\dif\mu
+		\leq 2^{2n}2^{-n(p+1)} + \int_{f^{-1}([2^n, \pinfty))}f^p\dif\mu.\]
+
+	Donc~:
+	\[\lim_{n \to \pinfty}\norm {f-f_n}_{L^p}^p = \underbrace {\lim_{n \to \pinfty}2^{n(1-p)}}_{= 0} + \lim_{n \to \pinfty}\int_{f^{-1}([2^n, \pinfty))}\abs f^p\dif\mu.\]
+
+	Montrons que $\mu\left(f^{-1}([2, \pinfty))\right) \xrightarrow[n \to \pinfty]{} 0$. Tout d'abord, remarquons que $f^{-1}([2^n, \pinfty)) = (f^p)^{-1}([2^{np}, \pinfty))$.
+	Par l'absurde, supposons~:
+	\[\limsup_{n \to \pinfty}\mu\left(\underbrace {(f^p)^{-1}([2^{np}, \pinfty))}_{\eqqcolon A_n^p}\right) = \alpha \gneqq 0,\]
+	qui est équivalent à~:
+	\[\forall \varepsilon > 0 : \exists N > 0 \st \forall n \geq N : \mu(A_n^p) > \alpha-\varepsilon.\]
+
+	En particulier $\exists N > 0 \st \forall n \geq N : \mu(A_n^p) > \frac \alpha2$. Or pour tout $n \geq N$~:
+	\[\norm f_{L^p}^p = \int_{A_n^p}\abs f^p\dif\mu + \int_{{A_n^p}^\C}\abs f^p\dif\mu \geq \int_{A_n^p}\abs f^p \geq \int_{A_n^p}2^{np}\dif\mu = 2^{np}\mu(A_n^p)
+	= 2^{np}\underbrace {\frac \alpha2}_{\gneqq 0}.\]
+	Dès lors $\norm f_{L^p}^p = \pinfty$, ce qui contredit $f \in L^p$.
+
+	De là, on peut appliquer l'exercice~\ref{ex:6.6} (qui dit que pour tout $g \in L^1 : \int_Ag\dif\mu \xrightarrow[\mu(A) \to 0]{} 0$) à l'application
+	$f^p \in L^1$. On a donc~:
+	\[\lim_{n \to \pinfty}\norm {f-f_n}_{L^p}^p = \lim_{n \to \pinfty}\int_{f^{-1}([2^n, \pinfty))}\abs f^p\dif\mu = 0,\]
+	et donc $f_n \xrightarrow[n \to \pinfty]{L^p} f$.
+
+	Dans le cas général où $f$ est à valeurs dans $\R$, on applique séparément le résultat à $f^+$ et $f^-$ puisque la somme de deux fonctions simples est toujours une fonction simple.
+
+	\item Il suffit de montrer que toute fonction caractéristique d'un ensemble mesurable est limite d'une suite de fonctions en escalier. En effet, on aurait alors que
+	l'ensemble des fonctions simples est contenu dans l'adhérence de l'ensemble des fonctions en escalier. Par passage à l'adhérence, on aura alors que $L^p =$ l'adhérence
+	de l'ensemble des fonctions simples est contenu dans l'adhérence de l'adhérence de l'ensemble des fonction en escalier $=$ l'adhérence de l'ensemble des fonctions en escalier
+	$\subseteq L^p$. Ou plus simplement, pour $\mathcal S^p$ l'ensemble des fonctions simples de $L^p$ et pour $\mathcal E^p$ l'ensemble des fonctions en escalier de $L^p$, si on montre
+	que $\overline {\mathcal E^p} \supseteq \mathcal S^p$, alors on a $L^p = \overline {\mathcal S^p} \subset \overline {\overline {\mathcal E^p}}=\overline {\mathcal E^p} \subseteq L^p$.
+
+	Soit donc $A$ mesurable tel que $\chi_A \in L^p$. Puisque $\norm {\chi_A}_{L^p}^p = \int\chi_a\dif\mathcal L = \mathcal L(A) \lneqq \pinfty$, on a que $A$ est de mesure finie.
+	Par un résultat vu au cours (cours 2)~: $\mathcal L(A) = \inf_{\Omega(A)}\mathcal L(U)$ où $\Omega(A)$ est l'ensemble des ouverts contenant $A$. On en déduit l'existence d'une
+	suite $U_k$ dans $\Omega(A)$ telle que
+	\[\forall \varepsilon > 0 : \exists K > 0 \st \forall k \geq K : \mathcal L(U_k \setminus A) = \mathcal L(U_k)-\mathcal L(A) < \varepsilon.\]
+
+	Rappelons-nous également que tout ouvert de $\R^n$ est égal à une union dénombrable d'intervalles disjoints de $\R^n$. Dès lors~:
+	\[\forall k \geq 0 : \exists (I^k_n)_{n \geq 0} \text{ suite d'intervalles } \st U_k = \bigcup_{n \geq 0}I^k_n.\]
+
+	On en déduit que pour $k \geq 0$~: $\mathcal L(U_k) = \sum_{n \geq 0}\mathcal L(I^k_n)$. Dès lors, puisque $(\sum_{n=0}^N\mathcal L(I^k_n))_{N \geq 0}$ est une suite monotone
+	positive qui converge, on a~:
+	\[\forall \tilde \varepsilon > 0 : \exists N \geq 0 \st \mathcal L\left(\bigcup_{n \geq N}I^k_n\right) < \tilde \varepsilon.\]
+
+	Pour $n > 0$, on sait qu'il existe $K_N > 0 \st \mathcal L(U_{K_n} \setminus A) < \frac 1n$ et $U_{K_n} = \bigcup_{j \geq 1}I_j^{K_n}$. De plus il existe
+	$J_n > 0 \st \mathcal L(\bigcup_{j \geq J_n} < \frac 1n$. On peut alors poser la suite $(f_n)_{n \geq 0}$ définie par~:
+	\[f_n \coloneqq \sum_{j=1}^{J_n}\chi_{I_j^{K_n}}.\]
+
+	Montrons alors que $f_n \xrightarrow[n \to \pinfty]{L^p} \chi_A$.
+
+	Remarquons d'abord (ce qui simplifiera les écritures)~:
+	\[\norm {\chi_A-f_n}^p_{L^p}\mathcal L = \int\abs {\chi_A - f_n}\dif\mathcal L = \norm {\chi_A-f_n}_{L^1}.\]
+
+	Donc~:
+	\begin{align*}
+		\norm {\chi_A-f_n}_{L^1} &= \int\abs {\chi_A - \sum_{j=1}^{J_n}\chi_{I^{K_n}_j}}\dif\mathcal L
+			= \int\abs {\sum_{j \geq 0}\chi_{A \cap I^{K_n}_j} - \sum_{j=1}^{J_n}\chi_{I^{K_n}_j}}\dif\mathcal L \\
+		&= \int\abs {\sum_{j=1}^{J_n}(\chi_{A \cap I^{K_n}_j}-\chi_{I^{K_n}_j}) + \sum_{j > J_n}\chi_{I^{K_n}_j}}\dif\mathcal L \\
+		&\leq \int\left(\abs {\sum_{j=1}^{J_n}(\chi_{A \cap I^{K_n}_j}-\chi_{K^{K_n}_j})} + \abs {\sum_{j > J_n}\chi_{I^{K_n}_j}}\right) \dif\mathcal L \\
+		&\leq \int\sum_{j=1}^{J_n}\abs {\chi_{A \cap I^{K_n}_j}-\chi_{I^{K_n}_j}}\dif\mathcal L + \sum_{j > J_n}\int\chi_{I^{K_n}_j}\dif\mathcal L \\
+		&= \sum_{j=1}^{J_n}\int\abs {\chi_{A \cap I^{K_n}_j}-\chi_{I^{K_n}_j}}\dif\mathcal L + \sum_{j > J_n}\mathcal L(I^{K_n}_j) \\
+		&= \sum_{j=1}^{J_n}\int\chi_{A^\C \cap I^{K_n}_j}\dif\mathcal L + \mathcal L\left(\bigcup_{j > J_n}I^{K_n}_j\right) \\
+		&\leq \sum_{j=1}^{J_n}\mathcal L(A^\C \cap I^{K_n}_j) + \frac 1n \\
+		&= \mathcal L\left(\bigcup_{j=1}^{J_n}A^\C \cap I^{K_n}_j\right) + \frac 1n \\
+		&\leq \mathcal L(U_{K_n} \setminus A) + \frac 1n \\
+		&\leq \frac 1n + \frac 1n = \frac 2n \xrightarrow[n \to \pinfty]{} 0.
+	\end{align*}
 	\item
 	\item
 \end{enumerate}
