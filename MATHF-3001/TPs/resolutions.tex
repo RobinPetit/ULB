@@ -411,7 +411,7 @@ est une mesure sur $(X, \mathcal A)$. Donc l'exercice peut être simplement rés
 \end{enumerate}
 \end{proof}
 
-\begin{ex} Soient $(X, \mathcal A, \mu)$ un espace mesuré et $(A_n)_{n \geq 0} \in {\mathcal A}^\N$.
+\begin{ex}\label{ex:2.9} Soient $(X, \mathcal A, \mu)$ un espace mesuré et $(A_n)_{n \geq 0} \in {\mathcal A}^\N$.
 \begin{enumerate}
 	\item Mq~:
 	\[\mu\left(\liminf_{n \to \pinfty}A_n\right) \leq \liminf_{n \to \pinfty}\mu(A_n).\]
@@ -1445,7 +1445,7 @@ Puisque $p \geq 1 \Rightarrow 2^{p-1} \geq 1$, on a $g_k \geq 0$. On peut donc a
 
 Or $g_k \xrightarrow[k \to \pinfty]{\mu\text{-ae}} 2^p\abs f$ donc $\liminf_{k \to \pinfty}g_k = \lim_{k \to \pinfty}g_k = 2^p\abs f^p$. On a alors~:
 \begin{align*}
-	2^p\norm f_{L^p}^p &= \int 2^p\abs f^p\dif\mu \leq \liminf_{k \to \pinfty}\left[\int (2^{p-1}\abs f^p + 2^{p-1}\abs {f_k}^p - \abs {f-f_k}^p)\right] \\
+	2^p\norm f_{L^p}^p &= \int 2^p\abs f^p\dif\mu \leq \liminf_{k \to \pinfty}\left[\int (2^{p-1}\abs f^p + 2^{p-1}\abs {f_k}^p - \abs {f-f_k}^p)\dif\mu\right] \\
   	&= 2^p\norm f_{L^p}^p + \liminf_{k \to \pinfty}-\int\abs {f-f_k}^p\dif\mu = 2^p\norm f_{L^p}^p + \liminf_{k \to \pinfty}-\norm {f-f_k}_{L^p}^p.
 \end{align*}
 
@@ -1501,4 +1501,154 @@ Montrons que $u \in L^p(X)$ et~:
 
 \newpage
 \section{Séance 10}
+
+\begin{ex} Soient $(X, \mathcal A, \mu)$ un espace mesuré, $(f_k)_{k \geq 0}$ suite d'applications mesurables de $X$ dans $\R$ et $p \in [1, \pinfty]$.
+Justifier les affirmations suivantes~:
+\begin{enumerate}
+	\item La convergence $\mu$-ae n'implique pas la convergence en $L^p$, sauf si la suite $(f_k)_k$ est bornée par $g \in L^p$.
+	\item La convergence en $L^p$ implique la convergence en mesure.
+	\item La convergence $\mu$-ae n'implique pas la convergence en mesure, sauf si $\mu(X) \lneqq \pinfty$.
+	\item La convergence en mesure n'implique pas la convergence $\mu$-ae, mais seulement la convergence $\mu$-ae d'une sous-suite.
+	\item La convergence en mesure n'implique pas la convergence en $L^p$, sauf si la suite $(f_k)_k$ est bornée par $g \in L^p$.
+	\item La convergence presque uniforme implique la convergence en mesure.
+	\item La convergence $\mu$-ae n'implique pas la convergence presque uniforme.
+	\item Si $\mu(X) \lneqq \pinfty$, la convergence $\mu$-ae implique la convergence presque uniforme.
+\end{enumerate}
+\end{ex}
+
+\begin{proof}~
+\begin{enumerate}
+	\item La suite $f_k = \chi_{[k, k+1]}$ converge simplement vers $\mathbf 0$ sur $\R$ (en particulier converge $\mu$-ae). Pourtant $\forall k \geq 0 : \norm {f_k}_{L^p} = 1$.
+
+	Cependant, si $\exists g \in L^p \st \forall k \geq 0 : \abs {f_k} \leq g$, on peut appliquer le théorème de la convergence dominée à la suite $(\abs {f_n}^p)_{n \geq 0}$
+	bornée par $\abs g^p$ et qui converge $\mu$-ae vers $\abs f^p$. Dès lors $\abs f^p$ est $\mu$-intégrable (i.e. $\abs f^p \in L^1$ et donc $f \in L^p$) et~:
+	\[\lim_{n \to \pinfty}\int \abs {f_n}^p\dif\mu = \int \abs f^p\dif\mu,\]
+	i.e. $\norm {f_n}_{L^p}^p \xrightarrow[n \to \pinfty]{} \norm f_{L^p}^p$. On en déduit $f_n \xrightarrow[n \to \pinfty]{L^p} f$.
+
+	\item Si la suite $(f_k)_k$ ne converge pas en mesure, alors $\exists \varepsilon_0 > 0 \st$~:
+	\[\limsup_{k \to \pinfty}\mu(\underbrace {\{x \in X \st \abs {f_k(x)-f(x)} > \varepsilon_0\}}_{\eqqcolon N_{k,\varepsilon_0}}) = \alpha \gneqq 0.\]
+
+	Dès lors~:
+	\[\norm {f_k-f}_{L^p} = \left(\int\abs {f_k-f}^p\dif\mu\right)^{\frac 1p} \geq \left(\int_{N_{k,\varepsilon_0}}\abs {f-f_k}^p\right)^{\frac 1p}
+	\geq \varepsilon_0\mu(N_{k,\varepsilon_0})^{\frac 1p}.\]
+	Par passage à la $\limsup$~:
+	\[\limsup_{k \to \pinfty}\norm {f_k-f}_{L^p} \geq \varepsilon_0\alpha^{\frac 1p} \gneqq 0,\]
+	et donc $f_k$ ne converge pas en $L^p$ vers $f$.
+
+	\item Prenons à nouveau la suite $f_k = \chi_{[k, k+1]}$. $f_k$ converge simplement vers $\mathbf 0$ sur $\R$ mais~:
+	\[\forall k \geq 0 : \forall \varepsilon \in (0, 1) : \mu(N_{k,\varepsilon}) = \mu([k, k+1]) = 1.\]
+
+	Cependant, si $\mu(X) \lneqq \pinfty$, alors procédons par contraposée. On suppose que $f_k$ ne converge pas en mesure vers $f$. On sait donc~:
+	\[\exists \varepsilon_0 > 0 \st \limsup_{k \to \pinfty}(N_{k,\varepsilon_0}) = \alpha \gneqq 0.\]
+
+	Remarquons ensuite que $f_k \xrightarrow[k \to \pinfty]{} f(x)$ si et seulement si~:
+	\[x \in \bigcap_{\varepsilon \in \Q_+^*}\bigcup_{N \geq 0}\bigcap_{n \geq N}N_{n,\varepsilon}.\]
+	par définition de la convergence. Donc $f_k(x) \not \to f(x)$ si et seulement si~:
+	\[x \in \bigcup_{\varepsilon \in \Q_+^*}\bigcap_{N \geq 0}\bigcup_{n \geq N}N_{n,\varepsilon},\]
+
+	Dès lors, si $N$ est l'ensemble des points $x \in X \st f_k(x) \not \to f(x)$, alors par monotonie de la mesure~:
+	\[\mu(N) \geq \mu\left(\bigcap_{N \geq 0}\bigcup_{n \geq N}N_{n,\varepsilon_0}\right) = \mu\left(\limsup_{n \to \pinfty}N_{n,\varepsilon_0}\right).\]
+
+	Par finitude de la mesure et par l'exercice~\ref{ex:2.9}, on a~:
+	\[\mu\left(\limsup_{n \to \pinfty}N_{n,\varepsilon_0}\right) \geq \limsup_{n \to \pinfty}\mu(N_{n,\varepsilon_0}) = \alpha \gneqq 0.\]
+
+	Donc $\mu(N) \gneqq 0$, et $f_k$ ne converge pas $\mu$-ae vers $f$.
+
+	\item Prenons suite $(f_k)_{k \geq 0}$ définie par $f_k = \chi_{\left[\frac {k-2^{i(k)}}{2^{i(k)}}, \frac {k-2^{i(k)}-1}{2^{i(k)}}\right]}$ avec $i(k) = \lfloor\log_2k\rfloor$.
+	On remarque que $f_k \xrightarrow[k \to \pinfty]{\mathcal L} 0$ puisque pour $\varepsilon \in (0, 1)$~:
+	\begin{align*}
+		\mathcal L(\{x \in X \st \abs {f_k(x)} > \varepsilon\}) &= \mathcal L(\{x \in X \st f_k(x) = 1\})
+			= \mathcal L\left(\left[\frac {k-2^{i(k)}}{2^{i(k)}}, \frac {k-2^{i(k)}-1}{2^{i(k)}}\right]\right) \\
+		&= 2^{-i(k)} = \frac 2{2^{i(k)+1}} < \frac 2k \xrightarrow[k \to \pinfty]{} 0.
+	\end{align*}
+
+	Mais à $x \in [0, 1]$, on peut trouver une sous-suite $(f_{k_n})_{n \geq 0}$ telle que $f_{k_n}(x) \xrightarrow[n \to \pinfty]{} 1$. Pour $n \geq 0$, on pose~:
+	\[k_n \coloneqq 2^n + \lfloor2^nx\rfloor.\]
+
+	On a alors $f_{k_n}(x) = 1$ si $x \in \left[\frac {\lfloor2^nx\rfloor}{2^n}, \frac {\lfloor2^nx\rfloor+1}{2^n}\right]$ et $f_{k_n}(x) = 0$ sinon. Or~:
+	\[\forall n \geq 0 : 2^nx \in \left[\lfloor2^nx\rfloor, \lfloor2^nx\rfloor+1\right]
+	\qquad\text{ et donc }\qquad x \in \left[\frac {\lfloor2^nx\rfloor}{2^n}, \frac {\lfloor2^nx\rfloor+1}{2^n}\right].\]
+
+	On n'a donc pas la convergence $\mathcal L$-ae de la suite $(f_k)_k$.
+
+	Montrons maintenant la convergence d'une sous-suite. Pour $n \geq 0$, on pose $k_n \geq 0 \st$~:
+	\[\forall k \geq k_n : \mu(\{x \in X \st \abs {f_k(x)-f(x)} > 2^{-n}\}) < 2^{-n}.\]
+	On sait que $k_n$ existe par la convergence en mesure de $(f_k)_k$. On peut supposer $(k_n)_{n \geq 0}$ strictement croissante, quitte à la remplacer par la suite
+	$(\tilde k_n)_{n \geq 0}$ définie par $\tilde k_0 \coloneqq k_0$ et $\tilde k_n \coloneqq \max\{k_n, \tilde k_{n-1}+1\}$.
+
+	On pose alors $N_n \coloneqq \{x \in X \st \abs {f_{k_n}(x)-f(x)} > 2^{-n}\}$. Posons également $N \coloneqq \{x \in X \st f_{k_n}(x) \not \to f(x)\}$. On sait
+	que $N \subset \bigcup_{n \geq 0}N_n$ car si $x \in N$, alors $\exists n \geq 0 \st x \in N_n$. Puisque~:
+	\[\mu\left(\bigcup_{n \geq 0}N_n\right) \leq \sum_{n \geq 0}\mu(N_n) \leq \sum_{n \geq 0}2^{-n} = 2 \lneqq \pinfty,\]
+	à nouveau par l'exercice~\ref{ex:2.9}, on trouve~:
+	\begin{align*}
+		\limsup_{n \to \pinfty}\mu(N_n) &\leq \mu(\limsup_{n \to \pinfty}N_n) = \mu\left(\bigcap_{k \geq 0}\bigcup_{n \geq 0}N_n\right)
+			= \inf_{n \geq 0}\mu\left(\bigcap_{n \geq k}N_n\right) \leq \inf_{k \geq 0}\sum_{n \geq k}\mu(N_n) \\
+		&\leq \inf_{k \geq 0}\sum_{n \geq k}2^{-n} = \inf_{n \geq 0}2^{-(k+1)} = \lim_{k \to \pinfty}2^{-(k+1)} = 0.
+	\end{align*}
+
+	On a donc finalement $\mu(N) = 0$, et donc $f_{k_n} \xrightarrow[n \to \pinfty]{\mu\text{-ae}} f$.
+
+	\item Prenons la suite $f_k = k\chi_{\left[\frac 1k, \frac 2k\right]}$. Cette suite converge en mesure vers $0$. En effet, pour $1 > \varepsilon > 0$~:
+	\[\mathcal L(\{x \in X \st \abs {f_k(x)} > \varepsilon\}) = \mathcal L\left(\left[\frac 1k, \frac 2k\right]\right) = \frac 1k \xrightarrow[k \to \pinfty]{} 0.\]
+
+	Pourtant $(f_k)_k$ ne converge pas en $L^1$. En effet~:
+	\[\norm {f_k}_{L^1} = \int \abs {f_k}\dif\mathcal L = k \cdot \frac 1k = 1.\]
+
+	Supposons maintenant que la suite $(f_k)_k$ est dominée par $g \in L^p$. Supposons, par l'absurde, que $\limsup_{k \to \pinfty}\norm {f_k-f}_{L^p} = \alpha \gneqq 0$.
+	On a alors une sous-suite $(f_{k_n})_{n \geq 0} \st (\norm {f_{k_n}-f}_{L^p})_{n \geq 0}$ est croissante et croit vers $\alpha$.
+	Cette sous-suite converge toujours en mesure~; donc par le point 4, on a la convergence $\mu$-ae d'une sous-suite $(f_{k_{n_j}})_{j \geq 0}$. Par la domination,
+	on peut appliquer le point 1 et on a alors que $\norm {f_{k_{n_j}}-f}_{L^p} \xrightarrow[j \to \pinfty]{} 0$. On a alors une contradiction car toute sous-suite d'une
+	suite convergente vers une limite $L$ converge également vers cette limite.
+
+
+	\item Posons $\varepsilon > 0$. Pour $\tilde \varepsilon \in (0, \varepsilon)$, on a $\Omega_{\tilde \varepsilon} \in \mathcal A$ avec
+	$\mu(\Omega_{\tilde \varepsilon}) < \tilde \varepsilon$ et $\sup_{x \in {\Omega_{\tilde \varepsilon}}^\C}\abs {f_k(x)-f(x)} \xrightarrow[k \to \pinfty]{} 0$.
+	En particulier~: $\exists K_\varepsilon > 0 \st \forall k \geq K_\varepsilon : \forall x \in {\Omega_{\tilde \varepsilon}}^\C : \abs {f_k(x)-f(x)} < \varepsilon$.
+
+	De là on déduit que pour $k \geq K_\varepsilon$~:
+	\begin{align*}
+		\mu(N_{k,\varepsilon}) &= \mu(\{x \in X \st \abs {f_k(x)-f(x)} > \varepsilon\}) \\
+		&= \mu(\{x \in X \st \abs {f_k(x)-f(x)} > \varepsilon\} \cap \Omega_{\tilde \varepsilon})
+			+ \mu(\{x \in X \st \abs {f_k(x)-f(x)} > \varepsilon\} \cap {\Omega_{\tilde \varepsilon}}^\C) \\
+		&\leq \tilde \varepsilon + \mu(\emptyset) = \tilde \varepsilon,
+	\end{align*}
+	et il en suit~: $\forall k \geq K_\varepsilon : \mu(N_{k,\varepsilon}) = 0$.
+
+	\item La suite définie par $f_k = \chi_{[k, k+1]}$ converge simplement vers $\mathbf 0$ mais ne converge pas presque uniformément. En effet, cette suite ne converge pas en mesure,
+	et la convergence presque uniforme implique la convergence en mesure. Donc cette suite ne peut converger presque uniformément.
+
+	\item Gardons la notation $N_{k,\varepsilon}$ définie plus haut. Pour $N \coloneqq \{x \in X \st f_k(x) \not \to f(x)\}$, on a~:
+	\begin{align*}
+		x \in N &\iff \exists \varepsilon > 0 \st \forall K \geq 0 : \exists k \geq K \st \abs {f_k(x)-f(x)} > \varepsilon \\
+		&\iff \exists n > 0 \st \forall K \geq 0 : \exists k \geq K \st \abs {f_k(x)-f(x)} > \frac 1n \\
+		&\iff \exists n > 0 \st \forall K \geq 0 : x \in \bigcup_{k \geq K}N_{k,\frac 1n} \\
+		&\iff \exists n > 0 \st x \in \bigcap_{K \geq 0}\bigcup_{k \geq K}N_{k,\frac 1n} \\
+		&\iff x \in \bigcup_{n \geq 0} \bigcap_{K \geq 0}\bigcup_{k \geq K}N_{k,\frac 1n}.
+	\end{align*}
+
+	Donc $N = \bigcup_{n \geq 0}\limsup_{k \to \pinfty}N_{k,\frac 1n}$ et donc~:
+	\[\forall n \geq 0 : \limsup_{k \to \pinfty}N_{k,\frac 1n} \subseteq N.\]
+
+	Or par hypothèse $\mu(N) = 0$. On en déduit que~:
+	\[\forall n \geq 0 : \mu(\limsup_{k \to \pinfty}N_{k,\frac 1n}) = 0.\]
+
+	Or puisque $\mu(X) \lneqq \pinfty$, on sait que~:
+	\[0 = \mu\left(\bigcap_{K \geq 0}\bigcup_{k \geq 0}N_{k,\frac 1n}\right) = \lim_{K \to \pinfty}\mu\left(\bigcup_{k \geq K}N_{k,\frac 1n}\right)
+	= \lim_{K \to \pinfty}\mu\left(\bigcup_{k \geq K}N_{k,\frac 1n}\right).\]
+
+	Donc $\forall \varepsilon > 0 : \exists K > 0 \st \mu(\bigcup_{k \geq K}N_{k,\frac 1n}) < \varepsilon$. En particulier~:
+	\[\forall \varepsilon > 0 : \forall n > 0 : \exists k_n > 0 \st \mu\left(\bigcup_{k \geq k_n}N_{k,\frac 1n}\right) < 2^{-n}\varepsilon.\]
+
+	Soit $\varepsilon > 0$. Posons alors $\Omega_\varepsilon \coloneqq \bigcup_{n > 0}\bigcup_{k \geq k_n}N_{k,\frac 1n}$. On a bien~:
+	\[\mu(\Omega_\varepsilon) = \mu\left(\bigcup_{n > 0}\bigcup_{k \geq k_n}N_{k,\frac 1n}\right) \leq \sum_{n > 0}\mu\left(\bigcup_{k \geq k_n}N_{k,\frac 1n}\right) < \varepsilon.\]
+
+	Montrons maintenant que $f_k$ converge uniformément vers $f$ sur $\Omega_\varepsilon^\C$. On sait que $x \in \Omega_\varepsilon^\C$ si et seulement si~:
+	\[\forall n > 0 : \forall k \geq k_n : \abs {f_k(x)-f(x)} \leq \frac 1n.\]
+
+	Soient $x \in \Omega_\varepsilon^\C$ et $\tilde \varepsilon > 0$ et soit $n > 0 \st \tilde \varepsilon > \frac 1n$. On a donc~:
+	\[\forall k \geq k_n : \abs {f_k(x)-f(x)} \leq \frac 1n < \tilde \varepsilon,\]
+	qui est équivalent à~:
+	\[\forall \tilde \varepsilon > 0 : \forall k \geq k_{\left\lceil\frac 1{\tilde \varepsilon}\right\rceil} : \forall x \in \Omega_\varepsilon^\C : \abs {f_k(x)-f(x)} < \tilde\varepsilon.\]
+\end{enumerate}
+\end{proof}
 \end{document}
