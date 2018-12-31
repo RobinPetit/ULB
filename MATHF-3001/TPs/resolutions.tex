@@ -62,6 +62,7 @@
 
 \DeclareMathOperator{\Vol}{Vol}
 \DeclareMathOperator{\Id}{Id}
+\DeclareMathOperator{\supp}{supp}
 
 \begin{document}
 \maketitle
@@ -1482,7 +1483,7 @@ Montrons que $u \in L^p(X)$ et~:
 	\item L'espace des fonctions simples est dense dans $L^p(\R^n)$.
 	\item L'espace des fonctions en escalier est dense dans $L^p(\R^n)$.
 	\item L'espace des fonctions continues à support compact $C^0_c(\R^n)$ est dense dans $L^p(\R^n)$.
-	\item Si $f \in L^p(\R^n)$ et $f \in \R^n$, alors~:
+	\item Si $f \in L^p(\R^n)$ et $h \in \R^n$, alors~:
 	\[\norm {f(\cdot+h)-f(\cdot)}_{L^p} \xrightarrow[\abs h \to \pinfty]{} 0.\]
 
 	Que dire du cas $p = \pinfty$~?
@@ -1513,7 +1514,7 @@ Montrons que $u \in L^p(X)$ et~:
 
 	En particulier $\exists N > 0 \st \forall n \geq N : \mu(A_n^p) > \frac \alpha2$. Or pour tout $n \geq N$~:
 	\[\norm f_{L^p}^p = \int_{A_n^p}\abs f^p\dif\mu + \int_{{A_n^p}^\C}\abs f^p\dif\mu \geq \int_{A_n^p}\abs f^p \geq \int_{A_n^p}2^{np}\dif\mu = 2^{np}\mu(A_n^p)
-	= 2^{np}\underbrace {\frac \alpha2}_{\gneqq 0}.\]
+	> 2^{np}\underbrace {\frac \alpha2}_{\gneqq 0}.\]
 	Dès lors $\norm f_{L^p}^p = \pinfty$, ce qui contredit $f \in L^p$.
 
 	De là, on peut appliquer l'exercice~\ref{ex:6.6} (qui dit que pour tout $g \in L^1 : \int_Ag\dif\mu \xrightarrow[\mu(A) \to 0]{} 0$) à l'application
@@ -1555,7 +1556,7 @@ Montrons que $u \in L^p(X)$ et~:
 		\norm {\chi_A-f_n}_{L^1} &= \int\abs {\chi_A - \sum_{j=1}^{J_n}\chi_{I^{K_n}_j}}\dif\mathcal L
 			= \int\abs {\sum_{j \geq 0}\chi_{A \cap I^{K_n}_j} - \sum_{j=1}^{J_n}\chi_{I^{K_n}_j}}\dif\mathcal L \\
 		&= \int\abs {\sum_{j=1}^{J_n}(\chi_{A \cap I^{K_n}_j}-\chi_{I^{K_n}_j}) + \sum_{j > J_n}\chi_{I^{K_n}_j}}\dif\mathcal L \\
-		&\leq \int\left(\abs {\sum_{j=1}^{J_n}(\chi_{A \cap I^{K_n}_j}-\chi_{K^{K_n}_j})} + \abs {\sum_{j > J_n}\chi_{I^{K_n}_j}}\right) \dif\mathcal L \\
+		&\leq \int\left(\abs {\sum_{j=1}^{J_n}(\chi_{A \cap I^{K_n}_j}-\chi_{I^{K_n}_j})} + \abs {\sum_{j > J_n}\chi_{I^{K_n}_j}}\right) \dif\mathcal L \\
 		&\leq \int\sum_{j=1}^{J_n}\abs {\chi_{A \cap I^{K_n}_j}-\chi_{I^{K_n}_j}}\dif\mathcal L + \sum_{j > J_n}\int\chi_{I^{K_n}_j}\dif\mathcal L \\
 		&= \sum_{j=1}^{J_n}\int\abs {\chi_{A \cap I^{K_n}_j}-\chi_{I^{K_n}_j}}\dif\mathcal L + \sum_{j > J_n}\mathcal L(I^{K_n}_j) \\
 		&= \sum_{j=1}^{J_n}\int\chi_{A^\C \cap I^{K_n}_j}\dif\mathcal L + \mathcal L\left(\bigcup_{j > J_n}I^{K_n}_j\right) \\
@@ -1564,8 +1565,58 @@ Montrons que $u \in L^p(X)$ et~:
 		&\leq \mathcal L(U_{K_n} \setminus A) + \frac 1n \\
 		&\leq \frac 1n + \frac 1n = \frac 2n \xrightarrow[n \to \pinfty]{} 0.
 	\end{align*}
-	\item
-	\item
+
+	\item Par un raisonnement similaire au point 2, il est suffisant de montrer que pour tout $A \subset \R^n$ mesurable, il existe $(f_k)_{k \geq 1} \in C^0_c(\R^n)^\N$ telle que
+	$\norm {\chi_A-f_k}_{L^p} \xrightarrow[k \to \pinfty]{} 0$.
+
+	Par le même résultat qu'au point 2, on sait que $\mathcal L(A) = \sup_{K \subset\subset A}\mathcal L(K)$. Donc on peut extraire une suite $(K_n)_{n \geq 0}$ de compacts
+	inclus dans $A$ telle que $\forall \varepsilon > 0 : \exists N > 0 \st \forall n \geq N : \mathcal L(A \setminus K_n) = \mathcal L(A) - \mathcal L(K_n) < \varepsilon$.
+	En particulier, pour $k \geq 1 : \exists n_k > 0 \st \forall n \geq n_k : \mathcal L(A \setminus K_n) < \frac 1k$. On pose alors la suite de fonctions $f_k = \chi_{K_{n_k}}$.
+	$f_k$ est bien à support compact et est constante sur son support donc trivialement continue. On a bien~:
+	\[\norm {\chi_A - f_k}_{L^p}^p = \int\abs {\chi_A-\chi_{K_{n_k}}}^p\dif\mathcal L = \int\chi_{A \cap K_{n_k}^\C}\dif\mathcal L = \mathcal L(A \setminus K_{n_k})
+		< \frac 1k \xrightarrow[k \to \pinfty]{} 0.\]
+
+	Notons que dans le cas $p = \pinfty$, ce résultat ne tient plus. En effet, pour $(f_n)_{n \geq 0} \st f_n \xrightarrow[n \to \pinfty]{L^\infty} f \in L^\infty$, on a
+	l'existence de $E \subset \R^n \st f_n(x) \xrightarrow[n \to \pinfty]{} f(x)$ sur $E$, $\mu(E^\C) = 0$ et~:
+	\[\sup_{x \in E}\abs {f_n(x)-f(x)} \xrightarrow[n \to \pinfty]{} 0.\]
+
+	Donc $f_n$ converge uniformément vers $f$ sur $E$. On en déduit que $f$ est également continue sur $E$, et donc $f$ est continue $\mathcal L$-ae. Cependant
+	$\chi_{\Q \cap [0, 1]} \in L^\infty$ mais $\chi_{\Q \cap [0, 1]}$ n'est nulle part continue sur $[0, 1]$. Donc pour toute suite $(f_n)_n$ d'applications continues~:
+	$\limsup_{n \to \pinfty}\norm {\chi_{\Q \cap [0, 1]}-f_n}_{L^\infty} \gneqq 0$.
+
+	\item Utilisons le point 3~: prenons une suite $(f_n)_{n \geq 0} \in C_c^0(\R^n)^\N \st \norm {f-f_n} \xrightarrow[n \to \pinfty]{} 0$. À $n \geq 0$ fixé, on a~:
+	\[\norm {f-f(\cdot+h)}_{L^p} \leq \norm {f-f_n}_{L^p} + \norm {f_n-f_n(\cdot + h)}_{L^p} + \norm {f_n(\cdot+h)-f(\cdot+h)}_{L^p}.\]
+
+	Fixons alors $\varepsilon > 0$. On sait que~:
+	\[\exists N > 0 \st \forall n \geq N : \norm {f-f_n}_{L^p} = \norm {f(\cdot+h)-f_n(\cdot+h)}_{L^p} < \frac \varepsilon3.\]
+
+	Maintenant montrons que $\forall n \geq 0 : \norm {f_n-f_n(\cdot+h)}_{L^p} \xrightarrow[\abs h \to 0]{} 0$. Pour cela, fixons $n \geq 0$ et fixons
+	$(h_k)_{k \geq 0} \in {\R^n}^\N$ décroissante vers $0$. Notons $K_n \coloneqq \supp f_n$. $\mathcal L(K_n) \lneqq \pinfty$ puisque dans $\R^n$ les compacts sont les fermés bornés
+	(Heine-Borel). Appliquons ensuite le théorème de Heine à $f_n$~: $f_n$ est continue sur un compact $K_n$, elle est donc uniformément continue, i.e.~:
+	\[\forall \tilde \varepsilon > 0 : \exists \delta > 0 \st \forall x, y \in \R^n : \abs {x-y} < \delta \Rightarrow \abs {f_n(x)-f_n(y)} < \tilde \varepsilon.\]
+
+	En particulier~:
+	\[\exists \delta_\varepsilon \st \forall x, y \in \R^n : \abs {x-y} < \delta_\varepsilon \Rightarrow \abs {f_n(x)-f_n(y)} < \frac {\varepsilon}{3\mathcal L(K_n)^{\frac 1p}}.\]
+
+	Or par convergence de la suite $(h_k)_k$, il existe $K > 0 \st \forall k \geq K : \abs {h_k} < \delta_\varepsilon$. Pour $k \geq K$, on a alors~:
+	\[\norm {f_n-f_n(\cdot+h_k)}_{L^p}^p = \int\abs {f_n-f_n(\cdot+h_k)}^p\dif\mathcal L \leq \int_{K_n}\abs {\frac {\varepsilon}{3\mathcal L(K_n)^{\frac 1p}}}^p\dif\mathcal L
+		= \frac {\varepsilon^p}{3^p\mathcal L(K_n)}\mathcal L(K_n) = \left(\frac \varepsilon3\right)^p,\]
+	et donc $\norm {f_n-f_n(\cdot+h_k)}_{L^p} \leq \frac \varepsilon3$.
+
+	Finalement, on a donc pour tout $n \geq N$ et pour tout $k \geq K$~:
+	\[\norm {f-f(\cdot+h_k)}_{L^p} \leq \frac 23\varepsilon + \norm {f_n-f_n(\cdot+h_k)}_{L^p} \leq \frac 33\varepsilon = \varepsilon.\]
+
+	Dans le cas $p = \pinfty$, on n'a pas cette convergence. Prenons l'ensemble $\Omega \coloneqq [0, 1]$ et la suite $(x_n)_{n \geq 1}$ définie par $x_n = -\frac 1n$.
+	Soit $n \geq 1$. On cherche $\norm {\chi_\Omega-\chi_\Omega(\cdot + x_n)}_{L^\infty}$. On remarque que $\forall x \in \R : \chi_\Omega(x+x_n) = \chi_{\Omega-x_n}(x)$.
+	De plus~:
+	\[\abs {\chi_\Omega - \chi_{\Omega+\frac 1n}} = \chi_{\Omega \cap (\Omega + \frac 1n)^\C} + \chi_{\Omega^\C \cap (\Omega+\frac 1n)}
+		= \chi_{\left(\Omega \cap (\Omega+\frac 1n)^\C\right) \sqcup \left(\Omega^\C \cap (\Omega+\frac 1n)\right)}.\]
+
+	Notons ce dernier ensemble $\Omega^{(n)}$. Puisque~:
+	\[\mathcal L(\{x \in \R \st \chi_{\Omega^{(n)}}(x) \gneqq 1\}) = 0 \text{ et } \mathcal L(\{x \in \R \st \chi_{\Omega^{(n)}}(x) \geq 1\})
+		= \mathcal L\left(\left[0, \frac 1n\right) \cup \left(1, \frac {n+1}n\right]\right) = \frac 2n \gneqq 0,\]
+	on déduit $\norm {\chi_{\Omega^{(n)}}}_{L^\infty} = 1$.
+	Dès lors $\lim_{n \to \pinfty}\norm {\chi_{\Omega^{(n)}}}_{L^\infty} = 1 \neq 0$.
 \end{enumerate}
 \end{proof}
 
