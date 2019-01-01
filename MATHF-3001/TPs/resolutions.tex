@@ -700,7 +700,7 @@ De plus, $\mathcal L(f^{-1}M) = \mathcal L(M_1 \sqcup M_2) = \mathcal L(M_1) + \
 $\mathcal L(M_2) = \mathcal L(M_1) = \frac 12\mathcal L(M)$. Donc $\mathcal L(f^{-1}M) = 2\mathcal L(M_1) = \mathcal L(M)$.
 \end{proof}
 
-\begin{ex}[Vrai ou Faux] Justifier~:
+\begin{ex}[Vrai ou Faux]\label{ex:4.8} Justifier~:
 \begin{enumerate}
 	\item Soit $f : \R \to \R \st f \circ f$ est mesurable. Alors $f$ est mesurable.
 	\item Soit $f : \R \to \R \st \abs f$ est mesurable. Alors $f$ est mesurable.
@@ -1771,5 +1771,143 @@ Justifier les affirmations suivantes~:
 	qui est équivalent à~:
 	\[\forall \tilde \varepsilon > 0 : \forall k \geq k_{\left\lceil\frac 1{\tilde \varepsilon}\right\rceil} : \forall x \in \Omega_\varepsilon^\C : \abs {f_k(x)-f(x)} < \tilde\varepsilon.\]
 \end{enumerate}
+\end{proof}
+
+\newpage
+\section{Séance 11}
+
+\begin{ex} On considère l'espace mesuré $([0, 1]^2, \mathcal M, \mu)$ avec $\mu = \mathcal L_1 \times \#$ où $\#$ est la mesure de comptage. On pose
+$\Delta \coloneqq \{(x, x)\}_{x \in [0, 1]}$. Calculer~:
+\[\int_{[0, 1]}\left(\int_{[0, 1]}\chi_\Delta(x, y)\dif\mathcal L\right)\dif\#\]
+et
+\[\int_{[0, 1]}\left(\int_{[0, 1]}\chi_\Delta(x, y)\dif\#\right)\dif\mathcal L\]
+
+Ceci contredit-il le théorème de Tonelli (Fubini pour les fonctions positives)~?
+\end{ex}
+
+\begin{proof}
+\begin{align*}
+	\int_{[0, 1]}\int_{[0, 1]}\chi_\Delta(x, y)\dif\mathcal L(x)\dif\#(y)
+		&= \int_{[0, 1]}\left(\int_{[0, 1] \setminus \{y\}}\chi_\Delta(x,y)\dif\mathcal L(x) + \int_{\{y\}}\chi_\Delta(x, y)\dif\mathcal L(x)\right)\dif\#(y) \\
+		&= \int_{[0, 1]}(0 + 0)\dif\# = 0.
+\end{align*}
+et
+\begin{align*}
+	\int_{[0, 1]}\int_{[0, 1]}\chi_\Delta(x,y)\dif\#(y)\dif\mathcal L(x)
+		&= \int_{[0, 1]}\left(\int_{[0, 1] \setminus \{x\}}\chi_\Delta(x, y)\dif\#(y) + \int_{\{x\}}\chi_\Delta(x,y)\dif\#(y)\right)\dif\mathcal L(x) \\
+		&= \int_{[0, 1]}(0 + \#(\{x\}))\dif\mathcal L(x) = \int_{[0, 1]}1\mathcal L(x) = \mathcal L([0, 1]) = 1.
+\end{align*}
+
+Ceci ne contredit pas le théorème de Tonelli car pour pouvoir l'appliquer, il faut que les espaces mesurés dont on prend le produit des mesures soient $\sigma$-finis.
+$([0, 1], \mathcal B([0, 1]), \mathcal L)$ est bien $\sigma$-fini (même fini), mais $([0, 1], \mathcal B([0, 1]), \#)$ n'est pas $\sigma$-fini.
+En effet, si $(X_n)_{n \geq 0} \in \mathcal B([0, 1])^\N$ est une suite de boréliens telle que $\forall n \geq 0 : \#(X_n) \lneqq \pinfty$, on a que les $X_n$ contiennent
+tous un nombre fini de point. Or $X \coloneqq \bigcup_{n \geq 0}X_n$ est une union dénombrable d'ensemble finis, donc $X$ est au plus dénombrable, et donc $X \neq [0, 1]$.
+\end{proof}
+
+\begin{ex} Soit la fonction suivante~:
+\[f : [-1, 1]^2 \to \R : (x, y) \mapsto \begin{cases}\frac {xy}{(x^2+y^2)^2} &\text{ si } (x, y) \neq (0, 0) \\0 &\text{ sinon.}\end{cases}\]
+\begin{enumerate}
+	\item Vérifier que $f$ est Lebesgue-mesurable.
+	\item Calculer~:
+	\[I \coloneqq \int_{[-1, 1]}\int_{[-1, 1]}f(x, y)\dif x\dif y\]
+	et~:
+	\[J \coloneqq \int_{[-1, 1]}\int_{[-1, 1]}f(x, y)\dif y\dif x.\]
+	\item La fonction $f$ est-elle intégrable sur $[-1, 1]^2$~?
+\end{enumerate}
+\end{ex}
+
+\begin{proof}~
+\begin{enumerate}
+	\item $f$ est continue sur $[-1, 1]^2 \setminus \{(0, 0)\}$ et donc est continue $\mathcal L$-ae. Par l'exercice~\ref{ex:4.8}, on sait que $f$ est mesurable.
+	\item On remarque que $x \mapsto \frac {xy}{(x^2+y^2)^2}$ et $y \mapsto \frac {xy}{(x^2+y^2)^2}$ sont impaires (à $y$ et $x$ fixés). Donc leur intégrale sur un domaine
+	symétrique est nulle. Donc $I = J = 0$.
+	\item Puisque $\abs f \geq 0$, par Tonelli, on a~:
+	\[\int_{[-1, 1]^2}\abs {f(x, y)}\dif\,(x,y) = \int_{[-1, 1]}\int_{[-1, 1]}\abs {f(x, y)}\dif x\dif y.\]
+
+	Calculons donc, à $y \in [-1, 1]$ fixé~:
+	\[\int_{[-1, 1]}\abs {f(x, y)}\dif x = \int_{[-1, 1]}\abs {\frac {xy}{(x^2+y^2)^2}}\dif x = 2\abs y\int_{[0, 1]}\frac x{(x^2+y^2)^2}\dif x
+		= \abs y\left[\frac {-1}{(x^2+y^2)}\right]_0^1 = \abs y\frac 1{y^2(y^2+1)}.\]
+
+	Donc~:
+	\begin{align*}
+		\int_{[-1, 1]^2}\abs {f(x, y)}\dif\,(x,y) &= \int_{[-1, 1]}\frac {\abs y}{y^2(y^2+1)}\dif y = 2\int_0^1\frac 1{y(y^2+1)}\dif y \geq 2\int_0^1\frac 1{y^3}\dif y \\
+		&= \lim_{\varepsilon \to 0}\left[\frac {-1}2y^{-2}\right]_\varepsilon^1 = \lim_{\varepsilon \to 0}\frac 1{\varepsilon^2}-1 = \pinfty.
+	\end{align*}
+
+	Donc $f$ n'est pas $\mathcal L \otimes \mathcal L$-intégrable sur $[0, 1]^2$.
+\end{enumerate}
+\end{proof}
+
+\begin{ex} Soit l'espace mesuré $(\N, \mathcal P(\N), \#)$. On définit~:
+\[f : \N \times \N \to [-1, 1] : (m, n) \mapsto \begin{cases}1 &\text{ si } m = n\\-1 &\text{ si }m=n+1 \\0 &\text{ sinon.}\end{cases}\]
+\begin{enumerate}
+	\item $f$ est-elle $\# \otimes \#$ intégrable~?
+	\item Calculer~:
+	\[\int_\N\int_\N f(m, n)\dif\#(m)\dif\#(n) \qquad \text{ et } \qquad \int_\N\int_\N f(m, n)\dif\#(n)\dif\#(m).\]
+	\item Le résultat est-il compatible avec le théorème de Fubini~?
+\end{enumerate}
+\end{ex}
+
+\begin{proof}~
+\begin{enumerate}
+	\item Posons $\Delta \coloneqq \{(m, m)\}_{m \in \N}$. Calculons~:
+	\begin{align*}
+		\int_{\N \times \N}\abs f\dif\,(\# \otimes \#) &\leq \int_\Delta\abs f\dif\,(\# \otimes \#) = \int_\Delta 1 \dif\,(\# \otimes \#) = \# \otimes \#(\Delta) \\
+			&= \int_\N\#(\Delta_m)\dif\#(m) = \int_\N\#\{m\}\dif\#(m) = \int_\N1\dif\# = \#(\N) = \pinfty.
+	\end{align*}
+	$f$ n'est donc pas $\# \otimes \#$-intégrable.
+
+	\item Fixons $n \in \N$.
+	\[\int_\N f(m, n)\dif\#(m) = \int_{\{n\}}f(m, n)\dif\#(m) + \int_{\{n+1\}}f(m, n)\dif\#(m) = 1 + (-1) = 0.\]
+	On en déduit $\int_\N\int_\N f(m,n)\dif\#(m)\dif\#(n) = 0$.
+
+	Fixons ensuite $m \in \N$. Si $m = 0$~:
+	\[\int_\N f(m, n)\dif\#(n) = \int_{\{0\}}f(m, n)\dif\#(n) = 1,\]
+	et si $m \gneqq 0$~:
+	\[\int_\N f(m, n)\dif\#(n) = \int_{\{m\}}f(m, n)\dif\#(n) + \int_{\{m-1\}}f(m, n)\dif\#(n) = 1 + (-1) = 0.\]
+	On en déduit $\int_\N\int_\N f(m, n)\dif\#(n)\dif\#(m) = 1$.
+
+	\item Oui.
+\end{enumerate}
+\end{proof}
+
+\begin{ex} Déterminer la valeur de~:
+\[J = \int_0^\pinfty\frac {\sin x}x\dif x.\]
+\end{ex}
+
+\begin{proof} On pose $f_n : [1/(2n\pi), 2n\pi] \times \R^+ \to \R : (x, y) \mapsto \sin(x)e^{-yx} = \sin(x)e^{-xy}\chi_{[1/(2n\pi), 2n\pi] \times \R}$. On sait que
+$f_n \xrightarrow[n \to \pinfty]{} \sin(x)e^{-xy}\chi_{\R^+ \times \R^+}$.
+
+On veut pouvoir dire~:
+\[\int_{1/t}^t\frac {\sin(x)}x\dif x = \int_{1/t}^t\int_0^\pinfty\sin(x)e^{-xy}\dif y\dif x = \int_0^\pinfty\int_{1/t}^t\sin(x)e^{-xy}\dif x\dif y.\]
+
+Pour cela on remarque que~:
+\[\int_{1/(2n\pi)}^{2n\pi}\int_0^\pinfty\abs {\sin(x)e^{-xy}}\dif y\dif x \leq \int_{1/(2n\pi)}^{2n\pi}\int_0^\pinfty\abs {e^{-xy}}\dif y\dif x
+	= \int_{1/(2n\pi)}^{2n\pi}\frac 1x\dif x = 2\ln (2n\pi) \lneqq \pinfty,\]
+i.e. $f_n$ est $\mathcal L$-intégrable. Donc par Fubini~:
+\[\int_{1/(2n\pi)}^{2n\pi}\frac {\sin(x)}x\dif x = \int_{1/(2n\pi)}^{2n\pi}\int_0^\pinfty f_n(x, y)\dif y\dif x = \int f_n\dif\mathcal L
+	= \int_0^\pinfty\int_{1/(2n\pi)}^{2n\pi}f_n(x, y)\dif x\dif y.\]
+
+À $y \in \R^+$ fixé, calculons~:
+\begin{align*}
+	P_n(y) &\coloneqq \int_{1/(2n\pi)}^{2n\pi}f_n(x, y)\dif x = \int_{1/(2n\pi)}^{2n\pi}\sin(x)e^{-xy}\dif x = \left[-\cos(x)e^{-xy}\right]_{1/(2n\pi)}^{2n\pi} - y\int_{1/(2n\pi)}^{2n\pi}\cos(x)e^{-xy}\dif x \\
+	&= \cos(1/(2n\pi))e^{-\frac y{2n\pi}} - e^{-2yn\pi} - y\left(\left[\sin(x)e^{-xy}\right]_{1/(2n\pi)}^{2n\pi} + y\int_{1/(2n\pi)}^{2n\pi}\sin(x)e^{-xy}\dif x\right) \\
+	&= \cos(1/(2n\pi))e^{-\frac y{2n\pi}} - e^{-2yn\pi} + y\sin(1/(2n\pi))e^{-\frac y{2n\pi}} - y^2\int_{1/(2n\pi)}^{2n\pi}\sin(x)e^{-xy}\dif x \\
+	&= \frac {\cos(1/(2n\pi))e^{-\frac y{2n\pi}} - e^{-2yn\pi} + y\sin(1/(2n\pi))e^{-\frac y{2n\pi}}}{1+y^2},
+\end{align*}
+car si $P_n(y) = F_n(y) - y^2P_n(y)$, alors $P_n(y) = F_n(y)/(1+y^2)$.
+
+De plus~:
+\[\int f_n\dif \mathcal L = \int_0^\pinfty P_n(y)\dif y,\]
+et $\forall n \geq 1 : 0 \leq P_n \leq \lim_{n \to \pinfty}P_n = \frac 1{1+y^2}$.\footnote{Bien que je ne sois pas tout à fait convaincu. Mais on doit pouvoir dire quelque chose comme
+$\exists N > 0 \st \forall n \geq N : P_n \leq \lim_{k \to \pinfty}P_k$.} Or $y \mapsto (1+y^2)$ est intégrable sur $\R^+$. En effet~:
+\[\int_0^\pinfty\frac 1{1+y^2}\dif y = [\arctan(y)]_0^\pinfty = \frac \pi2 \lneqq \pinfty.\]
+
+Donc par le théorème de la convergence dominée, on a~:
+\[\lim_{n \to \pinfty}\int f_n\dif\mathcal L = \int_0^\pinfty \lim_{n \to \pinfty}P_n(y)\dif y = \int_0^\pinfty\frac 1{1+y^2}\dif y = \frac \pi2.\]
+
+De là on conclut simplement par~:
+\[\int_0^\pinfty \frac {\sin(x)}x\dif x = \lim_{n \to \pinfty}\int_{1/(2n\pi)}^{2n\pi}\frac {\sin(x)}x\dif x = \lim_{n \to \pinfty}\int f_n\dif\mathcal L = \frac \pi2.\]
+{\small \color{white}{Voilà qui fut technique~!}}
 \end{proof}
 \end{document}
