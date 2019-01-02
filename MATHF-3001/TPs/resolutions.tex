@@ -1057,7 +1057,7 @@ Soit $f : [a, b] \to \R$ bornée. Mq~:
 	\end{itemize}
 
 	Par définition du $\sup$, il existe une suite de partitions $(P'_n)_{n \geq 0} \st U(f; P'_n) \xrightarrow[n \to \pinfty]{} \inf_PU(f; P)$ et
-	une suite de partitions $(\tilde P_n)_{n \geq 0} \st L(f; \tilde P_n) \xrightarrow[n \to \pinfty]{} \sup_PL(f; P)$. Du plus les suites $(U(f; P'_n))_{n \geq 0}$
+	une suite de partitions $(\tilde P_n)_{n \geq 0} \st L(f; \tilde P_n) \xrightarrow[n \to \pinfty]{} \sup_PL(f; P)$. De plus les suites $(U(f; P'_n))_{n \geq 0}$
 	et $(L(f; \tilde P_n))_{n \geq 0}$ sont respectivement décroissante et croissante. Par la remarque ci-dessus, on remarque que si on pose $P_n \coloneqq P'_n \oplus \tilde P_n$,
 	on obtient une suite de partitions $(P_n)_n$ telle que~:
 	\[\lim_{n \to \pinfty}U(f; P_n) = \inf_PU(f; P) = \sup_PL(f; P) = \lim_{n \to \pinfty} L(f; P_n).\]
@@ -1096,29 +1096,8 @@ Soit $f : [a, b] \to \R$ bornée. Mq~:
 
 	Or cette inégalité est vraie pour tout $\varepsilon > 0$. On en déduit que $H(x)-h(x) = 0$.
 
-	\item Pour $\beta \in \R$, remarquons~:
-	\[\overbracket {f^{-1}((\minfty, \beta])}^{\circ} = \{\xi \in [a, b] \st \exists r_\xi > 0 \st B_{r_\xi}(\xi) \subseteq f^{-1}((\minfty, \beta])\}.\]
-
-	Dès lors~:
-	\begin{align*}
-	     & x \in H^{-1}((\minfty, \beta]) \\
-	\iff & H(x) \leq \beta  \\
-	\iff & \lim_{\delta \to 0}\sup_{y \in B_\delta(x)}f(y) \leq \beta \\
-	\iff & \exists \delta > 0 \st \forall y \in B_\delta(x) : f(y) \leq \beta \\
-	\iff & \exists \delta > 0 \st B_\delta(x) \subseteq f^{-1}((\minfty, \beta]) \\
-	\iff & x \in \overbracket {f^{-1}((\minfty, \beta])}^{\circ},
-	\end{align*}
-	i.e. $H$ est mesurable car l'intérieur d'un ensemble est un ouvert.
-
-	De manière similaire, on a $x \in h^{-1}([\alpha, \pinfty)) \iff x \in \overbracket {f^{-1}([\alpha, \pinfty)}^{\circ}$. Donc $h$ est également mesurable.
-
-	Remarquons ensuite que pour toute partition $P$ : $H \leq f^P$ sur $[a, b] \setminus P$ et donc $H \leq f^P$ $\mathcal L$-ae. Par monotonie de l'intégrale~:
-	\[\int H\dif\mathcal L \leq \int f^P\dif\mathcal L.\]
-	En particulier~:
-	\[\int H\dif \mathcal L \leq \inf_P\int f^P\dif\mathcal L.\]
-
-	Reconsidérant maintenant la suite $(P_n)_{n \geq 0} \st U(f; P_n) \xrightarrow[n \to \pinfty]{} \inf_PU(f; P)$ et $L(f; P_n) \xrightarrow[n \to \pinfty]{} \sup_PL(f; P)$
-	et supposons la croissante (ce qui n'est pas abusif~: il suffit de poser la suite de partitions $\hat P_0 \coloneqq P_0$ et $\hat P_n \coloneqq \hat P_{n-1} \oplus P_n$
+	\item Reconsidérant maintenant la suite $(P_n)_{n \geq 0} \st U(f; P_n) \xrightarrow[n \to \pinfty]{} \inf_PU(f; P)$ et $L(f; P_n) \xrightarrow[n \to \pinfty]{} \sup_PL(f; P)$
+	et supposons-la croissante (ce qui n'est pas abusif~: il suffit de poser la suite de partitions $\hat P_0 \coloneqq P_0$ et $\hat P_n \coloneqq \hat P_{n-1} \oplus P_n$
 	qui est croissante au sens de l'inclusion et qui satisfait les limites puisque $f^{\hat P_n} \leq f^{P_n}$ et $f_{\hat P_n} \geq f_{P_n}$).
 	Pour toute partition $P$ et pour tout $x \in [a, b] \setminus P$, on note $j_{P,x} \in \intint 0{N_P-1} \st x \in P(j_{P,x}]$. Fixons alors $x \in [a, b] \setminus
 	\bigcup_{n \geq 0}P_n$ (i.e. $\forall n \geq 0 : x \not \in P_n$).
@@ -1143,9 +1122,11 @@ Soit $f : [a, b] \to \R$ bornée. Mq~:
 		i.e.~:
 		\[H(x) = \lim_{\delta \to 0}\sup_{y \in B_\delta(x)}f(y) = \sup_{y \in \bigcap_{n \geq 0}P_n(j_{P_n,x}]}f(y) = \lim_{n \to \pinfty}f^{P_n}(x).\]
 	\end{itemize}
-	On déduit de ces deux cas $f^{P_n} \xrightarrow[n \to \pinfty]{\mathcal L\text{-ae}} H$ et donc~:
+	On déduit de ces deux cas $f^{P_n} \xrightarrow[n \to \pinfty]{\mathcal L\text{-ae}} H$ et donc $H$ est mesurable puisque limite de fonctions mesurables. Du plus, on sait
+	que pour toute partition $P$~: $f^P$ est $\mathcal L$-intégrable sur $[a, b]$ car $f$ est majorée par $M \gneqq 0$ et donc~:
+	$\int_{[a, b]} \abs {f^P}\dif\mathcal L \leq M\mathcal L([a, b]) \lneqq \pinfty$. Dès lors,
+	par le théorème de la convergence monotone~:
 	\[\int H\dif\mathcal L = \lim_{n \to \pinfty}\int f^{P_n}\dif\mathcal L = \inf_PU(f; P).\]
-
 	On déduit similairement le cas $\int h\dif\mathcal L = \sup_PL(f; P)$.
 
 	\item $f$ est Riemann-intégrable $\iff \int H\dif\mathcal L = \int h\dif\mathcal L \iff \int (H-h)\dif\mathcal L = 0 \iff H = h$ $\mathcal L$-ae
