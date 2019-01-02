@@ -1910,4 +1910,95 @@ De là on conclut simplement par~:
 \[\int_0^\pinfty \frac {\sin(x)}x\dif x = \lim_{n \to \pinfty}\int_{1/(2n\pi)}^{2n\pi}\frac {\sin(x)}x\dif x = \lim_{n \to \pinfty}\int f_n\dif\mathcal L = \frac \pi2.\]
 {\small \color{white}{Voilà qui fut technique~!}}
 \end{proof}
+
+\newpage
+\section{Séance 12}
+\begin{ex}\label{ex:12.1} Soient $(X, \mathcal A, \mu)$, un espace mesuré et $g : X \to \R^+$, une application mesurable. On définit la mesure $\nu \coloneqq g \cdot \mu$. Mq
+si $f : X \to \R^+$ est une application mesurable, alors~:
+\[\int_X f\dif\nu = \int_X fg\dif \mu.\]
+En conclure que le résultat est valable pour $f \in L^1(\nu)$.
+\end{ex}
+
+\begin{proof} Soit $(f_n)_{n \geq 0} \in S^+$ croissante telle que $f_n \xrightarrow[n \to \pinfty]{\nu\text{-ae}} f$. À $n \geq 0$ fixé, on a
+$f_n = \sum_{j=1}^{N_n}a_{n,j}\chi_{A_{n,j}}$. Donc~:
+\[\int f_n\dif\nu = \sum_{j=1}^{N_n}a_{n,j}\nu(A_{n,j}) = \sum_{j=1}^{N_n}\int a_{n,j}g\chi_{A_{n,j}}\dif\mu = \int\sum_{j=1}^{N_n}a_{n,j}\chi_{A_{n,j}}g\dif\mu = \int f_ng\dif\mu.\]
+En particulier, puisque $f_n \xrightarrow[n \to \pinfty]{\nu\text{-ae}} f$ et $(f_n)_n$ est croissante, on sait $f_ng \xrightarrow[n \to \pinfty]{\nu\text{-ae}} fg$ et $(f_ng)_n$ est
+croissante vers $g$ (car $g \geq 0$). Par le théorème de la convergence monotone~:
+\[\int f\dif\nu = \lim_{n \to \pinfty}\int f_n\dif\mu = \lim_{n \to \pinfty}f_ng\dif\mu = \int fg\dif\mu.\]
+
+Dans le cas général $f \in L^1(\nu)$, on a $f = f^+ - f^-$ (et $\int f^+\dif\nu, \int f^-\dif\nu$ finis), et on en déduit~:
+\[\int f\dif\nu = \int (f^+-f^-)\dif\nu = \int f^+\dif\nu - \int f^-\dif\nu = \int f^+g\dif\mu - \int f^-g\dif\mu = \int (fg)^+\dif\mu - \int (fg)^-\dif\mu = \int fg\dif\mu.\]
+
+Notons qu'en particulier pour $A \in \mathcal A$, $f \in L^1(\nu)$, on a $f\chi_A \in L^1(\nu)$, et donc~:
+\[\int_Af\dif\nu = \int_A fg\dif\mu.\]
+\end{proof}
+
+\begin{ex}[Dérivées de Radon-Nikodym] Soient $\mu, \nu$ et $m$ des mesures finies sur $(X, \mathcal A)$. Montrer les affirmations suivantes~:
+\begin{enumerate}
+	\item Si $\mu \ll m$ et $\nu \ll m$, alors $\mu+\nu \ll m$ et~:
+	\[\od {(\mu+\nu)}m \stackrel {m\text{-ae}}= \od \mu m + \od \nu m.\]
+	\item Si $\mu \ll \nu$ et $\nu \ll m$, alors $\mu \ll m$ et~:
+	\[\od \mu m \stackrel {m\text{-ae}}= \od \mu\nu\od \nu m.\]
+	\item Si $\nu \ll \mu$ et $\mu \ll \nu$, alors~:
+	\[\od \mu\nu \stackrel {m\text{-ae}}= \left.\dod \nu\mu\right.^{-1}.\]
+	\item Si $\nu \ll \mu$ et $f$ est $\nu$-intégrable, alors~:
+	\[\int f\dif\nu = \int f\od \nu\mu\dif\mu.\]
+\end{enumerate}
+\end{ex}
+
+\begin{proof}
+\begin{enumerate}
+	\item Soit $A \in \mathcal A \st m(A) = 0$, alors $\mu(A) = \nu(A) = 0$ par hypothèse. Donc $\mu(A)+\nu(A) = 0$ et $\mu+\nu \ll m$. De plus~:
+	\[\forall A \in \mathcal A : \nu(A) = \int_A \od \nu m\dif m, \qquad \mu(A) = \int_A \od \mu m\dif m, \qquad \text{ et } \qquad (\mu+\nu)(A) = \int_A\od {(\mu+\nu)}m\dif m.\]
+
+	Donc, pour $A \in \mathcal A$~:
+	\[\int_A\dod {(\mu+\nu)}m\dif m = (\mu+\nu)(A) = \mu(A) + \nu(A) = \int_A\od \mu m\dif m + \int_A\od \nu m\dif m = \int_A \left(\od \mu m + \od \nu m\right)\dif m.\]
+	Par l'unicité de la dérivé de Radon-Nikodym d'une mesure absolument continue par rapport à une autre, on a le résultat.
+
+	\item Soit $A \in \mathcal A \st m(A) = 0$. On a alors $\nu(A) = 0$, et donc $\mu(A) = 0$. Dès lors $\mu \ll m$. De plus, par l'exercice~\ref{ex:12.1}, on a~:
+	\[\mu(A) = \int_A\dod \mu\nu\dif\nu = \int_A\dod\mu\nu\dod\nu m\dif m.\]
+	À nouveau, par l'unicité de la dérivée de R-N, on a le résultat.
+
+	\item On sait que $\mu \ll \mu$ trivialement avec $\od \mu\mu = \mathbf 1$. Or par le point précédent~: $\od \mu\mu = \od \mu\nu\od\nu\mu$. Dès lors pour $x \in X$, si
+	$\od \mu\nu(x) \neq 0$, alors $\od \nu\mu(x) = \od \mu\nu(x)^{-1}$. De plus~:
+	\[\mu(\{x \in X \st \od \mu\nu(x) = 0\}) = \int_{\{x \in X \st \od \mu\nu(x) = 0\}}\od\mu\nu\dif\nu = \int0\dif\nu = 0.\]
+	On a bien le résultat.
+
+	\item Exercice~\ref{ex:12.1}.
+\end{enumerate}
+\end{proof}
+
+\begin{ex} Pour $i=1, 2$, soient $\mu_i, \nu_i$ mesures finies sur $(X, \mathcal A)$ avec $\mu_i \ll \nu_i$. Posons $\nu \coloneqq \nu_1 \times \nu_2$ et
+$\mu \coloneqq \mu_1 \otimes \mu_2$ les mesures produits sur $(X \times X, \mathcal A \otimes \mathcal A)$. Montrer les affirmations suivantes~:
+\begin{enumerate}
+	\item $\mu \ll \nu$.
+	\item
+	\[\od \mu\nu(x, y) \stackrel {\nu\text{-ae}}= \od {\mu_1}{\nu_1}(x)\od {\mu_2}{\nu_2}(y).\]
+\end{enumerate}
+\end{ex}
+
+\begin{proof}~
+\begin{enumerate}
+	\item Soit $A \in \mathcal A \otimes \mathcal A \st \nu(A) = 0$. On a~:
+	\[0 = \nu(A) = \int\nu_2(A_x)\dif\nu_1(x) = 0,\]
+	or $\forall x \in X : \nu_2(A_x) \geq 0$, donc $x \mapsto \nu_2(A_x)$ est nulle $\nu_1$-ae. On a donc~:
+	\[0 = \nu(A) = \int\nu_2(A_x)\dif\mu_1(x) = \int_{\{x \in X \st \nu_2(A_x) = 0\}}\nu_2(A_x)\dif\mu_1(x).\]
+	Or si $\nu_2(A_x) = 0$, alors $\mu_2(A_x) = 0$. On a finalement~:
+	\[0 = \int_{\{x \in X \st \nu_2(A_x) = 0\}}\mu_2(A_x)\dif\mu_1(x) = \int \mu_2(A_x)\dif\mu_1(x) = \mu(A).\]
+
+	\item Soit $A \in \mathcal A$. $\chi_A$ est mesurable et est $\mu = \mu_1 \otimes \mu_2$- et $\nu = \nu_1 \otimes \nu_2$-intégrable car (par Tonelli et par finitude des mesures)~:
+	\begin{align*}
+		\int\chi_A\dif\mu &= \int\int\chi_A(x, y)\dif\mu_2(y)\dif\mu_1(x) \leq \mu_1(X)\mu_2(X) \lneqq \pinfty, \\
+		\int\chi_A\dif\nu &= \int\int\chi_A(x, y)\dif\nu_2(y)\dif\nu_1(x) \leq \nu_1(X)\nu_2(X) \lneqq \pinfty.
+	\end{align*}
+
+	Dès lors~:
+	\begin{align*}
+		\mu(A) &= \int\mu_2(A_x)\dif\mu_1(x) = \int\left(\int\od {\mu_2}{\nu_2}(y)\chi_{A_x}(y)\dif\nu_2\right)\dif\mu_1(x)
+			= \int\left(\int\od {\mu_2}{\nu_2}(y)\chi_A(x, y)\dif\nu_2\right)\od {\mu_1}{\nu_1}\dif\nu_1(x) \\
+		&= \int\int\od {\mu_2}{\nu_2}(y)\od {\mu_1}{\nu_1}(x)\chi_A(x, y)\dif\nu_2(y)\dif\nu_1(x) = \int_AF\dif\nu,
+	\end{align*}
+	où $F(x, y) = \od {\mu_1}{\nu_1}(x)\od {\mu_2}{\nu_2}(y)$. Par unicité de la dérivée de R-N, à nouveau on a l'égalité $\nu$-ae.
+\end{enumerate}
+\end{proof}
 \end{document}
