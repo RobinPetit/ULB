@@ -15,14 +15,15 @@
 \usepackage[parfill]{parskip}
 \usepackage[framemethod=tikz]{mdframed}
 \usepackage{hyperref}
+%
+\usepackage{verbatim}
+\usepackage{ifthen}
 
 \title{MATHF-3001 --- Théorie de la mesure \\Résolution des TPs}
 \author{R. Petit}
 \date{Année académique 2018 - 2019}
 
 \newtheorem{ex}{Exercice}[section]
-\theoremstyle{definition}
-%\newtheorem{proof}{Résolution}[section]
 \addto\captionsfrench{\renewcommand\proofname{\underline{Résolution}}}
 
 \newcommand{\TODO}[1]{\textcolor{red}{TODO: #1}}
@@ -63,6 +64,19 @@
 \DeclareMathOperator{\Vol}{Vol}
 \DeclareMathOperator{\Id}{Id}
 \DeclareMathOperator{\supp}{supp}
+
+\newcommand{\showproofs}{}
+
+\newenvironment{comm}%
+{\ifthenelse{\isundefined{\showproofs}}%
+	{\expandafter\comment}%
+	{}%
+}%
+{\ifthenelse{\isundefined{\showproofs}}%
+	{\expandafter\endcomment}%
+	{}%
+}
+\def\proof{\comm}
 
 \begin{document}
 \maketitle
