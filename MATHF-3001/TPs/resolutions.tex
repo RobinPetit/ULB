@@ -1303,13 +1303,11 @@ Pour le second point, il suffit de remarquer que $A_\alpha(f) \subset A_{\Phi(\a
 		\item Dans le dernier cas, montrons que $\liminf_{p \to \pinfty}\norm f_{L^p} = \pinfty$. On sait que $\norm f_{L^\infty} = \pinfty$, i.e.~:
 		\[\forall M \geq 0 : \exists A_M \in \mathcal A \st f \geq M \text{ sur } A_M \text{ et } \mu(A_M) \gneqq 0.\]
 
-		À nouveau, deux cas sont à distinguer~: soit $\forall A \in \mathcal A : A \neq \emptyset \Rightarrow \mu(A) = \pinfty$, soit $\exists A \in \mathcal A \st A \neq \emptyset$
-		et $\mu(A) \lneqq \pinfty$.
+		À nouveau, deux cas sont à distinguer~: soit $\exists M \geq 0 \st \mu(A_M) = \pinfty$, soit $\forall M \geq 0 : \mu(A_M) \lneqq \pinfty$.
 		\begin{enumerate}
-			\item Dans le premier cas, $f \neq \mathbf 0$ dans $L^p$ (où $\mathbf 0$ est la fonction constante nulle) implique $\forall p \geq 1 : \norm f_{L^p} = \pinfty$ car
-			$\norm f_{L^\infty} > 0$ et donc pour $p \geq 1$~:
-			\[\int \abs f^p\dif\mu \geq \int_{\left\{x \in X \st \abs {f(x)} > \frac {\norm f_{L^\infty}}2\right\}}\abs f^p\dif\mu
-			\geq \frac {\norm f_{L^\infty}}2\underbrace {\mu\left(\left\{x \in X \st \abs {f(x)} > \frac {\norm f_{L^\infty}}2\right\}\right)}_{= \pinfty} = \pinfty.\]
+			\item Dans le premier cas, prenons un tel $M$. On en déduit~:
+			\[\forall p \geq 1 : \norm f_{L^p}^p = \int\abs f^p\dif\mu \geq \int_{A_M}M^p\dif\mu = M^p\mu(A_M) = \pinfty,\]
+			et donc $\forall p \geq 1 : \norm f_{L^p}^p = \pinfty$.
 
 			\item Dans le second cas, pour tout $M \geq 0$, il existe $A_M \st f \geq M$ sur $A_M$ et $0 \lneqq \mu(A_M) \lneqq \pinfty$. Dans ce cas~:
 			\[\forall p \geq 1 : \forall M \geq 0 : \norm f_{L^p} \geq \left(\int_{A_M}\abs f^p\dif\mu\right)^{\frac 1p} \geq \left(\int_{A_M}M^p\dif\mu\right)^{\frac 1p}
@@ -1365,11 +1363,11 @@ Mq si $u \in L^p(X, \mathcal A, \mu) \cap L^q(X, \mathcal A, \mu)$, alors $u \in
 \[\norm u_{L^r} \leq \norm u_{L^p}^\theta \cdot \norm u_{L^q}^{1-\theta}.\]
 \end{ex}
 
-\begin{proof} Mq $f \in L^p \iff f^q \in L^{\frac pq}$ pour $q \geq 0$. Soient $p \geq 1$ et $q \in [1/p, \pinfty)$. Soit $f \in L^p$. Si $p \lneqq \pinfty$~:
-\[f^q \in L^{\frac pq} \iff \pinfty \gneqq \int \abs {f^q}^{\frac pq}\dif\mu = \int \abs {f}^p\dif\mu \lneqq \pinfty \iff f \in L^p.\]
+\begin{proof} Mq $f \in L^p \iff f^q \in L^{\frac pq}$ pour $q \geq p$. Soient $p \geq 1$ et $q \in [p, \pinfty)$. Soit $f \in L^p$. Si $p \lneqq \pinfty$~:
+\[f^q \in L^{\frac pq} \iff \pinfty \gneqq \int \abs {f^q}^{\frac pq}\dif\mu = \int \abs {f}^p\dif\mu \iff f \in L^p.\]
 
 Si $p = \pinfty$, alors $f \in L^\infty \iff \norm f_{L^\infty} \lneqq \pinfty$. Donc on observe
-$\norm {f^q}_{L^\infty} = {\norm f_L^\infty}^q \lneqq \pinfty \iff \norm f_{L^\infty} \lneqq \pinfty$.
+$\norm {f^q}_{L^\infty} = \norm f_{L^\infty}^q \lneqq \pinfty \iff \norm f_{L^\infty} \lneqq \pinfty$.
 
 Dès lors, on a~:
 \begin{itemize}
@@ -1482,7 +1480,7 @@ Montrons que $u \in L^p(X)$ et~:
 
 \begin{proof}~
 \begin{enumerate}
-	\item Supposons $f$ positive. Soit $f \in L^p(X, \mathcal A, \mu)$. Pour $n \geq 0$, on pose l'application~:
+	\item Soit $f \in L^p(X, \mathcal A, \mu)$. Supposons $f$ positive. Pour $n \geq 0$, on pose l'application~:
 	\[f_n : \R^n \to \R : x \mapsto \sum_{k=0}^{2^{2n}-1}\frac k{2^n}\chi_{f^{-1}\left(\left[\frac k{2^n}, \frac {k+1}{2^n}\right)\right)}.\]
 
 	Si $p=1$, alors par le théorème de la convergence dominée (puisque $f \in L^1$ et $\abs {f_n} \leq f$) on a $\norm {f_n-f}_{L^1} \xrightarrow[n \to \pinfty]{} 0$.
@@ -1496,7 +1494,7 @@ Montrons que $u \in L^p(X)$ et~:
 	Donc~:
 	\[\lim_{n \to \pinfty}\norm {f-f_n}_{L^p}^p = \underbrace {\lim_{n \to \pinfty}2^{n(1-p)}}_{= 0} + \lim_{n \to \pinfty}\int_{f^{-1}([2^n, \pinfty))}\abs f^p\dif\mu.\]
 
-	Montrons que $\mu\left(f^{-1}([2, \pinfty))\right) \xrightarrow[n \to \pinfty]{} 0$. Tout d'abord, remarquons que $f^{-1}([2^n, \pinfty)) = (f^p)^{-1}([2^{np}, \pinfty))$.
+	Montrons que $\mu\left(f^{-1}([2^n, \pinfty))\right) \xrightarrow[n \to \pinfty]{} 0$. Tout d'abord, remarquons que $f^{-1}([2^n, \pinfty)) = (f^p)^{-1}([2^{np}, \pinfty))$.
 	Par l'absurde, supposons~:
 	\[\limsup_{n \to \pinfty}\mu\left(\underbrace {(f^p)^{-1}([2^{np}, \pinfty))}_{\eqqcolon A_n^p}\right) = \alpha \gneqq 0,\]
 	qui est équivalent à~:
@@ -1532,14 +1530,14 @@ Montrons que $u \in L^p(X)$ et~:
 	positive qui converge, on a~:
 	\[\forall \tilde \varepsilon > 0 : \exists N \geq 0 \st \mathcal L\left(\bigcup_{n \geq N}I^k_n\right) < \tilde \varepsilon.\]
 
-	Pour $n > 0$, on sait qu'il existe $K_N > 0 \st \mathcal L(U_{K_n} \setminus A) < \frac 1n$ et $U_{K_n} = \bigcup_{j \geq 1}I_j^{K_n}$. De plus il existe
-	$J_n > 0 \st \mathcal L(\bigcup_{j \geq J_n} < \frac 1n$. On peut alors poser la suite $(f_n)_{n \geq 0}$ définie par~:
+	Pour $n > 0$, on sait qu'il existe $K_n > 0 \st \mathcal L(U_{K_n} \setminus A) < \frac 1n$ et $U_{K_n} = \bigcup_{j \geq 1}I_j^{K_n}$. De plus il existe
+	$J_n > 0 \st \mathcal L(\bigcup_{j \geq J_n}) < \frac 1n$. On peut alors poser la suite $(f_n)_{n \geq 0}$ définie par~:
 	\[f_n \coloneqq \sum_{j=1}^{J_n}\chi_{I_j^{K_n}}.\]
 
 	Montrons alors que $f_n \xrightarrow[n \to \pinfty]{L^p} \chi_A$.
 
 	Remarquons d'abord (ce qui simplifiera les écritures)~:
-	\[\norm {\chi_A-f_n}^p_{L^p}\mathcal L = \int\abs {\chi_A - f_n}\dif\mathcal L = \norm {\chi_A-f_n}_{L^1}.\]
+	\[\norm {\chi_A-f_n}^p_{L^p}\mathcal L = \int\abs {\chi_A-f_n}^p\dif\mathcal L = \int\abs {\chi_A - f_n}\dif\mathcal L = \norm {\chi_A-f_n}_{L^1}.\]
 
 	Donc~:
 	\begin{align*}
@@ -1574,7 +1572,7 @@ Montrons que $u \in L^p(X)$ et~:
 	$\chi_{\Q \cap [0, 1]} \in L^\infty$ mais $\chi_{\Q \cap [0, 1]}$ n'est nulle part continue sur $[0, 1]$. Donc pour toute suite $(f_n)_n$ d'applications continues~:
 	$\limsup_{n \to \pinfty}\norm {\chi_{\Q \cap [0, 1]}-f_n}_{L^\infty} \gneqq 0$.
 
-	\item Utilisons le point 3~: prenons une suite $(f_n)_{n \geq 0} \in C_c^0(\R^n)^\N \st \norm {f-f_n} \xrightarrow[n \to \pinfty]{} 0$. À $n \geq 0$ fixé, on a~:
+	\item Utilisons le point 3~: prenons une suite $(f_n)_{n \geq 0} \in C_c^0(\R^n)^\N \st \norm {f-f_n}_{L^p} \xrightarrow[n \to \pinfty]{} 0$. À $n \geq 0$ fixé, on a~:
 	\[\norm {f-f(\cdot+h)}_{L^p} \leq \norm {f-f_n}_{L^p} + \norm {f_n-f_n(\cdot + h)}_{L^p} + \norm {f_n(\cdot+h)-f(\cdot+h)}_{L^p}.\]
 
 	Fixons alors $\varepsilon > 0$. On sait que~:
@@ -1582,8 +1580,8 @@ Montrons que $u \in L^p(X)$ et~:
 
 	Maintenant montrons que $\forall n \geq 0 : \norm {f_n-f_n(\cdot+h)}_{L^p} \xrightarrow[\abs h \to 0]{} 0$. Pour cela, fixons $n \geq 0$ et fixons
 	$(h_k)_{k \geq 0} \in {\R^n}^\N$ décroissante vers $0$. Notons $K_n \coloneqq \supp f_n$. $\mathcal L(K_n) \lneqq \pinfty$ puisque dans $\R^n$ les compacts sont les fermés bornés
-	(Heine-Borel). Appliquons ensuite le théorème de Heine à $f_n$~: $f_n$ est continue sur un compact $K_n$, elle est donc uniformément continue, i.e.~:
-	\[\forall \tilde \varepsilon > 0 : \exists \delta > 0 \st \forall x, y \in \R^n : \abs {x-y} < \delta \Rightarrow \abs {f_n(x)-f_n(y)} < \tilde \varepsilon.\]
+	(Heine-Borel). Appliquons ensuite le théorème de Heine à $f_n$~: $f_n$ est continue sur un compact $K_n$, elle est donc uniformément continue sur ce compact, i.e.~:
+	\[\forall \tilde \varepsilon > 0 : \exists \delta > 0 \st \forall x, y \in K_n : \abs {x-y} < \delta \Rightarrow \abs {f_n(x)-f_n(y)} < \tilde \varepsilon.\]
 
 	En particulier~:
 	\[\exists \delta_\varepsilon \st \forall x, y \in \R^n : \abs {x-y} < \delta_\varepsilon \Rightarrow \abs {f_n(x)-f_n(y)} < \frac {\varepsilon}{3\mathcal L(K_n)^{\frac 1p}}.\]
@@ -1842,7 +1840,7 @@ tous un nombre fini de point. Or $X \coloneqq \bigcup_{n \geq 0}X_n$ est une uni
 \begin{enumerate}
 	\item Posons $\Delta \coloneqq \{(m, m)\}_{m \in \N}$. Calculons~:
 	\begin{align*}
-		\int_{\N \times \N}\abs f\dif\,(\# \otimes \#) &\leq \int_\Delta\abs f\dif\,(\# \otimes \#) = \int_\Delta 1 \dif\,(\# \otimes \#) = \# \otimes \#(\Delta) \\
+		\int_{\N \times \N}\abs f\dif\,(\# \otimes \#) &\geq \int_\Delta\abs f\dif\,(\# \otimes \#) = \int_\Delta 1 \dif\,(\# \otimes \#) = \# \otimes \#(\Delta) \\
 			&= \int_\N\#(\Delta_m)\dif\#(m) = \int_\N\#\{m\}\dif\#(m) = \int_\N1\dif\# = \#(\N) = \pinfty.
 	\end{align*}
 	$f$ n'est donc pas $\# \otimes \#$-intégrable.
