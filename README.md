@@ -5,7 +5,7 @@ Ils sont classés par mnémonique et sont accessibles  à tout le monde. En esp�
 
 # Cours par année d'étude
 
-Les résumés disponibles sont les suivants :
+Les résumés/résolutions de TPs disponibles sont les suivants :
 
 ## Informatique
 
@@ -69,6 +69,10 @@ Les résumés disponibles sont les suivants :
 + [MATH-F-203 : Algèbre et géométrie I](https://github.com/RobinPetit/ULB/blob/master/MATHF-203/r%C3%A9sum%C3%A9/r%C3%A9sum%C3%A9.pdf) (**janvier complet**).
 
 ### BA3 Mathématique
+
+#### Q1
+
++ [MATH-F-3001 : Théorie de la mesure](https://github.com/RobinPetit/ULB/blob/master/MATHF-3001/TPs/resolutions.pdf) (**complet**)
 
 #### Q2
 
