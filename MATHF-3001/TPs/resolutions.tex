@@ -902,7 +902,7 @@ pour les mesures $\mathcal L$ et $\mu$ comme défini ci-dessus (pour $f$ et $h$)
 		$f_n \xrightarrow[n \to \pinfty]{} \tilde f$ (où $\tilde f = \restr f{(0, 1)} = f\chi_{(0, 1)}$). Pour $n \geq 1$, posons~:
 		\[f_n : \R \to \R : x \mapsto -\chi_{(\frac 1n, 1)}(x)\ln x.\]
 
-		$f_n$ est majorée par $x \mapsto \chi_{(1/n, 1)}(x)\sup_{y \in (1/n, 1)}-\ln(y) = \chi_{(1/n, 1)}\ln(n)$ qui est intégrable. On en déduit que $f_n$ est intégrable.\footnote{
+		$f_n$ est majorée par $x \mapsto \chi_{(1/n, 1)}(x)\sup_{y \in (1/n, 1)}-\ln(y) = \ln(n)\chi_{(1/n, 1)}(x)$ qui est intégrable. On en déduit que $f_n$ est intégrable.\footnote{
 		Ainsi, toute fonction bornée définie sur un ensemble de mesure finie est intégrable.} Par l'exercice~\ref{ex:7.1}, une fonction bornée Riemann-intégrable est Lebesgue-intégrable et
 		les intégrales coïncident. On a donc~:
 		\[\int f_n\dif\mathcal L = \int_{\frac 1n}^1-\ln(x)\dif x = 1 - \frac {\ln n+1}n.\]
@@ -949,6 +949,10 @@ Donner un contre-exemple avec $f_1 \not \in L^1(X, \mathcal A, \mu)$.
 également et $\int f_k\dif\mu \xrightarrow[k \to \pinfty]{} \int f\dif\mu$.
 
 Pour un contre-exemple, prenons la suite constante $f_k : x \mapsto x^{-1}$. $\forall x \in X : f_k(x) \xrightarrow[k \to \pinfty]{} x^{-1}$ qui n'est pas intégrable.
+
+On peut aussi prendre la suite $f_k = \frac 1k\chi_{\R^+}$. Pour tout $k \geq 1 : f_k$ n'est pas intégrable car $\int\abs {f_k}\dif\mathcal L = \frac 1k\mathcal L(\R^+) = \pinfty$.
+Or $\forall x \in \R : f_k(x) \xrightarrow[k \to \pinfty]{} 0$. Donc $f_k \xrightarrow[k \to \pinfty]{} \mathbf 0 \in L^1$.
+Mais $\int f_k\dif\mathcal L \not \to 0 = \int\mathbf 0\dif\mathcal L$.
 \end{proof}
 
 \begin{ex} Supposons $\mu(X) \lneqq \pinfty$. Soit $(f_k)_{k \geq 0}$ une suite de fonctions mesurables positives sur $X$ telles que
@@ -968,7 +972,7 @@ En particulier, il existe $N > 0 \st \forall n > N : \sup_{x \in X}\abs {f - f_n
 car $f_n \in L^1$ et $\mu(X) < \pinfty$.
 
 On en déduit $f \in L^1(X, \mathcal A, \mu)$. De plus~:
-\[\abs {\int f_n\dif\mu - \int f\dif\mu} = \abs {\int (f_n-f)\dif\mu} \leq \int \abs {f_n - f}\dif\mu \xrightarrow[n \to \pinfty]{} 0,\]
+\[\abs {\int f_n\dif\mu - \int f\dif\mu} = \abs {\int (f_n-f)\dif\mu} \leq \int \abs {f_n - f}\dif\mu \leq \mu(X)\sup_{x \in X}\abs {f_n-f}(x) \xrightarrow[n \to \pinfty]{} 0,\]
 i.e. $\int f_n\dif\mu \xrightarrow[n \to \pinfty]{} \int f\dif\mu$.
 \end{proof}
 
@@ -995,12 +999,12 @@ Posons $f_n \coloneqq f\chi_{A_n}$. $\forall n > 0 : \abs {f_n} \leq \abs f$ et 
 la convergence dominée, on a~:
 \[\lim_{n \to \pinfty}\int f_n\dif\mu = \int\lim_{n \to \pinfty}f_n\dif \mu.\]
 
-Mq $\lim_{n \to \pinfty}f_n = 0$ $\mu$-ae. Soit $N \coloneqq \{\lim_{n \to \pinfty}f_n \neq 0\}$. Sur $N^\C$, on a $\lim_{n \to \pinfty}f_n = f$. Dès lors~:
-\[\exists K > 0 \st \forall x \in N : \forall n > K : x \in A_n,\]
-et donc~: $\forall n > K : N \subset A_n$, ce qui implique $\forall n > K : \mu(N) \leq \mu(A_n) < \frac 1K$, i.e. $\mu(A) = 0$.
-
-Finalement, on déduit~:
-\[\varepsilon \geq \lim_{n \to \pinfty}\int f_n\dif \mu = \int\lim_{n \to \pinfty}f_n\dif \mu = 0,\]
+Mq $\lim_{n \to \pinfty}f_n = 0$ $\mu$-ae. Soit $N \coloneqq \{x \in X \st \lim_{n \to \pinfty}f_n(x) \neq 0\}$. Soit $x \in N$. On sait que~:
+\[\exists K > 0 \st \forall k \geq K : x \in A_k \qquad\text{ i.e. }\qquad x \in \bigcup_{K > 0}\bigcap_{k \geq K}A_k = \liminf_{k \to \pinfty}A_k.\]
+Donc $N \subseteq \liminf_{k \to \pinfty}A_k$, et par monotonie de la mesure (et par l'exercice~\ref{ex:2.9})~:
+\[\mu(N) \leq \mu\left(\liminf_{k \to \pinfty}A_k\right) \leq \liminf_{k \to \pinfty}\mu(A_k) = \lim_{k \to \pinfty}\mu(A_k) = \lim_{k \to \pinfty} \frac 1k = 0.\]
+Donc $f_n \xrightarrow[n \to \pinfty]{\mu\text{-ae}} \mathbf 0$. Finalement, on déduit~:
+\[\varepsilon \leq \lim_{n \to \pinfty}\int f_n\dif \mu = \int\lim_{n \to \pinfty}f_n\dif \mu = \int\mathbf 0\dif\mu = 0,\]
 ce qui est une contradiction.
 \end{proof}
 
@@ -1056,7 +1060,7 @@ Soit $f : [a, b] \to \R$ bornée. Mq~:
 		\item $f_{P_1 \oplus P_2} \geq f_{P_1}$.
 	\end{itemize}
 
-	Par définition du $\sup$, il existe une suite de partitions $(P'_n)_{n \geq 0} \st U(f; P'_n) \xrightarrow[n \to \pinfty]{} \inf_PU(f; P)$ et
+	Par définition de $\inf/\sup$, il existe une suite de partitions $(P'_n)_{n \geq 0} \st U(f; P'_n) \xrightarrow[n \to \pinfty]{} \inf_PU(f; P)$ et
 	une suite de partitions $(\tilde P_n)_{n \geq 0} \st L(f; \tilde P_n) \xrightarrow[n \to \pinfty]{} \sup_PL(f; P)$. De plus les suites $(U(f; P'_n))_{n \geq 0}$
 	et $(L(f; \tilde P_n))_{n \geq 0}$ sont respectivement décroissante et croissante. Par la remarque ci-dessus, on remarque que si on pose $P_n \coloneqq P'_n \oplus \tilde P_n$,
 	on obtient une suite de partitions $(P_n)_n$ telle que~:
@@ -1114,18 +1118,18 @@ Soit $f : [a, b] \to \R$ bornée. Mq~:
 		\[\sup_{y \in (\alpha, \beta]}f(y) = \sup_{y \in P_k(j_{P_k, x}]}f(y).\]
 
 		En effet, s'il existe $(\alpha, \beta]$ qui ne satisfait pas la propriété, alors les $P_n$ pourraient être raffinés par la suite $(P'_n)_{n \geq 0}$ définie par
-		$P'_n \coloneqq P_n \oplus \alpha \oplus \beta$. Dans ce cas~: $f^{P_n} \geq f^{P'_n}$ ce qui contredit~:
-		\[U(f; P_n) \xrightarrow[n \to \pinfty]{} \inf_PU'f; P).\]
+		$P'_n \coloneqq P_n \oplus \alpha \oplus \beta$. Dans ce cas~: $f^{P_n} \gneqq f^{P'_n}$ sur $[\alpha, \beta]$, ce qui contredit~:
+		\[U(f; P_n) \xrightarrow[n \to \pinfty]{} \inf_PU(f; P).\]
 
 		On déduit donc~:
 		\[\lim_{\delta \to 0}\sup_{y \in B_\delta(x)}f(y) = \sup_{y \in \bigcap_{n \geq 0}P_n(j_{P_n,x}]}f(y),\]
 		i.e.~:
 		\[H(x) = \lim_{\delta \to 0}\sup_{y \in B_\delta(x)}f(y) = \sup_{y \in \bigcap_{n \geq 0}P_n(j_{P_n,x}]}f(y) = \lim_{n \to \pinfty}f^{P_n}(x).\]
 	\end{itemize}
-	On déduit de ces deux cas $f^{P_n} \xrightarrow[n \to \pinfty]{\mathcal L\text{-ae}} H$ et donc $H$ est mesurable puisque limite de fonctions mesurables. Du plus, on sait
+	On déduit de ces deux cas $f^{P_n} \xrightarrow[n \to \pinfty]{\mathcal L\text{-ae}} H$ et donc $H$ est mesurable puisque limite de fonctions mesurables. De plus, on sait
 	que pour toute partition $P$~: $f^P$ est $\mathcal L$-intégrable sur $[a, b]$ car $f$ est majorée par $M \gneqq 0$ et donc~:
 	$\int_{[a, b]} \abs {f^P}\dif\mathcal L \leq M\mathcal L([a, b]) \lneqq \pinfty$. Dès lors,
-	par le théorème de la convergence monotone~:
+	par le théorème de la convergence dominée~:
 	\[\int H\dif\mathcal L = \lim_{n \to \pinfty}\int f^{P_n}\dif\mathcal L = \inf_PU(f; P).\]
 	On déduit similairement le cas $\int h\dif\mathcal L = \sup_PL(f; P)$.
 
@@ -1199,6 +1203,7 @@ Soit $f : [a, b] \to \R$ bornée. Mq~:
 	\item Considérons la fonction suivante~:
 	\[v : \R \to \R : x \mapsto \begin{cases}x^{\frac {-1}p} &\text{ si } x \in (0, 1] \\0 &\text{ sinon}.\end{cases}\]
 	Mq $u \in L^q(\R) \setminus L^p(\R)$.
+	\item A-t-on $L^q(\R) \subseteq L^\infty(\R)$ et $L^\infty(\R) \subseteq L^q(R)$~?
 \end{enumerate}
 \end{ex}
 
@@ -1212,7 +1217,8 @@ Soit $f : [a, b] \to \R$ bornée. Mq~:
 
 		\item[$L^p \subseteq L^q$~:] Soit $f \in L^p$. On remarque que $\abs f^q \in L^{\frac pq}$ avec $\frac pq > 1$. De plus, puisque $\mu(X) < \pinfty$, les fonctions constantes
 		sont intégrables  (car dans $L^\infty$). En particulier $\mathbf 1 : x \mapsto 1$ est dans $L^{\frac p{p-q}}$. Par Hölder~:
-		\[\int\abs f^q\dif\mu = \int\abs f^q\abs {\mathbf 1}\dif\mu \leq \norm {\abs f^q}_{L^{\frac pq}}\underbrace {\norm {\mathbf 1}_{L^{\frac p{p-q}}}}_{= \mu(X) < \pinfty}.\]
+		\[\norm f_{L^q}^q = \norm {f^q}_{L^1} = \norm {\abs f^q\abs {\mathbf 1}^{\frac p{q-p}}}_{L^1} = \int\abs f^q\dif\mu = \int\abs f^q\abs {\mathbf 1}\dif\mu
+			\leq \norm {\abs f^q}_{L^{\frac pq}}\underbrace {\norm {\mathbf 1}_{L^{\frac p{p-q}}}}_{= \mu(X) < \pinfty}.\]
 		Or~:
 		\[\left[\int \left(\abs f^q\right)^{\frac pq}\dif\mu\right]^{\frac qp} = \left[\int \abs f^p\dif\mu\right]^{\frac qp} = \left[\left(\int \abs f^p\dif\mu\right)^{\frac 1p}\right]^q
 		= \norm f_{L^p}^q < \pinfty.\]
@@ -1236,7 +1242,13 @@ Soit $f : [a, b] \to \R$ bornée. Mq~:
 	car $\frac {p-q}q > 0$.
 
 	De plus $v \not \in L^p$ car~:
-	\[\int v^p\dif\mathcal L = \lim_{\varepsilon \to 0}\int_\varepsilon^1x^{-1}\dif x = \lim_{\varepsilon \to 0}\ln\varepsilon = \pinfty.\]
+	\[\int v^p\dif\mathcal L = \lim_{\varepsilon \to 0}\int_\varepsilon^1x^{-1}\dif x = 1 - \lim_{\varepsilon \to 0}\ln\varepsilon = \pinfty.\]
+
+	\item $L^\infty(\R) \not \subseteq L^q(\R)$ car $\norm {\mathbf 1}_{L^\infty} = 1 \lneqq \pinfty$ mais $\forall q \in [1, \pinfty)$~:
+	$\norm {\mathbf 1}_{L^q} = \mathcal L(\R) = \pinfty$. L'autre inclusion ne tient pas non plus~: $f : x \mapsto x^{-\frac 1{2q}}\chi_{(0, 1)}$ est dans $L^q$ car~:
+	\[\norm {f}_{L^q}^q = \int \abs {x^{-\frac 1{2q}}}^q\chi_{(0, 1)}\dif \mathcal L(x) = \int_0^1x^{-\frac 12}\dif\mathcal L(x) = 2 \lneqq \pinfty.\]
+	Or $\norm f_{L^\infty} = \pinfty$ car~:
+	\[\forall M > 0 : \mathcal L(\{x \in (0, 1) \st f(x) \geq M\}) = \mathcal L(\{x \in (0, 1) \st M^{-1} \geq \sqrt x\}) = \mathcal L((0, M^{-2})) = M^{-2} > 0.\]
 \end{enumerate}
 \end{proof}
 
