@@ -70,13 +70,13 @@
 \newenvironment{comm}%
 {\ifthenelse{\isundefined{\showproofs}}%
 	{\expandafter\comment}%
-	{}%
+	{\proof}%
 }%
 {\ifthenelse{\isundefined{\showproofs}}%
 	{\expandafter\endcomment}%
-	{}%
+	{\endproof}%
 }
-\def\proof{\comm}
+%\def\proof{\comm}
 
 \begin{document}
 \maketitle
@@ -89,9 +89,8 @@
 \begin{proof}~
 \begin{enumerate}
 	\item $\emptyset \in \mathcal F$, donc $\emptyset \cap Y = \emptyset \in \mathcal F_Y$.
-	\item Soit $F \in \mathcal F$. $F \cap Y \in \mathcal F_Y$ et donc~:
-	\[Y \setminus (F \cap Y) = Y \setminus F \cup \emptyset = Y \cap F^\C \in \mathcal F_Y\]
-	car $F^\C \in \mathcal F$.
+	\item Soit $F \cap Y \in \mathcal F_Y$. $F \in \mathcal F$ et donc~:
+	\[(F \cap Y)^\C = Y \cap (F \cap Y)^\C = Y \cap F^\C \cup \emptyset = F^\C \cap Y \in \mathcal F_Y.\]
 	\item Soit $(F_n)_{n \geq 0} \in \mathcal F^\N$. On sait que $\bigcup_{n \geq 0}F_n \in \mathcal F$. De plus $(F_n \cap Y)_{n \geq 0} \in {\mathcal F_Y}^\N$. Donc~:
 	\[\bigcup_{n \geq 0}(F_n \cap Y) = \bigcup_{n \geq 0}F_n \cap Y \in \mathcal F_Y.\]
 \end{enumerate}
@@ -99,7 +98,7 @@
 
 \begin{ex}~
 \begin{enumerate}
-	\item Soit $X$ un ensemble fini. Décrire la $\sigma$-algèbre engendrée par la classe des parties finies de $X$. Que peut-on dire si $X$ est fini~?
+	\item Soit $X$ un ensemble infini. Décrire la $\sigma$-algèbre engendrée par la classe des parties finies de $X$. Que peut-on dire si $X$ est fini~?
 	\item Dans $X = \intint 0n$, on considère $\mathcal A = \{0\}$ et $\mathcal B = \{\{0\}, \{1, 2\}\}$. Décrire $\sigma(\mathcal A)$ et $\sigma(\mathcal B)$.
 \end{enumerate}
 \end{ex}
@@ -197,7 +196,7 @@ puisque $\mathcal B' \subset \mathcal B$, on a $\mathcal B \subset \mathcal B' \
 	Par le point ci-dessus, $\lambda(\mathcal F)$ est une classe de Dynkin et toute classe de Dynkin $\mathcal D' \supset \mathcal F$ contient $\lambda(\mathcal F)$ par définition.
 
 	\item Soit $\mathcal D$ une classe de Dynkin stable par intersections finies et soit $(D_n)_{n \geq 0} \in \mathcal D^\N$. Montrons donc que $\bigcup_{n \geq 0}D_n \in \mathcal D$.
-	On pose $B_0 \coloneqq D_0$ et pour $n > 0$, on pose $B_n \coloneqq A_n \cap (\bigcap_{j=1}^{n-1}B_j^\C)$. Par récurrence, on observe que les $B_n$ sont dans $\mathcal D$ par
+	On pose $B_0 \coloneqq D_0$ et pour $n > 0$, on pose $B_n \coloneqq D_n \cap (\bigcap_{j=1}^{n-1}B_j^\C)$. Par récurrence, on observe que les $B_n$ sont dans $\mathcal D$ par
 	stabilité sous intersections finies. De plus les $B_n$ sont disjoints deux à deux et leur union est égale à l'union des $D_n$. Donc $\bigcup_{n \geq 0}D_n \in \mathcal D$.
 
 	\item Soit $D \in \lambda(\mathcal F)$. On pose $\mathcal D_D \coloneqq \{Q \in \lambda(\mathcal F) \st Q \cap D \in \lambda(\mathcal F)\} \subset \lambda(\mathcal F)$.
@@ -242,7 +241,7 @@ Donner un exemple de mesure $\mu : \mathcal A \to [0, \pinfty]$ qui ne satisfait
 
 \begin{proof}~
 \begin{itemize}
-	\item[\underline {$1. \Rightarrow 2.$}] Soit $(B_n)_{n \geq 0} \in \mathcal A^\N$. On pose $A_0 \coloneqq B_0$ et $\forall n > 0 : A_n \coloneqq B_n \setminus B_{n-1}$,
+	\item[\underline {$1. \Rightarrow 2.$}] Soit $(B_n)_{n \geq 0} \in \mathcal A^\N$. On pose $A_0 \coloneqq B_0$ et $\forall n > 0 : A_n \coloneqq B_n \setminus A_{n-1}$,
 	ce qui donne (car les $A_n$ sont dans $\mathcal A$)~:
 	\[\mu\left(\bigcup_{n \geq 0}B_n\right) = \mu\left(\bigsqcup_{n \geq 0}A_n\right) = \sum_{n \geq 0}\mu(A_n)
 	  = \lim_{N \to \pinfty}\underbrace {\sum_{n=0}^N\mu(A_n)}_{= \mu(B_N)} = \lim_{N \to \pinfty}\mu(B_N).\]
@@ -252,7 +251,7 @@ Donner un exemple de mesure $\mu : \mathcal A \to [0, \pinfty]$ qui ne satisfait
 	  = \lim_{n \to \pinfty}\sum_{j=0}^n\mu(A_j) = \sum_{n \geq 0}\mu(A_n).\]
 	\item[\underline {$2. \Rightarrow 3.$}] Soit $(C_n)_{n \geq 0} \in \mathcal A^\N$ une suite décroissante. On a alors que $({C_n}^\C)_{n \geq 0}$ est une suite croissante dans
 	$\mathcal A$. Donc~:
-	\[\mu\left(\bigcup_{n \geq 0}{C_n}^\C\right) = \lim_{n \to \pinfty}\mu({C_n}^\C) = \mu(X) - \lim_{n \to \pinfty}\mu({C_n}^\C)\]
+	\[\mu\left(\bigcup_{n \geq 0}{C_n}^\C\right) = \lim_{n \to \pinfty}\mu({C_n}^\C) = \mu(X) - \lim_{n \to \pinfty}\mu(C_n)\]
 	car $\mu(X) < \pinfty$. De plus~:
 	\[\mu\left(\bigcup_{n \geq 0}{C_n}^\C\right) = \mu\left(\left(\bigcap_{n \geq 0}C_n\right)^\C\right) = \mu(X) - \mu\left(\bigcap_{n \geq 0}C_n\right).\]
 	Par finitude de $\mu$, on conclut~:
@@ -280,9 +279,11 @@ où $\mu(A) = 0 \iff A$ est dénombrable. Mq $\mu$ est une mesure sur $(X, \math
 	et donc~:
 	\[\mu(A) = 0 = \sum_{n \geq 0}0 = \sum_{n \geq 0}\mu(A_n)\]
 	pour le premier cas. Pour le second cas, si $\mu(A) = 1$, il existe $n_0 \in \N \st {A_{n_0}}^\C$ est dénombrable (ou $\mu(A_{n_0}) = 1$), donc $\mu(A) \leq \sum_{n \geq 0}\mu(A_n)$.
-	Supposons par l'absurde qu'il existe $n_1 \neq n_0 \st {A_{n_1}}^\C$ est dénombrable ($\mu(A_{n_1}) = 1$). On a donc ${A_{n_0}}^\C$ et ${A_{n_1}}^\C$ dénombrables.
-	Or $A_{n_0} \cap A_{n_1} = \emptyset$, donc 	$A_{n_0} \subseteq {A_{n_1}}^\C$ ou $A_{n_1} \subseteq {A_{n_0}}^\C$, ce qui implique $A_{n_0}$ ou $A_{n_1}$ dénombrable,
-	ce qui est une contradiction car $X$ est non-dénombrable.
+	En effet, si ce n'est pas le cas, alors tous les ensembles $A_n$ sont dénombrables, donc leur union l'est aussi et donc $\mu(A) = \mu(\bigsqcup_{n \geq 0}A_n) = 0$.
+
+	Supposons alors par l'absurde qu'il existe $n_1 \neq n_0 \st {A_{n_1}}^\C$ est dénombrable ($\mu(A_{n_1}) = 1$). On a donc ${A_{n_0}}^\C$ et ${A_{n_1}}^\C$ dénombrables.
+	Or $A_{n_0} \cap A_{n_1} = \emptyset$, donc $A_{n_0} \subseteq {A_{n_1}}^\C$, ce qui implique que $A_{n_0}$ est dénombrable, et donc $X = A_{n_0} \sqcup {A_{n_0}}^\C$ est dénombrable
+	car une union finie d'ensembles dénombrables est dénombrable, ce qui est une contradiction car $X$ est non-dénombrable.
 \end{itemize}
 \end{proof}
 
@@ -339,7 +340,7 @@ Mq $\nu$ est une mesure sur $(Y, \mathcal B)$.
 	On pose $\tilde C \coloneqq C \cap B^\C$ et $\tilde B \coloneqq C^\C \cap B$. On a alors que $B$ et $\tilde C$ sont disjoints ($C$ et $\tilde B$ également).
 	De plus, $x \not \in \tilde B$ et $x \not \in \tilde C$, et donc $\mu(\tilde B) = \mu(\tilde C) = 0$. On a donc~:
 	\[\mu(C) = \mu(C) + \mu(\tilde B) = \mu(C \sqcup \tilde B) = \mu(B \cup C) = \mu(B \sqcup \tilde C) = \mu(B) + \mu(\tilde C) = \mu(B).\]
-	On a donc $\mu : \mathcal A \to \{0, C\}$ où $\mu(A) \iff \delta_x(A) = 1$.
+	On a donc $\mu : \mathcal A \to \{0, \theta\}$ où $\forall A \in \mathcal A : \mu(A) = \theta \iff \delta_x(A) = 1$, i.e. $\mu = \theta\delta_x$.
 \end{enumerate}
 \end{proof}
 
@@ -361,6 +362,7 @@ Mq $\nu$ est une mesure sur $(Y, \mathcal B)$.
 	\item $\mu(\emptyset) = 0/\abs X = 0$.
 	\item Soient $(A_n)_{n \geq 0} \in \mathcal P(X)^\N$ 2 à 2 disjoints.
 	\[\mu(\bigsqcup_{n \geq 0}A_n) = \frac {\sum_{n \geq 0}\abs {A_n}}{\abs X} = \sum_{n \geq 0}\frac {\abs {A_n}}{\abs X}.\]
+	\item Finalement $\mu$ est bien une mesure de proba puisque $\forall A \subseteq X$~: $\abs A \leq \abs X$ et donc $\abs A/\abs X \leq 1$.
 \end{itemize}
 
 \underline {\textit{Note:}} si $(X, \mathcal A, \mu)$ est un espace mesuré, alors $\forall \alpha > 0 : \alpha\mu : \mathcal A \to [0, \pinfty] : A \mapsto \alpha \cdot \mu(A)$
@@ -382,13 +384,19 @@ est une mesure sur $(X, \mathcal A)$. Donc l'exercice peut être simplement rés
 \begin{proof}~
 \begin{enumerate}
 	\item On note que puisque la suite des $\mu_n$ est croissante, pour tout $A \in \mathcal A$, $\mu(A)$ est bien définie car soit la suite $(\mu_n(A))_n$ converge vers une
-	valeur réelle, soit elle diverge vers $\pinfty$.
+	valeur réelle, soit elle diverge vers $\pinfty$ (convergence des suites monotones).
 	\begin{itemize}
 		\item $\mu(\emptyset) = \lim_{n \to \pinfty}\mu_n(\emptyset) = 0$.
 		\item Soient $(A_n)_{n \geq 0}$ 2 à 2 disjoints.
 		\begin{align*}
 			\mu\left(\bigsqcup_{n \geq 0}A_n\right) &= \lim_{k \to \pinfty}\mu_k\left(\bigsqcup_{n \geq 0}A_n\right) = \lim_{k \to \pinfty}\lim_{N \to \pinfty}\sum_{n=0}^N\mu_k(A_n) \\
 				&= \lim_{N \to \pinfty}\sum_{n=0}^N\lim_{k \to \pinfty}\mu_k(A_n) = \sum_{n \geq 0}\lim_{k \to \pinfty}\mu_k(A_n) = \sum_{n \geq 0}\mu(A_n).
+		\end{align*}
+
+		On peut intervertir les limites car les suites $(\sum_{n=0}^N\mu_k(A_n))_k$ (à $N$ fixé) et $(\sum_{n=0}^N\mu_k(A_n))_N$ (à $k$ fixé) sont croissantes. Dès lors~:
+		\begin{align*}
+			\lim_{k \to \pinfty}\lim_{N \to \pinfty}\sum_{n=0}^N\mu_k(A_n) &= \sup_{k \geq 0}\sup_{N \geq 0}\sum_{n=0}^N\mu_k(A_n) = \sup_{k, N \geq 0}\sum_{n=0}^N\mu_k(A_n) \\
+				&= \sup_{N \geq 0}\sup_{k \geq 0}\sum_{n=0}^N\mu_k(A_n) = \lim_{N \to \pinfty}\lim_{k \to \pinfty}\sum_{n=0}^N\mu_k(A_n).
 		\end{align*}
 	\end{itemize}
 	\item~
@@ -401,6 +409,8 @@ est une mesure sur $(X, \mathcal A)$. Donc l'exercice peut être simplement rés
 	\end{itemize}
 	On en déduit donc que $\mu = \sum_{k \geq 0}\mu_k$ est une mesure sur $(X, \mathcal A)$. De plus, puisque $\alpha \cdot \mu$ (pour $\alpha > 0$, $\mu$ mesure sur $(X, \mathcal A)$)
 	est également une mesure sur $(X, \mathcal A)$, on a que pour $(\alpha_n)_{n \geq 0} \in \left({\R^+}^*\right)^\N$~: $\mu = \sum_{n \geq 0}\alpha_n\mu_n$ est une mesure également.
+
+	Notons que l'on peut également appliquer le point 1 sur la suite des sommes partielles.
 	\item~
 	\begin{itemize}
 		\item Soit $n \in \N$.
@@ -515,7 +525,7 @@ et donc $\mu = \nu$.
 \begin{enumerate}
 	\item $\{x\} = [x, x]$ est fermé dans $\R$, et $\mathcal L(\{x\}) = x-x = 0$.
 	\item $\mathcal L(\Q) = \mathcal L(\bigsqcup_{q \in \Q}\{q\}) = \sum_{q \in \Q}\mathcal L(\{q\}) = 0$.
-	\item $\mathcal L(\R) = \pinfty$, or~: $\bigsqcup_{x \in \R}\{x\}$.
+	\item $\mathcal L(\R) = \pinfty$, or~: $\bigsqcup_{x \in \R}\{x\} = \R$.
 	\item $\underline {\Leftarrow}$~: par monotonie, si $\forall \varepsilon > 0 : N \subseteq U_\varepsilon$, alors $\mathcal L(N) \leq \mathcal L(U_\varepsilon) < \varepsilon$.
 	On en déduit $\mathcal L(N) = 0$, et donc $N$ est négligeable.
 
@@ -540,7 +550,7 @@ et donc $\mu = \nu$.
 \begin{ex} Montrer qu'une droite $E$ dans $\R^2$ est de mesure nulle pour $\mathcal L$.
 \end{ex}
 
-\begin{proof} À $x = (x_1, x_2), y = (y_1, y_2) \in \R^2$ fixés, $E = \{x + ty\}_{t \in \R}$. Pour $\alpha < \beta \in \R$, on définit
+\begin{proof} Pour $E \subset \R^2$, une droite, il existe $x = (x_1, x_2), y = (y_1, y_2) \in \R^2 \st E = \{x + ty\}_{t \in \R}$. Pour $\alpha < \beta \in \R$, on définit
 $E_\alpha^\beta \coloneqq \{x+ty\}_{t \in [\alpha, \beta]}$. Mq $\mathcal L(E_\alpha^\beta) = 0$.
 
 Si $y = (0, \lambda)$ (ou si $y = (\lambda, 0)$ par symétrie), on peut recouvrir $E_\alpha^\beta$ par l'intervalle compact
@@ -550,16 +560,16 @@ $\mathcal L(E_\alpha^\beta) = 0$.
 Sinon, soit $(I_n)_{n \geq 0}$ un recouvrement de $E_\alpha^\beta$ par des intervalles compacts. Pour $n \geq 0 : I_n = [a_n^1, b_n^1] \times [a_n^2, b_n^2]$ et
 $\Vol(I_n) = (b_n^1-a_n^1)(b_n^2-a_n^2)$.
 
-Montrons qu'il existe $(J_n)_{n \geq 0} \st \sum_{n \geq 0}\Vol(J_n) < \frac 12\sum_{n \geq 0}\Vol(I_n)$.
+Montrons qu'il existe $(J_n)_{n \geq 0}$, recouvrement de $E_\alpha^\beta$ $\st \sum_{n \geq 0}\Vol(J_n) < \frac 12\sum_{n \geq 0}\Vol(I_n)$.
 
 Soit $n \geq 0$. $I_n = [a_n^1, b_n^1] \times [a_n^2, b_n^2]$ où les 4 \textit{coins} sont $C_1 = (a_n^1, a_n^2), C_2 = (a_n^1, b_n^2), C_3 = (b_n^1, a_n^2), C_4 = (b_n^1, b_n^2)$.
-WLOG supposons $\abs {E_\alpha^\beta \cap \{C_i\}_{i=1}^4} = 2$, i.e. $E$ passe par deux coins de $I_n$ (soit $C_1$ et $C_3$, soit $C_2$ et $C_4$)\footnote{En effet, si ce n'est pas
+WLOG supposons $\abs {E_\alpha^\beta \cap \{C_i\}_{i=1}^4} = 2$, i.e. $E$ passe par deux coins de $I_n$ (soit $C_1$ et $C_4$, soit $C_2$ et $C_3$)\footnote{En effet, si ce n'est pas
 le cas, on peut "réduire" $I_n$ afin que ce soit le cas (et qui est donc de volume strictement inférieur).}. On définit alors~:
 \[\begin{cases}
 	J_{2n}   &\coloneqq [a_n^1, \frac 12(b_n^1 + a_n^1)] \times [a_n^2, \frac 12(b_n^2 + a_n^2)] \\
 	J_{2n+1} &\coloneqq [\frac 12(b_n^1 + a_n^1), b_n^1] \times [\frac 12(b_n^2 + a_n^2), b_n^2]
 \end{cases}\]
-si $E \cap \{C_1, C_3\}$~; et~:
+si $E \cap \{C_1, C_4\}$~; et~:
 \[\begin{cases}
 	J_{2n}   &\coloneqq [a_n^1, \frac 12(b_n^1 + a_n^1)] \times [\frac 12(b_n^2 + a_n^2), b_n^2] \\
 	J_{2n+1} &\coloneqq [\frac 12(b_n^1 + a_n^1), b_n^1] \times [a_n^2, \frac 12(b_n^2 + a_n^2)]
@@ -646,7 +656,7 @@ Dès lors, pour $r \in \R$~: $f^{-1}((r, \pinfty)) = \bigcup_{q \in (r, \pinfty)
 \begin{proof} Pour cela, on utilise le fait qu'un produit de fonctions mesurables est mesurable et que~:
 \begin{itemize}
 	\item les fonctions caractéristiques sur des boréliens sont mesurables~;
-	\item $\alpha : \R \to \R : x \mapsto x^2$ est mesurable car $\alpha = \Id \cdot \Id$~;
+	\item $\alpha : \R \to \R : x \mapsto x^2$ est mesurable car $\alpha = \Id \cdot \Id$ (ou car $\alpha$ est continue)~;
 	\item $(\R \setminus \Q) \cap [0, 1]$ est mesurable car $[0, 1]$ est mesurable et $\Q^\C$ est mesurable aussi.
 \end{itemize}
 
@@ -727,12 +737,14 @@ $\mathcal L(M_2) = \mathcal L(M_1) = \frac 12\mathcal L(M)$. Donc $\mathcal L(f^
 \begin{enumerate}
 	\item Faux. Prenons $N \not \in \mathcal M \st N \cap \{0, 1\} = \emptyset$. Alors $\chi_N$ n'est pas mesurable, mais $\chi_N \circ \chi_N = \mathbf 0$
 	est constante donc mesurable.
-	\item aux. Prenons à nouveau $N \not \in \mathcal M$. On pose $f \coloneqq \chi_N - \chi_{N^\C} : \R \to \{-1, +1\}$ où donc $f(x) = 1$ si $x \in N$ et $f(x) = -1$ sinon.
+	\item Faux. Prenons à nouveau $N \not \in \mathcal M$. On pose $f \coloneqq \chi_N - \chi_{N^\C} : \R \to \{-1, +1\}$ où donc $f(x) = 1$ si $x \in N$ et $f(x) = -1$ sinon.
 	$f$ n'est pas mesurable, mais $\abs f = \mathbf 1 : \R \to \{1\} : x \mapsto 1$ est constante donc mesurable.
 	\item Mq continuité implique Borel-mesurabilité. Soit $f \in \mathcal C^0(\R, \R)$. Pour $b \in \R$~: $f^{-1}((\minfty, b))$ est ouvert et est donc borélien.
 	Donc ici $g$ et $f$ sont toutes deux Borel-mesurables et la composition d'applications Borel-mesurables est Borel-mesurable.
-	\item On pose $N \coloneqq \{x \in \R \st f \text{ n'est pas continue en } x\}$. $N$ est négligeable et $f$ est continue sur $\R \setminus N$. On trouve pour $b \in \R$~:
+	\item On pose $N \coloneqq \{x \in \R \st f \text{ n'est pas continue en } x\}$. $N$ est $\mathcal L$-négligeable et $f$ est continue sur $\R \setminus N$. On trouve pour $b \in \R$~:
 	\[f^{-1}((\minfty, b)) = \left(f^{-1}((\minfty, b)) \cap N^\C\right) \sqcup \underbrace {\left(f^{-1}((\minfty, b)) \cap N\right)}_{\subseteq N \text{ donc } \in \mathcal M}.\]
+
+	Attention, il n'est pas vrai que toute fonction continue presque partout est Borel-mesurable (voir~: {\scriptsize \url{https://math.stackexchange.com/questions/3060657/function-continuous-ae-but-not-borel-measurable/3060677}})
 \end{enumerate}
 \end{proof}
 
@@ -780,8 +792,7 @@ On définit l'\textit{ensemble triadique de Cantor} par $\mathscr C \coloneqq \b
 \begin{enumerate}
 	\item Mq $\forall k \geq 0$~: $A_k$ est formé de $2^k$ intervalles fermés disjoints deux à deux et $\mathcal L(A_k) = (2/3)^k$.
 	\item Mq $\mathscr C$ est un borélien non vide et de mesure de Lebesgue nulle.
-	\item Mq le développement infini en base 3 est unique ssi les chiffres de la décomposition (notés $a_k : [0, 1] \to \{0, 1, 2\}$ pour le $k$ème chiffre)
-	sont soit 0 soit 2. Mq $x \in \mathscr C \iff \forall k \geq 0 : a_k(x) \neq 1$.
+	\item Soit $x \in [0, 1]$. Notons $a_k(x)$ le $k$ chiffre de son développement en base 3. Mq $x \in \mathscr C \iff \forall k \geq 0 : a_k(x) \neq 1$.
 	\item En déduire que $\mathscr C$ est en bijection avec $[0, 1]$.
 \end{enumerate}
 \end{ex}
@@ -819,14 +830,14 @@ On définit l'\textit{ensemble triadique de Cantor} par $\mathscr C \coloneqq \b
 
 	Donc les $A_k$ forment bien une suite décroissante.
 
-	\item On remarque que pour $\alpha \in \{0, 2\}^k : x \in A_k \iff \{a_j(x)\}_{j=1}^k \subseteq \{0, 2\}$. Et puisque $\mathscr C = \bigcap_{k \geq 0}A_k$~:
+	\item On remarque que pour $k \geq 1 : x \in A_k \iff \{a_j(x)\}_{j=1}^k \subseteq \{0, 2\}$. Et puisque $\mathscr C = \bigcap_{k \geq 0}A_k$~:
 	\[x \in \mathscr C \iff x \in \bigcap_{k \geq 0}A_k \iff \forall k \geq 0 : \{a_j(x)\}_{j=1}^k \subseteq \{0, 2\} \iff \{a_j(x)\}_{j \geq 0} \subseteq \{0, 2\}.\]
 
 	\item On a alors $x \in \mathscr C \iff x = \sum_{k \geq 1}\frac {a_k(x)}{3^k}$ où les $a_k(x) \neq 1$, i.e. $a_k(x) \in \{0, 2\}$. On peut alors poser~:
 	\[\theta : \mathscr C \to [0, 1] : x = \sum_{k \geq 1}\frac {a_k(x)}{3^k} \mapsto \sum_{k \geq 1}\frac {a_k(x)}{2^{k+1}},\]
 	qui est une bijection entre $\mathscr C$ et $[0, 1]$. On en déduit que $\abs {\mathscr C} = \abs {[0, 1]}$, et donc $\mathscr C$ est non-dénombrable.
 
-	\underline {\textbf{Note}~:} Un graphique de $\theta$ et de son inverse $f = \theta^{-1}$ est disponible à la page 17.
+	\underline {\textbf{Note}~:} Un graphique de $\theta$ et de son inverse $f = \theta^{-1}$ est disponible à la page 20.
 \end{enumerate}
 \end{proof}
 
@@ -844,10 +855,73 @@ On définit l'\textit{ensemble triadique de Cantor} par $\mathscr C \coloneqq \b
 	$x_n = \frac 12 - \frac 1{2^n} = 0.1_2 - 0.\underbrace {0\ldots0}_{n-1}1_2 = 0.0\underbrace {1\ldots1}_{n-1}\phantom._2$, et donc~:
 	\[f(x_n) = 0.0\underbrace {2\ldots2}_{n-1}\phantom._3 = \sum_{k=2}^n\frac 23 = \frac 13(1-3^{-n}) \xrightarrow[n \to \pinfty]{} \frac 13 \neq \frac 23 = f(x).\]
 
-	On en déduit que $f$ n'est pas continue. De manière équivalente, on aurait pu dire $(1/2, 1) \cap \mathscr C$ est ouvert dans $\mathscr C$, or
-	$f^{-1}(\mathscr C \cap (1/2, 1)) = [2/3, 1)$ n'est pas ouvert dans $[0, 1]$.
+	On en déduit que $f$ n'est pas continue. De manière équivalente, on aurait pu dire $(1/2, 1] \cap \mathscr C$ est ouvert dans $\mathscr C$ car $(1/2, 1]$ est ouvert dans $[0, 1]$,
+	or $f^{-1}(\mathscr C \cap (1/2, 1]) = [2/3, 1]$ n'est pas ouvert dans $[0, 1]$.
 
+	En fait l'ensemble $\mathscr C \cap (1/2, 1)$ est à la fois ouvert et fermé dans $\mathscr C$. De même pour tout $x \in [0, 1] \setminus \mathscr C$, l'ensemble
+	$(x, 1] \cap \mathscr C$ est à la fois ouvert et fermé dans $\mathscr C$. L'ensemble triadique de Cantor contient donc un nombre non dénombrable d'ensembles ouverts et fermés,
+	alors que tout sous-ensemble $X \subseteq [0, 1]$~: si $\mathring X = X = \overline X$, alors $X = \emptyset$ ou $X = \R$.\footnote{Ce qui doit pouvoir s'étendre en remplaçant
+	$[0, 1]$ pour un sous-ensemble connexe $Y \subseteq \R$.} $f$ ne peut pas être continue car sinon, pour $\Omega$ un sous-ensemble non-vide propre ouvert et fermé de $\mathscr C$,
+	on a $f^{-1}(\Omega)$ est ouvert et fermé dans $[0, 1]$ et $f^{-1}(\Omega) \not \in \{\emptyset, [0, 1]\}$ puisque $f$ est bijective, ce qui est impossible.
+
+	On peut également le démontrer par un argument topologique basé sur la connexité de $[0, 1]$.
+
+	\paragraph {Lemme} Soient $x, y \in \mathscr C$. Si $\exists N > 0 \st \abs {x-y} < 3^{-N}$, alors $\forall k \in \intint 1N : a_k(x) = a_k(y)$.
+
+	\paragraph{Preuve du lemme.} Supposons $x > y$ (le cas $x < y$ se déduit de la même manière). Soit $j \coloneqq \min\{k \in \N \st a_k(x) \neq a_k(y)\}$.
+	Puisque $x > y$, on sait $a_j(x) > a_j(y)$ (et donc $a_j(x) = 2$ et $a_j(y) = 0$). On remarque ensuite~:
+	\begin{align*}
+		x &= \sum_{k \geq 1}\frac {a_k(x)}{3^k} \geq \sum_{k=1}^j\frac {a_k(x)}{3^k} = \frac 2{3^j} + \sum_{k=1}^{j-1}\frac {a_k(x)}{3^k} \\
+		y &= \sum_{k \geq 1}\frac {a_k(y)}{3^k} \leq \sum_{k=1}^{j-1}\frac {a_k(y)}{3^k} + \sum_{k \gneqq j}\frac 2{3^k} = \sum_{k=1}^{j-1}\frac {a_k(y)}{3^k} + 3^{-j}.
+	\end{align*}
+	De là, on déduit~:
+	\[\abs {x-y} = x-y \geq \frac 2{3^j} + \sum_{k=1}^{j-1}\frac {a_k(x)}{3^k} - \left(\sum_{k=1}^{j-1}\frac {a_k(y)}{3^k} + 3^{-j}\right) = 3^{-j}\]
+	puisque $a_k(x) = a_k(y)$ pour $k \in \intint 1{j-1}$ par définition de $j$. Or puisque $\abs {x-y} < 3^{-N}$, on déduit $3^{-N} \gneqq \abs {x-y} \geq 3^{-j}$,
+	et donc $N \lneqq j$. \hfill$\qed$
+
+	\vspace{.5cm}
+
+	Sur base de ce lemme, on peut montrer que $\theta$ est continue. En effet, prenons $(x_n)_{n \geq 0} \in \mathscr C^\N$ une suite convergente vers $x$. Par fermeture
+	de $\mathscr C$, on sait $x \in \mathscr C$. Montrons alors que $\theta(x_n) \xrightarrow[n \to \pinfty]{} \theta(x)$. Soit $\varepsilon > 0$. Il existe
+	$N > 0 \st \varepsilon > 2^{-N}$. Dès lors, par convergence de la suite $(x_n)_n$, on sait qu'il existe $K_N > 0 \st \forall n \geq K_N : \abs {x_n-x} < 3^{-N}$.
+	Dès lors, pour $n \geq K_N$~:
+	\begin{align*}
+		\abs {\theta(x_n)-\theta(x)} &= \abs {\sum_{k \geq 1}\frac {a_k(x_n)}{2^{k+1}} - \sum_{k \geq 1}\frac {a_k(x)}{2^{k+1}}}
+			= \abs {\sum_{k \geq 1}2^{-(k+1)}(a_k(x_n)-a_k(x))} = \abs {\sum_{k > N}2^{-(k+1)}(a_k(x_n)-a_k(x))} \\
+		&\leq \sum_{k > N}2^{-(k+1)}\abs {a_k(x_n)-a_k(x)} \leq \sum_{k > N}2^{-k} = 2^{-N} < \varepsilon.
+	\end{align*}
+
+	$\theta$ est donc continue sur $\mathscr C$\footnote{Et peut même être étendue en une fonction continue sur $[0, 1]$ appelée \textit{escalier du diable} ou
+	\textit{escalier de Cantor} qui est continue partout et dérivable $\mathcal L$-ae telle que sa dérivée est nulle partout où elle existe et qui est croissante
+	de $0$ à $1$.}. Maintenant montrons que $\mathscr C$ et $[0, 1]$ ne sont pas homéomorphes. On sait que $[0, 1]$ est connexe. Montrons que $\mathscr C$ ne l'est pas.
+	Pour cela, trouvons $U, V$ ouverts dans $\mathscr C$ tels que $\mathscr C = U \cup V$ et $U \cap V = \emptyset$.
+
+	Posons $U \coloneqq (-1, 1/2)$ et $V \coloneqq (1/2, 2)$ (on peut remplacer $1/2$ par n'importe quel $x \in (0, 1) \setminus \mathscr C$). On a alors~:
+	\begin{itemize}
+		\item $U \cup V = \left((-1, 1/2) \cap \mathscr C\right) \cap \left((1/2, 2) \cap \mathscr C\right) = (-1, 2) \cap \{1/2\}^\C \cap \mathscr C
+		= (-1, 2) \cap \mathscr C = \mathscr C$~;
+		\item $U \cap V \subseteq (-1, 1/2) \cap (1/2, 2) = \emptyset$ donc $U \cap V = \emptyset$.
+	\end{itemize}
+
+	Puisque la connexité est une propriété topologique, que $[0, 1]$ est connexe et $\mathscr C$ ne l'est pas, on déduit que $\mathscr C$ et $[0, 1]$ ne sont pas homéomorphes.
+	Donc puisque $\theta$ est bijective et continue, on a obligatoirement que $f = \theta^{-1}$ n'est pas continue.
+
+	{\small \color{white}{Notons qu'il était franchement pas facile celui-là~: il a fallu pas mal réfléchir...}}
 	\item Soit $E \subseteq [0, 1]$ quelconque. $f(E) \subseteq \mathscr C$ donc $f(E)$ est $\mathcal L$-négligeable. Or $\mathcal L$ est complète donc $f(E)$ est mesurable.
+
+	Maintenant montrons que $f$ est également Borel-mesurable. Soit $\beta \in [0, 1]$. Distinguons deux cas~:
+	\begin{itemize}
+		\item Si $\beta \in \mathscr C$, alors $f^{-1}([0, \beta)) = [0, \theta(\beta))$ par monotonie de $f$.
+		\item Sinon, notons $\xi \coloneqq \sup\{x \in \mathscr C \st x \leq \beta\} \lneqq \beta$. Alors on a $\mathscr C \cap [0, \beta) = \mathscr C \cap [0, \xi]$,
+		et par le premier cas, $f^{-1}(\mathscr C \cap [0, \beta)) = f^{-1}(\mathscr C \cap ([0, \xi) \cup \{\xi\})) = [0, \theta(\xi)) \cup \{\theta(\xi)\} = [0, \theta(\xi)]$.
+	\end{itemize}
+
+	Dans les deux cas, $f^{-1}(\mathscr C \cap [0, \beta))$ est un borélien (car ouvert ou fermé). Donc $f$ est Borel-mesurable.
+
+	Dès lors, pour $E \subset [0, 1]$, si $f(E)$ est borélien de $\mathscr C$, alors $E = f^{-1}(f(E))$ est un borélien de $[0, 1]$. En particulier, pour $E \subset [0, 1]$,
+	si $E$ n'est pas $\mathcal L$-mesurable, alors $E$ n'est pas un borélien de $[0, 1]$ et $f(E)$ n'est pas un borélien de $\mathscr C$. Pour finir, puisque $\mathscr C$
+	est un borélien de $[0, 1]$, on a $\mathcal B(\mathscr C) = \mathcal B([0, 1]) \cap \mathscr C \subseteq \mathcal B([0, 1])$ (et de manière similaire on trouve
+	$\mathcal B([0, 1]) \subseteq \B$). Les boréliens de $\mathscr C$ sont donc des boréliens de $\R$. On a alors bien le résultat.
 \end{enumerate}
 
 \includegraphics[width=\textwidth]{cantor.eps}
