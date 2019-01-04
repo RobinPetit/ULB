@@ -65,18 +65,25 @@
 \DeclareMathOperator{\Id}{Id}
 \DeclareMathOperator{\supp}{supp}
 
-\newcommand{\showproofs}{}
+\newif\ifshowproofs
+\showproofstrue  % Commenter cette ligne pour générer uniquement les énoncés.
 
+\let\resolution\proof
+\let\endresolution\endproof
 \newenvironment{comm}%
-{\ifthenelse{\isundefined{\showproofs}}%
-	{\expandafter\comment}%
-	{\proof}%
+{\ifshowproofs%
+\resolution%
+\else%
+\expandafter\comment%
+\fi
 }%
-{\ifthenelse{\isundefined{\showproofs}}%
-	{\expandafter\endcomment}%
-	{\endproof}%
+{\ifshowproofs%
+\endresolution%
+\else%
+\expandafter\endcomment%
+\fi%
 }
-%\def\proof{\comm}
+\def\proof{\comm}
 
 \begin{document}
 \maketitle
@@ -753,8 +760,8 @@ $\mathcal L(M_2) = \mathcal L(M_1) = \frac 12\mathcal L(M)$. Donc $\mathcal L(f^
 \begin{ex}
 \begin{enumerate}
 	\item Mq la relation $\sim$ définie sur $[0, 1]$ par $x \sim y \iff x-y \in \Q$ est une relation d'équivalence.
-	\item On note $\hat x \coloneqq \R / \sim$. On pose $F \coloneqq \bigcup_{x \in \R}\rho(\hat x)$ où $\rho(\hat x)$ est un représentant de $\hat x$ ($\rho$ est bien
-	définie par l'axiome du choix). Mq~:
+	\item On note $\hat x$ la classe d'équivalence de $x$ dans $\R / \sim$. Par l'axiome du choix, pour toute classe d'équivalence $\hat x \in \R / \sim$,
+	on peut définir un représentant $\rho(\hat x)$. On pose alors $F \coloneqq \bigcup_{\hat x \in \R/\sim}\rho(\hat x)$. Mq~:
 	\[[0, 1] \subseteq \underbrace {\bigcup_{q \in \Q \cap [-1, 1]}(F+q)}_{\eqqcolon \tilde F} \subseteq [-1, 2].\]
 	\item Mq si $q_1 \neq q_2 \in \Q \cap [-1, 1]$, alors $(F+q_1) \cap (F+q_2) = \emptyset$.
 	\item Mq $F$ n'est pas $\mathcal L$-mesurable par l'absurde.
