@@ -19,6 +19,7 @@
 
 \DeclareMathOperator{\Vect}{Vect}
 \DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\supp}{supp}
 
 \newcommand{\C}{{\mathbb C}}
 \newcommand{\R}{{\mathbb R}}
@@ -34,8 +35,8 @@
 \newcommand{\Id}{\mathrm {Id}}
 
 \newcommand{\TODO}{TODO}
-\newcommand{\unic}{\underline {\textbf{unicité}~:}}
-\newcommand{\exis}{\underline {\textbf{existence}~:}}
+\newcommand{\unic}{{\underline {\textbf{unicité}~:}} }
+\newcommand{\exis}{{\underline {\textbf{existence}~:}} }
 
 \newtheorem{thm}{Théorème}[chapter]
 \newtheorem{prp}[thm]{Proposition}
@@ -67,15 +68,16 @@
 On considère $\R^n$ à $n$ fixé en tant qu'espace de mesure $(\R^n, \mathcal M, \lambda)$ avec $\mathcal M$ la famille des ensembles Lebesgue-mesurables et $\lambda$
 la mesure de Lebesgue sur $\R^n$.
 
-\begin{déf} Pour $f \in L^1(\R^n)$, on définit sa \textit{transformée de Fourier} par~:
+\begin{déf} Pour $u \in L^1(\R^n)$, on définit sa \textit{transformée de Fourier} par~:
 \begin{equation}
-	\hat f : \R^n \to \R : \xi \mapsto \int e^{-i\scpr x\xi}f(x)\dif x.
+	\hat u : \R^n \to \R : \xi \mapsto \int e^{-i\scpr x\xi}u(x)\dif x.
 \end{equation}
 \end{déf}
 
-Cette fonction est bien définie car $x \mapsto e^{-i\scpr x\xi}$ est continue, et $f$ est intégrable, donc $x \mapsto e^{-i\scpr x\xi}f(x)$ est intégrable
+Cette fonction est bien définie car $x \mapsto e^{-i\scpr x\xi}$ est continue (et donc $L^\infty$), et $u$ est intégrable, donc $x \mapsto e^{-i\scpr x\xi}u(x)$ est intégrable
+par Hölder.
 
-\begin{prp} Pour $f \in L^1$, $\hat f$ est continue.
+\begin{prp} Pour $u \in L^1$, $\hat u$ est continue.
 \end{prp}
 
 \begin{proof} Soient $\xi_0 \in \R^n$ et $(h_k)_{k \in \N} \in {\R^n}^\N \tq h_k \xrightarrow[k \to \pinfty]{} 0$.
@@ -86,14 +88,14 @@ Puisque $\abs {e^{-i\scpr x{\xi_0}}e^{-i\scpr x{h_k}}f(x)} = \abs {f(x)}$ et $x 
 \[\hat f(\xi_0 + h_k) \xrightarrow[k \to \pinfty]{} \int e^{-i\scpr x{\xi_0}}f(x)\dif x = \hat f(\xi_0).\]
 \end{proof}
 
-\begin{prp} Pour $f \in L^1 \tq \forall j \in \intint 1n : x_jf \in L^1$~: $\hat f \in C^1$ et~:
+\begin{prp} Soit $u \in L^1$. Si $\forall j \in \intint 1n : x_jf \in L^1$, alors~: $\hat u \in C^1$ et~:
 \begin{equation}\label{eq:pd transformée Fourier}
-	\forall j \in \intint 1n : \pd {\hat f}{\xi_j}\sVert[3]_\xi = \int e^{-i\scpr x\xi}(-ix_j)f(x)\dif x.
+	\forall j \in \intint 1n : \pd {\hat u}{\xi_j}\sVert[3]_\xi = \int e^{-i\scpr x\xi}(-ix_j)u(x)\dif x.
 \end{equation}
 \end{prp}
 
 \begin{proof} Soit $(h_k)_{k \in \N} \in \R^\N \tq h_k \xrightarrow[k \to \pinfty]{} 0$, et prenons $\{e_j\}_{j=1}^n$ la base canonique de $\R^n$.
-\[\frac {\hat f(\xi + h_ke_j) - \hat f(\xi)}{h_k} = \int e^{-i\scpr x\xi}\underbrace {\frac {e^{-ih_kx_j}-1}{h_k}}_{\xrightarrow[k \to \pinfty]{} -ix_j}\dif x.\]
+\[\frac {\hat u(\xi + h_ke_j) - \hat u(\xi)}{h_k} = \int e^{-i\scpr x\xi}\underbrace {\frac {e^{-ih_kx_j}-1}{h_k}}_{\xrightarrow[k \to \pinfty]{} -ix_j}u(x)\dif x.\]
 
 En module~:
 \[\abs {e^{-i\scpr x\xi}\frac {e^{-ih_kx_j}-1}{h_k}f(x)} = \abs {e^{-i\scpr x\xi}}\abs {\frac {e^{-ih_kx_j}-1}{h_k}}\abs {f(x)} \leq C\abs {x_j}\abs {f(x)},\]
@@ -104,32 +106,46 @@ En effet, si $x_j = 0$, alors tout est nul et l'inégalité devient une égalit�
 Dès lors, par le théorème de convergence dominée, la limite passe sous l'intégrale et on a~\eqref{eq:pd transformée Fourier}.
 \end{proof}
 
-\begin{cor} Pour $m \in \N^*$, si $(1+\abs x)^mf \in L^1$, alors $f \in C^m$ et on peut dériver $m$ fois sous le signe.
+\begin{cor} Pour $m \in \N^*$, si $(1+\abs x)^mu \in L^1$, alors $u \in C^m$ et on peut dériver $m$ fois sous le signe:
+\[\partial^\alpha\hat u(\xi) = \int e^{-i\scpr x\xi}(-i)^{\abs \alpha}x^\alpha u(x)\dif x\]
 \end{cor}
 
 \begin{proof} Exercice (récurrence sur $m$).
 \end{proof}
 
 \begin{déf} On définit l'ensemble de Schwartz~:
-\begin{equation}
-	\mathcal S(\R^n) \coloneqq \left\{u \in C^\infty(\R^n) \tq \forall \alpha, \beta \in \N^n : x^\alpha\partial^\beta u \text{ est borné dans } \R^n\right\}.
-\end{equation}
+\begin{equation}\begin{aligned}
+	\mathcal S(\R^n) \coloneqq &\left\{u \in C^\infty(\R^n) \tq \forall \alpha, \beta \in \N^n : x^\alpha\partial^\beta u \text{ est borné dans } \R^n\right\} \\
+		= &\left\{u \in C^\infty(\R^n) \tq \forall \alpha, \beta \in \N^n : x^\alpha\partial^\beta u \in L^\infty(\R^n)\right\}.
+\end{aligned}\end{equation}
 \end{déf}
+
+Dans l'idée, $\mathcal S$ est l'ensemble dont toutes les dérivées décroissent plus vite vers 0 que tout polynôme.
 
 \begin{prp} $\mathcal S(\R^n)$ est un $\R$-espace vectoriel.
 \end{prp}
 
-\begin{proof} \TODO
+\begin{proof} Immédiat par le fait que $C^\infty(\R^n)$ et $L^\infty(\R^n)$ sont des $\R$-evs.
 \end{proof}
 
-\begin{prp} $C^\infty_0(\R^n) \subseteq \mathcal S(\R^n) \subseteq \bigcap_{1 \leq p < \pinfty} L^p(\R^n)$.
+\begin{prp} Si $C^\infty_0(\R^n) = C^\infty_c(\R^n)$ désigne l'ensemble des fonctions $C^\infty$ à support compact, alors~:
+\[C^\infty_0(\R^n) \subseteq \mathcal S(\R^n) \subseteq \bigcap_{1 \leq p \leq \pinfty} L^p(\R^n).\]
 \end{prp}
 
-\begin{proof} Pour $u \in \mathcal S$ et $\pinfty > p \geq 1$~:
-\[\int \abs u^p\dif x = \int \Big(\underbrace{\abs u(1+\abs x)^N}_{\text{borné pour tout $N$}}\Big)^p(1+\abs x)^{-Np}\dif x
-	\leq \int (C_N)^p\underbrace {(1+\abs x)^{-Np}}_{\text{intégrable pour $Np > n$}}\dif x.\]
+\begin{proof}~
+\begin{itemize}
+	\item[$(i)$] Pour $u \in \mathcal S$ et $\pinfty > p \geq 1$~:
+	\[\int \abs u^p\dif x = \int \Big(\underbrace{\abs u(1+\abs x)^N}_{\text{borné pour tout $N$}}\Big)^p(1+\abs x)^{-Np}\dif x
+		\leq \int (C_N)^p\underbrace {(1+\abs x)^{-Np}}_{\text{intégrable pour $Np > n$}}\dif x.\]
 
-Dès lors, pour $N$ suffisamment grand ($Np>n$), on a $\int \abs u\dif x \leq \cste$
+	Dès lors, pour $N$ suffisamment grand ($Np>n$), on a $\int \abs u\dif x \leq \cste$
+
+	Le cas $p = \pinfty$ vient uniquement du fait que pour $u \in \mathcal S$, pour $\alpha = \beta = (0, \ldots, 0) \in \N^n$:
+	\[u = x^\alpha\partial^\beta u \in L^\infty.\]
+
+	\item[$(ii)$] Soit $u \in C^\infty_0(\R^n)$. Pour $\alpha, \beta \in \N^n$~: $x^\alpha\partial^\beta u \neq 0 \subseteq \supp u$ compact. Par Heine-Cantor,
+	$u$ est uniformément continue sur $\supp u$.
+\end{itemize}
 \end{proof}
 
 \begin{prp} Pour $u \in \mathcal S$ et $\alpha, \beta \in \N^n$, alors~: $x^\alpha\partial^\beta u \in \mathcal S$.
@@ -442,6 +458,9 @@ ci-dessus, on trouve que $u \in C^\infty(\R^n)$. On peut alors vérifier que la 
 Sur un produit scalaire, on peut définir une norme $\norm x \coloneqq \scpr xx^{1/2}$.
 \end{déf}
 
+\begin{rmq} Une forme hermitienne définie positive est donc anti-linéaire pour le 2e paramètre : $\scpr x{\lambda y} = \overline \lambda \scpr xy$.
+\end{rmq}
+
 \begin{prp} $\norm \cdot : H \to \R^+$ est une norme.
 \end{prp}
 
@@ -449,9 +468,12 @@ Sur un produit scalaire, on peut définir une norme $\norm x \coloneqq \scpr xx^
 \[\forall x, y \in H : \abs {\scpr xy} \leq \norm x\norm y.\]
 \end{prp}
 
-\begin{proof} Soit $\alpha \in \C \tq \abs \alpha = 1$ et $\alpha\scpr xy \in \R^+$ ($\alpha\scpr xy = \abs {\scpr xy}$). Soit $r \in \R$.
+\begin{proof} Soit $\alpha \in \C \tq \abs \alpha = 1$ et $\alpha\scpr yx \in \R^+$ (i.e. $\alpha\scpr yx = \abs {\scpr xy}$). Soit $r \in \R$.
 
-\[0 \leq \scpr {x-r\alpha y}{x-r\alpha y} = \scpr xx - r\alpha\scpr yx - r\overline \alpha\scpr xy + r^2\scpr yy = A - 2Br + Cr^2,\]
+\begin{align*}
+	0 &\leq \scpr {x-r\alpha y}{x-r\alpha y} = \scpr xx - r\alpha\scpr yx - r\overline \alpha\scpr xy + r^2\scpr yy \\
+		&= \scpr xx - r\underbrace {\alpha \scpr yx}_{= \abs {\scpr yx}} - r\underbrace {\overline \alpha \scpr xy}_{= \abs {\scpr yx}} + r^2\underbrace {\alpha\overline\alpha}_{= \abs \alpha = 1} \scpr yy = A - 2Br + Cr^2,
+\end{align*}
 pour $A = \scpr xx \in \R^+$, $B = \alpha\scpr xy = \abs {\scpr xy} \in \R^+$, $C = \scpr yy \in \R^+$.
 
 Si $C = 0$, alors $B = 0$, et donc $\scpr yx = 0$ et Cauchy-Schwartz est vérifié.
@@ -475,8 +497,9 @@ Quelques exemples d'espaces de Hilbert~:
 \begin{itemize}
 	\item[(0)] $\C^n$ pour $\scpr xy \coloneqq \sum_{j=1}^nx_j\overline {y_j}$~;
 	\item[(1)] Pour $(\Omega, \mathcal A, \mu)$ un espace de mesure, $L^2(\Omega, \mathcal A, \mu)$ muni du produit scalaire $\scpr fg \coloneqq \int f\overline g\dif\mu$~;
-	\item[(2)] Pour $(\N, \mathcal P(\N), \abs \cdot)$ comme espace de mesure, on a l'équivalent dénombrable de l'exemple (0)~: $\int f\overline g = \sum_{k \geq 1}f_k\overline {g_k}$.
-	On note $\ell^2(\N) \coloneqq L^2(\N, \mathcal P(\N), \abs \cdot)$.
+	\item[(2)] Pour $(\N, \mathcal P(\N), \#)$ comme espace de mesure, on a l'équivalent dénombrable de l'exemple (0)~:
+	\[\scpr fg_{\ell^2} \coloneqq \int f\overline g\dif\# = \sum_{k \geq 1}f_k\overline {g_k}.\]
+	On note $\ell^2(\N) \coloneqq L^2(\N, \mathcal P(\N), \#)$.
 \end{itemize}
 
 Un dernière exemple bien moins trivial~: les espaces de Sobolev.
@@ -508,7 +531,7 @@ Soient $u, v \in H^s$.
 
 Finalement, pour $u \in H^s$~:
 \[\scpr uu_s = (2\pi)^{-n}\int\underbrace {\abs {\mathbb Fu}^2}_{\geq 0}\underbrace {(1+\abs\xi)^s}_{\geq 0}\dif\xi \geq 0,\]
-et de plus, il est évident que $\scpr uu_s = 0 \iff u = 0$.
+et de plus, il est évident que $\scpr uu_s = 0 \iff u = 0$ puisque $\hat u = 0 \iff u = 0$.
 \end{proof}
 
 Par linéarité de Fourier, $H^s(\R^n)$ est un espace vectoriel, et de plus il est normé par le produit scalaire défini ci-dessus. Montrons alors que c'est un espace ce Hilbert.
@@ -519,7 +542,7 @@ et $\mathbb F$ est une bijection sur $L^2$. De plus, $u \in H^s$ car $V = (1+\ab
 on a que $H^s$ est complet.
 
 Pour un contre-exemple, on a $C^\infty_0(\R^n)$ muni du produit scalaire $\scpr fg \coloneqq \int f\overline g\dx$ n'est pas un Hilbert. En effet, pour $f \in L^2 \setminus C^\infty_0$,
-par densité de $D^\infty_0$ dans $L^2$, $\exists (f_k)_{k \in \N} \in {C^\infty_0}^\N \tq f_k \xrightarrow[k \to \pinfty]{L^2} f$. De plus, $(f_k)$ est de Cauchy dans $C^\infty_0$.
+par densité de $C^\infty_0$ dans $L^2$, $\exists (f_k)_{k \in \N} \in {C^\infty_0}^\N \tq f_k \xrightarrow[k \to \pinfty]{L^2} f$. De plus, $(f_k)$ est de Cauchy dans $C^\infty_0$.
 Par l'absurde, si $\exists g \in C^\infty_0 \tq f_k \xrightarrow[k \to \pinfty]{L^2} g$, par unicité de la limite, $g=f$, or $f \not \in C^\infty_0$.
 
 À partir d'ici, $H$ désigne un espace de Hilbert quelconque.
@@ -547,8 +570,8 @@ Par l'absurde, si $\exists g \in C^\infty_0 \tq f_k \xrightarrow[k \to \pinfty]{
 \end{prp}
 
 \begin{proof} Pour $x, y \in \overline F$, il existe $(x_k), (y_k) \in F^\N \tq x_k \xrightarrow[k \to \pinfty]{} x$ et $y_k \xrightarrow[k \to \pinfty]{} y$.
-Donc $\underbrace {x_k+y_k}_{\in F} \xrightarrow[k \to \pinfty]{} x+y$.
 
+Donc $F \ni x_k+y_k \xrightarrow[k \to \pinfty]{} x+y$.
 De plus, pour $\lambda \in \C$, $\underbrace {\lambda x_k}_{\in F} \xrightarrow[k \to \pinfty]{} \lambda x \in \overline F$.
 \end{proof}
 
@@ -574,7 +597,7 @@ $M^\perp \coloneqq \{y \in H \tq \forall x \in M : \scpr xy = 0\} = \bigcap_{x \
 \begin{prp} Pour $x \in H$, $x^\perp \leq H$, et $x^\perp$ est fermé.
 \end{prp}
 
-\begin{proof} À $x \in H$ fixé, on remarque que $x^\perp = f_2^{-1}(\{0\})$, or $f_2$ est continue. Donc $x^\perp$ est fermé. Vérifier que $x^\perp$ est un sous-e.v. est trivial.
+\begin{proof} À $x \in H$ fixé, on remarque que $x^\perp = f_1^{-1}(\{0\})$, or $f_2$ est continue. Donc $x^\perp$ est fermé. Vérifier que $x^\perp$ est un sous-e.v. est trivial.
 \end{proof}
 
 \begin{cor} Pour $M \leq H$, $M^\perp$ est un sous-e.v. fermé de $H$.
@@ -585,30 +608,30 @@ Ce résultat découle directement du fait que $M^\perp$ est une intersection d'e
 \begin{déf} $E \subseteq H$ est dit \textit{convexe} lorsque $\forall x, y \in E : \forall t \in [0, 1] : (1-t)x + ty \in E$.
 \end{déf}
 
-\begin{ex}
+\begin{ex}~
 \begin{itemize}
 	\item tout sous-e.v. de $H$ est convexe~;
 	\item toute boule (ouverte ou fermée) dans $H$ est convexe~;
 	\item pour $\Omega \subseteq \R^n, u \in L^2(\Omega)$, $E = \{v \in L^2 \tq u=v \text{ sur } \Omega\}$ est convexe.
 \end{itemize}
 
-Montrons également que ce dernier ensemble est fermé dans $L^2$. Soit $f \in \overline E$. Il existe $(f_k)_{k \in \N} \in E^\N \tq f_k \xrightarrow[k \to \pinfty]{L^2} f$.
-\[\int_\Omega \abs {u-f}^2\dx = \int_\Omega\abs {f_k-f} \leq \int_{\R^n}\abs {f_k-f}^2\dx \xrightarrow[k \to \pinfty]{} 0.\]
+Montrons également que $E$ est fermé dans $L^2$. Soit $f \in \overline E$. Il existe $(f_k)_{k \in \N} \in E^\N \tq f_k \xrightarrow[k \to \pinfty]{L^2} f$.
+\[\int_\Omega \abs {u-f}^2\dx = \int_\Omega\abs {f_k-f}\dif x \leq \int_{\R^n}\abs {f_k-f}^2\dx \xrightarrow[k \to \pinfty]{} 0.\]
 \end{ex}
 
-\begin{thm} Soit $E \neq \emptyset$ convexe fermé dans $H$. Alors $\exists! x \in E \tq \norm x = \min_{z \in E}\norm z = \in_{z \in E}\norm z \eqqcolon \delta$.
+\begin{thm} Soit $E \neq \emptyset$ convexe fermé dans $H$. Alors $\exists! x \in E \tq \norm x = \min_{z \in E}\norm z = \inf_{z \in E}\norm z \eqqcolon \delta$.
 \end{thm}
 
 \begin{proof} \unic soient $x, y \in E \tq \norm x = \norm y = \delta$. Par la formule du parallélogramme~:
-\[\norm {x+y}^2 = \norm {x-y}^2 = 2(\norm x^2+\norm y^2).\]
+\[\norm {x+y}^2 + \norm {x-y}^2 = 2(\norm x^2+\norm y^2).\]
 
-Par convexité de $E$, $(x+y)/2 \in E$, donc $\norm {(x+y)/2} \geq \delta$. En multipliant de part et d'autre par $1/4$ au préalable, on trouve alors~:
-\[\norm {x-y}^2 \leq 2(\norm x^2 + \norm y^2) - 4\delta^2 = 0.\]
+Par convexité de $E$, $\frac 12(x+y) \in E$. Donc $\norm {\frac 12(x+y)} \geq \delta$. On trouve alors~:
+\[\norm {x-y}^2 \leq 2(\underbrace {\norm x^2 + \norm y^2}_{=2\delta^2}) - 4\delta^2 = 0.\]
 
 On en déduit $\norm {x-y} = 0$, i.e. $x=y$.
 
-\exis Soit $(y_k)_{k \in \N} \in E^\N \tq y_k \xrightarrow[k \to \pinfty]{} \delta$ qui existe par définition de l'infimum.
-\[\norm {y_k - y_m}^2 \leq 2(\underbrace {\norm {y_k}^2+\norm {y_m}^2)}_{\to 2\delta^2} - 4\delta^2.\]
+\exis Soit $(y_k)_{k \in \N} \in E^\N \tq \norm {y_k} \xrightarrow[k \to \pinfty]{} \delta$ qui existe par définition de l'infimum. Par la règle du parallélogramme~:
+\[\norm {y_k - y_m}^2 \leq 2(\underbrace {\norm {y_k}^2+\norm {y_m}^2)}_{\xrightarrow[k, m \to \pinfty]{} 2\delta^2} - 4\delta^2 \xrightarrow[k, m \to \pinfty]{} 0.\]
 Donc $(y_k)$ est de Cauchy. Par complétude de $H$, $\exists x_0 \in H \tq y_k \xrightarrow[k \to \pinfty]{} x_0$, et par fermeture de $E$, $x_0 \in E$.
 
 De plus, par continuité de la norme, $\norm {y_k} \xrightarrow[k \to \pinfty]{} \norm {x_0}$, et par unicité de la limite, $\norm {x_0} = \delta$.
@@ -635,7 +658,7 @@ il existe un unique $u^* \in E$ qui minimise la norme~: $u^* = u$ sur $\Omega$ e
 
  	\exis $x+M$ est convexe (trivial par le fait que $M \leq H$). Montrons que $x+M$ est fermé. Soit $u \in \overline {x+M}$.
 	Il existe $(u_k)_{k \in \N} \in {(x+M)^\N} \tq u_k \xrightarrow[k \to \pinfty]{} u$. $\forall k \in \N : x+M \ni u_k = x + y_k$. On en déduit
-	$y_k \xrightarrow[k \to \pinfty] u-x$. Par fermeture de $M$, on a $u-x \in M$, et donc $u \in x+M$ (i.e.$ x+M$ est fermé).
+	$y_k \xrightarrow[k \to \pinfty]{} u-x$. Par fermeture de $M$, on a $u-x \in M$, et donc $u \in x+M$ (i.e. $x+M$ est fermé).
 
 	Soit $z \in x+M$ l'élément qui minimise la norme. On pose $y \coloneqq x-z \in M$. Montrons alors que $z \in x+M$. Soit $w \in M$~; WLOG, supposons $\norm w = 1$.
 	Puisque $z \in x+M$, $\forall \alpha \in \C : z-\alpha w \in x+M$. Donc~:
