@@ -1,23 +1,23 @@
 \documentclass{report}
 
-\usepackage[french]{babel}
 \usepackage{commath}
-\usepackage{palatino, eulervm}
+
+\usepackage[french]{babel}
+\usepackage{palatino, eulervm}  % commenter pour rétablir la police usuelle
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{fullpage}
-\usepackage{hyperref}
 
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amsthm}
 \usepackage{mathtools}
-\usepackage{stmaryrd}
 
 \usepackage[parfill]{parskip}
 
 \DeclareMathOperator{\Vect}{Vect}
+\DeclareMathOperator{\Span}{Span}
 \DeclareMathOperator{\Ker}{Ker}
 \DeclareMathOperator{\supp}{supp}
 
@@ -29,10 +29,12 @@
 \newcommand{\tq}{\text{ t.q. }}
 \newcommand{\pinfty}{{+\infty}}
 \newcommand{\minfty}{{-\infty}}
-\newcommand{\intint}[2]{\left\llbracket#1, #2\right\rrbracket}
+\newcommand{\intint}[2]{{[#1, #2]}} %{\left[#1 \dot \dot #2\right]}  %{\left\llbracket#1, #2\right\rrbracket}
 \newcommand{\cste}{\text{c}^{\text{ste}}}
 \newcommand{\dx}{\dif x}
 \newcommand{\Id}{\mathrm {Id}}
+
+\newcommand{\restr}[2]{\left.#1\vphantom{\big|}\right|_{#2}}
 
 \newcommand{\TODO}{TODO}
 \newcommand{\unic}{{\underline {\textbf{unicité}~:}} }
@@ -42,7 +44,7 @@
 \newtheorem{prp}[thm]{Proposition}
 \newtheorem{cor}[thm]{Corollaire}
 \newtheorem{lem}[thm]{Lemme}
-\addto\captionsfrench{\renewcommand\proofname{\underline{Démonstration}}}
+%\addto\captionsfrench{\renewcommand\proofname{\underline{Démonstration}}}
 \theoremstyle{definition}
 \newtheorem{déf}[thm]{Définition}
 \theoremstyle{remark}
@@ -666,8 +668,8 @@ il existe un unique $u^* \in E$ qui minimise la norme~: $u^* = u$ sur $\Omega$ e
 
 	$0 = 2\Re\alpha\scpr wz - \abs\alpha^2$. En particulier, pour $\alpha = \scpr zw$~: $0 = \norm {\scpr zw}^2$, donc $\scpr zw = 0$. Dès lors $z \in M^\perp$.
 
-	\item Soit $Y \in M$. Montrons que $\norm {x-Y} \geq \norm {x-y} = \norm z$~:
-	\[\norm {x-Y} = \norm {y+z-Y} = \norm {(y-Y) + z} = \norm {y-Y} + \norm z \geq \norm z.\]
+	\item Soit $Y \in M$. Montrons que $\norm {x-Y} \geq \norm {x-y} = \norm z$. Par Pythagore~:
+	\[\norm {x-Y}^2 = \norm {y+z-Y}^2 = \norm {(y-Y) + z}^2 = \norm {y-Y}^2 + \norm z^2 \geq \norm z^2.\]
 
 	Idem pour $Z \in M^\perp$~: $\norm {x-Z} \geq \norm {x-z} = y$.
 
@@ -682,7 +684,7 @@ il existe un unique $u^* \in E$ qui minimise la norme~: $u^* = u$ sur $\Omega$ e
 \end{enumerate}
 \end{proof}
 
-\begin{cor} Si $M \leq H$, avec $M \neq H$, il existe $y \in H \tq y \perp M$.
+\begin{cor} Si $M \leq H$, avec $M \neq H$, il existe $y \in H \setminus \{0\} \tq y \perp M$.
 \end{cor}
 
 \begin{proof} Pour $x \in H \setminus M$, $x = Px+Qx$, où $Qx \neq 0$, et $Qx \perp M$.
@@ -706,14 +708,14 @@ Or $0 = \scpr xz = \scpr {y+z}z = \scpr yz + \norm z^2$, et $\scpr yz = 0$ par d
 \begin{proof} \unic pour $y_1, y_2 \in H \tq \forall x \in H : \scpr x{y_1} = \scpr x{y_2}$, on a $\scpr x{y_1-y_2} = 0$, donc $y_1-y_2 \in H^\perp = \{0\}$, i.e. $y_1=y_2$.
 
 \exis si $L \equiv 0$, alors $y=0$. Supposons alors que $L$ n'est pas identiquement nulle. $\Ker L \lneqq H$ et est fermé par continuité de $L$. Dès lors, il existe $z \in H$,
-$z \neq 0 \tq z \perp \Ker L$. WLOG, supposons $\norm z = 1$. Posons $y \coloneqq \overline {Lz}z$ et $u \coloneqq (Lx)z - (Lz)x$. Calculons~:
+$z \neq 0 \tq z \perp \Ker L$. WLOG, supposons $\norm z = 1$. Posons $y \coloneqq (\overline {Lz})z$ et $u \coloneqq (Lx)z - (Lz)x$. Calculons~:
 \[Lu = (Lx)Lz - (Lz)Lx = 0,\]
-donc $u \in \Ker L$, et donc $0 = \scpr uz = (Lx)\scpr zz - (Lz)\scpr xz = Lx-(Lz)\scpr xz$. Dès lors, $Lx = (Lx)\scpr xz = \scpr xy$.
+donc $u \in \Ker L$, et donc $0 = \scpr uz = (Lx)\scpr zz - (Lz)\scpr xz = Lx-(Lz)\scpr xz$. Dès lors, $Lx = (Lz)\scpr xz = \scpr xy$.
 \end{proof}
 
 \section{Systèmes orthonormaux}
 
-\begin{déf} Pour $V$ un e.v. et $S \subseteq V$, on note $\Vect S$ l'e.v. engendré par $S$.
+\begin{déf} Pour $V$ un e.v. et $S \subseteq V$, on note $\Vect S = \Span S$ l'e.v. engendré par $S$.
 
 $(e_\alpha)_{\alpha \in A} \subset V$ est appelé \textit{orthonormal} lorsque $\forall \alpha, \beta \in A : \scpr {e_\alpha}{e_\beta} = \delta_{\alpha,\beta}$.
 
@@ -725,16 +727,127 @@ Les $\hat x(\alpha)$ sont les coefficients de Fourier relativement au système $
 \begin{ex} Sur $L^2(\R^n)$, les $(e_\alpha)_{\alpha \in \Z}$ sont les $e_\alpha : [0, 2\pi) \to \C : t \mapsto \frac {e^{i\alpha t}}{\sqrt {2\pi}}$.
 \end{ex}
 
-\begin{thm} Pour $H$ un espace de Hilbert et $(e_\alpha)_{\alpha \in A}$ un système orthonormal, $F \subset A$ fini, et $M_F \coloneqq \Vect {e_\alpha}_{\alpha \in F}$, on a~:
+\begin{thm} Pour $H$ un espace de Hilbert et $(e_\alpha)_{\alpha \in A}$ un système orthonormal, $F \subset A$ fini, et $M_F \coloneqq \Vect {\{e_\alpha\}}_{\alpha \in F}$, on a~:
 \begin{enumerate}
-	\item si $\varphi : A \to \C$ est nulle sur $A \setminus F$, pour $y = \sum_{\alpha \in F}\varpi(\alpha)e_\alpha$, alors~:
+	\item si $\varphi : A \to \C$ est nulle sur $A \setminus F$, pour $y = \sum_{\alpha \in F}\varphi(\alpha)e_\alpha$, alors~:
 	\[\forall \alpha \in A : \varphi(\alpha) = \hat y(\alpha).\]
-	De plus, $\norm y^2 = \sum_{\alpha \in F}\abs {\varphi(\alpha)}$.
+	De plus, $\norm y^2 = \sum_{\alpha \in F}\abs {\varphi(\alpha)}^2$.
 
 	\item Si $x \in H$, $s_F(x) \coloneqq \sum_{\alpha \in F}\hat x(\alpha)e_\alpha \in M_F$. Si $s \in M_F \setminus \{s_F(x)\}$, alors~:
 	\[\norm {x-s_F(x)} \lneqq \norm {x-s}.\]
 
-	De plus~: $\sum_{\alpha \in F}\abs {\hat x(\alpha)}^2 \leq \norm x^2$.
+	De plus~: $\sum_{\alpha \in F}\abs {\hat x(\alpha)}^2 \leq \norm x^2$ (inégalité de Bessel).
+\end{enumerate}
+\end{thm}
+
+\begin{proof}~
+\begin{enumerate}
+	\item $\hat y(\alpha) = \scpr y{e_\alpha} = \sum_{\beta \in F}\varphi(\beta)\scpr {e_\beta}{e_\alpha} = \varphi(\alpha)$ et~:
+	\[\norm y^2 = \norm {\sum_{\beta \in F}\varphi(\beta)e_\beta}^2 \stackrel {\text{Pythagore}}= \sum_{\beta \in F}\abs {\varphi(\beta)}^2\norm {e_\beta}^2 = \sum_{\beta \in F}\abs {\varphi(\beta)}^2.\]
+	\item Soit $s \in M_F$. $\forall \alpha \in F : x-s_F(x) \perp e_\alpha$ et $x-s_F(x) \perp s_F(x)-s \in M_F$. En effet~:
+	\[\scpr {x-s_F(x)}{e_\alpha} = \scpr x{e_\alpha} - \scpr {s_F(x)}{e_\alpha} = \hat x(\alpha) - \hat x(\alpha) = 0.\]
+
+	Dès lors~:
+	\[x-s = (x - s_F(x)) + (s_F(x) - s),\]
+	et donc, par Pythagore~:
+	\begin{align}\label{eq:x-s in norm}
+		\norm {x-s}^2 = \norm {x-s_F(x)}^2 + \norm {s_F(x) - s}^2.
+	\end{align}
+
+	Cette norme est minimisée (strictement) en $s = s_F(x)$ et donc~:
+	\[\norm {x-s_F(x)} \lneqq \norm {x-s}\]
+	si $s \neq s_F(x)$. Ensuite~:
+	\[\norm {s_F(x)}^2 \leq \norm {s_F(x)}^2 + \norm {x-s_F(x)}^2.\]
+	Par l'équation~\ref{eq:x-s in norm}~: si $s = 0$~:
+	\[\norm {s_F(x)}^2 \leq \norm {s_F(x)}^2 \leq \norm {s_F(x)}^2 + \norm {x-s_F(x)}^2 = \norm x^2.\]
+	Or~:
+	\[\norm {s_F(x)}^2 = \sum_{\alpha \in F}\abs {\hat x(\alpha)}^2.\]
+	Dès lors $\norm {s_F(x)}^2 \leq \norm x^2$.
+\end{enumerate}
+\end{proof}
+
+\begin{rmq} Sur $A$, on a un espace mesuré canonique~: $(A, \mathcal P(A), \#)$ pour lequel on adopte les notations~:
+\[\forall B \in \mathcal P(A) : \int_B\varphi\dif\# \eqqcolon \sum_{\alpha \in B}\varphi(\alpha).\]
+
+Remarquons également que par définition de l'intégrale, si $\varphi : A \to [0, \pinfty]$~:
+\[\sum_{\alpha \in A}\varphi(\alpha) = \sup_{\stackrel {B \subset A}{\abs B \lneqq \pinfty}}\sum_{\alpha \in B}\varphi(\alpha).\]
+
+Et si $\varphi \in \ell^1(A)$ et $\varphi \geq 0$, alors pour $A_k = \{\varphi \geq k^{-1}\}$ ($k \geq 1$), on a $\abs {A_k} \lneqq \pinfty$ puisque $\varphi \in \ell^1(A)$.
+Or $\bigcup_{k \geq 1}A_k = \{\varphi \gneqq 0\}$, et donc $\{\varphi \neq 0\}$ est au plus dénombrable.
+
+Dans le cas général, pour $\varphi : A \to \C$, alors $(\Re \varphi)^\pm$ et $(\Im \varphi)^\pm$ sont non-nulles sur un ensemble au plus dénombrable, et donc $\{\varphi \neq 0\}$
+est au plus dénombrable.
+\end{rmq}
+
+\begin{lem} Pour $(\Omega, \mathcal F, \mu)$ un espace mesuré, l'ensemble des fonctions simples mesurables nulles hors d'un ensemble de mesure finie est dense dans
+$L^p(\Omega, \mathcal F, \mu)$ pour $p \in [1, \pinfty)$.
+\end{lem}
+
+\begin{lem}\label{lem:isométrie dense} Soient $X$ un espace métrique complet, $Y$ un espace métrique, et $X_0 \subset X$, un sous-ensemble dense.
+Si $f \in C^0(X, Y)$ telle que $\restr f{X_0}$  une isométrie et $f(X_0)$ est dense dans $Y$, alors $f$ est surjective et est une isométrie.
+\end{lem}
+
+\begin{proof} Fixons $x, y \in X$. Il existe $(x_k)_{k \geq 0}, (y_k)_{k \geq 0} \in {X_0}^\N$ telles que $x_k \xrightarrow[k \to \pinfty]{} x$ et $y_k \xrightarrow[k \to \pinfty]{} y$.
+Pour $k \geq 0$~:
+\[d(x_k, y_k) \xrightarrow[k \to \pinfty]{} d(x, y)\]
+car la distance est continue sur un espace métrique. De plus~:
+\[d(x_k, y_k) = d\left(f(x_k), f(y_k)\right) \xrightarrow[k \to \pinfty]{} d\left(f(x), f(y)\right),\]
+à nouveau par continuité de la métrique, et par continuité de $f$. Donc par unicité de la limite, on a $d(x, y) = d(f(x), f(y))$, et donc $f$ est une isométrie.
+
+Il reste à montrer que $f$ est surjective. Soit $y \in Y$. $f(X_0)$ est dense dans $Y$, et donc par continuité de $f$, on sait~: $\exists (x_k)_{k \geq 0} \in {X_0}^\N$ telle que
+$f(x_k) \xrightarrow[k \to \pinfty]{} y$. $(f(x_k))_k$ est de Cauchy dans $Y$, et puisque $f$ est une isométrie, $(x_k)_k$ est de Cauchy dans $X$. Par complétude, on sait
+que $\exists x \in X \tq x_k \xrightarrow[k \to \pinfty]{} x$.
+
+Finalement, par continuité de $f$~: $f(x_k) \xrightarrow[k \to \pinfty]{} f(x)$, et par construction $f(x_k) \xrightarrow[k \to \pinfty]{} y$. Par unicité de la limite dans les
+espaces métriques, on a $f(x) = y$, et donc $y$ admet une préimage par $f$.
+\end{proof}
+
+\begin{thm} Soit $(e_\alpha)_{\alpha \in A}$, un système orthonormal dans $H$. Soit $P = \Span \{e_\alpha\}_{\alpha \in A}$. Alors~:
+\begin{enumerate}
+	\item $\forall x \in H : \sum_{\alpha \in A}\abs {\hat x(\alpha)}^2 \leq \norm x^2 \qquad$ (inégalité de Bessel généralisée)~;
+	\item $f : H \to \ell^2(A) : x \mapsto \hat x$ est linéaire, continue, et surjective~;
+	\item $\restr f{\overline P}$ est une isométrie surjective $\overline P \to \ell^2(A)$.
+\end{enumerate}
+\end{thm}
+
+\begin{proof}~
+\begin{enumerate}
+	\item Pour tout $F \subset A$ fini, on a~:
+	\[\sum_{\alpha \in F}\abs {\hat x(\alpha)}^2 \leq \norm x^2.\]
+	Or par la remarque précédente~:
+	\[\sum_{\alpha \in A}\abs {\hat x(\alpha)}^2 = \sup_{\stackrel {B \subset A}{\abs B \lneqq \pinfty}}\sum_{\alpha \in B}\abs {\hat x(\alpha)}^2 \leq \norm x^2\]
+	par passage au supremum (à la limite) et par l'inégalité de Bessel finie.
+	\item Soit $x \in H$. Puisque $\norm x^2$, par l'inégalité de Bessel, on sait $\sum_{\alpha \in A}\abs {\hat x(\alpha)}^2 \lneqq \pinfty$, i.e. $\hat x \in \ell^2(A)$.
+
+	$f$ est linéaire par linéarité de $x \mapsto \scpr x{e_\alpha}$ pour tout $\alpha \in A$.
+
+	$f$ est continue car Lipschitzienne~:
+	\[\norm {f(x)-f(y)}_{\ell^2(A)}^2 = \sum_{\alpha \in A}\abs {\widehat {x-y}(\alpha)}^2 \leq \norm {x-y}_H^2.\]
+
+	La surjectivité vient du point 3~: si $\restr f{\overline P}$ est surjective, alors en particulier $f$ est surjective.
+	\item Pour $X = \overline P$, $X_0 = P$, $Y = \ell^2(A)$, remarquons que~:
+	\[\underbrace {\left\{\chi \in \ell^2(A) \tq \chi(\alpha) = 0 \text{ si } \alpha \not \in F \subset A \text{ fini }\right\}}_{\text{dense dans } \ell^2(A)} \subset f(P).\]
+
+	De plus $\restr fP$ est une isométrie. En effet, pour $x \in P$, on sait qu'il existe $F \subset A$ fini et $\lambda_\alpha \in \C$ ($\alpha \in F$) tels que
+	$x = \sum_{\alpha \in F}\lambda_\alpha e_\alpha$. Dès lors~:
+	\[\norm {f(x)}_{\ell^2(A)}^2 = \norm x_{\ell^2(A)}^2 = \sum_{\alpha \in A}\abs {\hat x(\alpha)}^2 = \sum_{\alpha \in F}\abs {\hat x(\alpha)}^2
+	= \sum_{\alpha \in A}\abs {\sum_{\beta \in F}\lambda_\beta \scpr {e_\beta}{e_\alpha}}^2 = \sum_{\alpha \in F}\abs {\lambda_\alpha}^2,\]
+	et~:
+	\[\norm x_H^2 = \scpr xx_H = \scpr {\sum_{\alpha \in F}\lambda_\alpha e_\alpha}{\sum_{\beta \in F}\lambda_\beta e_\beta}
+	= \sum_{\alpha \in F}\sum_{\beta \in F}\lambda_\alpha\overline {\lambda_\beta}\scpr {e_\alpha}{e_\beta} = \sum_{\alpha \in F}\abs {\lambda_\alpha}^2.\]
+
+	Finalement, puisque $\overline P$ est complet (car sous-ensemble fermé de $H$), on peut ensuite appliquer le lemme~\ref{lem:isométrie dense} qui affirme que
+	$\restr f{\overline P}$ est une isométrie surjective sur $Y$.
+\end{enumerate}
+\end{proof}
+
+\begin{thm} Soit $(e_\alpha)_{\alpha \in A}$ un système orthonormal dans $H$. Alors les conditions suivantes sont équivalentes~:
+\begin{enumerate}
+	\item $(e_\alpha)_\alpha$ est un système orthonormal maximal.
+	\item $\Span \{e_\alpha\}_\alpha$ est dense dans $H$.
+	\item $\forall x \in H : \sum_{\alpha \in A}\abs {\hat x(\alpha)}^2 = \norm x^2$.
+	\item $\forall x, y \in H : \sum_{\alpha \in A}\hat x(\alpha)\overline {\hat y(\alpha)} = \scpr xy \qquad$ (Identité de Parseval).
+	\item $\forall x \in H : \forall \varepsilon > 0 : \exists A_0 \subset A$ fini tel que $\forall A_1 \supset A_0$ : si $A_1$ est fini, alors $\norm {x - \sum_{\alpha \in A_1}\hat x(\alpha)e_\alpha} \leq \varepsilon$.
 \end{enumerate}
 \end{thm}
 
