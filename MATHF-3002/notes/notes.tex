@@ -2,11 +2,12 @@
 
 \usepackage{commath}
 
-\usepackage[french]{babel}
-\usepackage{palatino, eulervm}  % commenter pour rétablir la police usuelle
+%\usepackage[french]{babel}
+%\usepackage{palatino, eulervm}  % commenter pour rétablir la police usuelle
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{fullpage}
+\usepackage{hyperref}
 
 \usepackage{amssymb}
 \usepackage{amsmath}
@@ -23,13 +24,15 @@
 
 \newcommand{\C}{{\mathbb C}}
 \newcommand{\R}{{\mathbb R}}
+\newcommand{\Q}{{\mathbb Q}}
 \newcommand{\Z}{{\mathbb Z}}
 \newcommand{\N}{{\mathbb N}}
 \newcommand{\scpr}[2]{\left\langle#1, #2\right\rangle}
 \newcommand{\tq}{\text{ t.q. }}
+\newcommand{\st}{\tq}
 \newcommand{\pinfty}{{+\infty}}
 \newcommand{\minfty}{{-\infty}}
-\newcommand{\intint}[2]{{[#1, #2]}} %{\left[#1 \dot \dot #2\right]}  %{\left\llbracket#1, #2\right\rrbracket}
+\newcommand{\intint}[2]{{[[#1, #2]]}}
 \newcommand{\cste}{\text{c}^{\text{ste}}}
 \newcommand{\dx}{\dif x}
 \newcommand{\Id}{\mathrm {Id}}
@@ -802,7 +805,7 @@ Finalement, par continuité de $f$~: $f(x_k) \xrightarrow[k \to \pinfty]{} f(x)$
 espaces métriques, on a $f(x) = y$, et donc $y$ admet une préimage par $f$.
 \end{proof}
 
-\begin{thm} Soit $(e_\alpha)_{\alpha \in A}$, un système orthonormal dans $H$. Soit $P = \Span \{e_\alpha\}_{\alpha \in A}$. Alors~:
+\begin{thm}\label{thm:cefficients Fourier isométrie} Soit $(e_\alpha)_{\alpha \in A}$, un système orthonormal dans $H$. Soit $P = \Span \{e_\alpha\}_{\alpha \in A}$. Alors~:
 \begin{enumerate}
 	\item $\forall x \in H : \sum_{\alpha \in A}\abs {\hat x(\alpha)}^2 \leq \norm x^2 \qquad$ (inégalité de Bessel généralisée)~;
 	\item $f : H \to \ell^2(A) : x \mapsto \hat x$ est linéaire, continue, et surjective~;
@@ -817,7 +820,7 @@ espaces métriques, on a $f(x) = y$, et donc $y$ admet une préimage par $f$.
 	Or par la remarque précédente~:
 	\[\sum_{\alpha \in A}\abs {\hat x(\alpha)}^2 = \sup_{\stackrel {B \subset A}{\abs B \lneqq \pinfty}}\sum_{\alpha \in B}\abs {\hat x(\alpha)}^2 \leq \norm x^2\]
 	par passage au supremum (à la limite) et par l'inégalité de Bessel finie.
-	\item Soit $x \in H$. Puisque $\norm x^2$, par l'inégalité de Bessel, on sait $\sum_{\alpha \in A}\abs {\hat x(\alpha)}^2 \lneqq \pinfty$, i.e. $\hat x \in \ell^2(A)$.
+	\item Soit $x \in H$. Puisque $\norm x^2 \lneqq \pinfty$, par l'inégalité de Bessel, on sait $\sum_{\alpha \in A}\abs {\hat x(\alpha)}^2 \lneqq \pinfty$, i.e. $\hat x \in \ell^2(A)$.
 
 	$f$ est linéaire par linéarité de $x \mapsto \scpr x{e_\alpha}$ pour tout $\alpha \in A$.
 
@@ -841,14 +844,179 @@ espaces métriques, on a $f(x) = y$, et donc $y$ admet une préimage par $f$.
 \end{enumerate}
 \end{proof}
 
-\begin{thm} Soit $(e_\alpha)_{\alpha \in A}$ un système orthonormal dans $H$. Alors les conditions suivantes sont équivalentes~:
+\begin{déf} Un \textit{système orthonormal maximal} (SOM) est un système orthonormal qui est maximal au sens de l'inclusion.
+\end{déf}
+
+\begin{thm}\label{thm:caractérisation SOM} Soit $(e_\alpha)_{\alpha \in A}$ un système orthonormal dans $H$. Alors les conditions suivantes sont équivalentes~:
 \begin{enumerate}
-	\item $(e_\alpha)_\alpha$ est un système orthonormal maximal.
-	\item $\Span \{e_\alpha\}_\alpha$ est dense dans $H$.
+	\item $(e_\alpha)_\alpha$ est un SOM.
+	\item $M \coloneqq \Span \{e_\alpha\}_\alpha$ est dense dans $H$.
 	\item $\forall x \in H : \sum_{\alpha \in A}\abs {\hat x(\alpha)}^2 = \norm x^2$.
 	\item $\forall x, y \in H : \sum_{\alpha \in A}\hat x(\alpha)\overline {\hat y(\alpha)} = \scpr xy \qquad$ (Identité de Parseval).
 	\item $\forall x \in H : \forall \varepsilon > 0 : \exists A_0 \subset A$ fini tel que $\forall A_1 \supset A_0$ : si $A_1$ est fini, alors $\norm {x - \sum_{\alpha \in A_1}\hat x(\alpha)e_\alpha} \leq \varepsilon$.
 \end{enumerate}
 \end{thm}
+
+\begin{proof}~
+\begin{itemize}
+	\item[$1 \Rightarrow 2$] Par l'absurde, supposons que $M \subsetneqq A$. Alors il existe $y \in A \setminus \{0\}$ tel que $y \perp M$ et donc le système n'est pas maximal
+	car on peut lui ajouter $\frac y{\norm y_H}$.
+	\item[$2 \Rightarrow 3$] Par le Théorème~\ref{thm:cefficients Fourier isométrie} (point 3), on sait que $\overline M \to \ell^2(A) : x \mapsto \hat x$ est une isométrie,
+	ce qui revient à dire que si $x \in \overline M$, alors l'inégalité de Bessel est une égalité, i.e.~:
+	\[\norm x^2 = \sum_{\alpha \in A}\abs {\hat x(\alpha)}^2.\]
+	\item[$3 \Rightarrow 4$] On veut montrer que $\norm {\hat \cdot}_{\ell^2(A)} = \norm \cdot_H \Rightarrow \scpr {\hat \cdot}{\hat \cdot}_{\ell^2(A)} = \scpr \cdot\cdot_H$.
+	Dans $\mathcal H$, un espace de Hilbert quelconque (e.g. $\mathcal H = H$ ou $\mathcal H = \ell^2(A)$), on a~:
+	\[4\scpr xy_{\mathcal H} = \norm {x+y}^2_{\mathcal H} - \norm {x-y}^2_{\mathcal H} + i\norm {x+iy}^2_{\mathcal H} - i\norm {x-iy}^2_{\mathcal H}.\]
+	Or par hypothèse, $\norm \cdot_H = \norm {\hat \cdot}_{\ell^2(A)}$. Donc~:
+	\begin{align*}
+		4 \scpr {\hat x}{\hat y}_{\ell^2(A)} &= \norm {\hat x+\hat y}^2_{\ell^2(A)} - \norm {\hat x-\hat y}^2_{\ell^2(A)} + i\norm {\hat x+i\hat y}^2_{\ell^2(A)} - i\norm {\hat x-i\hat y}^2_{\ell^2(A)} \\
+		&= \norm {x+y}^2_H - \norm {x-y}^2_H + i\norm {x+iy}^2_H - i\norm {x-iy}^2_H = 4\scpr xy_H.
+	\end{align*}
+	\item[$4 \Rightarrow 1$] Par l'absurde, supposons qu'il existe $u \neq 0$ tel que $\forall \alpha \in A : u \perp e_\alpha$. Alors $\forall \alpha \in A : \hat u(\alpha) = 0$.
+	Or $0 \neq \norm u^2 = \sum_{\alpha \in A}\hat u(\alpha)\overline {\hat u(\alpha)} = \sum_{\alpha \in A}\abs {\hat u(\alpha)}^2 = 0$, ce qui est une contradiction.
+	\item[$5 \Rightarrow 2$] Fixons $x \in H$ et $\varepsilon = \frac 1k$. Pour tout $k$, il existe $x_k = \sum_{\alpha \in A_1}\scpr x{e_\alpha}e_\alpha \in M$ tel que
+	$\norm {x-x_k} \leq \frac 1k = \varepsilon$
+	\item[$3 \Rightarrow 5$]
+	\[\sum_{\alpha \in A}\abs {\hat x(\alpha)}^2 = \sup_{B \subset A \text{ fini}}\sum_{\beta \in B}\abs {\hat x(\beta)}^2.\]
+	Par définition du $\sup$~: $\forall \varepsilon > 0 : \exists A_0$ fini $\subset A \tq \forall A_1$ fini $\supset A_0$~:
+	\[\norm {x- \sum_{\alpha \in A_1}\hat x(\alpha)e_\alpha}^2 = \norm x^2 - \sum_{\alpha \in A_1}\abs {\hat x(\alpha)}^2 \leq \varepsilon^2.\]
+\end{itemize}
+\end{proof}
+
+\begin{thm} Tout espace de Hiblert possède un système orthonormal maximal.
+\end{thm}
+
+\begin{proof} Soit $A$ l'ensemble des SOMs de $H$. $(A, \subseteq)$ est ordonné. Soit $\mathcal S \subset A$ une partie totalement ordonnée. On pose~:
+\[\hat S \coloneqq \bigcup_{s \in \mathcal S}s.\]
+Mq $\hat S \in A$.
+
+Soient $a_1, a_2 \in \hat S$. Il existe $s_1, s_2 \in \mathcal S$ tels que $a_1 \in s_1$ et $a_2 \in s_2$, or $\mathcal S$ est totalement ordonné. Donc soit $s_1 \subseteq s_2$,
+soit $s_2 \subseteq s_1$, donc $a_1, a_2 \in s_1$ ou $a_1, a_2 \in s_2$. En particulier, ils sont orthogonaux, et de plus $\hat S$ majore tout $s \in \mathcal S$.
+
+Par le lemme de Zorn, on a l'existence d'un élément maximal pour l'inclusion, i.e. un SOM.
+\end{proof}
+
+\begin{thm}[Gram-Schmidt] Soit $\{x_1, x_2, \ldots\} \subseteq H$ une suite finie ou dénombrable de vecteurs linéairement indépendants. Alors il existe un système orthonormal
+$\{u_1, u_2, \ldots,\}$ fini et de même cardinalité que $\{x_1, \ldots\}$ si ce dernier est fini ou dénombrable si $\{x_1, x_2, \ldots\}$ est dénombrable tel que
+$\Span \{u_1, \ldots, \} = \Span \{x_1, \ldots\}$.
+\end{thm}
+
+\begin{proof} Les $x_j$ sont non-nuls car $\{x_1, x_2, \ldots\}$ est linéairement indépendant. Posons $y_1 \coloneqq x_1$ et $u_1 \coloneqq \frac {y_1}{\norm {y_1}}$ et pour tout $n > 1$
+posons $y_n \coloneqq x_n - \sum_{j=1}^n\scpr {x_n}{u_j}u_j$ et $u_n \coloneqq \frac {y_n}{\norm {y_n}}$.
+
+Il faut maintenant s'assurer que pour tout $n \geq 1$~: $y_n \neq 0$ afin que les $u_n$ soient bien définis. Par l'absurde, supposons qu'il existe $n \geq 1$ tel que $y_n = 0$. Alors~:
+\[x_n \in \Span\{u_1, \ldots, u_{n-1}\} \subseteq \Span\{y_1, \ldots, y_{n-1}\} \subseteq \Span\{x_1, \ldots, x_{n-1}\}.\]
+Or les $x_j$ sont linéairement indépendants.
+
+Il est évident que $u_n \in \Span\{x_1, \ldots, x_n\}$ et $x_n \in \Span\{u_1, \ldots, u_n\}$ pour tout $n \geq 1$. Il reste alors uniquement à montrer que $u_n \perp u_j$ ($j < n$),
+ou de manière équivalente $y_n \perp u_j$, et cette dernière formulation est évidente par définition de $y_n$.
+\end{proof}
+
+\begin{déf} Un espace topologique $E$ est dit \textit{séparable} s'il admet une partie dense dénombrable.
+\end{déf}
+
+\begin{thm} Un espace de Hilbert est séparable ssi il possède un système orthonormal maximal.
+\end{thm}
+
+\begin{proof} \underline {$\Rightarrow$~:} Soit $\{a_1, a_2, \ldots\}$ une suite dense dans $H$. Soit $\{a'_1, a'_2, \ldots\}$ la suite partielle (possiblement finie) de
+$\{a_1, \ldots\}$ consitituée des $a_i \not \in \Span\{a_1, \ldots, a_{i-1}\}$. Par définition, on a que les $a'_i$ sont indépendants et tous les $a_j$ sont combinaisons linéaires
+des $a'_i$, i.e. $\{a_1, a_2, \ldots\} \subset \Span\{a'_1, a'_2, \ldots\}$.
+
+On en déduit alors que $\Span\{a'_1, a'_2, \ldots\}$ est dense dans $H$ Par Gram-Schmidt sur $\{a'_1, a'_2, \ldots\}$, on a un système orthonormal $\{u_1, \ldots\}$ tel que
+$\Span\{u_1, \ldots\}$ est dense dans $H$. Dès lors, par le Théorème~\ref{thm:caractérisation SOM}, $\{u_1, \ldots\}$ est un SOM.
+
+\underline {$\Leftarrow$~:} Soit $(e_k)_{k \in \N}$ un SOM. Pour $N \in \N^*$, on pose~:
+\[E_N \coloneqq \left\{\sum_{j=1}^Nq_je_j \tq q_j \in \Q[i]\right\}.\]
+
+$E_N$ est dénombrable, et donc $E \coloneqq \bigcup_{N > 0}E_N$ est également dénombrable. Par le théorème~\ref{thm:caractérisation SOM}, on a
+$\forall \varepsilon > 0 : \exists A_0 \subset A$ fini tel que~:
+\[\forall A_1 \supset A_0 : \norm {x-\sum_{\alpha \in A_1}\hat x(\alpha)e_\alpha} \leq \varepsilon.\]
+
+Montrons que $\forall \varepsilon > 0 : \exists y \in E \st \norm {x-y} \leq \varepsilon$.
+Soit $(q_\alpha)_{\alpha \in A_1} \subset \Q[i] \st \sum_{\alpha \in A_1}\norm {q_\alpha - \hat x(\alpha)}^2 \leq \varepsilon^2$. De tels $q_\alpha$ existent bien par densité
+de $\Q$ dans $\R$, et donc par densité de $\Q[i]$ dans $\C$.
+
+\[\norm {x - \sum_{\alpha \in A_1}q_\alpha e_\alpha}^2 = \norm {x-\sum_{\alpha \in A_1}\hat x(\alpha)e_\alpha}^2 + \sum_{\alpha \in A_1}\norm {q_\alpha - \hat x(\alpha)} \leq 2\varepsilon^2.\]
+
+Donc pour $y = \sum_{\alpha \in A_1}q_\alpha e_\alpha$, on a bien le résultat.
+\end{proof}
+
+\begin{ex}~
+\begin{itemize}
+	\item[(0)] $\C^N$ muni du produit scalaire usuel admet une base canonique. Cette dernière est orthonormale et maximale.
+	\item[(1)] Dans $\ell^2(\N_0)$, posons le suites $e_k \; (k \in \Z)$ telles que $e_{k,j} = 1$ si $k=j$ et $0$ sinon. $(e_k)_{k \in \Z}$ est un système orthonormal maximal car~:
+	\[\norm x^2 = \scpr xx = \sum_{j \geq 1}x_j\overline {x_j} = \sum_{j \geq 1}\abs {x_j}^2.\]
+	Par le point 3 du Théorème~\ref{thm:caractérisation SOM}, on a que $(e_k)_{k \in \Z}$ est un SOM.
+	\item[(2)] Dans $L^2[0, 2\pi)$, on définit (pour $k \in \Z$)~:
+	\[e_k : [0, 2\pi) \to \C : t \mapsto \frac {e^{ikt}}{\sqrt {2\pi}}.\]
+	Pour le produit scalaire usuel de $L^2$, on a~:
+	\[\scpr {e_k}{e_\ell}_{L^2} = \int_0^{2\pi}\frac {e^{i(k-\ell)t}}{2\pi}\dif t = \begin{cases}1 &\text{ si } k-\ell = 0 \\0 &\text{ sinon}\end{cases}.\]
+
+	Pour montrer que $(e_k)_{k \in \Z}$ est maximal, prenons $f \in L^2[0, 2\pi)$. $S_kf \coloneqq \sum_{m=-k}^k\scpr f{e_m}e_m.$ Montrons que $S_kf \xrightarrow[k \to \pinfty]{L^2} f$.
+	Pour $\varepsilon > 0, \exists \varphi \in C_0^\infty((0, 2\pi)) : \norm {f-\varphi}_{L^2} \leq \varepsilon$ (par densité de $C_0^\infty$ dans $L^2$).
+
+	On a $S_k\varphi \xrightarrow[k \to \pinfty]{\text{CVU}} \varphi$ (théorème de Dirichlet global), ce qui implique $S_k\varphi \xrightarrow[k \to \pinfty]{L^2} \varphi$.
+	Finalement, remarquons~:
+	\[\norm {f-S_kf}_{L^2} \leq \norm {f-S_k\varphi}_{L^2} \leq \norm {f-\varphi}_{L^2} + \norm {\varphi - S_k\varphi} \leq 2\varepsilon\]
+	si $k$ est assez grand.
+
+	Attention, $\{e_k\}_k$ n'est \textbf{pas} une base au sens algébrique car $\forall k \in \Z : e_k \in C^\infty$. Donc si $\{e_k\}_k$ est une base, toute fonction $f \in L^2$ est
+	égale à $\sum_{j=1}^Nc_je_{k_j} \in C^\infty$. Or $L^2 \not \subseteq C^\infty$.
+\end{itemize}
+\end{ex}
+
+\section{Applications linéaires entre espaces vectoriels normés}
+Soient $E, F$ deux espaces de Banach. Pour $T : E \to F$ linéaire, on dit que $T$ est \textit{bornée} lorsque~:
+\[\sup_{\norm x \leq 1}\norm {Tx} \lneqq \pinfty.\]
+
+\begin{rmq} \textit{borné} doit se comprendre \textit{borné sur la boule unité} car $T$ n'est pas borné puisque linéaire.
+\end{rmq}
+
+\begin{prp} Soit $T : E \to F$ linéaire.
+\[\sup_{\norm x \leq 1}\norm {Tx} = \sup_{\norm x \lneqq 1}\norm {Tx} = \sup_{\norm x = 1}\norm {Tx}.\]
+\end{prp}
+
+\begin{proof} On note $A = \{\norm {Tx}\}_{\norm x \leq 1}$, $B = \{\norm {Tx}\}_{\norm x < 1}$, et $C = \{\norm {Tx}\}_{\norm x = 1}$.
+Notons également $a = \sup A$, $b = \sup B$ et $c = \sup C$.
+
+Puisque $A \supset B \cup C$, on sait que $a \geq b$ et $a \geq c$. Maintenant, si $x \neq 0 \st \norm x \leq 1$, alors $B \ni T\frac x{\norm x} = \frac 1{\norm x}Tx \geq \norm {Tx}$.
+En particulier, $c \geq a$, et donc $c=a$.
+
+Si $a \lneqq \pinfty$, alors $\forall \delta > 0 : \exists x \st \norm x = 1$ et $\norm {Tx} \geq a-\delta$ (par définition du $\sup$ et puisque $a=c$). Pour $\varepsilon \in (0, 1)$~:
+\[\norm {T((1-\varepsilon)x)} = (1-\varepsilon)\norm {Tx} \geq (1-\varepsilon)(a-\delta) \geq a-\eta,\]
+pour $\eta = \varepsilon a - \varepsilon \delta + \delta$. Pour $\delta, \varepsilon \to 0$, on a $\eta \to 0$ et donc $b \geq a$.
+
+Finalement, si $a = \pinfty$, alors $\forall M > 0 : \exists x_M \st \norm {x_M} \leq 1$ et $\norm {Tx_M} \geq M$. Or par linéarité de $T$, on a $\norm {x_{M/2}} \lneqq 1$,
+et finalement~:
+\[\forall M > 0 : \exists \tilde x_M (= x_{M/2}) \st \norm {\tilde x_M} \leq 1 \text{ et } \norm {T\tilde x_M} \geq M.\]
+On en déduit également que $a=b$.
+
+Dès lors, on a bien $a = b = c$.
+\end{proof}
+
+\begin{déf} L'ensemble des applications linéaires bornées de $E$ dans $F$ est noté $\mathcal L(E, F)$. On munit cet ensemble de la norme~:
+\[\norm \cdot_{\mathcal L(E, F)} : \mathcal L(E, F) \to \mathbb R^+ : T \mapsto \norm T_{\mathcal L(E, F)} \coloneqq \sup_{\norm x \leq 1}\norm {Tx}.\]
+
+On note également $\mathcal L(E) \coloneqq \mathcal L(E, E)$.
+\end{déf}
+
+\begin{rmq} Il est à noter que cette norme sur $\mathcal L(E, F)$ dépend des normes sur $E$ et sur $F$~!
+\end{rmq}
+
+\begin{prp} $\norm \cdot_{\mathcal L(E, F)}$ est une norme.
+\end{prp}
+
+\begin{proof} \TODO: Exercice
+\end{proof}
+
+\begin{prp} Soit $T \in \mathcal L(E, F)$. Pour tout $y \in E$, on a $\norm {Ty} \leq \norm T\norm y$.
+\end{prp}
+
+\begin{proof} Si $y = 0$, alors $Ty = 0$, et donc ok. Sinon, $Ty = \norm yT\frac y{\norm y}$. Par passage à la norme dans $F$~:
+\[\norm {Ty} = \norm y \underbrace {\norm {T\frac y{\norm y}}}_{\leq \norm T} \leq \norm y\norm T.\]
+\end{proof}
+
+On remarque également que $\norm {(T_2 \circ T_1)(x)} \leq \norm {T_2}\norm {T_1x} \leq \norm {T_2}\norm {T_1}\norm x$, et donc $\norm {T_2T_1} \leq \norm {T_2}\norm {T_1}$. Dès lors
+si $T_1 \in \mathcal L(E, F)$ et $T_2 \in \mathcal L(F, G)$, alors $T_2T_1 \in \mathcal L(E, G)$.
 
 \end{document}
