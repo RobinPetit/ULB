@@ -378,13 +378,13 @@ Puisque~:
 on sait~:
 \[\int u_k\overline v \xrightarrow[k \to \pinfty]{} \int u\overline v.\]
 
-Or $u_k, v \in \mathcal S$. Donc pour $k \to \pinfty$, par Cauchy-Schwartz et par Parseval pour $\mathcal F$~:
+Or $u_k, v \in \mathcal S$. Donc pour $k \to \pinfty$, par Cauchy-Schwarz et par Parseval pour $\mathcal F$~:
 \[\int u\overline v = \int u_k\overline v \xrightarrow[k \to \pinfty]{L^2} (2\pi)^{-n}\int\mathbb Fu\overline {\hat v}.\]
 
 Dans le cas général $u, v \in L^2$, par le premier point pour $(v_k)_{k \in \N} \tq v_k \xrightarrow[k \to \pinfty]{} v$~:
 \[\int u\overline {v_k} = (2\pi)^{-n}\int \mathbb Fu\overline {\hat {v_k}}.\]
 
-Or $v_k \xrightarrow[k \to \pinfty]{L^2} \mathbb Fv$. Par Cauchy-Schwartz, on a~:
+Or $v_k \xrightarrow[k \to \pinfty]{L^2} \mathbb Fv$. Par Cauchy-Schwarz, on a~:
 \begin{enumerate}
 	\item $\int u\overline {v_k} \xrightarrow[k \to \pinfty]{L^2} \int u\overline v$~;
 	\item et $\int \mathbb Fu\overline {\hat {v_k}} \xrightarrow[k \to \pinfty]{L^2} \int \mathbb Fu\overline {\mathbb Fv}$.
@@ -469,7 +469,7 @@ Sur un produit scalaire, on peut définir une norme $\norm x \coloneqq \scpr xx^
 \begin{prp} $\norm \cdot : H \to \R^+$ est une norme.
 \end{prp}
 
-\begin{prp} $\norm \cdot$ vérifie Cauchy-Schwartz, i.e.~:
+\begin{prp} $\norm \cdot$ vérifie Cauchy-Schwarz, i.e.~:
 \[\forall x, y \in H : \abs {\scpr xy} \leq \norm x\norm y.\]
 \end{prp}
 
@@ -481,9 +481,9 @@ Sur un produit scalaire, on peut définir une norme $\norm x \coloneqq \scpr xx^
 \end{align*}
 pour $A = \scpr xx \in \R^+$, $B = \alpha\scpr xy = \abs {\scpr xy} \in \R^+$, $C = \scpr yy \in \R^+$.
 
-Si $C = 0$, alors $B = 0$, et donc $\scpr yx = 0$ et Cauchy-Schwartz est vérifié.
+Si $C = 0$, alors $B = 0$, et donc $\scpr yx = 0$ et Cauchy-Schwarz est vérifié.
 
-Si $C \gneqq 0$, alors pour $r = B/C$~: $0 \leq A - 2Br + Cr^2 = \frac {AC-B^2}C$, donc $B^2 \leq AC$, donc Cauchy-Schwartz est vérifié.
+Si $C \gneqq 0$, alors pour $r = B/C$~: $0 \leq A - 2Br + Cr^2 = \frac {AC-B^2}C$, donc $B^2 \leq AC$, donc Cauchy-Schwarz est vérifié.
 \end{proof}
 
 \begin{prp} $\norm \cdot$ vérifie l'inégalité triangulaire, i.e.~:
@@ -1019,4 +1019,199 @@ On note également $\mathcal L(E) \coloneqq \mathcal L(E, E)$.
 On remarque également que $\norm {(T_2 \circ T_1)(x)} \leq \norm {T_2}\norm {T_1x} \leq \norm {T_2}\norm {T_1}\norm x$, et donc $\norm {T_2T_1} \leq \norm {T_2}\norm {T_1}$. Dès lors
 si $T_1 \in \mathcal L(E, F)$ et $T_2 \in \mathcal L(F, G)$, alors $T_2T_1 \in \mathcal L(E, G)$.
 
+\begin{thm} Soit $T : E \to F$ linéaire. Alors les conditions suivantes sont équivalentes~:
+\begin{itemize}
+	\item[$(i)$]   $T$ est bornée~;
+	\item[$(ii)$]  $T$ est continue en tous points~;
+	\item[$(iii)$] $\exists x_0 \in E \st T$ est continue en $x_0$.
+\end{itemize}
+\end{thm}
+
+\begin{proof}~
+\begin{itemize}
+	\item[$(i) \Rightarrow (ii)$]   Soit $y \in E$. $\norm {Tx - Ty} = \norm {T(x-y)} \leq \norm T\norm {x-y}$. Dès lors, $T$ est Lipschitzienne et donc continue.
+	\item[$(ii) \Rightarrow (iii)$] Trivial (je cite~: \textit{Si vous avez un problème ici, je crois qu'il y a un sérieux problème dans l'enseignement}).
+	\item[$(iii) \Rightarrow (i)$]  Pour $\varepsilon > 0$, il existe $\delta > 0$ tel que si $\norm {x-x_0} < \delta$, alors $\norm {T(x-x_0)} < \varepsilon$.
+		En posant $y \coloneqq x-x_0$, si $\norm y < \delta$, alors $\norm {Ty} < \varepsilon$. Autrement dit, $T(B(0, \delta)) \subset B(0, \varepsilon)$.
+		Pour $z \in B(0, 1)$ (i.e. $\norm z < 1$), on a~:
+		\[\norm {Tz} = \frac 1\delta\norm {T(\delta z)} < \frac 1\delta \varepsilon.\]
+		Dès lors $\forall z : \norm z < 1 \Rightarrow \norm {Tz} < \varepsilon/\delta$, et donc $\norm T \lneqq \pinfty$, i.e. $T$ est bornée.
+\end{itemize}
+\end{proof}
+
+\begin{ex}~
+\begin{itemize}
+	\item[(0)] Un opérateur linéaire $T : \C^n \to \C^m$ est déterminé par une matrice $(T_{k\ell})_{k,\ell}$ dans les bases canoniques de $\C^m$ et $\C^n$.
+	$T$ est continue\footnote{En dimension finie, toute application linéaire entre espaces vectoriels est continue.} donc bornée.
+	\item[(1)] $T : L^1(\Omega, \mathcal A, \mu) \to \C : f \mapsto \int f\dif\mu$ est borné car~:
+	\[\abs {Tf} = \abs {\int f\dif\mu} \leq \int\abs f\dif\mu = \norm f_{L^1}.\]
+	Dès lors l'opérateur $T$ d'intégration est continue.
+	\item[(2)] Si $1 \leq p, q \leq \pinfty$ sont conjugués, pour $g \in L^q(\Omega, \mathcal A, \mu)$ on définit~:
+	\[T_g : L^p(\Omega, \mathcal A, \mu) \to \C : f \mapsto \int fg\dif\mu.\]
+	$T_g$ est bien défini par l'inégalité de Hölder. De plus~: $\abs {T_gf} \leq \norm f_{L^p}\norm g_{L^q}$, et donc $\norm {T_g} \leq \norm g_{L^q}$.
+	\item[(3)] $\mathbb F : L^2(\R^n) \to L^2(\R^n)$ est un opérateur linéaire. De plus, par Plancherel, on a $\norm {\mathbb Ff}_{L^2} = (2\pi)^{n/2}\norm f_{L^2}$,
+	et donc $\norm {\mathbb F} = (2\pi)^{n/2}$, i.e. la transformée de Fourier est un opérateur borné (donc continu).
+	\item[(4)] Pour $H$, un espace de Hilbert quelconque et $M$ un sous-espace vectoriel fermé, $P : H \to M$, la projection orthogonale sur $M$ est bornée car Lipschitzienne
+	(et donc également continue).
+	\item[(5)] Dans $(\Omega, \mathcal A, \mu)$ un espace mesuré, on fixe $K \in L^2(\Omega \times \Omega, \mathcal A \otimes \mathcal A, \mu \otimes \mu)$, et on pose~:
+	\[T : L^2(\Omega, \mathcal A, \mu) \to L^2(\Omega, \mathcal A, \mu) : f \mapsto \int_\Omega K(\cdot, y)f(y)\dif\mu(y).\]
+	Par Fubini, $\forall x \in \Omega : \int_\Omega \abs {K(x, y)}^2\dif\mu(y)$ est bien défini, et pour presque tout $x \in \Omega :
+	\abs {K(x, \cdot)}^2 \in L^1(\Omega, \mathcal A, \mu)$. En particulier, $\abs {K(x, \cdot)} \in L^2(\Omega, \mathcal A, \mu)$.
+
+	Dès lors, à $x \in \Omega$ fixé, $y \mapsto K(x, y)f(y)$ est $L^1$ par Hölder. Donc il existe $N \in \mathcal A \st \mu(N) = 0$ et $\forall x \not \in N :
+	K(x, \cdot)f(\cdot) \in L^1(\Omega, \mathcal A, \mu)$. On pose alors~:
+	\[g : x \mapsto \begin{cases}\displaystyle \int_\Omega K(x, y)f(y)\dif\mu(y) &\text{ si $x \not \in N$,} \\0 &\text{ sinon.}\end{cases}\]
+
+	Montrons que $g = Tf \in L^2(\Omega, \mathcal A, \mu)$. Si $x \not \in N$, alors par Cauchy-Schwarz~:
+	\[\abs {g(x)}^2 \leq \left(\int\abs {K(x, y)}\abs {f(y)}\dif\mu(y)\right)^2 \leq \int_\Omega \abs {K(x, y)}^2\dif\mu(y)\int_\Omega \abs {f(y)}^2\dif\mu(y).\]
+	Or le second facteur ne dépend pas de $x$ (notons le $C$) et est fini puisque $f \in L^2(\Omega, \mathcal A, \mu)$. Dès lors~:
+	\[\int\abs {g(x)}^2\dif\mu(x) = C\int_\Omega\left(\int_\Omega \abs {K(x, y)}^2\dif\mu(y)\right)\dif\mu(y).\]
+	Par Fubini (puisque $K \in L^2(\Omega \times \Omega, \mathcal A \otimes \mathcal A, \mu \otimes \mu)$), on a finalement~:
+	\[\int_\Omega\abs {g(x)}^2\dif\mu(x) \leq C\int_{\Omega \times \Omega}\abs {K(x, y)}^2\dif(\mu \otimes \mu)(x, y) \lneqq \pinfty.\]
+	On en déduit également $\norm g_{L^2} \leq \norm f_{L^2}\norm K_{L^2}$, et donc $\norm T \leq \norm K_{L^2}$.
+\end{itemize}
+\end{ex}
+
+\begin{déf} Un opérateur de la forme suivante~:
+\[T : L^2(\Omega, \mathcal A, \mu) \to L^2(\Omega, \mathcal A, \mu) : f \mapsto \int_\Omega K(\cdot, y)f(y)\dif\mu(y),\]
+pour $K \in L^2(\Omega \times \Omega, \mathcal A \otimes \mathcal A, \mu \otimes \mu)$ est appelé \textit{opérateur intégral de Hilbert-Schmidt}.
+\end{déf}
+
+Soient $T \in \mathcal L(H), x \in H$ et $\Phi : H \to \C : y \mapsto \scpr {Ty}x$, une forme linéaire bornée. Par Cauchy-Schwarz~:
+$\abs {\Phi y} \leq \norm {Ty}\norm x \leq \norm T\norm y\norm x$.
+
+Par le lemme de Riesz, on sait qu'il existe un unique $z_x \in H$ tel que $\forall y \in H : \Phi y = \scpr y{z}$. On a alors une application $x \mapsto z_x$. Notons-la $T^*$.
+
+\begin{prp} $T^*$ est une application linéaire.
+\end{prp}
+
+\begin{proof} Soient $x_1, x_2 \in H, \lambda \in \C$. Alors~:
+\[\scpr y{T^*(\lambda x_1 + x_2)} = \scpr {Ty}{\lambda x_1 + x_2} = \overline \lambda \scpr {Ty}{x_1} + \scpr {Ty}{x_2} = \overline \lambda\scpr y{T^*x_1} + \scpr y{T^*x_2}
+= \scpr y{\lambda T^*x_1 + x_2}.\]
+Or cette égalité vaut pour pour tous $x_1, x_2 \in H$, donc $T^*(\lambda x_1 + x_2) = \lambda T^*x_1 + T^*x_2$.
+\end{proof}
+
+\begin{lem} $\sup_{\norm x \leq 1}\norm {Tx} = \sup_{\norm x \leq 1, \norm y \leq 1}\abs {\scpr {Tx}y}$.
+\end{lem}
+
+\begin{proof} Par Cauchy-Schwarz, si $\norm y \leq 1$~: $\abs {\scpr {Tx}y} \leq \norm {Tx}\norm y \leq \norm {Tx}$. En particulier, par passage au $\sup$, on a
+l'inégalité $\geq$.
+
+Pour l'autre inégalité, Si $T \equiv 0$, le résultat est trivial. Donc supposons $T \not \equiv 0$. On sait alors que $\Ker T \neq H$, et donc $\exists x \in H \setminus \Ker T$.
+En posant $z \coloneqq \frac {Tx}{\norm {Tx}}$, on observe~:
+\[\sup_{\substack {\norm x \leq 1 \\ \norm y \leq 1}}\abs {\scpr {Tx}y} \geq \sup_{\norm x \leq 1}\abs {\scpr {Tx}z} = \sup_{\norm x \leq 1}\frac {\norm {Tx}^2}{\norm {Tx}}.\]
+\end{proof}
+
+\begin{thm} Pour $T \in \mathcal L(H)$, on a $\norm T = \norm {T^*}$.
+\end{thm}
+
+\begin{proof} Par le lemme précédent~:
+\[\norm {T^*} = \sup_{\norm x \leq 1}\norm {T^*x} = \sup_{\substack {\norm x \leq 1 \\ \norm y \leq 1}}\abs {\scpr {T^*x}y}
+	= \sup_{\substack {\norm x \leq 1 \\ \norm y \leq 1}}\abs {\scpr y{T^*x}} = \sup_{\substack {\norm x \leq 1 \\ \norm y \leq 1}}\abs {\scpr {Ty}x}
+	= \sup_{\norm x \leq 1}\norm {Tx} = \norm T\]
+\end{proof}
+
+\begin{déf} Cet opérateur $T^*$ est appelé \textit{l'opérateur adjoint de $T$}.
+\end{déf}
+
+\begin{prp} Soient $S, T \in \mathcal L(H)$. Pour $\alpha, \beta \in \C$, on a~:
+\begin{enumerate}
+	\item $(\alpha S + \beta T)^*x = \overline \alpha S^* + \overline \beta T^*$~;
+	\item $(ST)^* = T^*S^*$.
+\end{enumerate}
+\end{prp}
+
+\begin{proof}~
+\begin{enumerate}
+	\item Fixons $x, y \in H$.
+	\[\scpr x{(\alpha S + \beta T)^*y} = \scpr {(\alpha S + \beta T)x}y = \alpha \scpr {Sx}y + \beta \scpr {Tx}y = \alpha \scpr x{S^*y} + \beta \scpr x{T^*y}
+	= \scpr x{\overline \alpha S^*y + \overline\beta T^*y}.\]
+	\item Montrons que $\forall x \in H : (ST)^*x = T^*S^*x$. Soient $x, y \in H$.
+	\[\scpr y{(ST)^*x} = \scpr {STy}x = \scpr {Ty}{S^*x} = \scpr y{T^*S^*x}.\]
+\end{enumerate}
+\end{proof}
+
+\begin{déf} Si $T = T^*$, on dit que $T$ est auto-adjoint.
+\end{déf}
+
+\begin{ex}~
+\begin{itemize}
+	\item[(1)] Soit un opérateur linéaire $T \in \mathcal L(\C^n)$. $T$ est défini par une matrice $(T_{k\ell})_{k,\ell} \in \C^{n \times n}$. L'adjoint $T^*$ de $T$
+	est également un opérateur linéaire de $\C^n$ et est donc également définit par une matrice $({T^*}_{k\ell})_{k,\ell}$. Fixons $z, w \in \C^n$ et calculons~:
+	\[\sum_{j=1}^n\sum_{k=1}^n{T^*}_{jk}z_k\overline {w_j} = \scpr {T^*z}w = \scpr z{Tw} = \sum_{j=1}^n\sum_{k=1}^nz_k\overline {T_{kj}}\overline {w_j}.\]
+	Cette égalité étant vraie $\forall z, w \in \C^n$, on en déduit ${T^*}_{jk} = \overline {T_{kj}}$, i.e. la matrice adjointe est la conjuguée de la transposée.
+
+	D'ailleurs, si $T=T^*$, alors $(T_{jk})_{jk}$ est une matrice hermitienne.
+	\item[(2)] Pour un opérateur intégral de Hilbert-Schmidt, fixons $K \in L^2(\Omega \times \Omega, \mathcal A \otimes \mathcal A, \mu \otimes \mu)$ et considérons~:
+	\[T_K : L^2(\Omega, \mathcal A, \mu) \to L^2(\Omega, \mathcal A, \mu) : f \mapsto \int K(\cdot, y)f(y)\dif\mu(y).\]
+	Soient $f, g \in L^2(\Omega, \mathcal A, \mu)$. Partons de $\scpr {T_Kf}g = \scpr f{T_K^*f}$ et calculons~:
+	\[\scpr {Tf}g = \int_\Omega\overline g(x)\int_\Omega K(x, y)f(y)\dif\mu(y)\dif\mu(x) \stackrel {\text{Fubini}}=
+		\int_\Omega f(y)\int_\Omega K(x, y)\overline g(x)\dif\mu(x)\dif\mu(y) = \scpr f{T_K^*g}.\]
+
+	Donc~:
+	\[T_K^*g(y) = \overline {\int_\Omega K(x, y)\overline g(x)\dif\mu(x)},\]
+	ou en changeant simplement les variables $x$ et $y$~:
+	\[T_K^*g(x) = \int_\Omega \overline K(y, x) g(y)\dif\mu(y).\]
+	$T_K^*$ est donc également un opérateur intégral de Hilbert-Schmidt et on a bien \textit{transposé/conjugué} le noyau $K$ de $T_K$ pour trouver celui de $T_K^*$.
+
+	\item[(2)] Reconsidérons $M$ un sous-espace fermé de $H$ et la projection orthogonale $P : H \to M$. Montrons que $P = P^*$.
+
+	Soient $x_1, x_2 \in H$ et soit $Q$ la projection orthogonale sur $M^\perp$. Calculons~:
+	\[\scpr {Px_1}{x_2} = \scpr {Px_1}{Px_2 + Qx_2} = \scpr {Px_1}{Px_2} + \underbrace {\scpr {Px_1}{Qx_2}}_{= 0} = \scpr {Px_1}{Px_2}.\]
+	Et~:
+	\[\scpr {x_1}{Px_2} = \scpr {Px_1 + Qx_1}{Px_2} = \scpr {Px_1}{Px_2} + \underbrace {\scpr {Qx_1}{Px_2}}_{= 0} = \scpr {Px_1}{Px_2}.\]
+	On a donc $\forall x_1, x_2 \in H : \scpr {x_1}{P^*x_2} = \scpr {Px_1}{x_2} = \scpr {x_1}{Px_2}$. Dès lors $P = P^*$. La projection orthogonale est donc auto-adjointe.
+\end{itemize}
+\end{ex}
+
+Pour $E, F$ espaces vectoriels normés, plusieurs normes semblent canoniques. À $p \geq 1$ fixé, on peut définir~:
+\[\norm {(e, f)}_{E \times F; p} \coloneqq \left(\norm e_E^p + \norm f_F^p\right)^{1/p}.\]
+De même, si $E$ et $F$ sont munis d'un produit scalaire, on a un produit scalaires canonique sur $E \times F$~:
+\[\scpr {(e_1, f_1)}{(e_2, f_2)}_{E \times F} \coloneqq \scpr {e_1}{e_2}_F + \scpr {f_1}{f_2}_F,\]
+et donc la norme $\norm \cdot_{E \times F; 2}$ semble particulièrement intuitive.
+
+Il est cependant à noter que les normes $\norm \cdot_{E \times F; p}$ sont équivalentes pour toutes les valeurs de $p \geq 1$, et donc que les topologies induites par ces
+normes sont homéomorphes (elles sont même strictement identiques, et cette topologie est la topologie produit). Dès lors, la norme $\norm \cdot_{E \times F; 1}$ va être
+posée canoniquement sur $E \times F$, mais les résultats qui suivront seront également valables pour toute valeur de $p > 1$.
+
+\begin{déf} Pour un opérateur linéaire $T : E \to F$, on note $\Gamma_T = \{(x, Tx)\}_{x \in E} \subset E \times F$ le graphe de $T$.
+\end{déf}
+
+\begin{thm} Si $T$ est bornée, alors $\Gamma_T$ est fermé dans $E \times F$.
+\end{thm}
+
+\begin{proof} Soit $(x, y) \in \overline {\Gamma_T}$. Prenons une suite $(x_n, y_n)_{n \in \N} \subset \Gamma_T$ telle que $(x_n, y_n) \xrightarrow[n \to \pinfty]{} (x, y)$.
+De plus $T$ est continue car bornée. Dès lors~:
+\[\begin{cases}
+&Tx_n = y_n \\
+&Tx_n \xrightarrow[n \to \pinfty]{} Tx \\
+&y_n \xrightarrow[n \to \pinfty]{} y.
+\end{cases}\]
+Or $x \in E$ et par unicité de la limite, $Tx = y$. Dès lors, $(x, y) \in \Gamma_T$.
+\end{proof}
+
+\begin{déf} Une application $f : E \to F$ est \textit{ouverte} si l'image de tout ouvert de $E$ par $f$ est un ouvert de $F$.
+\end{déf}
+
+\begin{thm}[de l'application ouverte, Banach] Soient $E, F$ espaces de Banach, $T \in \mathcal L(E, F)$. Si $T$ est surjective, alors $T$ est ouverte.
+\end{thm}
+
+\begin{proof} Notons $B_E$ (resp. $B_F$) la boule unité dans $E$ (resp. dans $F$). Il suffit de montrer que $\exists \delta > 0 \st T(B_E) \supset \delta B_F$.
+En effet, en supposant que cette inclusion est vérifiée, on a $T(x_0 + \lambda E) = Tx_0 + \lambda T(B_E)$. Dès lors, si $U$ est un voisinage de $x_0$ dans $E$,
+alors $T(U)$ est un voisinage de $Tx_0$ dans $F$. Si de plus $U$ est ouvert, $U$ est un voisinage de tout $y \in U$, et donc $T(U)$ est un voisinage de tout $Ty \in T(U)$,
+et donc $T(U)$ est ouvert dans $F$.
+
+\TODO: Montrer que l'inclusion est bien vérifiée.
+\end{proof}
+
+\begin{thm}[du graphe fermé, Banach] Soient $E, F$ espaces de Banach, $T : E \to F$ linéaire. Si $\Gamma_T$ est fermé dans $E \times F$, alors $T$ est bornée.
+\end{thm}
+
+\begin{proof} $\Gamma_T$ est un sous-espace vectoriel fermé de $E \times F$. Or $E \times F$ est un espace de Banach puisque le produit d'espaces de Banach en est un.
+Dès lors $\Gamma_T$ est un espace de Banach également. On décompose $T$ en $T_1 : E \to \Gamma_T : x \mapsto (x, Tx)$ et $T_2 : E \times F \to F : (x, y) \mapsto y$ ($T = T_2T_1$).
+$T_1$ est bijective par définition du graphe d'une application et ${T_1}^{-1} : (x, Tx) \mapsto x$ est bornée (donc continue). Par le théorème de l'application ouverte de Banach,
+on déduit que ${T_1}^{-1}$ est ouverte, i.e. $T_2$ est continue.
+
+De plus, $T_2$ est continue car les projections sont toujours continues pour la topologie produit. Donc $T = T_2T_1$ est composition d'applications continues, et est donc continue.
+\end{proof}
 \end{document}
