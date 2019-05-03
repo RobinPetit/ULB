@@ -1,0 +1,409 @@
+\documentclass{beamer}
+
+\usefonttheme[onlymath]{serif}
+
+\usepackage{appendixnumberbeamer}
+\setbeamertemplate{theorems}[numbered]
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[font=scriptsize]{subcaption}
+\usepackage{ifthen}
+\usepackage{array}
+\usepackage[sort,colon]{natbib}
+
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{commath}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+\usepackage{algorithm2e}
+
+\DeclareSymbolFont{bbold}{U}{bbold}{m}{n}
+\DeclareSymbolFontAlphabet{\mathbbold}{bbold}
+
+%%%%%%%%%% Red environment for theorems
+
+\makeatletter
+\def\th@theoremenv{%
+  \normalfont% body font
+  \def\inserttheoremblockenv{alertblock}%
+}
+\theoremstyle{theoremenv}
+\newtheorem{thm}{Theorem}
+
+\makeatother
+\newenvironment<>{lemmablock}[1]{%
+    \setbeamercolor{block title}{fg=white,bg=orange!75!black}%
+    \begin{block}#2{#1}%
+}%
+{\end{block}}
+
+%%%%%%%%%% Orange environment for Lemma
+
+\makeatletter
+\def\th@lemmaenv{
+\normalfont%
+\def\inserttheoremblockenv{lemmablock}%
+}
+\theoremstyle{lemmaenv}
+\newtheorem{lem}[thm]{Lemma}
+\makeatother
+\theoremstyle{definition}
+\newtheorem{df}{Definition}
+
+\AtBeginSection[]
+{
+\begin{frame}<beamer>{Table of Contents}
+\tableofcontents[currentsection,currentsubsection,
+    hideothersubsections,
+    sectionstyle=show/shaded,
+]
+\end{frame}
+}
+
+\newcommand\Wider[2][3em]{%
+\makebox[\linewidth][c]{%
+  \begin{minipage}{\dimexpr\textwidth+#1\relax}
+  \raggedright#2
+  \end{minipage}%
+  }%
+}
+
+\setbeamertemplate{proof begin}{\textit{Proof (\insertproofname)\hspace{.2cm}}}
+\setbeamertemplate{proof end}{}
+
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator{\SDP}{SDP}
+\DeclareMathOperator{\RCC}{RCC}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\nb}{nb}
+
+\mode<presentation>
+{
+  \usetheme{Warsaw}
+  \usecolortheme{default}
+  \usefonttheme{default}
+  \setbeamertemplate{navigation symbols}{}
+  \setbeamertemplate{caption}[numbered]
+}
+
+\addtobeamertemplate{navigation symbols}{}{%
+    \usebeamerfont{footline}%
+    \usebeamercolor[fg]{footline}%
+    \hspace{1em}%
+    \ifthenelse{\equal{\insertframenumber}{0}}{}{\insertframenumber/\inserttotalframenumber}%
+}
+
+\title{MATH-F-305 -- Projet de recherche}
+\subtitle{Statistical and Computational Trade-offs in Estimation of Sparse Principal Components}
+\author{Robin Petit}
+\date{May 2019}
+
+\newcommand{\pinfty}{+\infty}
+\newcommand{\R}{\mathbb R}
+\newcommand{\N}{\mathbb N}
+\renewcommand{\P}{\mathbb P}
+\newcommand{\E}{\mathbb E}
+\newcommand{\st}{\text{ s.t. }}
+\newcommand{\wrt}{\text{ w.r.t. }}
+\newcommand{\iid}{\stackrel {\text{iid}}\sim}
+\newcommand{\ind}{\mathbbold 1}
+
+\setbeamertemplate{headline}{}
+
+\begin{document}
+
+\begin{frame}[noframenumbering]
+    \titlepage
+\end{frame}
+
+\begin{frame}
+    \tableofcontents
+\end{frame}
+
+\section{Introduction}
+
+\subsection{Sparse PCA}
+\begin{frame}
+\begin{itemize}
+    \item Given $X_1, \ldots, X_n$ i.i.d. samples from $p$-dimensional distribution $P$, Principal Component Analysis (PCA) projects the samples onto the space spanned by \textit{principal components}, i.e. the set of orthogonal vectors maximising variance.
+    \pause
+    \item The first principal component is the leading eigenvector of the sample covariance matrix $\hat \Sigma$.
+    \pause
+    \item Very efficient if $p \ll n$, but breaks down if $p_n \sim n$ or $\lim_{n \to +\infty}p_n/n = +\infty$ and estimators become inconsistent~\citep{johnstone2009consistency,paul2007asymptotics}.
+    \pause
+    \item Sparse PCA intends to improve interpretability of projection and to remedy this inconsistency. In the simplest case, it is assumed that the leading eigenvector $v_1$ of $\hat \Sigma$ belongs to $B_0(k) \coloneqq \{u \in \R^p : \norm u_0 \leq k, \norm u_2 = 1\}$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\citep{wang2016statistical} detailed a \textit{trade-off} between statistical and computational efficiency:
+\begin{itemize}
+    \item In general, well performing estimators are hard to compute, e.g. $v^k_{\max}(\hat \Sigma) \coloneqq \argmax_{u \in B_0(k)}u^\top\hat\Sigma u$ attains minimax rate but is $\mathsf {NP}$-hard~\citep{birnbaum2013minimax,berthet2013computational,cai2013sparse,berthet2013complexity}.
+    \item Under some distributional assumptions, interesting rates can be achieved while being \textit{easily} computable.
+\end{itemize}
+\end{frame}
+
+\subsection{Computation Theory}
+\begin{frame}
+Some definitions~\citep{sipser2012introduction}:
+\begin{itemize}
+    \item $\mathsf P$ is the class of problems solvable in polynomial time.
+    \pause
+    \item $\mathsf {NP}$ is the class of problems verifiable in polynomial time.
+    \pause
+    \item Conjectured that $\mathsf P \subsetneqq \mathsf {NP}$.
+    \pause
+    \item A problem $Q$ is said $\mathsf {NP}$-hard if it is at least as hard as every problem in $\mathsf {NP}$ (every problem $H \in \mathsf {NP}$ is reducible to $Q$ in polytime).
+    \pause
+    \item A problem $Q$ is said $\mathsf {NP}$-complete if it is $\mathsf {NP}$-hard and $Q \in \mathsf {NP}$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Clique Problem}
+\begin{itemize}
+    \item A clique in an undirected graph is a complete subgraph (every two nodes are connected). A $k$-clique is a clique of size $k$.
+    \item The \textit{clique problem} (denoted $\mathsf {CLIQUE}$) consists in determining whether a graph contains a clique of specified size $k$.
+    \item $\mathsf {CLIQUE} \in \mathsf {NP}$.
+    \item Finding the largest clique of a graph is $\mathsf {NP}$-hard.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Planted Clique Problem}
+The \textit{planted clique problem} is a variant of $\mathsf {CLIQUE}$. Consider the following random process:
+\begin{itemize}
+    \item Sample a random graph $G \sim \mathcal G(n, 1/2)$ (Erd\H{o}s-Rényi),
+    \item with probability $1/2$, sample uniformly $W \in \binom {V(G)}{k}$ and join each pair of vertices of $W$ ($W$ induces a clique) in $G$.
+\end{itemize}
+
+The planted clique problem consists in determining whether such a graph contains a clique of size $\geq k$.
+\end{frame}
+
+\begin{frame}{Objectives of the paper}
+\begin{enumerate}
+    \item Restrict analysis to finding first principal component (i.e. maximising directional variance).
+    \item Find appropriate classes of probability distributions with interesting minimax rate ($\mathcal P_p(n, k, \theta)$).
+    \item Find estimators behaving well w.r.t. this rate ($\hat v^{\SDP}$).
+    \item Find a lower bound for estimators computable in polytime.
+\end{enumerate}
+\end{frame}
+
+\section{Content of the paper}
+\subsection{Definitions and notations}
+\begin{frame}
+\begin{df} The $k$-sparse unit ball is defined by:
+\[B_0(k) \coloneqq \left\{u \in \R^p \st \norm u_0 \leq k, \norm u_2 = 1\right\}.\]
+\end{df}
+\pause
+\begin{df}[Restricted Covariance Concentration] A distribution $P$ is said to satisfy a \textit{Restricted Covariance Concentration} condition with parameters $p, n, \ell, C$ if for all $\delta > 0$:
+\[\resizebox{\textwidth}{!}{%
+$\displaystyle \P\left[\sup_{u \in B_0(\ell)}\abs {\hat V(u) - V(u)} \geq C\max\left\{\sqrt {\frac {\ell\log(p/\delta)}n}, \frac {\ell\log(p/\delta)}n\right\}\right] \leq \delta,$%
+}\]
+which is denoted $P \in \RCC_p(n, \ell, C)$
+\end{df}
+\end{frame}
+
+\begin{frame}
+\begin{df}
+For $\theta > 0$ (signal-to-noise measure), define:
+\begin{align*}
+    \mathcal P_p(n, k, \theta) \coloneqq \Big\{P \in \RCC_p&(n, 2, 1) \cap \RCC_p(n, 2k, 1) \st \\
+    &v_1(P) \in B_0(k), \lambda_1(P) - \lambda_2(P) \geq \theta\Big\}.
+\end{align*}
+\end{df}
+\pause
+\begin{df}
+Consider the loss function:
+\[L(u, v) \coloneqq \left(1 - (u^\top v)^2\right)^{\frac 12} = \frac 1{\sqrt 2}\norm {uu^\top - vv^\top}_2.\]
+\end{df}
+\end{frame}
+
+\begin{frame}
+\begin{df}
+    Consider the following notations:
+    \begin{itemize}
+        \item $\mathcal M$ is the set of non-negative definite real symmetric matrices;
+        \item $\mathcal M_1 \coloneqq \{M \in \mathcal M \st \Tr M = 1\}$;
+        \item $\mathcal M_{1,1}(k^2) \coloneqq \{M \in \mathcal M_1 \st \rank M = 1, \norm M_0 = k^2\}$.
+    \end{itemize}
+\end{df}
+\end{frame}
+
+\subsection{Results}
+\begin{frame}
+\begin{thm}\label{thm:1}
+For $2k\log p \leq n$, $\hat v^k_{\max}(\hat \Sigma) \coloneqq \argmax_{u \in B_0(k)}u^\top\hat \Sigma u$ satisfies:
+\begin{align*}
+    \sup_{P \in \mathcal P_p(n, k, \theta)}\E_PL(\hat v^k_{\max}(\hat \Sigma), v_1(P)) &\leq 2\sqrt 2\left(1 + \frac 1{\log p}\right)\sqrt {\frac {k\log p}{n\theta^2}} \\
+    &\leq 7\sqrt {\frac {k\log p}{n\theta^2}}
+\end{align*}
+\end{thm}
+\pause
+\begin{thm}
+If $7 \leq k \leq \sqrt p$ and $0 < \theta \leq \frac 1{16(1 + \frac 9{\log p})}$:
+\[\inf_{\hat v}\sup_{P \in \mathcal P_p(n, k, \theta)}\E_PL(\hat v, v_1(P)) \geq \min\left\{\frac 1{1660}\sqrt {\frac {k\log p}{n\theta^2}}, \frac 5{18\sqrt 3}\right\}.\]
+\end{thm}
+\end{frame}
+
+\begin{frame}
+\begin{lem}[SM -- Propostion 1]
+Let $P \in \RCC_p(n, \ell, C)$ with $\ell\log p \leq n$. Then:
+\[\E_P\sup_{u \in B_0(\ell)}\abs {\hat V(u) - V(u)} \leq \left(1+\frac 1{\log p}\right)C\sqrt {\frac {\ell\log p}n}.\]
+\end{lem}
+\pause
+\begin{lem}[Curvature Lemma~\citep{vu2013fantope}]
+For $A \in \R^{p \times p}$ a symmetric matrix and $E$ the projection onto the subspace spanned by the eigenvectors of $A$ corresponding to the $d$ largest eigenvalues, if $\delta_A \coloneqq \lambda_d - \lambda_{d+1} \gneqq 0$, then for all $F$ satisfying $0 \preceq F \preceq I$ and $\Tr F = d$:
+\[\frac {\delta_A}2\norm {E-F}_2^2 \leq \Tr\left(A(E-F)\right)\]
+\end{lem}
+\end{frame}
+
+\begin{frame}
+\begin{proof}[Theorem~\ref{thm:1}] Fix $P \in \mathcal P_p(n, k, \theta)$. By Curvature lemma:
+\begin{align*}
+    \frac \theta2\norm {vv^\top - \hat v\hat v^\top}_2^{\textcolor{red}{2}} &\leq \Tr(\Sigma(vv^\top - \hat v\hat v^\top)) \\
+    &\leq \Tr((\Sigma-\hat\Sigma)(vv^\top - \hat v\hat v^\top)).
+\end{align*}
+
+$M = \frac {vv^\top - \hat v\hat v^\top}{\norm {vv^\top - \hat v\hat v^\top}_2}$ has rank 2, trace 0 and non-zero entries in at most $2k$ rows and $2k$ columns. Hence
+$M = (xx^\top - yy^\top)/\sqrt 2$ for some $x, y \in B_0(2k)$. Thus:
+\begin{align*}
+	\E L(\hat v&, v) = \frac 1{\sqrt 2}\E\norm {\hat v\hat v^\top - vv^\top}_2 \leq \frac 1\theta\E[\Tr((\Sigma-\hat\Sigma)(xx^\top - yy^\top))] \\
+	&\leq \frac 2\theta\E\sup_{u \in B_0(2k)}\abs {\hat V(u) - V(u)} \leq 2\sqrt 2\left(1 + \frac 1{\log p}\right)\sqrt {\frac {k\log p}{n\theta^2}}
+\end{align*}
+\end{proof}
+\end{frame}
+
+\begin{frame}
+SDP formulation from~\citep{d2005direct}:
+\begin{align*}
+    \max_{M \in \mathcal M_1}\; & \Tr(\hat\Sigma M) \\
+    \st  & \norm M_0 \leq k^2 \\
+         & \rank M = 1
+\end{align*}
+
+With fixed sparsity level, formulation is equivalent to:
+\[\max_{M \in \mathcal M_{1,1}(k^2)}\Tr(\hat \Sigma M) = \max_{u \in B_0(k)}u^\top\hat \Sigma u.\]
+
+\begin{itemize}
+    \item Problem: rank and sparsity constraints are not convex.
+    \item Solution: Drop rank constraint and relax sparsity constraint by $\ell_1$ penalty.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+$\hat v^{SDP}$ is then defined by the following \textit{convex} optimisation problem (with parameter $\lambda > 0$):
+\[\max_{M \in \mathcal M_1}\Tr(\hat\Sigma M) - \lambda\norm M_1\]
+
+\begin{algorithm}[H]
+\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+
+\Input{$\mathbf X = (X_1, \ldots, X_n)^\top \in \R^{n \times p}, \, \lambda > 0, \, \epsilon > 0$}
+\Begin{
+    \textbf{Step 1:} Compute $\hat \Sigma \leftarrow \frac 1n\mathbf X^\top\mathbf X$. \\
+    \textbf{Step 2:} For $f(M) \coloneqq \Tr(\hat \Sigma M) - \lambda \norm M_1$, let $\hat M^\epsilon$ be an $\epsilon$-maximiser of $f$ in $\mathcal M_1$. \\
+    \textbf{Step 3:} Let $\hat v^{\SDP} \coloneqq \hat v^{\SDP}_{\lambda,\epsilon} \in \argmax_{u \st \norm u_1 = 1}u^\top \hat M^\epsilon u$.
+}
+\Output{$\hat v^{\SDP}$}
+\caption{Pseudo-code for computing $\hat v^{\SDP}$.\label{alg:1}}
+\end{algorithm}
+\end{frame}
+
+\begin{frame}
+Fully adaptative: $\hat v^{\SDP}$ is not necessarily sparse but can be forced sparse by keeping the $k$ top components and set the $p-k$ remaining to 0 (then renormalising).
+\vspace{.25cm}
+\begin{itemize}
+    \item Step 1 takes $O(np^2)$ flops
+    \item Step 2 can be solved in $O(\frac {\lambda^2p^2+1}\epsilon)$ flops (provided algorithm based on the following equality: $\max_{M \in \mathcal M_1}\Tr(\hat \Sigma M) = \max_{M \in \mathcal M_1}\min_{U \in \mathcal U}\Tr((\hat \Sigma + U)M)$ where $\mathcal U = \{U \in \R^{p \times p} \st U=U^\top, \norm U_\infty \leq \lambda\}$).
+    \item Step 3 requires $O(p^3)$ flops in worst case but under additional assumptions is feasible in $O(p^2)$.
+\end{itemize}
+Hence $\hat v^{\SDP}$ is computable in polytime. Is it \textit{statistically efficient} though?
+\end{frame}
+
+\begin{frame}
+\begin{thm}
+    Let $\Sigma \in \mathcal M \st \theta = \lambda_1(\Sigma)-\lambda_2(\Sigma) > 0$. Let $\mathbf X \in \R^{n \times p}$. For arbitrary $\lambda > 0$ and $\epsilon > 0$, if $\norm {\Sigma-\hat\Sigma}_{\infty} \leq \lambda$, then $\hat v^{\SDP}$ computed by Algorithm~\ref{alg:1} with parameters $\mathbf X, \lambda, \epsilon$ satisifes:
+    \[L(\hat v^{\SDP}, v_1(\Sigma)) \leq \frac {4\sqrt 2\lambda k}\theta + 2\sqrt {\frac \epsilon\theta}.\]
+\end{thm}
+\end{frame}
+
+\begin{frame}
+\begin{thm}\label{thm:prove}
+    For any $P \in \mathcal P_p(n, k, \theta)$ and $X_1, \ldots, X_n \iid P$, let $\hat v^{\SDP}(\mathbf X)$ be the output of Algorithm~\ref{alg:1} with parameters $\mathbf X$, $\lambda = 4\sqrt {\frac {\log p}n}$ and $\epsilon = \frac {\log p}{4n}$. If $4\log p \leq n \leq k^2p^2\theta^{-2}\log p$ and $\theta \in (0, k]$, then:
+    \[\resizebox{\textwidth}{!}{$\displaystyle\sup_{P \in \mathcal P_p(n, k, \theta)}\E_PL(\hat v^{\SDP}(\mathbf X), v_1(P)) \leq \min\left\{1, (16\sqrt 2 + 2)\sqrt {\frac {k^2\log p}{n\theta^2}}\right\}$}\]
+\end{thm}
+\end{frame}
+
+\subsection{Let's prove something}
+\begin{frame}
+\begin{lem}\label{lem:7}
+Suppose $P \in \mathcal P_p(n, k, \theta)$, $X_1, \ldots, X_n \iid P$. Then:
+\[\norm {\hat \Sigma-\Sigma}_{\infty} \leq 2\sup_{u \in B_0(2)}\abs {\hat V(u) - V(u)}.\]
+\end{lem}
+
+\begin{proof}[Lemma~\ref{lem:7}] $e_{s,r}^+ \coloneqq (e_s+e_r)/2$, $e_{s,r}^- \coloneqq (e_s-e_r)/2$.
+\begin{align*}
+    &\norm {\hat \Sigma-\Sigma}_{\infty} \leq \max_{r,s \in [1:p]}\abs {\frac 1n\sum_{i=1}^n\left((e_{s,r}^+)^\top X_i\right)^2 - \E\left[\left((e_{s,r}^+)^\top X_1\right)^2\right]} \\
+    &+ \max_{r,s \in [1:p]}\abs {\frac 1n\sum_{i=1}^n\left((e_{s,r}^-)^\top X_i\right)^2 - \E\left[\left((e_{s,r}^-)^\top X_1\right)^2\right]} \\
+    &\leq 2\sup_{u \in B_0(2)}\abs {\hat V(u) - V(u)}.
+\end{align*}
+\end{proof}
+\end{frame}
+
+\begin{frame}
+\begin{proof}[Theorem~\ref{thm:prove}] Fix $P \in \mathcal P_p(n, k, \theta)$.
+\[\resizebox{\textwidth}{!}{$\displaystyle\E_PL(\hat v^{\SDP}, v_1(P)) \leq \frac {4\sqrt 2\lambda k}\theta + 2\sqrt {\frac \epsilon\theta} + \P\left[\sup_{u \in B_0(2)}\abs {\hat V(u) - V(u)} > 2\sqrt {\frac {\log p}n}\right].$}\]
+Since $P \in \RCC_p(n, 2 ,1)$, for every $\delta > 0$:
+\[\P\left[\sup_{u \in B_0(2)}\abs {\hat V(u)-V(u)} > \max\left\{\sqrt {\frac {2\log(p/\delta)}n}, \frac {2\log(p/\delta)}n\right\}\right] \leq \delta.\]
+Set $\delta \coloneqq \sqrt {(k^2\log p)/(n\theta^2)}$. Since $4\log p \leq n$:
+\[2\log(p/\delta) \leq 1/2 + \log n - \log\log 2 \leq n.\]
+Furthermore, since $n \leq k^2p^2\theta^{-2}\log p$:
+\[2\log(p/\delta) = 2\log p+\log\left((n\theta^2)/(k^2\log p)\right) \leq 4\log p.\]
+Finally:
+\[\P\left[\sup_{u \in B_0(2)}\abs {\hat V(u)-V(u)} > 2\sqrt {\frac {\log p}n}\right] \leq \sqrt {\frac {k^2\log p}{n\theta^2}}.\]
+\end{proof}
+\end{frame}
+
+\subsection{Polytime computable}
+\begin{frame}{Polytime computable}
+It is conjectured that the Planted Clique problem is \textit{hard} in the following sense (for $\tau = 0$):
+\begin{itemize}
+    \item[(A1)($\tau$)] For any sequence $\kappa = \kappa_m$ such that $\kappa \leq m^\beta$ for some $\beta \in (0, 1/2-\tau)$, there is no randomised polynomial algorithm that can correctly identify the planted clique problem with probability tending to $1$ as $m \to +\infty$.
+\end{itemize}
+
+However, a quasi-poly-time algorithm is known to solve PCP w.h.p. if $\kappa \geq 2\log m$ and a poly-time algorithm is known to solve PCP w.h.p. if $\kappa \geq \sqrt m$.
+\end{frame}
+
+\begin{frame}
+\begin{thm}\label{thm:no polytime}
+    Fix $\tau \in [0, 1/6)$, assume $(A1)(\tau)$ and let $\alpha \in(0, \frac {1-6\tau}{1-2\tau})$. Let $(p, k, \theta)$ be indexed by $n$ such that: (i) $k = O(p^{1/2 - \tau - \delta})$ for some $\delta \in (0, 1/2-\tau)$, (ii) $n = o(p\log p)$ and (iii) $\theta \leq k^2/(1000p)$. Also suppose that:
+    \[\frac {k^{1+\alpha}\log p}{n\theta^2} \xrightarrow[n \to +\infty]{} 0.\]
+
+    Let $\mathbf X \in \R^{n \times p}$ with rows iid $P$. Then every sequence of randomised polynomial time estimators $(\hat v^{(n)})_n$ of $v_1(P)$ satisfies:
+    \[\sqrt {\frac {n\theta^2}{k^{1+\alpha}\log p}}\sup_{P \in \mathcal P_p(n, k, \theta)}\E_PL(\hat v^{(n)}, v_1(P)) \xrightarrow[n \to +\infty]{} +\infty.\]
+\end{thm}
+\end{frame}
+
+\begin{frame}
+\begin{algorithm}[H]
+\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+
+\Input{$m \in \N, \kappa \in \{1, \ldots, m\}, G \in \mathbb G_m, L \in \N$}
+\Begin{
+    \textbf{Step 1:} Let $n \leftarrow \lfloor9m/(10L)\rfloor$, $p=p_n$, $k \leftarrow \lfloor\kappa/L\rfloor$. Draw $u_1, \ldots, u_n, w_1, \ldots, w_p$ uniformly from $V(G)$. Form $\mathbf A = (\ind_{\{u_i \sim w_j\}})_{ij}$ and $\mathbf X = \diag(\xi_1, \ldots, \xi_n)(2\mathbf A - \mathbf 1)$. \\
+    \textbf{Step 2:} Use $\hat v^{(n)}$ to compute $\hat v \coloneqq \hat v^{(n)}$. \\
+    \textbf{Step 3:} Let $\hat S = \hat S(\hat v)$ be the lexicographically smallest $k$-subset of $\{1, \ldots, p\}$ such that $(\hat v_j)_{j \in \hat S}$ contains the $k$ largest coordinates in $\hat v$ in absolute value. \\
+    \textbf{Step 4:} For $u \in V(G)$ and $W \subset V(G)$, let $\nb(u, W) \coloneqq \ind_{\{u \in W\}} + \sum_{w \in W}\ind_{\{u \sim w\}}$. Set $\hat K \coloneqq \{u \in V(G) \st \nb(u, \{w_j\}_{j \in \hat S}) \geq 3k/4\}$.
+}
+\Output{$\hat K$}
+\caption{Pseudo-code for a Planted Algorithm algorithm.\label{alg:2}}
+\end{algorithm}
+\end{frame}
+
+\begin{frame}[allowframebreaks]{References}
+\footnotesize
+\bibliographystyle{apalike}
+\bibliography{references}{}
+\end{frame}
+
+\end{document}
