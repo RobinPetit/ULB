@@ -2,8 +2,6 @@
 
 \usepackage{commath}
 
-%\usepackage[french]{babel}
-%\usepackage{palatino, eulervm}  % commenter pour rétablir la police usuelle
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{fullpage}
@@ -21,6 +19,11 @@
 \DeclareMathOperator{\Span}{Span}
 \DeclareMathOperator{\Ker}{Ker}
 \DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\spectre}{spectre\!}
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\Imapp}{Im}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\rot}{rot}
 
 \newcommand{\C}{{\mathbb C}}
 \newcommand{\R}{{\mathbb R}}
@@ -47,7 +50,8 @@
 \newtheorem{prp}[thm]{Proposition}
 \newtheorem{cor}[thm]{Corollaire}
 \newtheorem{lem}[thm]{Lemme}
-%\addto\captionsfrench{\renewcommand\proofname{\underline{Démonstration}}}
+\newtheorem{claim}[thm]{Affirmation}
+\renewcommand\proofname{\textnormal{\textbf{Démonstration}}}
 \theoremstyle{definition}
 \newtheorem{déf}[thm]{Définition}
 \theoremstyle{remark}
@@ -1266,7 +1270,7 @@ $T(\sum_{j=1}^nx_j) \xrightarrow[n \to \pinfty]{} Tx$. Or puisque $T(\sum_{j=1}^
 ce qui montre bien~\eqref{eq:sharp}.
 \end{proof}
 
-\begin{thm}[du graphe fermé, Banach] Soient $E, F$ espaces de Banach, $T : E \to F$ linéaire. Si $\Gamma_T$ est fermé dans $E \times F$, alors $T$ est bornée.
+\begin{thm}[du graphe fermé, Banach]\label{thm:graphe fermé} Soient $E, F$ espaces de Banach, $T : E \to F$ linéaire. Si $\Gamma_T$ est fermé dans $E \times F$, alors $T$ est bornée.
 \end{thm}
 
 \begin{proof} $\Gamma_T$ est un sous-espace vectoriel fermé de $E \times F$. Or $E \times F$ est un espace de Banach puisque le produit d'espaces de Banach en est un.
@@ -1277,7 +1281,7 @@ on déduit que ${T_1}^{-1}$ est ouverte, i.e. $T_2$ est continue.
 De plus, $T_2$ est continue car les projections sont toujours continues pour la topologie produit. Donc $T = T_2T_1$ est composition d'applications continues, et est donc continue.
 \end{proof}
 
-\chapter{Équations aux dérivées partielles et théorie des distributions}
+\chapter{Équations aux dérivées partielles}
 \section{Rappels}
 Dans le cadre des EDOs, on cherche une fonction $u : [-T, T] \to \C$ telle que~:
 \[F(t, u(t), u'(t), \ldots, u^{(m)}(t)) = 0.\]
@@ -1369,11 +1373,256 @@ De manière similaire, pour $T > 0$, on introduit~:
 \[\norm \cdot_{C^p_b(\R^n)} : C^p_b(\R^n) \to \R^+ : v \mapsto \norm v_{C^p_b(\R^n)} \coloneqq \sum_{\abs \alpha \leq p}\sup_{x \in \R^n}\abs {\partial^\alpha v(x)}.\]
 \end{prp}
 
-\begin{prp} $C^p_b(\R^n)$ est un espace de Banach.
+\begin{prp}\label{prp:C^p_b Banach} $C^p_b(\R^n)$ est un espace de Banach.
 \end{prp}
 
 \begin{proof}
 %\textbf{Cas $p=0$.} Soit $(v_k)_k \subset C^p_b(\R^n)$ de Cauchy, i.e. $\sup\abs {v_k-v_\ell} \xrightarrow[k,\ell \to \pinfty]{} 0$.
 TODO
+\end{proof}
+
+\begin{prp} Soient $B \in \C^{m \times m}$, $\mu \in \C$ et $w \in \C^m$. Si $Bw = \mu w$, alors $e^Bw = e^\mu w$.
+\end{prp}
+
+\begin{proof} Par définition de l'exponentielle matricielle~:
+\[e^Bw = \left(\sum-{k \geq 0}\frac {B^k}{k!}\right)w = \sum_{k \geq 0}\frac {B^kw}{k!} = \sum_{k \geq 0}\frac {\mu^kw}{k!} = e^\mu w.\]
+\end{proof}
+
+\section{Théorème de Petrowsky}
+\begin{thm}[Petrowsky, 1937] Supposons qu'il existe $T > 0$, $p \in \N$ tels que~:
+\[\forall F \in C^p_b([-T, T] \times \R^n), u^0 \in C^p_b(\R^n) : \exists! u \in C^1_b(\R^n) \st:\]
+\[\begin{cases}\dpd ut + \sum_{j=1}^nA_j\dpd u{x_j} = F & \text{ si } \abs t \leq T, x \in \R^n\\u=u^0 &\text{ si }t=0, x \in \R^n.\end{cases}\]
+
+Alors $\forall \xi \in \R^n : \spectre\left(\sum_{j=1}^m\xi_j A_j\right) \subset \R$.
+\end{thm}
+
+\begin{rmq} Pour simplifier les notations, on pose $L \coloneqq \pd {}t + \sum_{j=1}^mA_j\pd {}{x_j}$.
+\end{rmq}
+
+\begin{proof} Le problème de Cauchy induit une application (l'application \textit{solution})~:
+\[\Phi : C^p_b([-T, T] \times \R^n) \times C^p_b(\R^n) \to C^1_b(\R^n) : (F, u^0) \mapsto \Phi(F, u^0) \coloneqq u.\]
+
+Montrons que $\Phi$ est linéaire. Soient $(F, u^0), (\tilde F, \tilde u^0) \in C^p_b([-T, T] \times \R^n) \times C^p_b(\R^n)$.
+
+On prend $C^1_b(\R^n) \ni z \coloneqq \Phi\left((F, u^0) + (\tilde F, \tilde u^0)\right) = \Phi(F+\tilde F, u^0 + \tilde u^0)$ qui satisfait $Lz = F+\tilde F$
+(pour $\abs t \leq T, x \in \R^n$) et $\restr z{t=0} = u^0+\tilde u^0$ (pour $x \in \R$). Prenons également $z_1 = \Phi(F, u^0)$ et $z_2 = \Phi(\tilde F, \tilde u^0)$.
+Or par linéarité de l'opérateur $L$~:
+\[\begin{cases}&L(z_1+z_2) = Lz_1 + Lz_2 = F+\tilde F\\&\restr {(z_1+z_2)}{t=0} = u^0 + \tilde u^0.\end{cases}\]
+
+Dès lors $z$ et $z_1+z_2$ satisfont le même problème de Cauchy et par hypothèse, cette solution est unique, i.e. $z = z_1 + z_2$.
+
+Notons maintenant que $\Phi$ est une application linéaire entre des espaces de Banach (par la Proposition~\ref{prp:C^p_b Banach}). Notons $E = \dom \Phi$ et $G = \Imapp \phi$
+
+Montrons que $\Gamma_\Phi$, le graphe de $\Phi$ est fermé dans $E \times G$. Soit $(\zeta, \psi) \in \overline {\Gamma_\Phi}$. Il existe des suites $(\zeta_k)_k \subset E$
+et $(\psi_k)_k \subset G$ telles que $\zeta_k \xrightarrow[k \to \pinfty]{E} \zeta$ et $\psi_k \xrightarrow[k \to \pinfty]{G} \psi$. En notant $\zeta_k = (F_k, u^0_k)$
+et $\zeta = (F, u^0)$, on a $F_k \xrightarrow[k \to \pinfty]{C^p_b([-T, T] \times \R^n)} F$ et $u^0_k \xrightarrow[k \to \pinfty]{C^p_b(\R^n)} u^0$.
+
+Par définition de l'application $\Phi$~: $L\Phi(\zeta_k) = F_k$ et $\restr{\Phi(\zeta_k)}{t=0} = u^0_k$. Or, puisque $\Phi(\zeta_k) \xrightarrow[k \to \pinfty]{G} \psi$~:
+\[L\Phi(\zeta_k) \xrightarrow[k \to \pinfty]{C^0_b(\R^n)} L\psi \qquad \text{ et } \qquad \restr {\Phi(\zeta_k)}{t=0} \xrightarrow[k \to \pinfty]{C^1_b(\R^n)} \restr \psi{t=0},\]
+et donc, en sachant $\Phi(\zeta_k) \xrightarrow[k \to \pinfty]{C^1_b(\R^n)} \psi$~:
+\[\dpd {}t\Phi(\zeta_k) + \sum_{j=1}^nA_j\dpd {}{x_j}\Phi(\zeta_k) \xrightarrow[k \to \pinfty]{C^0_b(\R^n)} \dpd {}t\psi + \sum_{j=1}^nA_j\dpd {}{x_j}\psi.\]
+
+En effet, puisque $\dpd {}t$ et $\dpd {}{x_j}$ sont des opérateurs bornés de $C^1_b([-T, T] \times \R^n)$ dans $C^0_b([-T, T] \times \R^n)$ et que $A_j$
+est un opérateur borné de $C^0_b([-T, T] \times \R^n)$ dans lui-même, la convergence se fait terme à terme car borné $\equiv$ continu.
+
+Montrons donc que $\dpd {}t$ est un opérateur borné ($\dpd {}{x_j}$ se fait de manière similaire). Pour $v \in C^1_b([-T, T] \times \R^n)$~:
+\[\norm {\dpd vt}_{C^0_b([-T, T] \times \R^n)} = \sup_{t,x}\abs {\dpd vt(t, x)}
+\leq \sup_{t,x}\abs {\dpd vt(t, x)} + \sup_{t,x}\abs {v(t, x)} + \sum_{j=1}^n\sup_{t,x}\abs {\dpd v{x_j}(t,x)} = \norm v_{C^0_b([-T, T] \times \R^n)}.\]
+
+Dès lors, puisque $F_k = L\Phi(\zeta_k)$~:
+\[F_k \xrightarrow[k \to \pinfty]{C^p_b(\R^n)} F \qquad \text{ et } \qquad L\Phi(\zeta_k) \xrightarrow[k \to \pinfty]{C^0_b(\R^n)} L\psi.\]
+
+Or la convergence dans $C^p_b(\R^n)$ implique la convergence $C^0_b(\R^n)$ car $C^p_b(\R^n) \subseteq C^0_b(\R^n)$ et~:
+\[\forall v \in C^p_b(\R^n) : \norm v_{C^p_b(\R^n)} \leq \norm v_{C^0_b(\R^n)}.\]
+
+Donc par unicité de la limite dans les espaces métriques (ici, dans $C^0_b(\R^n)$)~: $F = L\psi$. De la même manière, on a~:
+\[\restr{\Phi(\zeta_k)}{t=0} = \restr {\psi_k}{t=0} \xrightarrow[k \to \pinfty]{C^1_b(\R^n)} \psi \qquad \text{ et } \qquad \restr {\psi_k}{t=0} = u^0_k \xrightarrow[k \to \pinfty]{C^p_b(\R^n)} u^0.\]
+À nouveau, par unicité de la limite (cette fois dans $C^1_b(\R^n)$, puisque $p \geq 1$)~: $\restr {\psi}{t=0} = u^0$. Dès lors $\Phi(\zeta) = \Phi(F, u^0) = \psi$, et donc
+$(\zeta, \psi) \in \Gamma_\Phi$. Dès lors par le théorème du graphe fermé de Banach (Théorème~\ref{thm:graphe fermé}), on sait que $\Phi$ est bornée, i.e. $\exists C > 0$
+($C = \norm \Phi$) tel que pour tout $u \in E$~:
+\begin{equation}\label{eq:Phi bornée}
+	\norm {\Phi u}_{C^1_b(\R^n)} = \sum_{\abs \alpha \leq 1}\sup_{\abs t \leq T,x \in \R^n}\abs {\partial^\alpha u(t, x)}
+		\leq C\left[\sum_{\abs {\beta} \leq p}\left(\sup_{\abs t \leq T, x \in \R^n}\abs {\partial^\beta F(t, x)} + \sup_{x \in \R^n}\abs {\partial^\beta u^0(x)}\right)\right]
+		= \norm {u}_E
+\end{equation}
+
+Finalement, raisonnons par l'absurde. Posons $F \equiv 0$ et $u^0 : \R^n \to \C : x \mapsto e^{i\scpr x\xi}v^0$ pour $v^0 \in \C^m$ et $\xi \in \R^n$. Fabriquons alors $u$, une
+solution du problème de Cauchy~:
+\begin{equation}\label{eq:PC 1 Petrowsky}\tag{PC~1}
+	\begin{cases}
+		Lu = 0 &\text{ pour } \abs t \leq T, x \in \R^n \\
+		\restr u{t=0} = u^0 &\text{ pour } x \in \R^n
+	\end{cases}
+\end{equation}
+
+Par séparation des variables~:
+\[u(t, x) = e^{i\scpr x\xi} v(t, \xi),\]
+et pour $A(\xi) \coloneqq \sum_{j=1}^m\xi_jA_j$~:
+\[Lu = e^{i\scpr x\xi}\left(\dpd vt + iA(\xi)v\right) = 0.\]
+
+Donc on a l'EDO suivante~:
+\begin{equation}\label{eq:PC 2 Petrowsky}\tag{PC~2}
+	\begin{cases}
+		&v' + iA(\xi)v = 0 \\
+		&\restr v{t=0} = v^0
+	\end{cases}
+\end{equation}
+
+\eqref{eq:PC 2 Petrowsky} admet pour solution~:
+\[v(t, \xi) = e^{-itA(\xi)}v^0,\]
+ce qui permet de déterminer la solution de~\eqref{eq:PC 1 Petrowsky}~:
+\[u(t, x) = e^{i\scpr x\xi}e^{-itA(\xi)}v^0.\]
+
+Or par~\eqref{eq:Phi bornée}, on a~:
+\begin{equation}\label{eq:fin Petrowsky}
+	\sup_{\abs t \leq T}\abs {u(t, 0)} \leq C\sum_{\abs \beta \leq p}\sup_{» \in \R^n}\abs {\partial^\beta u^0(x)}.
+\end{equation}
+
+De plus, puisque $\abs {\partial^\beta u^0(x)} = \abs {\partial^\beta e^{i\scpr x\xi}v^0} \leq C\abs \xi^{\abs \beta}\abs {v^0}$~:
+\[\sup_{\abs t \leq T}\abs {u(t, 0)} \leq C(1+\abs \xi^p)\abs {v^0}.\]
+
+Or $\abs {u(t, 0)} = \abs {e^{-itA(\xi)}v^0}$.
+
+Supposons maintenant qu'il existe un $\xi^0 \in \R^n$ tel que $A(\xi^0)$ admette une valeur propre $\lambda = \lambda(\xi^0) \in \C \setminus \R$,
+et notons le vecteur propre associé $v^0 = v(\xi^0)$. Pour $\sigma > 0$~:
+\[A(\sigma\xi^0)v^0 = \sigma\lambda(\xi^0)v^0,\]
+et donc~:
+\[-itA(\sigma\xi^0)v^0 = -it\sigma\lambda(\xi^0)v^0.\]
+
+Dès lors~:
+\[e^{-itA(\sigma\xi^0)}v^0 = e^{-it\sigma\lambda(\xi^0)}v^0,\]
+et en particulier~:
+\[\abs {e^{-itA(\sigma\xi^0)}v^0} = \abs {e^{-it\sigma\lambda(\xi^0)}}\abs {v^0} = e^{t\sigma\Im\lambda(\xi^0)}\abs {v^0}.\]
+
+\eqref{eq:fin Petrowsky} nous dit finalement que~:
+\[\forall \sigma > 0 : \forall t \in [-T, T] : \abs {v^0}e^{t\sigma\Im\lambda(\xi^0)} \leq C\left(1 + \abs {\sigma\xi^0}\right)^p\abs {v^0}.\]
+Or, pour $t^0$ tel que $t^0\Im\lambda(\xi^0) > 0$ (et un tel $t^0$ existe, par exemple $\frac T2\sgn(\Im\lambda(\xi^0))$ est bien dans $[-T, T]$), on a une contradiction car
+$\sigma \mapsto e^{t^0\Im\lambda(\xi^0)\sigma}$ croît exponentiellement et ne peut pas être bornée par un polynôme en $\sigma$.
+\end{proof}
+
+\begin{déf} Si $L = \pd {}t + \sum_{j=1}^nA_j\pd {}{x_j}$ satisfait la condition de Petrowsky (i.e. $\forall \xi \in \R^n : \spectre A(\xi) \subset \R$), on dit que
+$L$ est \textit{hyperbolique} dans la direction $\pd {}t$.
+\end{déf}
+
+\begin{rmq} Le terme \textit{hyperbolicité} vient du fait que les courbes de niveau de la forme quadratique associée à la transformée de Fourier de $L$ sont hyperbolique.
+\end{rmq}
+
+\begin{ex}~
+\begin{enumerate}
+	\item Pour $m=n=1$~: $L = \pd {}t + a\pd {}x$. Pour $\xi \in \R : A(\xi) = a\xi$. Donc la condition de Petrowsky revient à imposer que $a \in \R$.
+	\item On prend $L = \partial^2_t + 2b\partial^2_{t,x} + c\partial^2_x$ et l'EDP associée $Lu = f$. En posant $v = \partial_t u$ et $w = \partial_x u$, l'EDP devient~:
+	\[\begin{cases}\dpd vt + 2b\dpd vx + c\dpd wx = f\\\dpd vx - \dpd wt = 0\end{cases}\]
+	ou sous forme matricielle~:
+	\[\dpd {}t\begin{bmatrix}v \\ w\end{bmatrix} + \begin{bmatrix}2b & c \\-1 & 0\end{bmatrix}\dpd {}x\begin{bmatrix}v \\ w\end{bmatrix} = \begin{bmatrix}f \\ 0\end{bmatrix}.\]
+
+	La condition d'hyperbolicité dit alors que $\spectre \begin{bmatrix}2b & c \\-1 & 0\end{bmatrix} \subset \R$, i.e. $b,c \in \R$ et $b^2-c \geq 0$.
+
+	Le Laplacien est un cas particulier de cet exemple avec $b=0$ et $c=1$. Donc le Laplacien n'est pas hyperbolique car $b^2-c = -1 \not \geq 0$.
+	Par contre $\partial_t^2 - \partial_x^2$ est hyperbolique car $b^2 - c = 1 \geq 0$.
+
+	\item Les équations de Maxwell~:
+	\[\begin{cases}\dpd Et = \rot H\\\dpd Ht = \rot E\end{cases}\]
+	pour $E, H : \R^4 \to \C$ sont hyperboliques et peuvent s'écrire sous la forme~:
+	\[\dpd ut + \sum_{j=1}^3\dpd u{x_j},\]
+	pour $A_j = \begin{bmatrix}0 & \omega_j \\-\omega_j & 0\end{bmatrix}$ pour $\omega_1 = \begin{bmatrix}0 & 0 & 0\\0 & 0 & 1\\0 & -1 & 0\end{bmatrix}$,
+	$\omega-2 = \begin{bmatrix}0 & 0 & -1\\0 & 0 & 0\\1 & 0 & 0\end{bmatrix}$, $\omega_3 = \begin{bmatrix}0 & 1 & 0\\-1 & 0 & 0\\0 & 0 & 0\end{bmatrix}$, et
+	$u = \begin{bmatrix}E\\H\end{bmatrix}$. En effet, les $A_j$ sont symétriques réelles, donc pour tout $\xi \in \R^3$, les valeurs propres de $A(\xi) = \sum_{j=1}^3\xi_jA_j$
+	sont réelles car $A(\xi)$ est également symétrique réelle.
+	\item Pour $\sigma_1 = \begin{bmatrix}0 & 1 \\1 & 0\end{bmatrix}$, $\sigma_2 = \begin{bmatrix}0 & i \\-i & 0\end{bmatrix}$, $\sigma_3 = \begin{bmatrix}1 & 0\\0 & -1\end{bmatrix}$,
+	on pose $A_j \coloneqq \begin{bmatrix}0 & -\sigma_j\\-\sigma_j & 0\end{bmatrix}$. $L = \dpd {}t + \sum_{j=1}^3A_j\dpd {}{x_j}$ est l'\textit{opérateur de Dirac}.
+	$L$ est hyperbolique puisque pour $\xi \in \R^3 : \sum_{j=1}^3\xi_jA_j$ est hermitienne.
+\end{enumerate}
+\end{ex}
+
+\begin{déf} on pose l'ensemble~:
+\[\widetilde {\mathcal S}([-T, T] \times \R^n) \coloneqq \left\{u \in C^\infty([-T, T] \times \R^n) \st \forall \alpha, \beta \in \N^n : \forall k \in \N :
+	x^\alpha\partial_x^\beta\partial_t^ku \in L^\infty([-T, T] \times \R^n)\right\}.\]
+\end{déf}
+
+\begin{rmq} $\widetilde{\mathcal S}([-T, T] \times \R^n)$ est une variante de l'espace de Schwartz où la première variable n'est pas définie sur $\R$ mais sur un compact $[-T, T]$.
+\end{rmq}
+
+\begin{thm} Soit $L$ un opérateur hyperbolique dans la direction $\pd {}t$. Alors~:
+\[\forall F \in \widetilde {\mathcal S}([-T, T] \times \R^n : \forall u^0 \in \mathcal S(\R^n) : \exists! u \in \widetilde {\mathcal S}([-T, T] \times \R^n) \st\]
+\[\begin{cases}
+	Lu = F &\text{ pour } \abs t \leq T, x \in \R^n \\
+	\restr u{t=0} = u^0 &\text{ pour } x \in \R^n
+\end{cases}\]
+\end{thm}
+
+\begin{proof} Si une solution $u$ existe, alors à $t \in [-T, T]$ fixé, on peut appliquer Fourier en $x$~:
+\[\widetilde u(t, x) = \int_{\mathbb R^n}e^{-i\scpr x\xi}u(t, x)\dif x,\]
+et $\widetilde u$ dois satisfaire le problème de Cauchy suivant~:
+\[\begin{cases}
+	\dpd {}t\widetilde u + iA(\xi)\widetilde u = \widetilde F \\
+	\restr {\widetilde u}{t=0} = \widehat {u^0},
+\end{cases}\]
+qui admet pour solution~:
+\[\widetilde u = e^{-itA(\xi)}\widehat {u^0} + \int_0^te^{-i(t-s)}\widetilde F(s, \xi)\dif s.\]
+
+Posons~:
+\begin{align*}
+	P(t, \xi) &\coloneqq e^{-itA(\xi)}\widehat {u^0}
+	Q(t, \xi) &\coloneqq \int_0^te^{-i(t-s)}\widetilde F(s, \xi)\dif s.
+\end{align*}
+
+\begin{claim}\label{claim 1} $\forall k \geq 0 : \partial_t^kP, \partial_t^kQ \in \mathcal S_\xi$, où $f \in \mathcal S_\xi$ veut dire
+$\forall t \in [-T, T] : \xi \mapsto f(t, \xi) \in \mathcal S_\xi$.
+\end{claim}
+
+Par cette affirmation, $P+Q \in \mathcal S_\xi$. Posons alors $u \coloneqq \mathcal F_\xi^{-1}(P+Q)$. On trouve~:
+\[\dpd ut + \sum_{j=1}^nA_j\dpd u{x_j}
+	= \left(\dpd {}t + \sum_{j=1}^nA_j \dpd{}{x_j}\right)\mathcal F_\xi^{-1}P + \left(\dpd {}t + \sum_{j=1}^nA_j\dpd {}{x_j}\right)\mathcal F_\xi^{-1}Q
+	= \mathcal F_\xi^{-1}\left((\partial_t + iA(\xi))(P+Q)\right),\]
+où la dernière égalité découle directement de~:
+\begin{align*}
+\left(\partial_t + \sum_{j=1}^nA_j\partial_{x_j}\right)\mathcal F_\xi^{-1}P &= \left(\partial_t + \sum_{j=1}^nA_j\partial_{x_j}\right)\int_{\R^n}e^{i\scpr x\xi}P(t,\xi)\dif\xi\\
+	&= \int_{\R^n}\left(\partial_t + \sum_{j=1}^nA_j\partial_{x_j}\right)\left(e^{i\scpr x\xi}P(t,\xi)\right)\dif\xi \\
+	&= \int_{\R^n}\partial_t\left(e^{i\scpr x\xi}P(t,\xi)\right) + \left(\sum_{j=1}^nA_j\partial_{x_j}e^{i\scpr x\xi}\right)P(t,\xi)\dif\xi \\
+	&= \int_{\R^n}e^{i\scpr x\xi}\partial_tP(t,\xi) + \sum_{j=1}^nA_ji\xi_je^{i\scpr x\xi}P(t,\xi)\dif \xi \\
+	&= \int_{\R^n}e^{i\scpr x\xi}\left(\partial_t + i\sum_{j=1}^n\xi_jA_j\right)P(t,\xi)\dif\xi.
+\end{align*}
+
+Par symétrie, on a le même résultat sur $Q$. Donc $\partial_t u + \sum_{j=1}^nA_j\partial_{x_j}u = \mathcal F_\xi^{-1}\widetilde F = F$
+(car à $t$ fixé, $\xi \mapsto F(t, \xi) \in \mathcal S$). Donc $u$ est bien solution $Lu = F$, et par la formule d'inversion de Fourier (dans l'espace de Schwartz)~:
+\[\restr {P+Q}{t=0} = \restr P{t=0} + \restr Q{t=0} = \widehat {u^0} + \int_0^0\ldots\dif s = \widehat {u^0},\]
+et donc $\restr u{t=0} = u^0$.
+
+$u$ est donc bien solution du problème de Cauchy. Il reste à montrer que $u \in \widetilde {\mathcal S}([-T, T] \times \R^n)$. Pour cela, il est suffisant de montrer que
+$P, Q \in \widetilde {\mathcal S}$ puisque la transformée de Fourier est une bijection sur $\mathcal S$.
+
+$(t, \xi) \mapsto e^{-itA(\xi)}$ est $C^\infty$, donc $(t, \xi) \mapsto e^{-itA(\xi)}\widehat {u^0}(\xi)$ est $C^\infty$ également, i.e. $P \in C^\infty$.
+Soient $\alpha, \beta \in \N^n, k \in \N$.
+
+\begin{align*}
+	\xi^\alpha\partial_t^kD_\xi^\alpha P
+	&= \xi^\alpha\partial_t^kD_\xi^\beta\left(e^{-itA(\xi)}\widehat {u^0}(\xi)\right)
+	= \xi^\alpha\partial_t^k\sum_{\beta'\leq\beta}\left[\binom \beta{\beta'}D_\xi^{\beta'}(e^{-itA(\xi)})D_\xi^{\beta-\beta'}\widehat {u^0}(\xi)\right] \\
+	&= \xi^\alpha\sum_{\beta'\leq\beta}\binom\beta{\beta'}\underbrace {\partial_t^kD_\xi^{\beta'}e^{-itA(\xi)}}_{(*)}D_\xi^{\beta-\beta'}\widehat {u^0}(\xi)
+	= \xi^\alpha\sum_{\beta'\leq\beta}\binom\beta{\beta'}D_\xi^{\beta'}\left(\left((-iA(\xi)\right)^ke^{-itA(\xi)}\right)D_\xi^{\beta-\beta'}\widehat {u^0}(\xi) \\
+	&= \xi^\alpha\sum_{\beta'\leq\beta}\left[\sum_{\gamma\leq\beta'}\binom{\beta'}\gamma D_\xi^\gamma\left(-iA(\xi)\right)^kD_\xi^{\beta'-\gamma}\left(e^{-itA(\xi)}\right)\right]D_\xi^{\beta-\beta'}\widehat{u^0}(\xi)
+\end{align*}
+
+{\tiny {$(*)$ les dérivées commutent puisque $(t, x) \mapsto e^{-itA(\xi)} \in C^\infty$.}}
+
+\begin{claim}\label{claim 2} Pour $\mu \in \N^n$~: $\exists C > 0, e_\mu > 0 \st \abs {D_\xi^\mu e^{-itA(\xi)}} \leq C(1+\abs\xi)^{e_\mu}$.
+\end{claim}
+
+Avec cette affirmation, on peut finalement majorer~:
+\begin{align*}
+	\abs {\xi^\alpha\partial_t^kD_\xi^\beta P}
+	&\leq \sum_{\beta',\gamma}C\abs \xi^\alpha\underbrace {\abs {D_\xi^\gamma (-iA(\xi))^k}}_{\text{polynôme} \leq C(1+\abs\xi)^{K_\gamma}}\underbrace {\abs {D_\xi^{\beta'-\gamma}e^{-itA(\xi)}}}_{\leq C(1+\abs\xi)^{e_\gamma}}\underbrace {\abs {D_\xi^{\beta-\beta'}\widehat {u^0}(\xi)}}_{\leq C_N(1+\abs\xi)^{-N}} \\
+	&\leq C(1+\abs\xi)^{-K} \leq C
+\end{align*}
+pour $N$ suffisamment grand.
+
+on a donc bien finalement $\xi^\alpha\partial_t^kD_\xi^\beta P$ borné. On a exactement la même chose pour $Q$.
+\end{proof}
+% Crevindiou. P'tite binouze, c'est mérité.
+
+\begin{proof}[\textnormal {\textbf {Démonstration} (de l'Affirmation~\ref{claim 1})}] À venir
+\end{proof}
+
+\begin{proof}[\textnormal {\textbf {Démonstration} (de l'Affirmation~\ref{claim 2})}] À venir
 \end{proof}
 \end{document}
