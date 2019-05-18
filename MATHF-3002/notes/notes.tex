@@ -79,27 +79,28 @@ la mesure de Lebesgue sur $\R^n$.
 \end{equation}
 \end{déf}
 
-Cette fonction est bien définie car $x \mapsto e^{-i\scpr x\xi}$ est continue (et donc $L^\infty$), et $u$ est intégrable, donc $x \mapsto e^{-i\scpr x\xi}u(x)$ est intégrable
+Cette fonction est bien définie car $x \mapsto e^{-i\scpr x\xi}$ est bornée en module (et donc $L^\infty$), et $u$ est intégrable, donc $x \mapsto e^{-i\scpr x\xi}u(x)$ est intégrable
 par Hölder.
 
-\begin{prp} Pour $u \in L^1$, $\hat u$ est continue.
+\begin{prp} Pour $u \in L^1(\R^n)$, $\hat u$ est continue.
 \end{prp}
 
-\begin{proof} Soient $\xi_0 \in \R^n$ et $(h_k)_{k \in \N} \in {\R^n}^\N \tq h_k \xrightarrow[k \to \pinfty]{} 0$.
+\begin{proof} Soient $\xi_0 \in \R^n$ et $(h_k)_{k \in \N} \subset \R^n \tq h_k \xrightarrow[k \to \pinfty]{} 0$.
 \[\hat f(\xi_0 + h_k) = \int e^{-i\scpr x{\xi_0}}e^{-i\scpr x{h_k}}f(x)\dif x.\]
 
-Puisque $\abs {e^{-i\scpr x{\xi_0}}e^{-i\scpr x{h_k}}f(x)} = \abs {f(x)}$ et $x \mapsto e^{-i\scpr x{\xi_0}}e^{-i\scpr x{h_k}}f(x)$ converge partout
-(en particulier presque partout), par le théorème de la convergence dominée~:
+Puisque $\abs {e^{-i\scpr x{\xi_0}}e^{-i\scpr x{h_k}}f(x)} = \abs {f(x)}$ et
+$e^{-i\scpr \cdot{\xi_0}}e^{-i\scpr \cdot{h_k}}f(\cdot) \xrightarrow[k \to \pinfty]{\lambda\text{-p.p.}}e^{-i\scpr \cdot{\xi_0}}f(\cdot)$ (la suite converge même partout). Donc
+par le théorème de la convergence dominée~:
 \[\hat f(\xi_0 + h_k) \xrightarrow[k \to \pinfty]{} \int e^{-i\scpr x{\xi_0}}f(x)\dif x = \hat f(\xi_0).\]
 \end{proof}
 
-\begin{prp} Soit $u \in L^1$. Si $\forall j \in \intint 1n : x_jf \in L^1$, alors~: $\hat u \in C^1$ et~:
+\begin{prp} Soit $u \in L^1(\R^n)$. Si $\forall j \in \intint 1n : x_jf \in L^1$, alors~: $\hat u \in C^1$ et~:
 \begin{equation}\label{eq:pd transformée Fourier}
-	\forall j \in \intint 1n : \pd {\hat u}{\xi_j}\sVert[3]_\xi = \int e^{-i\scpr x\xi}(-ix_j)u(x)\dif x.
+	\forall j \in \intint 1n : \dpd {\hat u}{\xi_j}\sVert[3]_\xi = \int e^{-i\scpr x\xi}(-ix_j)u(x)\dif x.
 \end{equation}
 \end{prp}
 
-\begin{proof} Soit $(h_k)_{k \in \N} \in \R^\N \tq h_k \xrightarrow[k \to \pinfty]{} 0$, et prenons $\{e_j\}_{j=1}^n$ la base canonique de $\R^n$.
+\begin{proof} Soit $(h_k)_{k \in \N} \subset \R \tq h_k \xrightarrow[k \to \pinfty]{} 0$, et prenons $\{e_j\}_{j=1}^n$ la base canonique de $\R^n$.
 \[\frac {\hat u(\xi + h_ke_j) - \hat u(\xi)}{h_k} = \int e^{-i\scpr x\xi}\underbrace {\frac {e^{-ih_kx_j}-1}{h_k}}_{\xrightarrow[k \to \pinfty]{} -ix_j}u(x)\dif x.\]
 
 En module~:
@@ -162,7 +163,7 @@ Dans l'idée, $\mathcal S$ est l'ensemble dont toutes les dérivées décroissen
 Donc~:
 \[x^\lambda\partial^\mu(x^\alpha\partial^\beta u) = \sum_{\sigma \leq \mu}\binom \mu\sigma x^\lambda\partial^\sigma(x^\alpha)\partial^{\mu-\sigma}u,\]
 où $x^\lambda\partial^\sigma(x^\alpha) \leq \cste x^\gamma$. On en déduit que $x^\lambda\partial^\mu(x^\alpha\partial^\beta u)$ est une somme finie de termes
-bornés et est donc bornée.
+essentiellement bornés et est donc essentiellement bornée.
 \end{proof}
 
 À défaut de définir une topologie sur $\mathcal S(\R^n)$, on définit uniquement une notion de convergence.
@@ -1167,7 +1168,7 @@ En posant $z \coloneqq \frac {Tx}{\norm {Tx}}$, on observe~:
 Pour $E, F$ espaces vectoriels normés, plusieurs normes semblent canoniques. À $p \geq 1$ fixé, on peut définir~:
 \[\norm {(e, f)}_{E \times F; p} \coloneqq \left(\norm e_E^p + \norm f_F^p\right)^{1/p}.\]
 De même, si $E$ et $F$ sont munis d'un produit scalaire, on a un produit scalaires canonique sur $E \times F$~:
-\[\scpr {(e_1, f_1)}{(e_2, f_2)}_{E \times F} \coloneqq \scpr {e_1}{e_2}_F + \scpr {f_1}{f_2}_F,\]
+\[\scpr {(e_1, f_1)}{(e_2, f_2)}_{E \times F} \coloneqq \scpr {e_1}{e_2}_E + \scpr {f_1}{f_2}_F,\]
 et donc la norme $\norm \cdot_{E \times F; 2}$ semble particulièrement intuitive.
 
 Il est cependant à noter que les normes $\norm \cdot_{E \times F; p}$ sont équivalentes pour toutes les valeurs de $p \geq 1$, et donc que les topologies induites par ces
@@ -1193,15 +1194,76 @@ Or $x \in E$ et par unicité de la limite, $Tx = y$. Dès lors, $(x, y) \in \Gam
 \begin{déf} Une application $f : E \to F$ est \textit{ouverte} si l'image de tout ouvert de $E$ par $f$ est un ouvert de $F$.
 \end{déf}
 
+\begin{thm}[de Baire] Soit $X$ un espace métrique complet. Si $(V_n)_{n \geq 0}$ est une suite d'ouverts denses dans $X$, alors $\bigcap_{n \geq 0}V_n$ est également dense dans $X$.
+\end{thm}
+
+\begin{proof} Soient $(V_n)_n$ ouverts denses dans $X$. Si pour tout $W \subset X$ ouvert non vide, $W \cap \bigcap_{n \geq 0}V_n \neq \emptyset$, alors $\bigcap_{n \geq 0}V_n$
+ests dense dans $X$. Fixons donc $W \subset X$ ouvert de $X$ non vide et trouvons $x \in W \cap \bigcap_{n \geq 0}V_n$.
+
+$V_1$ est dense. Donc $\exists x_1 \in W \cap V_1$ et $r_1 \in (0, 1)$ tel que $\overline {B(x_1, r_1)} \subset W \cap V_1$. $B(x_X1, r_1)$ est un ouvert de $X$, donc
+$\exists x_2 \in B(x_1, r_1) \cap V_2$ et $r_2 \in (0, 1/2)$ tel que $\overline {B(x_2, r_2)} \subset B(x_1, r_1) \cap V_2$, etc. On construit ainsi une suite $(x_n)_{n \geq 1}$
+et $(r_n)_{n \geq 1}$ tels que~:
+\[\forall n \geq 2 : x_n \in B(x_{n-1}, r_{n-1}) \cap V_n \text{ et } r_n \in (0, 1/n) \st \overline {B(x_n, r_n)} \subset B(x_{n-1}, r_{n-1}) \cap V_n.\]
+
+À $n$ fixé, pour $k \geq n$, $x_k \in B(x_n, r_n)$ et donc pour $k, \ell \geq n : d(x_k, x_\ell) \leq d(x_k, x_n) + d(x_\ell, x_n) \leq 2r_n = \frac 2n$.
+Donc la suite $(x_n)_n$ est de Cauchy dans $X$. Dès lors $\exists x \in X \st x_n \xrightarrow[n \to \pinfty]{} x$. De plus, pour $k \geq n$~:
+\[x_k \in \overline {B(x_n, r_n)} \subset B(x_{n-1}, r_{n-1}) \cap V_n \subset V_n.\]
+Dès lors $\forall n \geq 1 : \forall k \geq n : x_k \in V_n$, et donc $\forall k \geq 1 : x_k \in \bigcap_{k=1}^nV_n$. En particulier~: $x \in \bigcap_{n \geq 1}V_n$.
+
+Finalement, puisque $x \in \overline {B(x_1, r_1)} \subset W$, on a bien $x \in W \cap \bigcap_{n \geq 1}V_n$.
+\end{proof}
+
+\begin{rmq} Le théorème de Baire peut se formuler de la manière équivalente suivante: si dans $X$, $(F_n)_{n \geq 0}$ est une suite de fermés d'intérieur vide,
+alors $\bigcup_{n \geq 0}F_n$ est également d'intérieur vide.
+\end{rmq}
+
 \begin{thm}[de l'application ouverte, Banach] Soient $E, F$ espaces de Banach, $T \in \mathcal L(E, F)$. Si $T$ est surjective, alors $T$ est ouverte.
 \end{thm}
 
 \begin{proof} Notons $B_E$ (resp. $B_F$) la boule unité dans $E$ (resp. dans $F$). Il suffit de montrer que $\exists \delta > 0 \st T(B_E) \supset \delta B_F$.
-En effet, en supposant que cette inclusion est vérifiée, on a $T(x_0 + \lambda E) = Tx_0 + \lambda T(B_E)$. Dès lors, si $U$ est un voisinage de $x_0$ dans $E$,
+En effet, en supposant que cette inclusion est vérifiée, on a $T(x_0 + \lambda B_E) = Tx_0 + \lambda T(B_E)$. Dès lors, si $U$ est un voisinage de $x_0$ dans $E$,
 alors $T(U)$ est un voisinage de $Tx_0$ dans $F$. Si de plus $U$ est ouvert, $U$ est un voisinage de tout $y \in U$, et donc $T(U)$ est un voisinage de tout $Ty \in T(U)$,
 et donc $T(U)$ est ouvert dans $F$.
 
-\TODO: Montrer que l'inclusion est bien vérifiée.
+Montrons donc qu'il existe un tel $\delta > 0$. On sait que $E = \bigcup_{n \geq 0}n B_E$, et donc~:
+\[F = T(E) = T\left(\bigcup_{n \geq 0}n B_E\right) = \bigcup_{n \geq 0}T(n B_E).\]
+
+Supposons alors par l'absure que $\forall n \geq 0 : \mathring {\overline {T(nB_E)}} = \emptyset$. Par Baire, on a $F = \mathring F = \emptyset$, ce qui est une contradiction.
+
+Dès lors, il existe $n > 0$ te que $T(nB_E) \supseteq \mathring {\overline {T(nB_E)}} \neq \emptyset$, et donc il existe un ouvert $W \subset \overline {T(nB_E)}$. Soient $y_0 \in W$
+et $r > 0 \st y_0 + rB_F \subset W$. Fixons également $y \in F \st \norm y < r$. Soit également $(x'_k)_{k \geq 0} \subset nB_E \st Tx'_k \xrightarrow[k \to \pinfty]{} y_0$.
+
+Puisque $y_0+y \in W \subset \overline {T(nB_E)}$, prenons une autre suite $(x''_k)_{k \geq 0} \subset nB_E \st Tx''_k \xrightarrow[k \to \pinfty]{} y_0+y$.
+
+On note $x_k \coloneqq x'_k - x''_k$. $\norm {x_k} \leq \norm {x''_k} + \norm {x'_k} \leq 2n$ et $Tx_k = Tx''_k - Tx'_k \xrightarrow[k \to \pinfty]{} y_0+y-y_0 = y$.
+Dès lors $\forall \varepsilon > 0 : \forall y \in rB_F : \exists x \in E \st \norm x \leq 2n$ et $\norm {Tx-y} \leq \varepsilon$. Ce qui est équivalent à~:
+\begin{equation}\tag{$\Delta$}\label{eq:Delta}
+	\forall y \in F : \forall \varepsilon > 0 : \exists x \in E \st \norm x \leq \frac {4n}r\norm y \text{ et } \norm {Tx - y} \leq \varepsilon.
+\end{equation}
+En effet, si $y = 0$, on prend $x=0$, et si $y \neq 0$, on sait qu'il existe $\tilde x \in E \st \norm x \leq 2n$ et $\norm {T\tilde x - \frac {2}{2\norm y}y} \leq \varepsilon$.
+On peut dès lors poser $x \coloneqq \frac {2\norm y}{r}x$.
+
+Posons $\delta \coloneqq \frac r{4n}$, et prenons $\omega > 0$. Montrons alors que~:
+\begin{equation}\tag{$\sharp$}\label{eq:sharp}
+	\forall y \in F : \norm y \leq \delta \Rightarrow \exists x \in E \st \norm x \leq 1+\omega \text{ et } Tx = y.
+\end{equation}
+
+Par~\eqref{eq:Delta}~:
+\[\exists x_1 \in E \st \norm {x_1} \leq \frac 1\delta\norm y \leq 1 \text{ et } \norm {Tx_1-y} \frac {\delta\omega}2.\]
+
+De même~:
+\[\exists x_2 \in E \st \norm {x_2} \leq \frac {4n}r\norm {Tx_1 - y} \leq \frac \omega2 \text{ et } \norm {(y-Tx_1 - Tx_2} \leq \frac {\delta\omega}{2^2}.\]
+On construit ainsi $x_1, \ldots, x_n$ tels que $\norm {x_n} \leq 2^{-(n-1)}\omega$. Pour $\varepsilon = 2^{-n}\delta\omega$, on a l'existence de
+$x_n \st \norm {x_n} \leq 2^{-(n-1)}\omega$ et $\norm {y-Tx_1-\ldots-Tx_n} \leq \varepsilon$.
+
+De plus, puisque $(x_n)_n$ est de Cauchy, la suite $(\sum_{j=1}^nx_j)_n$ est également de Cauchy. Donc~:
+\[\exists x \in E \st \sum_{j=1}^nx_j \xrightarrow[n \to \pinfty]{} x.\]
+
+Par continuité de la norme $\norm \cdot$, on a également $\norm {\sum_{j=1}^nx_j} \xrightarrow[n \to \pinfty]{} \norm x$. or
+$\exists \eta > 0 \st \norm {\sum_{j=1}^nx_j} \leq 1+\omega-\eta$ et donc $\norm x \leq 1+\omega$. Finalement, par continuité de $T$, on a
+$T(\sum_{j=1}^nx_j) \xrightarrow[n \to \pinfty]{} Tx$. Or puisque $T(\sum_{j=1}^nx_j) = \sum_{j=1}^nTx_j \xrightarrow[n \to \pinfty]{} y$, par unicité de la limite
+(dans les espaces métriques complets), on a $Tx=y$,
+ce qui montre bien~\eqref{eq:sharp}.
 \end{proof}
 
 \begin{thm}[du graphe fermé, Banach] Soient $E, F$ espaces de Banach, $T : E \to F$ linéaire. Si $\Gamma_T$ est fermé dans $E \times F$, alors $T$ est bornée.
@@ -1213,5 +1275,105 @@ $T_1$ est bijective par définition du graphe d'une application et ${T_1}^{-1} :
 on déduit que ${T_1}^{-1}$ est ouverte, i.e. $T_2$ est continue.
 
 De plus, $T_2$ est continue car les projections sont toujours continues pour la topologie produit. Donc $T = T_2T_1$ est composition d'applications continues, et est donc continue.
+\end{proof}
+
+\chapter{Équations aux dérivées partielles et théorie des distributions}
+\section{Rappels}
+Dans le cadre des EDOs, on cherche une fonction $u : [-T, T] \to \C$ telle que~:
+\[F(t, u(t), u'(t), \ldots, u^{(m)}(t)) = 0.\]
+
+On généralise à $u : \R^m \to \C$, et une EDP est donc sous la forme~:
+\[F\left(x, \left(\partial^\alpha u(x)\right)_{\abs \alpha \leq m}\right) = 0.\]
+
+Dans le cadre des EDOs, la solution du problème de Cauchy suivant~:
+\[\begin{cases}&\od ut(t) + Au(t) = f(t) \\&u(0) = u^0,\end{cases}\]
+pour $A \in \C^{n \times n}$, $f : \R \to \C^n$ continue, et $u^0 \in \C^n$ est donnée par~:
+\[u(t) = u^0e^{-tA} + \int_0^te^{(s-t)A}f(s)\dif s,\]
+où l'exponentielle d'une matrice est définie par la série~:
+\[e^A \coloneqq \sum_{k \geq 0}\frac {A^k}{k!}.\]
+
+\subsection{Normes et matrices}
+Remarquons que les matrices définissent des opérateurs linéaires. Elles sont donc canoniquement munies de la norme associée~:
+\[\norm A \coloneqq \sup_{\abs x = 1}\abs {Ax}.\]
+
+\begin{prp} Les normes $\norm \cdot$ et $\norm \cdot_\infty : A \mapsto \norm A_\infty \coloneqq \sup_{1 \leq i,j \leq m}\abs {A_{ij}}$ sont équivalentes.
+\end{prp}
+
+\begin{proof} Soit $A \in \C^{m \times m}$. Pour tous $1 \leq i, j \leq m$, on a~:
+\[\abs {A_{ij}} \leq \abs {Ae_j} \leq \norm A\]
+car $\abs {e_j} = 1$. De plus~:
+\[\norm A = \sup_{\abs x = 1}\abs {Ax} = \sup_{\abs x = 1}\left(\sum_{i=1}^m\abs {\sum_{j=1}^mA_{ij}x_j}^2\right)^{1/2}
+\leq \sup_{\abs x = 1}\norm A_\infty\left(\sum_{i=1}^m\sum_{j=1}^m\abs {x_j}^2\right)^{1/2}.\]
+Or $x \mapsto \sum_{i=1}^m\sum_{j=1}^m\abs {x_j}^2$ est continue sur $\{x \in \C^m \st \abs x = 1\}$ (qui est fermé), et donc $\exists M > 0$ tel que~:
+\[\norm A \leq M\norm A_\infty.\]
+\end{proof}
+
+\begin{prp} Pour $A \in \C^{m \times m}$~: $\norm {\exp(A)} \leq \exp(\norm A)$.
+\end{prp}
+
+\begin{proof} Par propriété de la norme opérateur~:
+\[\norm {e^A} = \norm {\sum_{k \geq 0}\frac {A^k}{k!}} \leq \sum_{k \geq 0}\frac {\norm {A^k}}{k!} \leq \sum_{k \geq 0}\frac {\norm A^k}{k!} = e^{\norm A}.\]
+\end{proof}
+
+\section{Problème de Cauchy pour les EDPs}
+On va étudier des problèmes sous la forme~\eqref{eq:PC EDP} avec $u = [u_1, \ldots, u_m]^\top$ où $u_j : \R \times \R^n \to \C$, $f = [f_1, \ldots, f_n]^\top$ où
+$f_j : \R \times \R^n \to \C$, $A_j \in \C^{m \times m}$, et $u^0 : \R^n \to \C$.
+
+\begin{equation}\label{eq:PC EDP}\tag{P.C.}
+	\begin{cases}&\dpd ut + \sum_{j=1}^nA_j\dpd u{x_j} = f\\&\restr u{t=0} = u^0\end{cases}
+\end{equation}
+
+\begin{prp} Le problème de Cauchy suivant (équivalent )~\eqref{eq:PC EDP} pour $n=m=1$)~:
+\[\begin{cases}&\dpd ut + a\dpd ux = f\\&\restr u{t=0} = u^0,\end{cases}\]
+pour $a \in \C$, $u^0 \in C^1(\R)$ et $f \in C^1(\R^2)$ possède une unique solution $C^1(\R^2)$ si $a \in \R$ et ne possède (en général) pas de solution $C^1(\R^2)$
+si $a \in \C \setminus \R$.
+\end{prp}
+
+\begin{proof} Supposons que $a \in \R$. On procède au changement de variable $(t, x) \mapsto (t, y)$ (et $u(t, x) = U(t, y)$). On a alors~:
+\[\dpd ut + a \dpd ux = \dpd Ut + \left(\dpd yt + a\dpd yx\right)\dpd Uy.\]
+En particulier, pour $y = x - at$ (afin d'annuler la parenthèse), on a~:
+\[\begin{cases}&\dpd Ut = f(t, y+at)\\&U(0, y) = u^0(y)\end{cases}\]
+qui revient à résoudre une EDO pour tout $y \in \R$. On a donc la solution~:
+\[U(t, y) = u^0(y) + \int_0^tf(s, y+as)\dif s,\]
+ou encore, pour $u$ et non $U$~:
+\[u(t, x) = u^0(x-at) + \int_0^tf(s, x-a(t-s))\dif s.\]
+
+Dans le cas où $a \in \C \setminus \R$, justifions pourquoi trouver une solution est en général pas faisable.
+
+On peut réécrire $a = \alpha + i\beta$ avec $\beta \neq 0$. En faisant le même changement de variable que précédemment ($y = x-\alpha t$), on trouve~:
+\[\begin{cases}&\dpd Ut + i\beta\dpd Uy = f(t, y+\alpha t)\\&\restr U{t=0} = u^0.\end{cases}\]
+on peut supposer WLOG que $a = i$ car en posant $y' \coloneqq \frac y\beta$ (bien défini car $\beta \neq 0$), on trouve~:
+\[\dpd {U'}t + i\dpd {U'}{y'} = f(t, \beta y' + \alpha t).\]
+
+Dans le cas le plus simple, supposons $f \equiv 0$ et regardons le P.C.~:
+\[\begin{cases}&\dpd ut + i\dpd ux = 0\\&\restr u{t=0} = u^0\end{cases}\]
+
+La première équation est celle de Cauchy-Riemann en $t + ix$, et donc $u$ doit être une fonction holomorphe de $t + ix$. Si une solution $u$ existe à ce problème, alors~:
+\[u(t, x) = \sum_{k \geq 0}c_k(t+ix)^k,\]
+qui converge uniformément en les variables d'origine. En particulier, pour $t=0$~:
+\[u^0(x) = u(0, x) = \sum_{k \geq 0}c_k(ix)^k.\]
+
+Dès lors $u^0$ est analytique, et donc $u^0 \in C^\infty(\R)$. On a donc une condition extrêmement restrictive sur le choix de $u^0$~: il est nécessaire (mais pas suffisant~!)
+que $u^0 \in C^\infty(\R)$ pour que le système admette une solution.
+\end{proof}
+
+Définissons alors des espaces dans lesquelles on espère pouvoir résoudre~\eqref{eq:PC EDP}
+
+\begin{déf} Pour $p \in \N$, on définit~:
+\[C^p_b(\R^n) \coloneqq \left\{v \in C^p(\R^n) \st \forall \alpha \in \N^n : \abs \alpha \leq p \Rightarrow \partial^\alpha v \in L^\infty(\R^n)\right\}.\]
+De manière similaire, pour $T > 0$, on introduit~:
+\[C^p_b([-T, T] \times \R^n) \coloneqq \left\{v \in C^p([-T, T] \times \R^n) \st \forall \alpha \in \N^n : \abs \alpha \leq p \Rightarrow \partial^\alpha v \in L^\infty([-T, T] \times \R^n)\right\}.\]
+\end{déf}
+
+\begin{prp} L'application suivante est une norme sur $C^p_b(\R^n)$~:
+\[\norm \cdot_{C^p_b(\R^n)} : C^p_b(\R^n) \to \R^+ : v \mapsto \norm v_{C^p_b(\R^n)} \coloneqq \sum_{\abs \alpha \leq p}\sup_{x \in \R^n}\abs {\partial^\alpha v(x)}.\]
+\end{prp}
+
+\begin{prp} $C^p_b(\R^n)$ est un espace de Banach.
+\end{prp}
+
+\begin{proof}
+%\textbf{Cas $p=0$.} Soit $(v_k)_k \subset C^p_b(\R^n)$ de Cauchy, i.e. $\sup\abs {v_k-v_\ell} \xrightarrow[k,\ell \to \pinfty]{} 0$.
+TODO
 \end{proof}
 \end{document}
