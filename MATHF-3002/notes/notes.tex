@@ -12,6 +12,7 @@
 \usepackage{amsfonts}
 \usepackage{amsthm}
 \usepackage{mathtools}
+\usepackage{mathrsfs}
 
 \usepackage[parfill]{parskip}
 
@@ -19,11 +20,12 @@
 \DeclareMathOperator{\Span}{Span}
 \DeclareMathOperator{\Ker}{Ker}
 \DeclareMathOperator{\supp}{supp}
-\DeclareMathOperator{\spectre}{spectre\!}
+\DeclareMathOperator{\spectreOperator}{spectre\!}
 \DeclareMathOperator{\dom}{dom}
 \DeclareMathOperator{\Imapp}{Im}
 \DeclareMathOperator{\sgn}{sgn}
 \DeclareMathOperator{\rot}{rot}
+\DeclareMathOperator{\dist}{dist}
 
 \newcommand{\C}{{\mathbb C}}
 \newcommand{\R}{{\mathbb R}}
@@ -39,6 +41,7 @@
 \newcommand{\cste}{\text{c}^{\text{ste}}}
 \newcommand{\dx}{\dif x}
 \newcommand{\Id}{\mathrm {Id}}
+\newcommand{\spectre}[1]{{\spectreOperator\left(#1\right)}}
 
 \newcommand{\restr}[2]{\left.#1\vphantom{\big|}\right|_{#2}}
 
@@ -1319,6 +1322,138 @@ Or $x \mapsto \sum_{i=1}^m\sum_{j=1}^m\abs {x_j}^2$ est continue sur $\{x \in \C
 \[\norm {e^A} = \norm {\sum_{k \geq 0}\frac {A^k}{k!}} \leq \sum_{k \geq 0}\frac {\norm {A^k}}{k!} \leq \sum_{k \geq 0}\frac {\norm A^k}{k!} = e^{\norm A}.\]
 \end{proof}
 
+\section{Fonctions holomorphes}
+\begin{déf} Pour $\Omega \subset \C$ ouvert, $A : \Omega \to \C^{m \times m} : z \mapsto A(z)$ est holomorphe dans $\Omega$ si $A_{ij}$ est holomorphe dans $\Omega$
+pour tous $1 \leq i, j \leq m$. On note cela $A \in \mathscr H(\Omega)$.
+\end{déf}
+
+\begin{déf} Pour $A \in \mathscr H(\Omega)$ et $\gamma$ un chemin $C^1$ par morceaux dont l'image est dans $\Omega$, on définit $\int_\gamma A(z)\dif z$
+comme étant la matrice telle que~:
+\[\forall\, 1 \leq i, j \leq m : \left(\int_\gamma A(z)\dif z\right)_{ij} = \int_\gamma A_{ij}(z)\dif z.\]
+\end{déf}
+
+\begin{prp} Pour $S \in \C^{m \times m}$~:
+\begin{enumerate}
+	\item $\spectre S \subset \{z \in \C \st \abs z \leq \norm S\}$~;
+	\item $\C \setminus \spectre S \to \C^{m \times m} : z \mapsto (z-S)^{-1} \coloneqq (zI - S)^{-1}$ est holomorphe dans $\C \setminus \spectre S$.
+\end{enumerate}
+\end{prp}
+
+\begin{proof}~
+\begin{enumerate}
+	\item Soit $\lambda \in \spectre S$. Il existe $v \neq 0 \st Sv = \lambda v$. Dès lors $\scpr {Sv}v = \lambda\abs v^2$. De plus, par Cauchy-Schwarz~:
+	$\abs {\scpr {Sv}v} \leq \abs {Sv}\abs v \le q\norm S\abs v\abs v = \norm S\abs v^2$. On en déduit $\lambda \leq \norm S$.
+	\item ${(z-S)^{-1}}_{ij}$ est une fonction rationnelle complexe dont le dénominateur $z \mapsto \det(z-S)$ ne s'annule jamais sur $\C \setminus \spectre S$.
+	${(z-S)^{-1}}_{ij}$ est donc holomorphe dans $\C \setminus \spectre S$, et donc $(z-S)^{-1}$ également.
+\end{enumerate}
+\end{proof}
+
+\begin{proof}[\textnormal {\textbf {Démonstration alternative du point 1.}}]
+Soit $z \in \C$ tel que $\abs z \geq \norm S$. On pose $T \coloneqq \sum_{k \geq 0}s^{-k-1}S^k$. Cette série converge (en norme opérateur) car les sommes
+partielles forment une suite de Cauchy~:
+\[
+	\norm {\sum_{k=K_1}^{K_2}z^{-k-1}S^k} \leq \sum_{k=K_1}^{K_2}\abs z^{-k-1}\norm {S^k} \leq \sum_{k=K_1}^{K_2}\abs z^{-k-1}\norm S^k
+	= \abs z^{-1}\sum_{k=K_1}^{K_2}\left(\underbrace {\frac {\norm S}{\abs z}}_{\in [0, 1)}\right)^k \xrightarrow[K_1,K_2 \to \pinfty]{} 0.
+\]
+
+De plus~:
+\[(z-S)\sum_{k=0}^Ks^{-k-1}S^k = \sum_{k=0}^Kz^{-k}S^k - \sum_{k=1}^{K+1}z^{-k-1}S^{k+1} = I - z^{-K-1}S^{K+1}.\]
+
+Or puisque~:
+\[\norm {z^{-(K+1)}S^{K+1}} = \left(\frac {\norm S}{\abs z}\right)^{K+1} \xrightarrow[K \to \pinfty]{} 0,\]
+on trouve $(z-S)\sum_{k=0}^Kz^{-k-1}S^k \xrightarrow[K \to \pinfty]{} (z-S)T$ et $I-z^{-K-1}S^{K+1} \xrightarrow[K \to \pinfty]{} I$. Par unicité de la limite
+dans les espaces métriques, on a $T = (z-S)^{-1}$, i.e. $(z-S)$ est inversible. Donc $z$ ne peut être une valeur propre de $S$.
+\end{proof}
+
+\begin{cor}\label{cor:intégrales chemins homotopes} Soient $\Omega$ un disque ouvert, $S \in \C^{m \times m} \st \spectre S \subset \Omega$ et $f \in \mathscr H(\Omega)$.
+Alors $z \mapsto f(z)(z-S)^{-1} \in \mathscr H(\Omega \setminus \spectre S)$ et pour $\gamma_1, \gamma_2$ chemins $C^1$ par morceaux à valeurs dans $\Omega \setminus \spectre S$
+homotopes dans $\Omega \setminus \spectre S$~:
+\[\int_{\gamma_1}f(z)(z-S)^{-1}\dif z = \int_{\gamma_2}f(z)(z-S)^{-1}\dif z.\]
+\end{cor}
+
+\begin{prp}[Forme matricielle de la forme intégrale de Cauchy] Soient $\Omega \subset \C$ un disque ouvert, $f(z) = \sum_{n \geq 0}\alpha_nz^n$, une série de puissance qui
+converge dans $\Omega \supset \overline {B(0, \norm S)}$. Considérons le chemin $\gamma_1 : [0, 2\pi] \to \Omega : t \mapsto (\norm S + \varepsilon)e^{it}$.
+Soit $\gamma$, chemin $C^1$ par morceaux, homotope à $\gamma_1$ dans $\Omega \setminus \spectre S$. Alors~:
+\[\sum_{k =0}^K\alpha_kS^k \xrightarrow[K \to \pinfty]{} \frac 1{2\pi i}\int_\gamma f(z)(z-S)^{-1}\dif z.\]
+\end{prp}
+
+\begin{proof} $f(z) = \sum_{k \geq 0}\alpha_kz^k$ converge uniformément sur $\Imapp \gamma$, et donc~:
+\[\sum_{k=0}^K\alpha_kz^k(z-S)^{-1} \xrightarrow[K \to \pinfty]{\text{CVU sur } \Imapp \gamma} f(z)(z-S)^{-1}.\]
+
+En effet~:
+\[\norm {f(z)(z-S)^{-1} - \sum_{k=0}^K\alpha_kz^k(z-S)^{-1}}  \abs {\sum_{k \geq K+1}\alpha_kz^k}\norm {(z-S)^{-1}}.\]
+
+Dès lors~:
+\[\sum_{k=0}^K\alpha_k\int_\gamma z^k(z-S)^{-1}\dif z \xrightarrow[K \to \pinfty]{} \int_\gamma f(z)(z-S)^{-1}\dif z.\]
+
+Par le Corollaire~\ref{cor:intégrales chemins homotopes}~:
+\[\int_\gamma z^k(z-S)^{-1}\dif z = \int_{\gamma_1}z^k(z-S)^{-1}\dif z.\]
+
+Puisque $(z-S)^{-1} = \sum_{\ell \geq 0}z^{-\ell-1}S^\ell$ converge uniformément sur $\{z \in \C \st \abs z > \norm S + \varepsilon/2\}$, on a~:
+\[\int_{\gamma_1}z^k(z-S)^{-1}\dif z = \int_{\gamma_1}z^k\sum_{\ell \geq 0}z^{-\ell-1}S^\ell\dif z = \lim_{L \to \pinfty}\sum_{\ell=0}^L\int_{\gamma_1}z^{k-\ell-1}\dif zS^\ell.\]
+
+Or $\int_{\gamma_1}z^{k-\ell-1}\dif z = 2\pi i \delta_\ell^k$. Donc~:
+\[\int_{\gamma_1}z^k(z-S)^{-1}\dif z = 2\pi iS^k.\]
+
+On conclut alors par~:
+\[\sum_{k=0}^K\alpha_kS^k = \frac 1{2\pi i}\sum_{k=0}^K\alpha_k\int_\gamma z^k(z-S)^{-1}\dif z \xrightarrow[K \to \pinfty]{} \frac 1{2\pi i}\int_\gamma f(z)(z-S)^{-1}\dif z.\]
+\end{proof}
+
+\begin{cor}\label{cor:Cauchy e^(mu S)} Pour $\mu \in \C$, $f(z) = e^{\mu z}$, $S \in \C^{m \times m}$, $\gamma$ un chemin $C^1$ par morceaux, homotope au cercle $\gamma_1$ dans $\C \setminus \spectre S$~:
+\[e^{\mu S} = \frac 1{2\pi i}\int_\gamma e^{\mu z}(z-S)^{-1}\dif z.\]
+\end{cor}
+
+\begin{lem} Soient $A(z)$ holomorphe et $\gamma$ un chemin $C^1$ par morceaux. Alors~:
+\[\norm {\int_\gamma A(z)\dif z} \leq \int_\gamma\norm {A(z)}\abs {\dif z} \coloneqq \int_\gamma \norm {A(\gamma(t))}\abs {\gamma'(t)}\dif t.\]
+\end{lem}
+
+\begin{proof} Par intégration de Riemann~:
+\begin{align*}
+	\int_\gamma A(z)\dif z &= \int_0^1 A(\gamma(t))\gamma'(t)\dif t
+		= \lim_{k \to \pinfty}\underbrace {\sum_{j=0}^{n_k}A(\gamma(\tau_j^k))\gamma'(\tau_j^k)(t_j^k - t_{j-1}^k)}_{\eqqcolon a_k} \\
+	\int_\gamma\norm {A(z)}\abs {\dif z} &= \lim_{k \to \pinfty}\underbrace {\sum_{j=0}^{n_k}\norm {A(\gamma(\tau_j^k))}\abs {\gamma'(\tau_j^k)}(t^k_j-t^k_{j-1})}_{\eqqcolon b_k}.
+\end{align*}
+
+$a_k \in \C^{m \times m}$ et $\forall k \geq 0 : \norm {a_k} \leq b_k$. Or $\norm {a_k} \xrightarrow[k \to \pinfty]{} \norm {\int_\gamma A(z)\dif z}$ et
+$b_k \xrightarrow[k \to \pinfty]{} \int_\gamma \norm {A(z)}\abs {\dif z}$. Donc par passage à la limite~:
+\[\norm {\int_\gamma A(z)\dif z} \leq \int_\gamma\norm {A(z)}\abs {\dif z}.\]
+\end{proof}
+
+\begin{lem}\label{lem:majoration inverse (z-S)} Soit $S \in \C^{m \times m}$. Alors $\forall \delta > 0 : \exists C_m > 0 \st \forall z \in \C \st \dist(z, \spectre S) \geq \delta$~:
+\[\norm {(z-S)^{-1}} \leq C_m(1 + \abs z + \norm S)^{m-1}.\]
+\end{lem}
+
+\begin{proof} Fixsons $\delta > 0$ et soit $z \in \C \st \dist(z, \spectre S)$. Posons $T = z-S$ et $P(\lambda) = \det(\lambda - T) = \lambda^m + \sum_{j=1}^ma_j\lambda^{m-j}$.
+Par Hamilton-Cayley~:
+\[T^m + \sum_{j=1}^ma_jT^{m-j} = 0,\]
+ou encore~:
+\[T\left(T^{m-1} + a_1T^{m-2} + \ldots + a_{m-1}\right) + a_m = 0.\]
+
+Or $T$ est inversible par hypothèse, donc~:
+\begin{align*}
+	T^{-1} &= \frac {-1}{a_m}\left(T^{m-1} + \ldots + a_{m-1}\right) \\
+	\norm {T^{-1}} &\leq \abs {a_m}^{-1}\norm T^{m-1} + \abs {\frac {a_1}{a_m}}\norm T^{m-2} + \ldots + \abs {\frac {a_{m-1}}{a_m}}.
+\end{align*}
+
+De plus $\norm T = \norm {z-S} \leq \abs z + \norm S$.
+
+Montrons alors qu'il existe $\rho > 0$ indépendant de $z$ et $S$ qui borne uniformément les coefficicents
+$\frac 1{\abs {a_m}}, \abs {\frac {a_1}{a_m}}, \ldots, \abs {\frac {a_{m-1}}{a_m}}$.
+
+En effet, par hypothèse, toutes les racines de $P$ satisfont $\abs \lambda \geq \delta$ puisque $\det(\lambda - T) = \det((\lambda-z) + S) = 0$, i.e. $\lambda-z \in \spectre S$,
+et donc~:
+\[\abs \lambda = \abs {z-(\lambda-z)} \geq \min_{s \in \spectre S}\abs {z-s} \geq \delta\]
+par hypothèse.
+
+posons alors $Q(\tau) \coloneqq \tau^m + \frac {a_{m-1}}{a_m}\tau^{m-1} + \ldots + \frac 1{a_m}$, et observons que pour $\tau \neq 0$~:
+\[P(\tau^{-1}) = \tau^{-m}+\sum_{j=1}^{m-1}a_j\tau^{j-m} + a_m\tau^{-m} = a_m\tau^{-m}\left(\frac 1{a_m} + \sum_{j=1}^{m-1}\frac {a_j}{a_m}\tau^j + 1\right) = a_m\tau^{-m}Q(\tau).\]
+Donc $P(\tau^{-1}) = 0 \iff Q(\tau)$, et donc les racines de $Q$ satisfont $\abs \tau \leq \delta^{-1}$. On en déduit~:
+\[Q(\tau) = C\prod_{j=1}^m(\tau-\tau_j),\]
+où les $\tau_j \in \overline {B(0, 1/\delta)}$ sont les racines de $Q$ et sont des paramètres du polynôme. Par continuité sur le compact $\overline {B(0, 1/\delta)}$,
+les coefficients de $Q$ sotn uniformément bornés. Finalement, on conclut par~:
+\[\norm {(z-S)^{-1}} = \norm {T^{-1}} \leq \sum_{j=0}^{m-1}\rho\norm T^j \leq \rho\sum_{j=0}^{m-1}(\abs z + \norm S)^j \leq C_m(1+\abs z + \norm S)^{m-1}.\]
+\end{proof}
+
 \section{Problème de Cauchy pour les EDPs}
 On va étudier des problèmes sous la forme~\eqref{eq:PC EDP} avec $u = [u_1, \ldots, u_m]^\top$ où $u_j : \R \times \R^n \to \C$, $f = [f_1, \ldots, f_n]^\top$ où
 $f_j : \R \times \R^n \to \C$, $A_j \in \C^{m \times m}$, et $u^0 : \R^n \to \C$.
@@ -1393,7 +1528,7 @@ TODO
 \[\forall F \in C^p_b([-T, T] \times \R^n), u^0 \in C^p_b(\R^n) : \exists! u \in C^1_b(\R^n) \st:\]
 \[\begin{cases}\dpd ut + \sum_{j=1}^nA_j\dpd u{x_j} = F & \text{ si } \abs t \leq T, x \in \R^n\\u=u^0 &\text{ si }t=0, x \in \R^n.\end{cases}\]
 
-Alors $\forall \xi \in \R^n : \spectre\left(\sum_{j=1}^m\xi_j A_j\right) \subset \R$.
+Alors $\forall \xi \in \R^n : \spectre {\sum_{j=1}^m\xi_j A_j} \subset \R$.
 \end{thm}
 
 \begin{rmq} Pour simplifier les notations, on pose $L \coloneqq \pd {}t + \sum_{j=1}^mA_j\pd {}{x_j}$.
@@ -1500,7 +1635,7 @@ Or, pour $t^0$ tel que $t^0\Im\lambda(\xi^0) > 0$ (et un tel $t^0$ existe, par e
 $\sigma \mapsto e^{t^0\Im\lambda(\xi^0)\sigma}$ croît exponentiellement et ne peut pas être bornée par un polynôme en $\sigma$.
 \end{proof}
 
-\begin{déf} Si $L = \pd {}t + \sum_{j=1}^nA_j\pd {}{x_j}$ satisfait la condition de Petrowsky (i.e. $\forall \xi \in \R^n : \spectre A(\xi) \subset \R$), on dit que
+\begin{déf} Si $L = \pd {}t + \sum_{j=1}^nA_j\pd {}{x_j}$ satisfait la condition de Petrowsky (i.e. $\forall \xi \in \R^n : \spectre {A(\xi)} \subset \R$), on dit que
 $L$ est \textit{hyperbolique} dans la direction $\pd {}t$.
 \end{déf}
 
@@ -1515,7 +1650,7 @@ $L$ est \textit{hyperbolique} dans la direction $\pd {}t$.
 	ou sous forme matricielle~:
 	\[\dpd {}t\begin{bmatrix}v \\ w\end{bmatrix} + \begin{bmatrix}2b & c \\-1 & 0\end{bmatrix}\dpd {}x\begin{bmatrix}v \\ w\end{bmatrix} = \begin{bmatrix}f \\ 0\end{bmatrix}.\]
 
-	La condition d'hyperbolicité dit alors que $\spectre \begin{bmatrix}2b & c \\-1 & 0\end{bmatrix} \subset \R$, i.e. $b,c \in \R$ et $b^2-c \geq 0$.
+	La condition d'hyperbolicité dit alors que $\spectre {\begin{bmatrix}2b & c \\-1 & 0\end{bmatrix}} \subset \R$, i.e. $b,c \in \R$ et $b^2-c \geq 0$.
 
 	Le Laplacien est un cas particulier de cet exemple avec $b=0$ et $c=1$. Donc le Laplacien n'est pas hyperbolique car $b^2-c = -1 \not \geq 0$.
 	Par contre $\partial_t^2 - \partial_x^2$ est hyperbolique car $b^2 - c = 1 \geq 0$.
@@ -1550,7 +1685,8 @@ $L$ est \textit{hyperbolique} dans la direction $\pd {}t$.
 \end{cases}\]
 \end{thm}
 
-\begin{proof} Si une solution $u$ existe, alors à $t \in [-T, T]$ fixé, on peut appliquer Fourier en $x$~:
+\begin{proof}
+\exis Si une solution $u$ existe, alors à $t \in [-T, T]$ fixé, on peut appliquer Fourier en $x$~:
 \[\widetilde u(t, x) = \int_{\mathbb R^n}e^{-i\scpr x\xi}u(t, x)\dif x,\]
 et $\widetilde u$ dois satisfaire le problème de Cauchy suivant~:
 \[\begin{cases}
@@ -1562,7 +1698,7 @@ qui admet pour solution~:
 
 Posons~:
 \begin{align*}
-	P(t, \xi) &\coloneqq e^{-itA(\xi)}\widehat {u^0}
+	P(t, \xi) &\coloneqq e^{-itA(\xi)}\widehat {u^0}(\xi) \\
 	Q(t, \xi) &\coloneqq \int_0^te^{-i(t-s)}\widetilde F(s, \xi)\dif s.
 \end{align*}
 
@@ -1591,7 +1727,10 @@ et donc $\restr u{t=0} = u^0$.
 $u$ est donc bien solution du problème de Cauchy. Il reste à montrer que $u \in \widetilde {\mathcal S}([-T, T] \times \R^n)$. Pour cela, il est suffisant de montrer que
 $P, Q \in \widetilde {\mathcal S}$ puisque la transformée de Fourier est une bijection sur $\mathcal S$.
 
-$(t, \xi) \mapsto e^{-itA(\xi)}$ est $C^\infty$, donc $(t, \xi) \mapsto e^{-itA(\xi)}\widehat {u^0}(\xi)$ est $C^\infty$ également, i.e. $P \in C^\infty$.
+\begin{claim}\label{claim 2} $(t, \xi) \mapsto e^{-itA(\xi)}$ est $C^\infty$.
+\end{claim}
+
+Donc $(t, \xi) \mapsto e^{-itA(\xi)}\widehat {u^0}(\xi)$ est $C^\infty$ également, i.e. $P \in C^\infty$.
 Soient $\alpha, \beta \in \N^n, k \in \N$.
 
 \begin{align*}
@@ -1605,7 +1744,7 @@ Soient $\alpha, \beta \in \N^n, k \in \N$.
 
 {\tiny {$(*)$ les dérivées commutent puisque $(t, x) \mapsto e^{-itA(\xi)} \in C^\infty$.}}
 
-\begin{claim}\label{claim 2} Pour $\mu \in \N^n$~: $\exists C > 0, e_\mu > 0 \st \abs {D_\xi^\mu e^{-itA(\xi)}} \leq C(1+\abs\xi)^{e_\mu}$.
+\begin{claim}\label{claim 3} Pour $\mu \in \N^n$~: $\exists C > 0, e_\mu > 0 \st \abs {D_\xi^\mu e^{-itA(\xi)}} \leq C(1+\abs\xi)^{e_\mu}$.
 \end{claim}
 
 Avec cette affirmation, on peut finalement majorer~:
@@ -1616,13 +1755,92 @@ Avec cette affirmation, on peut finalement majorer~:
 \end{align*}
 pour $N$ suffisamment grand.
 
-on a donc bien finalement $\xi^\alpha\partial_t^kD_\xi^\beta P$ borné. On a exactement la même chose pour $Q$.
-\end{proof}
-% Crevindiou. P'tite binouze, c'est mérité.
+On a donc bien finalement $\xi^\alpha\partial_t^kD_\xi^\beta P$ borné. On a exactement la même chose pour $Q$. Dès lors, $u \in \widetilde {\mathcal S}([-T, T] \times \R^n)$ est
+une solution au problème de Cauchy, et l'existence est démontrée. De plus, cela montre l'Affirmation~\ref{claim 1}.
 
-\begin{proof}[\textnormal {\textbf {Démonstration} (de l'Affirmation~\ref{claim 1})}] À venir
+\unic Soient $u_{(1)}, u_{(2)}$, solutions du problème de Cauchy dans $\widetilde {\mathcal S}([-T, T] \times \R^n)$, alors on pose $w \coloneqq u_{(1)} - u_{(2)}$.
+$w \in \widetilde {\mathcal S}(([-T, T] \times \R^n))$ est solution du problème de Cauchy~:
+\[\begin{cases}Lw = \\\restr w{t=0} = 0\end{cases}\]
+
+En en prenant la transformée de Fourier à $\abs t \leq T$ fixé~:
+\[\begin{cases}\partial_t\widetilde w + iA(\xi)\widetilde w = 0\\\restr {\widetilde w}{t=0} = 0\end{cases}\]
+qui admet pour unique solution $\widetilde w = 0$, et donc $w = 0$ par formule d'inversion de Fourier, et donc $u_{(1)} = u_{(2)}$.
 \end{proof}
 
-\begin{proof}[\textnormal {\textbf {Démonstration} (de l'Affirmation~\ref{claim 2})}] À venir
+\begin{prp} Il existe $C_m > 0$ tel que $\forall S \in \C^{m \times m} \st \spectre S \subset \R : \norm {e^{iS}} \leq C_m(1+\norm S)^m$.
+\end{prp}
+
+\begin{proof} Trouvons un chemin $\gamma$ tel que~:
+\[\norm {e^{iS}} = \frac 1{2\pi i}\int_\gamma e^{iz}(z-S)^{-1}\dif z.\]
+
+Prenons le chemin $\gamma = \left[(-\norm S-1 - i) \to (\norm S+1-i) \to (\norm S+1+i) \to (-\norm S-1+i) \to (-\norm S-1-i)\right]$. $\gamma$ est homotope à
+$\gamma' : t \mapsto (\norm S + \varepsilon)e^{it}$. Par la forme intégrale de Cauchy pour $f(z) = e^{iz}$~:
+\[e^{iS} = \frac 1{2\pi i}\int_\gamma e^{iz}(z-S)^{-1}\dif z,\]
+et donc~:
+\[\norm {e^{iS}} \leq \frac 1{2\pi}\int_\gamma\abs {e^{iz}}\norm {(z-S)^{-1}}\abs {\dif z}.\]
+
+Par le Lemme~\ref{lem:majoration inverse (z-S)}, $\norm {(z-S)^{-1}} \leq C_m(1+\abs z + \norm S)^{m-1}$. De plus $\abs {e^{iz}} \leq \kappa$ sur le chemin $\gamma$.
+De plus, pour $z$ dans le chemin $\gamma$~:
+\[\abs z \leq \sqrt {1 + (1+\norm S)^2} \leq \sqrt 2(\norm S + 1).\]
+
+Dès lors~:
+\[\norm {e^{iS}} \leq \frac 1{2\pi}\int_\gamma\kappa C(1+\norm S)^{m-1}\abs {\dif z} = \frac {C(1+\norm S)^{m-1}\kappa}{2\pi}\int_\gamma\abs {\dif z}
+	\leq \frac {C\kappa(\norm S + 1)^{m-1}}\pi(\norm S + 2) \leq C(1+\norm S)^m.\]
 \end{proof}
+
+\begin{proof}[\textnormal {\textbf {Démonstration} (de l'Affirmation~\ref{claim 2})}] Montrons que $(t, \xi) \mapsto e^{-itA(\xi)}$ est $C^\infty$ sur $[-T, T] \times \R^n$.
+
+On fixe $\xi^0 \in \R^n$. Si $\spectre {A(\xi)} \subset (-\chi^0, \chi^0)$ où
+$\chi^0 = \norm {A(\xi^0)}+1$, on peut prendre le chemin $\gamma_{\xi^0}$ défini par~:
+\[\gamma_{\xi^0} = \left[(-\chi^0-i) \to (\chi^0-i) \to (\chi^0+i) \to (-\chi^0+i) \to (-\chi^0-i)\right].\]
+
+Or puisque~:
+\[\norm {A(\xi)} \leq \norm {A(\xi^0)} + \norm {A(\xi-\xi^0)} \leq \norm {A(\xi^0)} + \norm A\abs {\xi-\xi^0} \lneqq \norm {A(\xi^0)} + 1\]
+pour $\abs {\xi-\xi^0}$ suffisament petit, on sait qu'à $\xi$ fixé, $\exists \xi^0 \st \spectre {A(\xi)} \subset (-\chi^0, \chi^0)$.
+
+Donc, par le Corollaire~\ref{cor:Cauchy e^(mu S)}~:
+\begin{equation}\label{eq:forme intégrale Cauchy e^(-itA(xi))}
+	e^{-itA(\xi)} = \frac 1{2\pi i}\int_{\gamma_{\xi^0}}e^{-itz}(z-A(\xi))^{-1}\dif z.
+\end{equation}
+
+Il faut donc voir que $\xi \mapsto (z-A(\xi))^{-1}$ est bien $C^\infty$ pour $z \in \Imapp \gamma_{\xi^0}$. Or par choix de $\xi^0$, on sait que
+$\forall z \in \Imapp \gamma : z \not \in \spectre {A(\xi)}$. Dès lors, pour $1 \leq j, k \leq m$~:
+\[{(z-A(\xi))^{-1}}_{jk} = \frac {\text{polynôme en $\xi$ et $z$}}{\det(z-A(\xi))}\]
+est une fonction rationnelle complexe dont le dénominateur ne s'annule pas. Dès lors elle est bien $C^\infty$.
+\end{proof}
+
+\begin{proof}[\textnormal {\textbf {Démonstration} (de l'Affirmation~\ref{claim 3})}] Il reste donc unoquement à vérifier que les dérivées de $\xi \mapsto z^{-itA(\xi)}$ sont à
+croissance polynômiale.
+
+Puisque~:
+\[0 = \dpd {}{\xi_j}I = \dpd {}{\xi_j}\left((z-A(\xi))^{-1}(z-A(\xi))\right) = \left(\dpd {}{\xi_j}(z-A(\xi))^{-1}\right)(z-A(\xi)) + (z-A(\xi))^{-1}(-A_j),\]
+on trouve~:
+\begin{equation}\label{eq:partial_j (z-A(xi)) inverse}
+	\dpd {}{\xi_j}(z-A(\xi))^{-1} = (z-A(\xi))^{-1}A_j(z-A(\xi_j))^{-1}.
+\end{equation}
+
+De plus, par l'équation~\eqref{eq:forme intégrale Cauchy e^(-itA(xi))} (et parce que l'intégration ne dépend pas de $\xi_j$)~:
+\[\dpd {}{\xi_j}e^{-itA(\xi)} = \frac 1{2\pi i}\int_{\gamma_{\xi^0}}e^{-itz}(z-A(\xi))^{-1}A_j(z-A(\xi))^{-1}\dif z,\]
+que l'on majore comme suit~:
+\[\norm {\dpd {}{\xi_j}e^{-itA(\xi)}} \leq \frac 1{2\pi i}\int_{\gamma_{\xi^0}}\kappa_t\norm {(z-A(\xi))^{-1}}\norm {A_j}\norm {(z-A(\xi))^{-1}}\abs {\dif z}.\]
+
+De plus, par le Lemme~\ref{lem:majoration inverse (z-S)}~:
+\[\norm {(z-A(\xi))^{-1}} \leq C(1+\abs z + \norm {A(\xi)})^{m-1},\]
+et par choix du chemin d'intégration~:
+\[\abs z \leq \left(\left(\norm {A(\xi^0)} + 1\right)^2 + 1\right)^{1/2} \leq C(\norm {A(\xi^0)}+1) \leq C(\abs {\xi^0}+1).\]
+
+Dès lors $\norm {(z-A(\xi))^{-1}} \leq C(1+\abs {\xi^0}+\abs {\xi})$, et donc~:
+\[\norm {\dpd {}{\xi_j}e^{-itA(\xi)}} \leq C\left(1+\abs {\xi^0}+\abs \xi\right)^{2(m-1)}\int_{\gamma_{\xi^0}}\abs {\dif z}
+	\leq C\left(1 + \abs {\xi^0} + \abs \xi\right)^{2(m-1)} \cdot K (1+\abs {\xi^0}).\]
+
+Et finalement, puisque~:
+\[\abs {\xi^0} \leq \abs \xi + \abs {\xi-\xi^0} \leq \abs \xi + c \leq C(1+\abs \xi),\]
+on peut conclure avec~:
+\[\norm {\dpd {}{\xi_j}e^{-itA(\xi)}} \leq C(1+\xi)^{2(m-1)}(1+\xi) = C(1+\abs \xi)^{2m-1}.\]
+
+De là, il ne reste plus qu'à effectuer une récurrence sur base du Lemme~\ref{lem:majoration inverse (z-S)} et de l'équation \eqref{eq:partial_j (z-A(xi)) inverse} pour montrer
+que toutes les dérivées de $\xi \mapsto e^{-itA(\xi)}$ sont à croissance polynômiale.
+\end{proof}
+
+\chapter{Théorie des distributions}
 \end{document}
