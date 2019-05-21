@@ -13,8 +13,27 @@
 \usepackage{amsthm}
 \usepackage{mathtools}
 \usepackage{mathrsfs}
+\usepackage{stmaryrd}
 
 \usepackage[parfill]{parskip}
+\usepackage[framemethod=tikz]{mdframed}
+
+\mdfdefinestyle{resultstyle}{%
+	skipabove=5pt,%
+	skipbelow=5pt,%
+	hidealllines=true,%
+	leftline=true,%
+	rightline=true,%
+	innerleftmargin=10pt,%
+	innerrightmargin=10pt,%
+	innertopmargin=10pt,%
+	innerbottommargin=8pt,%
+}
+
+\surroundwithmdframed[style=resultstyle]{thm}
+\surroundwithmdframed[style=resultstyle]{prp}
+\surroundwithmdframed[style=resultstyle]{cor}
+\surroundwithmdframed[style=resultstyle]{lem}
 
 \DeclareMathOperator{\Vect}{Vect}
 \DeclareMathOperator{\Span}{Span}
@@ -37,13 +56,13 @@
 \newcommand{\st}{\tq}
 \newcommand{\pinfty}{{+\infty}}
 \newcommand{\minfty}{{-\infty}}
-\newcommand{\intint}[2]{{[[#1, #2]]}}
+\newcommand{\intint}[2]{{\left\llbracket#1, #2\right\rrbracket}}
 \newcommand{\cste}{\text{c}^{\text{ste}}}
 \newcommand{\dx}{\dif x}
 \newcommand{\Id}{\mathrm {Id}}
 \newcommand{\spectre}[1]{{\spectreOperator\left(#1\right)}}
-
 \newcommand{\restr}[2]{\left.#1\vphantom{\big|}\right|_{#2}}
+\newcommand{\loc}{{\text{\textnormal{loc}}}}
 
 \newcommand{\TODO}{TODO}
 \newcommand{\unic}{{\underline {\textbf{unicité}~:}} }
@@ -60,6 +79,8 @@
 \theoremstyle{remark}
 \newtheorem*{rmq}{Remarque}
 \newtheorem{ex}{Exemple}[chapter]
+
+\renewcommand{\chaptername}{Chapitre}
 
 \title{Espaces fonctionnels et séries de Fourier --- Notes de cours de Pr. P. Godin}
 \author{Robin Petit}
@@ -175,7 +196,7 @@ essentiellement bornés et est donc essentiellement bornée.
 
 À défaut de définir une topologie sur $\mathcal S(\R^n)$, on définit uniquement une notion de convergence.
 
-\begin{déf} Soit $(u_k)_{k \in \N} \in \mathcal S^\N$, $u \in \mathcal S$, on dit que $u_k$ converge vers $u$ lorsque $k \to \pinfty$
+\begin{déf}\label{déf:convergence Schwartz} Soit $(u_k)_{k \in \N} \in \mathcal S^\N$, $u \in \mathcal S$, on dit que $u_k$ converge vers $u$ lorsque $k \to \pinfty$
 (noté $u_k \xrightarrow[k \to \pinfty]{\mathcal S} u$) lorsque~:
 \begin{equation}
 	\forall \alpha, \beta \in \N^n : \sup_{x \in \R^n}\abs {x^\alpha\partial^\beta(u-u_k)} \xrightarrow[k \to \pinfty]{} 0.
@@ -949,28 +970,32 @@ de $\Q$ dans $\R$, et donc par densité de $\Q[i]$ dans $\C$.
 Donc pour $y = \sum_{\alpha \in A_1}q_\alpha e_\alpha$, on a bien le résultat.
 \end{proof}
 
-\begin{ex}~
-\begin{itemize}
-	\item[(0)] $\C^N$ muni du produit scalaire usuel admet une base canonique. Cette dernière est orthonormale et maximale.
-	\item[(1)] Dans $\ell^2(\N_0)$, posons le suites $e_k \; (k \in \Z)$ telles que $e_{k,j} = 1$ si $k=j$ et $0$ sinon. $(e_k)_{k \in \Z}$ est un système orthonormal maximal car~:
-	\[\norm x^2 = \scpr xx = \sum_{j \geq 1}x_j\overline {x_j} = \sum_{j \geq 1}\abs {x_j}^2.\]
-	Par le point 3 du Théorème~\ref{thm:caractérisation SOM}, on a que $(e_k)_{k \in \Z}$ est un SOM.
-	\item[(2)] Dans $L^2[0, 2\pi)$, on définit (pour $k \in \Z$)~:
-	\[e_k : [0, 2\pi) \to \C : t \mapsto \frac {e^{ikt}}{\sqrt {2\pi}}.\]
-	Pour le produit scalaire usuel de $L^2$, on a~:
-	\[\scpr {e_k}{e_\ell}_{L^2} = \int_0^{2\pi}\frac {e^{i(k-\ell)t}}{2\pi}\dif t = \begin{cases}1 &\text{ si } k-\ell = 0 \\0 &\text{ sinon}\end{cases}.\]
+\begin{ex}
+$\C^N$ muni du produit scalaire usuel admet une base canonique. Cette dernière est orthonormale et maximale.
+\end{ex}
 
-	Pour montrer que $(e_k)_{k \in \Z}$ est maximal, prenons $f \in L^2[0, 2\pi)$. $S_kf \coloneqq \sum_{m=-k}^k\scpr f{e_m}e_m.$ Montrons que $S_kf \xrightarrow[k \to \pinfty]{L^2} f$.
-	Pour $\varepsilon > 0, \exists \varphi \in C_0^\infty((0, 2\pi)) : \norm {f-\varphi}_{L^2} \leq \varepsilon$ (par densité de $C_0^\infty$ dans $L^2$).
+\begin{ex}
+Dans $\ell^2(\N_0)$, posons le suites $e_k \; (k \in \Z)$ telles que $e_{k,j} = 1$ si $k=j$ et $0$ sinon. $(e_k)_{k \in \Z}$ est un système orthonormal maximal car~:
+\[\norm x^2 = \scpr xx = \sum_{j \geq 1}x_j\overline {x_j} = \sum_{j \geq 1}\abs {x_j}^2.\]
+Par le point 3 du Théorème~\ref{thm:caractérisation SOM}, on a que $(e_k)_{k \in \Z}$ est un SOM.
+\end{ex}
 
-	On a $S_k\varphi \xrightarrow[k \to \pinfty]{\text{CVU}} \varphi$ (théorème de Dirichlet global), ce qui implique $S_k\varphi \xrightarrow[k \to \pinfty]{L^2} \varphi$.
-	Finalement, remarquons~:
-	\[\norm {f-S_kf}_{L^2} \leq \norm {f-S_k\varphi}_{L^2} \leq \norm {f-\varphi}_{L^2} + \norm {\varphi - S_k\varphi} \leq 2\varepsilon\]
-	si $k$ est assez grand.
+\begin{ex}
+Dans $L^2[0, 2\pi)$, on définit (pour $k \in \Z$)~:
+\[e_k : [0, 2\pi) \to \C : t \mapsto \frac {e^{ikt}}{\sqrt {2\pi}}.\]
+Pour le produit scalaire usuel de $L^2$, on a~:
+\[\scpr {e_k}{e_\ell}_{L^2} = \int_0^{2\pi}\frac {e^{i(k-\ell)t}}{2\pi}\dif t = \begin{cases}1 &\text{ si } k-\ell = 0 \\0 &\text{ sinon}\end{cases}.\]
 
-	Attention, $\{e_k\}_k$ n'est \textbf{pas} une base au sens algébrique car $\forall k \in \Z : e_k \in C^\infty$. Donc si $\{e_k\}_k$ est une base, toute fonction $f \in L^2$ est
-	égale à $\sum_{j=1}^Nc_je_{k_j} \in C^\infty$. Or $L^2 \not \subseteq C^\infty$.
-\end{itemize}
+Pour montrer que $(e_k)_{k \in \Z}$ est maximal, prenons $f \in L^2[0, 2\pi)$. $S_kf \coloneqq \sum_{m=-k}^k\scpr f{e_m}e_m.$ Montrons que $S_kf \xrightarrow[k \to \pinfty]{L^2} f$.
+Pour $\varepsilon > 0, \exists \varphi \in C_0^\infty((0, 2\pi)) : \norm {f-\varphi}_{L^2} \leq \varepsilon$ (par densité de $C_0^\infty$ dans $L^2$).
+
+On a $S_k\varphi \xrightarrow[k \to \pinfty]{\text{CVU}} \varphi$ (théorème de Dirichlet global), ce qui implique $S_k\varphi \xrightarrow[k \to \pinfty]{L^2} \varphi$.
+Finalement, remarquons~:
+\[\norm {f-S_kf}_{L^2} \leq \norm {f-S_k\varphi}_{L^2} \leq \norm {f-\varphi}_{L^2} + \norm {\varphi - S_k\varphi} \leq 2\varepsilon\]
+si $k$ est assez grand.
+
+Attention, $\{e_k\}_k$ n'est \textbf{pas} une base au sens algébrique car $\forall k \in \Z : e_k \in C^\infty$. Donc si $\{e_k\}_k$ est une base, toute fonction $f \in L^2$ est
+égale à $\sum_{j=1}^Nc_je_{k_j} \in C^\infty$. Or $L^2 \not \subseteq C^\infty$.
 \end{ex}
 
 \section{Applications linéaires entre espaces vectoriels normés}
@@ -1027,7 +1052,7 @@ On note également $\mathcal L(E) \coloneqq \mathcal L(E, E)$.
 On remarque également que $\norm {(T_2 \circ T_1)(x)} \leq \norm {T_2}\norm {T_1x} \leq \norm {T_2}\norm {T_1}\norm x$, et donc $\norm {T_2T_1} \leq \norm {T_2}\norm {T_1}$. Dès lors
 si $T_1 \in \mathcal L(E, F)$ et $T_2 \in \mathcal L(F, G)$, alors $T_2T_1 \in \mathcal L(E, G)$.
 
-\begin{thm} Soit $T : E \to F$ linéaire. Alors les conditions suivantes sont équivalentes~:
+\begin{thm}\label{thm:opérateur continu ssi borné} Soit $T : E \to F$ linéaire. Alors les conditions suivantes sont équivalentes~:
 \begin{itemize}
 	\item[$(i)$]   $T$ est bornée~;
 	\item[$(ii)$]  $T$ est continue en tous points~;
@@ -1047,37 +1072,50 @@ si $T_1 \in \mathcal L(E, F)$ et $T_2 \in \mathcal L(F, G)$, alors $T_2T_1 \in \
 \end{itemize}
 \end{proof}
 
-\begin{ex}~
-\begin{itemize}
-	\item[(0)] Un opérateur linéaire $T : \C^n \to \C^m$ est déterminé par une matrice $(T_{k\ell})_{k,\ell}$ dans les bases canoniques de $\C^m$ et $\C^n$.
-	$T$ est continue\footnote{En dimension finie, toute application linéaire entre espaces vectoriels est continue.} donc bornée.
-	\item[(1)] $T : L^1(\Omega, \mathcal A, \mu) \to \C : f \mapsto \int f\dif\mu$ est borné car~:
-	\[\abs {Tf} = \abs {\int f\dif\mu} \leq \int\abs f\dif\mu = \norm f_{L^1}.\]
-	Dès lors l'opérateur $T$ d'intégration est continue.
-	\item[(2)] Si $1 \leq p, q \leq \pinfty$ sont conjugués, pour $g \in L^q(\Omega, \mathcal A, \mu)$ on définit~:
-	\[T_g : L^p(\Omega, \mathcal A, \mu) \to \C : f \mapsto \int fg\dif\mu.\]
-	$T_g$ est bien défini par l'inégalité de Hölder. De plus~: $\abs {T_gf} \leq \norm f_{L^p}\norm g_{L^q}$, et donc $\norm {T_g} \leq \norm g_{L^q}$.
-	\item[(3)] $\mathbb F : L^2(\R^n) \to L^2(\R^n)$ est un opérateur linéaire. De plus, par Plancherel, on a $\norm {\mathbb Ff}_{L^2} = (2\pi)^{n/2}\norm f_{L^2}$,
-	et donc $\norm {\mathbb F} = (2\pi)^{n/2}$, i.e. la transformée de Fourier est un opérateur borné (donc continu).
-	\item[(4)] Pour $H$, un espace de Hilbert quelconque et $M$ un sous-espace vectoriel fermé, $P : H \to M$, la projection orthogonale sur $M$ est bornée car Lipschitzienne
-	(et donc également continue).
-	\item[(5)] Dans $(\Omega, \mathcal A, \mu)$ un espace mesuré, on fixe $K \in L^2(\Omega \times \Omega, \mathcal A \otimes \mathcal A, \mu \otimes \mu)$, et on pose~:
-	\[T : L^2(\Omega, \mathcal A, \mu) \to L^2(\Omega, \mathcal A, \mu) : f \mapsto \int_\Omega K(\cdot, y)f(y)\dif\mu(y).\]
-	Par Fubini, $\forall x \in \Omega : \int_\Omega \abs {K(x, y)}^2\dif\mu(y)$ est bien défini, et pour presque tout $x \in \Omega :
-	\abs {K(x, \cdot)}^2 \in L^1(\Omega, \mathcal A, \mu)$. En particulier, $\abs {K(x, \cdot)} \in L^2(\Omega, \mathcal A, \mu)$.
+\begin{ex}
+Un opérateur linéaire $T : \C^n \to \C^m$ est déterminé par une matrice $(T_{k\ell})_{k,\ell}$ dans les bases canoniques de $\C^m$ et $\C^n$.
+$T$ est continu\footnote{En dimension finie, toute application linéaire entre espaces vectoriels est continue.} donc bornée.
+\end{ex}
 
-	Dès lors, à $x \in \Omega$ fixé, $y \mapsto K(x, y)f(y)$ est $L^1$ par Hölder. Donc il existe $N \in \mathcal A \st \mu(N) = 0$ et $\forall x \not \in N :
-	K(x, \cdot)f(\cdot) \in L^1(\Omega, \mathcal A, \mu)$. On pose alors~:
-	\[g : x \mapsto \begin{cases}\displaystyle \int_\Omega K(x, y)f(y)\dif\mu(y) &\text{ si $x \not \in N$,} \\0 &\text{ sinon.}\end{cases}\]
+\begin{ex}
+$T : L^1(\Omega, \mathcal A, \mu) \to \C : f \mapsto \int f\dif\mu$ est borné car~:
+\[\abs {Tf} = \abs {\int f\dif\mu} \leq \int\abs f\dif\mu = \norm f_{L^1}.\]
+Dès lors l'opérateur $T$ d'intégration est continue.
+\end{ex}
 
-	Montrons que $g = Tf \in L^2(\Omega, \mathcal A, \mu)$. Si $x \not \in N$, alors par Cauchy-Schwarz~:
-	\[\abs {g(x)}^2 \leq \left(\int\abs {K(x, y)}\abs {f(y)}\dif\mu(y)\right)^2 \leq \int_\Omega \abs {K(x, y)}^2\dif\mu(y)\int_\Omega \abs {f(y)}^2\dif\mu(y).\]
-	Or le second facteur ne dépend pas de $x$ (notons le $C$) et est fini puisque $f \in L^2(\Omega, \mathcal A, \mu)$. Dès lors~:
-	\[\int\abs {g(x)}^2\dif\mu(x) = C\int_\Omega\left(\int_\Omega \abs {K(x, y)}^2\dif\mu(y)\right)\dif\mu(y).\]
+\begin{ex}
+Si $1 \leq p, q \leq \pinfty$ sont conjugués, pour $g \in L^q(\Omega, \mathcal A, \mu)$ on définit~:
+\[T_g : L^p(\Omega, \mathcal A, \mu) \to \C : f \mapsto \int fg\dif\mu.\]
+$T_g$ est bien défini par l'inégalité de Hölder. De plus~: $\abs {T_gf} \leq \norm f_{L^p}\norm g_{L^q}$, et donc $\norm {T_g} \leq \norm g_{L^q}$.
+\end{ex}
+
+\begin{ex}
+$\mathbb F : L^2(\R^n) \to L^2(\R^n)$ est un opérateur linéaire. De plus, par Plancherel, on a $\norm {\mathbb Ff}_{L^2} = (2\pi)^{n/2}\norm f_{L^2}$,
+et donc $\norm {\mathbb F} = (2\pi)^{n/2}$, i.e. la transformée de Fourier est un opérateur borné (donc continu).
+\end{ex}
+
+\begin{ex}
+Pour $H$, un espace de Hilbert quelconque et $M$ un sous-espace vectoriel fermé, $P : H \to M$, la projection orthogonale sur $M$ est bornée car Lipschitzienne
+(et donc également continue).
+\end{ex}
+
+\begin{ex}
+Dans $(\Omega, \mathcal A, \mu)$ un espace mesuré, on fixe $K \in L^2(\Omega \times \Omega, \mathcal A \otimes \mathcal A, \mu \otimes \mu)$, et on pose~:
+\[T : L^2(\Omega, \mathcal A, \mu) \to L^2(\Omega, \mathcal A, \mu) : f \mapsto \int_\Omega K(\cdot, y)f(y)\dif\mu(y).\]
+Par Fubini, $\forall x \in \Omega : \int_\Omega \abs {K(x, y)}^2\dif\mu(y)$ est bien défini, et pour presque tout $x \in \Omega :
+\abs {K(x, \cdot)}^2 \in L^1(\Omega, \mathcal A, \mu)$. En particulier, $\abs {K(x, \cdot)} \in L^2(\Omega, \mathcal A, \mu)$.
+
+Dès lors, à $x \in \Omega$ fixé, $y \mapsto K(x, y)f(y)$ est $L^1$ par Hölder. Donc il existe $N \in \mathcal A \st \mu(N) = 0$ et $\forall x \not \in N :
+K(x, \cdot)f(\cdot) \in L^1(\Omega, \mathcal A, \mu)$. On pose alors~:
+\[g : x \mapsto \begin{cases}\displaystyle \int_\Omega K(x, y)f(y)\dif\mu(y) &\text{ si $x \not \in N$,} \\0 &\text{ sinon.}\end{cases}\]
+
+Montrons que $g = Tf \in L^2(\Omega, \mathcal A, \mu)$. Si $x \not \in N$, alors par Cauchy-Schwarz~:
+\[\abs {g(x)}^2 \leq \left(\int\abs {K(x, y)}\abs {f(y)}\dif\mu(y)\right)^2 \leq \int_\Omega \abs {K(x, y)}^2\dif\mu(y)\int_\Omega \abs {f(y)}^2\dif\mu(y).\]
+Or le second facteur ne dépend pas de $x$ (notons le $C$) et est fini puisque $f \in L^2(\Omega, \mathcal A, \mu)$. Dès lors~:
+\[\int\abs {g(x)}^2\dif\mu(x) = C\int_\Omega\left(\int_\Omega \abs {K(x, y)}^2\dif\mu(y)\right)\dif\mu(y).\]
 	Par Fubini (puisque $K \in L^2(\Omega \times \Omega, \mathcal A \otimes \mathcal A, \mu \otimes \mu)$), on a finalement~:
-	\[\int_\Omega\abs {g(x)}^2\dif\mu(x) \leq C\int_{\Omega \times \Omega}\abs {K(x, y)}^2\dif(\mu \otimes \mu)(x, y) \lneqq \pinfty.\]
-	On en déduit également $\norm g_{L^2} \leq \norm f_{L^2}\norm K_{L^2}$, et donc $\norm T \leq \norm K_{L^2}$.
-\end{itemize}
+\[\int_\Omega\abs {g(x)}^2\dif\mu(x) \leq C\int_{\Omega \times \Omega}\abs {K(x, y)}^2\dif(\mu \otimes \mu)(x, y) \lneqq \pinfty.\]
+On en déduit également $\norm g_{L^2} \leq \norm f_{L^2}\norm K_{L^2}$, et donc $\norm T \leq \norm K_{L^2}$.
 \end{ex}
 
 \begin{déf} Un opérateur de la forme suivante~:
@@ -1353,7 +1391,7 @@ Soit $z \in \C$ tel que $\abs z \geq \norm S$. On pose $T \coloneqq \sum_{k \geq
 partielles forment une suite de Cauchy~:
 \[
 	\norm {\sum_{k=K_1}^{K_2}z^{-k-1}S^k} \leq \sum_{k=K_1}^{K_2}\abs z^{-k-1}\norm {S^k} \leq \sum_{k=K_1}^{K_2}\abs z^{-k-1}\norm S^k
-	= \abs z^{-1}\sum_{k=K_1}^{K_2}\left(\underbrace {\frac {\norm S}{\abs z}}_{\in [0, 1)}\right)^k \xrightarrow[K_1,K_2 \to \pinfty]{} 0.
+	= \abs z^{-1}\sum_{k=K_1}^{K_2}\Bigg(\underbrace {\frac {\norm S}{\abs z}}_{\in [0, 1)}\Bigg)^k \xrightarrow[K_1,K_2 \to \pinfty]{} 0.
 \]
 
 De plus~:
@@ -1381,7 +1419,7 @@ Soit $\gamma$, chemin $C^1$ par morceaux, homotope à $\gamma_1$ dans $\Omega \s
 \[\sum_{k=0}^K\alpha_kz^k(z-S)^{-1} \xrightarrow[K \to \pinfty]{\text{CVU sur } \Imapp \gamma} f(z)(z-S)^{-1}.\]
 
 En effet~:
-\[\norm {f(z)(z-S)^{-1} - \sum_{k=0}^K\alpha_kz^k(z-S)^{-1}}  \abs {\sum_{k \geq K+1}\alpha_kz^k}\norm {(z-S)^{-1}}.\]
+\[\norm {f(z)(z-S)^{-1} - \sum_{k=0}^K\alpha_kz^k(z-S)^{-1}} \leq \abs {\sum_{k \geq K+1}\alpha_kz^k}\norm {(z-S)^{-1}}.\]
 
 Dès lors~:
 \[\sum_{k=0}^K\alpha_k\int_\gamma z^k(z-S)^{-1}\dif z \xrightarrow[K \to \pinfty]{} \int_\gamma f(z)(z-S)^{-1}\dif z.\]
@@ -1610,7 +1648,7 @@ ce qui permet de déterminer la solution de~\eqref{eq:PC 1 Petrowsky}~:
 
 Or par~\eqref{eq:Phi bornée}, on a~:
 \begin{equation}\label{eq:fin Petrowsky}
-	\sup_{\abs t \leq T}\abs {u(t, 0)} \leq C\sum_{\abs \beta \leq p}\sup_{» \in \R^n}\abs {\partial^\beta u^0(x)}.
+	\sup_{\abs t \leq T}\abs {u(t, 0)} \leq C\sum_{\abs \beta \leq p}\sup_{x \in \R^n}\abs {\partial^\beta u^0(x)}.
 \end{equation}
 
 De plus, puisque $\abs {\partial^\beta u^0(x)} = \abs {\partial^\beta e^{i\scpr x\xi}v^0} \leq C\abs \xi^{\abs \beta}\abs {v^0}$~:
@@ -1642,31 +1680,37 @@ $L$ est \textit{hyperbolique} dans la direction $\pd {}t$.
 \begin{rmq} Le terme \textit{hyperbolicité} vient du fait que les courbes de niveau de la forme quadratique associée à la transformée de Fourier de $L$ sont hyperbolique.
 \end{rmq}
 
-\begin{ex}~
-\begin{enumerate}
-	\item Pour $m=n=1$~: $L = \pd {}t + a\pd {}x$. Pour $\xi \in \R : A(\xi) = a\xi$. Donc la condition de Petrowsky revient à imposer que $a \in \R$.
-	\item On prend $L = \partial^2_t + 2b\partial^2_{t,x} + c\partial^2_x$ et l'EDP associée $Lu = f$. En posant $v = \partial_t u$ et $w = \partial_x u$, l'EDP devient~:
-	\[\begin{cases}\dpd vt + 2b\dpd vx + c\dpd wx = f\\\dpd vx - \dpd wt = 0\end{cases}\]
-	ou sous forme matricielle~:
-	\[\dpd {}t\begin{bmatrix}v \\ w\end{bmatrix} + \begin{bmatrix}2b & c \\-1 & 0\end{bmatrix}\dpd {}x\begin{bmatrix}v \\ w\end{bmatrix} = \begin{bmatrix}f \\ 0\end{bmatrix}.\]
+\begin{ex}
+Pour $m=n=1$~: $L = \pd {}t + a\pd {}x$. Pour $\xi \in \R : A(\xi) = a\xi$. Donc la condition de Petrowsky revient à imposer que $a \in \R$.
+\end{ex}
 
-	La condition d'hyperbolicité dit alors que $\spectre {\begin{bmatrix}2b & c \\-1 & 0\end{bmatrix}} \subset \R$, i.e. $b,c \in \R$ et $b^2-c \geq 0$.
+\begin{ex}
+On prend $L = \partial^2_t + 2b\partial^2_{t,x} + c\partial^2_x$ et l'EDP associée $Lu = f$. En posant $v = \partial_t u$ et $w = \partial_x u$, l'EDP devient~:
+\[\begin{cases}\dpd vt + 2b\dpd vx + c\dpd wx = f\\\dpd vx - \dpd wt = 0\end{cases}\]
+ou sous forme matricielle~:
+\[\dpd {}t\begin{bmatrix}v \\ w\end{bmatrix} + \begin{bmatrix}2b & c \\-1 & 0\end{bmatrix}\dpd {}x\begin{bmatrix}v \\ w\end{bmatrix} = \begin{bmatrix}f \\ 0\end{bmatrix}.\]
 
-	Le Laplacien est un cas particulier de cet exemple avec $b=0$ et $c=1$. Donc le Laplacien n'est pas hyperbolique car $b^2-c = -1 \not \geq 0$.
-	Par contre $\partial_t^2 - \partial_x^2$ est hyperbolique car $b^2 - c = 1 \geq 0$.
+La condition d'hyperbolicité dit alors que $\spectre {\begin{bmatrix}2b & c \\-1 & 0\end{bmatrix}} \subset \R$, i.e. $b,c \in \R$ et $b^2-c \geq 0$.
 
-	\item Les équations de Maxwell~:
-	\[\begin{cases}\dpd Et = \rot H\\\dpd Ht = \rot E\end{cases}\]
-	pour $E, H : \R^4 \to \C$ sont hyperboliques et peuvent s'écrire sous la forme~:
-	\[\dpd ut + \sum_{j=1}^3\dpd u{x_j},\]
-	pour $A_j = \begin{bmatrix}0 & \omega_j \\-\omega_j & 0\end{bmatrix}$ pour $\omega_1 = \begin{bmatrix}0 & 0 & 0\\0 & 0 & 1\\0 & -1 & 0\end{bmatrix}$,
-	$\omega-2 = \begin{bmatrix}0 & 0 & -1\\0 & 0 & 0\\1 & 0 & 0\end{bmatrix}$, $\omega_3 = \begin{bmatrix}0 & 1 & 0\\-1 & 0 & 0\\0 & 0 & 0\end{bmatrix}$, et
-	$u = \begin{bmatrix}E\\H\end{bmatrix}$. En effet, les $A_j$ sont symétriques réelles, donc pour tout $\xi \in \R^3$, les valeurs propres de $A(\xi) = \sum_{j=1}^3\xi_jA_j$
-	sont réelles car $A(\xi)$ est également symétrique réelle.
-	\item Pour $\sigma_1 = \begin{bmatrix}0 & 1 \\1 & 0\end{bmatrix}$, $\sigma_2 = \begin{bmatrix}0 & i \\-i & 0\end{bmatrix}$, $\sigma_3 = \begin{bmatrix}1 & 0\\0 & -1\end{bmatrix}$,
-	on pose $A_j \coloneqq \begin{bmatrix}0 & -\sigma_j\\-\sigma_j & 0\end{bmatrix}$. $L = \dpd {}t + \sum_{j=1}^3A_j\dpd {}{x_j}$ est l'\textit{opérateur de Dirac}.
-	$L$ est hyperbolique puisque pour $\xi \in \R^3 : \sum_{j=1}^3\xi_jA_j$ est hermitienne.
-\end{enumerate}
+Le Laplacien est un cas particulier de cet exemple avec $b=0$ et $c=1$. Donc le Laplacien n'est pas hyperbolique car $b^2-c = -1 \not \geq 0$.
+Par contre $\partial_t^2 - \partial_x^2$ est hyperbolique car $b^2 - c = 1 \geq 0$.
+\end{ex}
+
+\begin{ex}
+Les équations de Maxwell~:
+\[\begin{cases}\dpd Et = \rot H\\\dpd Ht = \rot E\end{cases}\]
+pour $E, H : \R^4 \to \C$ sont hyperboliques et peuvent s'écrire sous la forme~:
+\[\dpd ut + \sum_{j=1}^3\dpd u{x_j},\]
+pour $A_j = \begin{bmatrix}0 & \omega_j \\-\omega_j & 0\end{bmatrix}$ pour $\omega_1 = \begin{bmatrix}0 & 0 & 0\\0 & 0 & 1\\0 & -1 & 0\end{bmatrix}$,
+$\omega-2 = \begin{bmatrix}0 & 0 & -1\\0 & 0 & 0\\1 & 0 & 0\end{bmatrix}$, $\omega_3 = \begin{bmatrix}0 & 1 & 0\\-1 & 0 & 0\\0 & 0 & 0\end{bmatrix}$, et
+$u = \begin{bmatrix}E\\H\end{bmatrix}$. En effet, les $A_j$ sont symétriques réelles, donc pour tout $\xi \in \R^3$, les valeurs propres de $A(\xi) = \sum_{j=1}^3\xi_jA_j$
+sont réelles car $A(\xi)$ est également symétrique réelle.
+\end{ex}
+
+\begin{ex}
+Pour $\sigma_1 = \begin{bmatrix}0 & 1 \\1 & 0\end{bmatrix}$, $\sigma_2 = \begin{bmatrix}0 & i \\-i & 0\end{bmatrix}$, $\sigma_3 = \begin{bmatrix}1 & 0\\0 & -1\end{bmatrix}$,
+on pose $A_j \coloneqq \begin{bmatrix}0 & -\sigma_j\\-\sigma_j & 0\end{bmatrix}$. $L = \dpd {}t + \sum_{j=1}^3A_j\dpd {}{x_j}$ est l'\textit{opérateur de Dirac}.
+$L$ est hyperbolique puisque pour $\xi \in \R^3 : \sum_{j=1}^3\xi_jA_j$ est hermitienne.
 \end{ex}
 
 \begin{déf} on pose l'ensemble~:
@@ -1843,4 +1887,217 @@ que toutes les dérivées de $\xi \mapsto e^{-itA(\xi)}$ sont à croissance poly
 \end{proof}
 
 \chapter{Théorie des distributions}
+On pose $\Omega \subseteq \R^n$, un ouvert quelconque.
+
+\section{Introduction}
+\begin{déf} Soit $u : C^\infty_0(\Omega) \to \C$ linéaire. On dit que $u$ est une \textit{distribution} sur $\Omega$ si pour toute suite $(\varphi_k)_k \subset C^\infty_0(\Omega)$
+telle que $\exists K \subset\subset \Omega \st \forall k \geq 0 : \supp \varphi_k \subset K$ et~:
+\[\forall \alpha \in \N^n : \partial^\alpha\varphi_k \xrightarrow[k \to \pinfty]{\text{CVU}} 0,\]
+on a~:
+\[\scpr u{\varphi_k} \coloneqq u(\varphi_k) \xrightarrow[k \to \pinfty]{} 0 \qquad\text{ dans } \C.\]
+
+On note $\mathcal D'(\Omega)$ l'ensemble des distributions sur $\Omega$.\footnote{Cette notation vient du fait que $\mathcal D'(\Omega)$ est le \textit{dual} de $C^\infty_0(\Omega)$,
+qui est aussi noté $\mathcal D(\Omega)$.}
+\end{déf}
+
+\begin{rmq} Cette condition correspond à une forme de \textit{continuité généralisée}. De fait, on peut construire une topologie sur $C^\infty_0(\Omega)$ telle que cette
+condition correspond exactement à la notion topologique de continuité. Cependant, les résultats sont plus généraux car ce n'est pas une topologie d'espace normé.
+\end{rmq}
+
+\begin{prp} $\mathcal D'(\Omega)$ est un $\C$-e.v.
+\end{prp}
+
+\begin{ex}\label{ex:L^1_loc}
+On introduit l'espace~:
+\[L^1_\loc(\Omega) \coloneqq \left\{f : \Omega \to \C \st \forall K \subset\subset \Omega : f\chi_K \in L^1(\Omega)\right\}.\]
+\textit{Note~:} $L^(\Omega) \subseteq L^1_\loc(\Omega)$ trivialement, mais $L^1_\loc(\Omega) \neq L^1(\Omega)$. En effet $x \mapsto e^x \in L^1_\loc(\Omega) \setminus L^1(\Omega)$.
+
+Pour $f \in L^1_\loc(\Omega)$, on définit l'application~:
+\[u_f : C^\infty_0(\Omega) \to \C : \varphi \mapsto \int_\Omega\varphi f\dif x.\]
+
+$u_f$ est bien une distribution. En effet, fixons pour une suite $(\varphi_k)_k$ satisfaisant les hypothèses. On sait que $\varphi_kf \xrightarrow[k \to \pinfty]{} 0$
+ponctuellement. De plus, $\exists M > 0 \st \forall k \geq 0 : \abs {\varphi_kf} \leq M\abs f\chi_K \in L^1(\Omega)$. Par la convergence dominée~:
+\[\lim_{k \to \pinfty}\int\varphi_k f\dif x = \int \lim_{k \to \pinfty}\varphi_k f\dif x = 0.\]
+
+De plus, $f \mapsto u_f$ est injective, donc on peut identifier $f$ à $u_f$. Les distributions généralisent donc la notion de fonction.o
+\end{ex}
+
+\begin{ex}
+Soit $\mu$ une mesure borélienne sur $\Omega$ et finie sur les compacts. On définit~:
+\[u_\mu : C^\infty_0(\Omega) \to \C : \varphi \mapsto \int_\Omega\varphi\dif\mu.\]
+
+Montrons que $u_\mu$ est une distribution. La linéarité vient de la linéarité de l'intégrale. Soit $(\varphi_k)_k \subset C^\infty_0(\Omega)$ satisfaisant les hypothèses.
+Le support de toutes les applications $\varphi_k$ est contenu dans un compact $K$, donc $\exists M > 0 \st \forall k \geq 0 : \varphi_k \leq M\chi_K \in L^1(\mu)$.
+Dès lors par la convergence dominée~: $\int_\Omega\varphi_k\dif\mu \xrightarrow[k \to \pinfty]{} 0$.
+
+À nouveau, $\mu \mapsto u_\mu$ est injective et donc on peut identifier $\mu$ avec $u_\mu$. La notion de distribution généralise donc également la notion de mesure.
+\end{ex}
+
+\begin{ex}
+$u : C^\infty_0(\R) \to \C : \varphi \mapsto \varphi'(0)$ est une distribution puisque~:
+\[u(\varphi_k) = \varphi_k'(0) \xrightarrow[k \to \pinfty]{} 0.\]
+\end{ex}
+
+\section{Dérivées de distributions}
+
+\begin{déf} Soit $u \in \mathcal D'(\Omega)$. Pour $j \in \intint 1n$, on définit~:
+\[\partial_ju : C^\infty_0(\Omega) \to \C : \varphi \mapsto -\scpr {\partial_ju}\varphi \coloneqq -\scpr u{\partial_j\varphi}.\]
+\end{déf}
+
+\begin{prp}\label{prp:dérivation distribution} $\partial_ju \in \mathcal D'(\Omega)$ pour tout $u \in \mathcal D'(\Omega)$ et $j \in \intint 1n$.
+\end{prp}
+
+\begin{proof} $\partial_ju$ est bien une forme linéaire par linéarité de $u$ et de $\partial_j$. Pour $(\varphi_k)_k \subset C^\infty_0(\Omega)$, si il existe
+$K \subset\subset \Omega \st \forall k \geq 0 : \supp \varphi_k \subseteq K$ et si $\forall \alpha \in \N^n : \partial^\alpha\varphi_k \xrightarrow[k \to \pinfty]{\text{CVU}} 0$,
+on sait que $(\partial_j\varphi_k)_k$ satisfait les mêmes propriétés. Dès lors, par définition de $u$~:
+\[-\scpr u{\partial_j\varphi_k} \xrightarrow[k \to \pinfty]{} 0.\]
+\end{proof}
+
+\begin{déf} Pour $\alpha \in \N^n$, on définit $\partial^\alpha u \coloneqq \partial_1^{\alpha_1}\ldots\partial_n^{\alpha_n}u$.
+\end{déf}
+
+\begin{prp} $\partial^\alpha u \in \mathcal D'(\Omega)$.
+\end{prp}
+
+\begin{proof} par récurrence avec la Proposition~\ref{prp:dérivation distribution}.
+\end{proof}
+
+\begin{prp} Pour $f \in C^1(\Omega)$, $u_{\partial_jf} = \partial_ju_f$ (au sens de l'exemple~\ref{ex:L^1_loc}).
+\end{prp}
+
+\begin{proof} Soit $\varphi \in C^\infty_0(\Omega)$. On calcule~:
+\[\scpr {u_{\partial_jf}}\varphi = \int_\Omega \varphi\partial_jf\dif x,\]
+et~:
+\[\scpr {\partial u_f}\varphi = -\int_\Omega f\partial_j\varphi\dif x.\]
+
+Par intégration par partie, on trouve~:
+\[\int_\Omega\varphi\partial_jf\dif x + \int_\Omega\partial_j\varphi f\dif x = \int_\Omega \partial_j(\varphi f)\dif x = \int_K \partial_j(f\varphi)\dif x
+= f(-L)\varphi(-L) - f(L)\varphi(L) = 0-0 = 0,\]
+où $\Omega \supset [-L, L] = K \supseteq \supp \varphi$, donc $\varphi(\pm L) = 0$.
+\end{proof}
+
+\begin{ex} Pour $f = \chi_{\overline {\R^+}}$~:
+\[(u_f)' : \varphi \mapsto -\int_{\overline {\R^+}}\varphi'(x)\dif x = -\left(\lim_{x \to \pinfty}\varphi(x) - \varphi(0)\right) = \varphi(0),\]
+puisque $\varphi$ est à support compact.
+
+Donc $\od {}xu_{\chi_{\overline {\R^+}}} = \delta_0$ (la mesure de Dirac en 0).
+\end{ex}
+
+\begin{prp} Pour $u \in \mathcal D'(\Omega)$, $\partial_j\partial_ku = \partial_k\partial_ju$.
+\end{prp}
+
+\begin{proof} $u$ est définie sur $C^\infty_0(\Omega)$ donc pour $\varphi \in C^\infty_0(\Omega)$, les dérivées commutent. Donc~:
+\[\scpr {\partial_j\partial_ku}\varphi = -\scpr {\partial_ku}{\partial_j\varphi} = \scpr u{\partial_k\partial_j\varphi} = \scpr u{\partial_j\partial_k\varphi}
+= \scpr {\partial_k\partial_ju}\varphi.\]
+\end{proof}
+
+\begin{déf} Pour $a \in C^\infty_0$ et $u \in \mathcal D'(\Omega)$, on définit~:
+\[au : C^\infty_0(\Omega) \to \C : \varphi \mapsto \scpr {au}\varphi \coloneqq \scpr u{a\varphi}.\]
+\end{déf}
+
+\begin{prp} $au$ est une distribution.
+\end{prp}
+
+\begin{proof} Par linéarité de $u$.
+\end{proof}
+
+\begin{prp} Soient $f \in L^1_\loc(\Omega)$ et $a \in C^\infty_0$. Alors $u_{af} = au_f$.
+\end{prp}
+
+\begin{proof} Soit $\varphi \in C^\infty_0(\Omega)$.
+\[\scpr {u_{af}}\varphi = \int_\Omega \varphi (af)\dif x = \int_\Omega(a\varphi)f\dif x = \scpr {u_f}{a\varphi} = \scpr {au_f}\varphi.\]
+\end{proof}
+
+\begin{ex} Soient $\delta_0$ la mesure de Dirac en 0 et $C^\infty_0(\Omega) \ni a : x \mapsto x_j$. Par définition de $a$~:
+\[\scpr {au}\varphi = (a\varphi)(0) = 0.\]
+\end{ex}
+
+\begin{prp} Les distributions vérifient la formule de Leibniz~: si $u \in \mathcal D'(\Omega)$ et $a \in C^\infty_0(\Omega)$, alors~:
+\[\partial_j(au) = \partial_jau + a\partial_ju\]
+\end{prp}
+
+\begin{proof} Soit $\varphi \in C^\infty_0(\Omega)$.
+\begin{align*}
+	\scpr {\partial_j(au)}\varphi &= -\scpr {au}{\partial_j\varphi} = \scpr u{-a\partial_j\varphi} = \scpr u{-\partial_j(au)+\partial_ja\varphi}
+		= \scpr {\partial_ju}{a\varphi} + \scpr{\partial_jau}\varphi \\
+	&= \scpr {a\partial_ju}\varphi + \scpr {\partial_jau}\varphi = \scpr {\partial_jau + a\partial_ju}\varphi.
+\end{align*}
+\end{proof}
+
+\section{Distributions tempérées et transformations de Fourier}
+On se place dans le cas $\Omega = \R^n$.
+
+\begin{déf} Soit $u \in \mathcal D'(\Omega)$. $u$ est dite \textit{tempérée} si pour toute suite
+$(\varphi_k)_k \subset C^\infty_0(\R^n) \st \varphi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} 0$ (au sens de la Définition~\ref{déf:convergence Schwartz}), on a~:
+\[\scpr u{\varphi_k} \xrightarrow[k \to \pinfty]{} 0.\]
+
+On note $\mathcal S'(\R^n)$ l'espace des distributions tempérées.
+\end{déf}
+
+\begin{rmq} Si $(\varphi_k)_k \subset C^\infty_0(\R^n)$ telle qu'il existe $K \subset\subset \R^n$ avec $\forall k \geq 0 : \supp \varphi_k \subset K$ et~:
+\[\forall \alpha \in \N^n : \partial^\alpha \varphi_k \xrightarrow[k \to \pinfty]{\text{CVU}} 0,\]
+alors $\varphi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} 0$, i.e. la topologie sur $C^\infty_0(\R^n)$ est plus fine que celle de $\mathcal S(\R^n)$.
+\end{rmq}
+
+\begin{prp} Soit $u : C^\infty_0(\R^n) \to \C$ une forme linéaire. $u$ est tempérée ssi~:
+\[\exists C, m > 0 \st \forall \varphi \in C^\infty_0(\R^n) : \abs {\scpr u\varphi} \leq C\sum_{\abs \alpha + \abs \beta \leq m}\norm {x^\alpha\partial^\beta\varphi}_{L^\infty(\R^n)}.\]
+\end{prp}
+
+\begin{rmq}Cette proposition est une généralisation du Théorème~\ref{thm:opérateur continu ssi borné}.
+\end{rmq}
+
+\begin{proof} \underline {$\Leftarrow$~:} Pour tout $\varphi \in C^\infty_0(\R^n)$, on note~:
+\[p_m(\varphi) \coloneqq \sum_{\abs \alpha + \abs\beta \leq m}\norm {x^\alpha\partial^\beta\varphi}_{L^\infty(\R^n)}.\]
+
+Soit $(\varphi_k)_k \subset C^\infty_0(\R^n)$ telle que $\varphi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} 0$. Par définition de la convergence dans $\mathcal S(\R^n)$, on sait
+que $p_m(\varphi_k) \xrightarrow[k \to \pinfty]{} 0$. Dès lors, $\scpr u{\varphi_k} \leq Cp_m(\varphi_k) \xrightarrow[k \to \pinfty]{} 0$, et donc $u$ est tempérée.
+
+\underline {$\Rightarrow$~:} Par contraposée, supposons que~:
+\[\forall C > 0, m > 0 : \exists \varphi_{C,m} \in C^\infty_0(\R^n) \st \abs {u{\varphi_{C,m}}} > Cp_m(\varphi_{C,m}).\]
+
+En particulier, si $C=m=j$, il existe $\varphi_j \in C^\infty_0(\R^n) \st \abs {\scpr u{\varphi_j}} \gneqq jp_j(\varphi_j)$. WLOG supposons $\abs {\scpr u{\varphi_j}}=1$
+(quitte à normaliser $\varphi_j$). Alors $p_j(\varphi_j) < \frac 1j$, et donc pour $m \leq j$~: $p_m(\varphi_j) < \frac 1j$. On a donc construit une suite
+$(\varphi_j)_j \subset C^\infty_0(\R^n)$ qui converge vers 0 dans $\mathcal S(\R^n)$. Cependant pour tout $j$, $\abs {\scpr u{\varphi_j}} = 1$, et donc $\scpr u{\varphi_j}$
+ne converge pas vers 0. Donc $u$ n'est pas tempérée.
+\end{proof}
+
+\begin{prp} $\mathcal S'(\R^n) \subset \mathcal D'(\R^n)$ et $\mathcal S'(\R^n)$ est un $\C$-e.v.
+\end{prp}
+
+\begin{lem}\label{lem:C^infty_0 Lipschitz} Soit $\psi \in C^\infty_0(\R^n)$. Il existe $C > 0$ tel que~:
+\[\forall y, z \in \R^n : \abs {\psi(y)-\psi(z)} \leq C\abs {y-z}.\]
+\end{lem}
+
+%PROOF?
+
+\begin{lem} Si $\varphi \in \mathcal S(\R^n)$, alors $\exists (\varphi_k)_k \subset C^\infty_0(\R^n) \st \varphi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} \varphi$,
+i.e. $C^\infty_0(\R^n)$ est dense dans $\mathcal S(\R^n)$ pour la topologie de $\mathcal S(\R^n)$.
+\end{lem}
+
+\begin{proof} Soit $\psi \in C^\infty_0(\R^n) \st \psi(x) = 1$ si $\abs x \leq 1$. Pour $k \geq 1$, on pose~:
+\[\varphi_k : \R^n \to \C : x \mapsto \varphi(x)\psi\left(\frac xk\right).\]
+
+On a alors $(\varphi_k-\varphi)(x) = \varphi(x)\left(\psi\left(\frac xk\right)-1\right)$. Par Leibniz~:
+\begin{align*}
+	\abs {x^\alpha\partial^\beta(\varphi_k-\varphi)}
+	&= \abs {\sum_{\gamma \leq \beta}\binom \beta\gamma x^\alpha\partial^\gamma\varphi\partial^{\beta-\gamma}\left(\psi\left(\frac xk\right)-1\right)} \\
+	&\leq \sum_{\gamma\leq\beta}\binom\beta\gamma\abs {x^\alpha}\abs {\partial^\beta\varphi}\abs {\partial^{\beta-\gamma}\left(\psi\left(\frac xk\right)-1\right)}
+\end{align*}
+
+Si $\beta - \gamma \neq 0$, un facteur $k^{-\abs{\beta-\gamma}}$ sort du dernier facteur, et si $\beta=\gamma$, par le Lemme~\ref{lem:C^infty_0 Lipschitz}, il existe $C$ tel que
+$\abs {\psi\left(\frac xk\right)-1} = \abs {\psi\left(\frac xk\right) - \psi(0)} \leq C\abs {\frac xk} = C\frac {\abs x}k$.
+
+Dès lors, tous les termes de la somme tendent uniformément vers 0 et~:
+\[\varphi_k-\varphi \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} 0.\]
+\end{proof}
+
+\begin{thm} Soit $u \in \mathcal S'(\R^n)$. $u$ possède un unique prolongement $\widetilde u$ à $\mathcal S(\R^n)$ tel que~:
+\begin{enumerate}
+	\item $\widetilde u : \mathcal S(\R^n) \to \C$ est linéaire~;
+	\item $\exists C, m > 0 \st \forall \varphi \in \mathcal S(\R^n) : \abs {\scpr {\widetilde u}\varphi} \leq Cp_m(\varphi)$.
+\end{enumerate}
+\end{thm}
+
+\begin{proof} À venir
+\end{proof}
 \end{document}
