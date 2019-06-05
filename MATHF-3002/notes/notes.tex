@@ -112,16 +112,16 @@
 \section{Définitions}
 
 On considère $\R^n$ à $n$ fixé en tant qu'espace de mesure $(\R^n, \mathcal M, \lambda)$ avec $\mathcal M$ la famille des ensembles Lebesgue-mesurables et $\lambda$
-la mesure de Lebesgue sur $\R^n$.
+la mesure de Lebesgue sur $\R^n$. Pour $f \in L^1(\R^n)$, on note $\int f\dif x$ l'intégrale de $f$ par rapport à la mesure de Lebesgue sur $\R^n$.
 
 \begin{déf}\label{déf:Fourier dans L^1} Pour $u \in L^1(\R^n)$, on définit sa \textit{transformée de Fourier} par~:
 \begin{equation}
-	\hat u : \R^n \to \R : \xi \mapsto \int e^{-i\scpr x\xi}u(x)\dif x.
+	\hat u : \R^n \to \C : \xi \mapsto \int e^{-i\scpr x\xi}u(x)\dif x.
 \end{equation}
 \end{déf}
 
 Cette fonction est bien définie car $x \mapsto e^{-i\scpr x\xi}$ est bornée en module (et donc $L^\infty$), et $u$ est intégrable, donc $x \mapsto e^{-i\scpr x\xi}u(x)$ est intégrable
-par Hölder.
+par Hölder. Ou plus simplement, pour $x \in \R^n : \abs {e^{-\scpr x\xi}u(x)} = \abs {u(x)}$, et donc $x \mapsto e^{-i\scpr x\xi}u(x)$ est intégrable.
 
 \begin{prp} Pour $u \in L^1(\R^n)$, $\hat u$ est continue.
 \end{prp}
@@ -130,10 +130,11 @@ par Hölder.
 \[\hat f(\xi_0 + h_k) = \int e^{-i\scpr x{\xi_0}}e^{-i\scpr x{h_k}}f(x)\dif x.\]
 
 Puisque $\abs {e^{-i\scpr x{\xi_0}}e^{-i\scpr x{h_k}}f(x)} = \abs {f(x)}$ et
-$e^{-i\scpr \cdot{\xi_0}}e^{-i\scpr \cdot{h_k}}f(\cdot) \xrightarrow[k \to \pinfty]{\lambda\text{-p.p.}}e^{-i\scpr \cdot{\xi_0}}f(\cdot)$ (la suite converge même partout). Donc
-par le théorème de la convergence dominée~:
+$e^{-i\scpr \cdot{\xi_0}}e^{-i\scpr \cdot{h_k}}f(\cdot) \xrightarrow[k \to \pinfty]{\lambda\text{-p.p.}}e^{-i\scpr \cdot{\xi_0}}f(\cdot)$ (la suite converge même partout),
+par le théorème de la convergence dominée, on sait~:
 \[\hat f(\xi_0 + h_k) \xrightarrow[k \to \pinfty]{} \int e^{-i\scpr x{\xi_0}}f(x)\dif x = \hat f(\xi_0).\]
 \end{proof}
+\vspace{1cm}
 
 \begin{prp} Soit $u \in L^1(\R^n)$. Si $\forall j \in \intint 1n : x_jf \in L^1$, alors~: $\hat u \in C^1$ et~:
 \begin{equation}\label{eq:pd transformée Fourier}
@@ -141,7 +142,7 @@ par le théorème de la convergence dominée~:
 \end{equation}
 \end{prp}
 
-\begin{proof} Soit $(h_k)_{k \in \N} \subset \R \tq h_k \xrightarrow[k \to \pinfty]{} 0$, et prenons $\{e_j\}_{j=1}^n$ la base canonique de $\R^n$.
+\begin{proof} Soit $(h_k)_{k \in \N} \subset \R \tq h_k \xrightarrow[k \to \pinfty]{} 0$, et prenons $\{e_j\}_{j=1}^n$ la base canonique de $\R^n$. Pour tout $\xi \in \R^n$~:
 \[\frac {\hat u(\xi + h_ke_j) - \hat u(\xi)}{h_k} = \int e^{-i\scpr x\xi}\underbrace {\frac {e^{-ih_kx_j}-1}{h_k}}_{\xrightarrow[k \to \pinfty]{} -ix_j}u(x)\dif x.\]
 
 En module~:
@@ -167,12 +168,12 @@ Dès lors, par le théorème de convergence dominée, la limite passe sous l'int
 \end{aligned}\end{equation}
 \end{déf}
 
-Dans l'idée, $\mathcal S$ est l'ensemble dont toutes les dérivées décroissent plus vite vers 0 que tout polynôme.
+Dans l'idée, $\mathcal S$ est l'ensemble des fonctions dont toutes les dérivées décroissent plus vite vers 0 aux infinis que tout polynôme.
 
-\begin{prp} $\mathcal S(\R^n)$ est un $\R$-espace vectoriel.
+\begin{prp} $\mathcal S(\R^n)$ est un $\C$-espace vectoriel.
 \end{prp}
 
-\begin{proof} Immédiat par le fait que $C^\infty(\R^n)$ et $L^\infty(\R^n)$ sont des $\R$-evs.
+\begin{proof} Immédiat par le fait que $C^\infty(\R^n)$ et $L^\infty(\R^n)$ sont des $\C$-evs.
 \end{proof}
 
 \begin{prp}\label{prp:C^infty_0 dans Schartz dans l'intersection des L^p} Si $C^\infty_0(\R^n) = C^\infty_c(\R^n)$ désigne l'ensemble des fonctions $C^\infty$ à support compact, alors~:
@@ -209,17 +210,17 @@ essentiellement bornés et est donc essentiellement bornée.
 
 À défaut de définir une topologie sur $\mathcal S(\R^n)$, on définit uniquement une notion de convergence.
 
-\begin{déf}\label{déf:convergence Schwartz} Soit $(u_k)_{k \in \N} \in \mathcal S^\N$, $u \in \mathcal S$, on dit que $u_k$ converge vers $u$ lorsque $k \to \pinfty$
-(noté $u_k \xrightarrow[k \to \pinfty]{\mathcal S} u$) lorsque~:
-\begin{equation}
-	\forall \alpha, \beta \in \N^n : \sup_{x \in \R^n}\abs {x^\alpha\partial^\beta(u-u_k)} \xrightarrow[k \to \pinfty]{} 0.
-\end{equation}
+\begin{déf}\label{déf:convergence Schwartz} Soit $(u_k)_{k \in \N} \subset \mathcal S(\R^n)$, $u \in \mathcal S(\R^n)$, on dit que \textit{$u_k$ converge vers $u$ dans
+$\mathcal S(\R^n)$ lorsque $k \to \pinfty$} (noté $u_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} u$) lorsque~:
+\[\forall \alpha, \beta \in \N^n : \sup_{x \in \R^n}\abs {x^\alpha\partial^\beta(u-u_k)} \xrightarrow[k \to \pinfty]{} 0,\]
+i.e. lorsque~:
+\[\forall \alpha, \beta \N^n : \norm {x^\alpha\partial^\beta(u_k-u)}_{L^\infty} \xrightarrow[k \to \pinfty]{} 0.\]
 \end{déf}
 
-\begin{thm}\label{thm:Fourier continu sur Schwartz} Soit $u \in \mathcal S$. Alors~:
+\begin{thm}\label{thm:Fourier continu sur Schwartz} Soit $u \in \mathcal S(\R^n)$. Alors~:
 \begin{enumerate}
-	\item $\hat u \in \mathcal S$. De plus si $u_k \xrightarrow[k \to \pinfty]{\mathcal S} u$, alors $\hat {u_k} \xrightarrow[k \to \pinfty]{\mathcal S} \hat u$.
-	\item $\widehat {D_ju}(\xi) = \xi_j\hat u(\xi)\quad$ (de plus $\widehat {x_ju} = D_j \hat u$).
+	\item $\hat u \in \mathcal S(\R^n)$. De plus si $u_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} u$, alors $\hat {u_k} \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} \hat u$.
+	\item $\widehat {D_ju}(\xi) = \xi_j\hat u(\xi)\quad$ (de plus $\widehat {x_ju} = -D_j \hat u$) où $D_j = \frac 1i\partial_j$.
 \end{enumerate}
 \end{thm}
 
@@ -231,30 +232,31 @@ Donc~:
 	= \int e^{-i\scpr x\xi} D^\beta_x\left((-x)^\alpha u(x)\right)\dif x.\]
 
 Pour montrer cette dernière égalité, intégrons par partie. D'abord observons pour $\phi \in \mathcal S$ et $j \in \intint 1n$~:
-\[\int \partial_j\phi\dx = \int\ldots\int\left(\int \partial_j\phi\dx_j\right)\dx_1\ldots\dx_{j-1}\dx_{j+1}\ldots\dx_n.\]
-Or~:
-\[\int \partial_j\phi\dx_j = \lim_{N \to \pinfty}\int_{-N}^N\partial_j\phi(x)\dx_j
-	= \lim_{N \to \pinfty}\left(\underbrace {\phi(x_1, \ldots, x_{j-1}, N, x_{j+1}, \ldots, x_n)}_{\xrightarrow[N \to \pinfty]{} 0} - \underbrace {\phi(x_1, \ldots, x_{j-1}, N, x_{j+1}, \ldots, x_n)}_{\xrightarrow[N \to \pinfty]{} 0}\right) = 0,\]
-puisque $\phi \in \mathcal S$.
+\[\int \partial_j\phi\dx = \idotsint\left(\int \partial_j\phi\dx_j\right)\dx_1\ldots\dx_{j-1}\dx_{j+1}\ldots\dx_n.\]
+En effet, $\partial_j\phi$ est Borélienne, donc par Fubini, on peut passer de l'intégrale sur $\R^n$ à $n$ intégrale itérées sur $\R$. Or~:
+\begin{align*}
+	\int \partial_j\phi\dx_j &= \lim_{N \to \pinfty}\int_{-N}^N\partial_j\phi(x)\dx_j \\
+	&= \lim_{N \to \pinfty}\left(\underbrace {\phi(x_1, \ldots, x_{j-1}, N, x_{j+1}, \ldots, x_n)}_{\xrightarrow[N \to \pinfty]{} 0}
+			- \underbrace {\phi(x_1, \ldots, x_{j-1}, N, x_{j+1}, \ldots, x_n)}_{\xrightarrow[N \to \pinfty]{} 0}\right) = 0,
+\end{align*}
+puisque $\phi \in \mathcal S(\R^n)$ implique $\phi(x) \xrightarrow[\abs x \to \pinfty]{} 0$. On en déduit donc que $\int\partial_j\phi\dx = 0$.
 
-On en déduit donc que $\int\partial_j\phi\dx = 0$.
-
-Dès lors, puisque $e^{-i\scpr x\xi}(-x)^\alpha u(x) \in \mathcal S$ et par récurrence~:
+Dès lors, puisque $e^{-i\scpr x\xi}(-x)^\alpha u(x) \in \mathcal S(\R^n)$ et par récurrence~:
 \[\int (-D_x)^\beta(e^{-i\scpr x\xi})(-x)^\alpha u(x)\dif x	= \int e^{-i\scpr x\xi} D^\beta_x\left((-x)^\alpha u(x)\right)\dif x.\]
 
-Montrons alors que $\forall N \in \N : \exists C_N \geq 0 \tq \abs {D_x^\beta((-x)^\alpha u(x))} \leq C_N(1 + \abs x)^{-N}$. Par Leibniz~:
+Montrons alors que $\forall N \in \N : \exists C_N \geq 0 \tq \abs {D_x^\beta\left((-x)^\alpha u(x)\right)} \leq C_N(1 + \abs x)^{-N}$. Par Leibniz~:
 \[(1 + \abs x)^N\partial^\beta (x^\alpha u(x)) = (1 + \abs x)^N\sum_{\gamma \leq \beta} \binom \beta\gamma\partial^\gamma x^\alpha\partial^{\beta-\gamma}u(x)\]
-est borné car $u \in \mathcal S$. Dès lors~:
+est borné car $u \in \mathcal S(\R^n)$. Dès lors~:
 \[\abs {\xi^\beta D_\xi^\alpha \hat u(x)} \leq C_N\int(1 + \abs x)^{-N}\dx.\]
 
 Pour $N$ suffisamment grand ($N > n$), on a $\abs {\xi^\beta D_\xi^\alpha \hat u(x)} \leq \cste$.
 
 Dès lors, on trouve~:
-\[\abs {\xi^\beta D_\xi^\alpha\hat u(x)} \leq \sup_{x \in \R^n}(1 + \abs x)^{-N}\abs {D_x^\beta((-x)^\alpha(u - u_k))} \xrightarrow[k \to \pinfty]{} 0.\]
-On en déduit donc $\hat {u_k} \xrightarrow[k \to \pinfty]{\mathcal S} \hat u$.
+\[\abs {\xi^\beta D_\xi^\alpha\hat u(x)} \leq \sup_{x \in \R^n}(1 + \abs x)^{-N}\abs {D_x^\beta\left((-x)^\alpha(u - u_k)\right)} \xrightarrow[k \to \pinfty]{} 0.\]
+On en déduit donc $\hat {u_k} \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} \hat u$.
 
 Pour le second point, la seconde formule découle directement du premier pour $\alpha = e_j$~:
-\[D_j\hat u(\xi) = \int e^{-i\scpr x\xi}(-x_j)u(x)\dx = \widehat {x_ju}(\xi).\]
+\[D_j\hat u(\xi) = \int e^{-i\scpr x\xi}(-x_j)u(x)\dx = -\widehat {x_ju}(\xi).\]
 
 La première égalité se démontre par~:
 \[\widehat {D_ju}(\xi) = \int e^{-i\scpr x\xi} D_ju(x)\dx = -\int D_{x,j}\left(e^{-i\scpr x\xi}\right)u(x)\dx = \xi_j\int e^{-i\scpr x\xi}u(x)\dx = \xi_j\hat u(\xi).\]
@@ -262,19 +264,19 @@ La première égalité se démontre par~:
 
 \section{Formule d'inversion}
 
-\begin{thm}\label{thm:inversion Fourier} Soit $u \in \mathcal S$. Alors~:
+\begin{thm}\label{thm:inversion Fourier} Soit $u \in \mathcal S(\R^n)$. Alors~:
 \begin{equation}\label{eq:inversion Fourier}
 	u(x) = (2\pi)^{-n}\int e^{i\scpr x\xi}\hat u(\xi)\dif\xi.
 \end{equation}
 \end{thm}
 
-La fonction $(y, \xi) \mapsto e^{i\scpr x\xi}e^{-i\scpr y\xi}u(y)$ n'est pas intégrable pour $(y, \xi)$. On ne va donc pas pouvoir appliquer Fubini.
+La fonction $(y, \xi) \mapsto e^{i\scpr x\xi}e^{-i\scpr y\xi}u(y)$ n'est pas intégrable pour $(y, \xi)$. On ne va donc pas pouvoir appliquer Fubini naïvement.
 
-\begin{proof} Pour $\chi \in \mathcal S$, $(y, \xi) \mapsto e^{-i\scpr y\xi}e^{i\scpr x\xi}\chi(\xi)u(y)$ est intégrable. Donc par Fubini~:
+\begin{proof} Pour $\chi \in \mathcal S(\R^n)$, $(y, \xi) \mapsto e^{-i\scpr y\xi}e^{i\scpr x\xi}\chi(\xi)u(y)$, à $x$ fixé, est intégrable. Donc par Fubini~:
 \[\int e^{i\scpr x\xi}\chi(\xi)\hat u(\xi)\dif\xi = \int e^{i\scpr x\xi}\chi(\xi)\int e^{-i\scpr y\xi}u(y)\dif y\dif\xi
 	= \int u(y)\int e^{-i\scpr {y-x}\xi}\chi(\xi)\dif\xi \dif y = \int u(y)\hat \chi(y-x)\dif y.\]
 
-Pour $\psi \in \mathcal S$, $\delta > 0$ tels que $\chi(\xi) = \psi(\delta\xi)$~:
+Pour $\psi \in \mathcal S(\R^n)$, $\delta > 0$ tels que $\chi(\xi) = \psi(\delta\xi)$~:
 \[\hat \chi(\xi) = \int e^{-i\scpr y\xi}\psi(\delta\xi)\dif\xi = \delta^{-n}\hat \psi(\xi/\delta).\]
 
 Alors~:
@@ -312,45 +314,47 @@ où l'avant dernière égalité s'obtient en appliquant Fubini.
 Puisque $\hat \psi(0) = 1$, on a bien~\eqref{eq:inversion Fourier}.
 \end{proof}
 
-On définit une application \textit{transformée de Fourier} $\mathcal F : \mathcal S \to \mathcal S : u \mapsto \mathcal Fu \coloneqq \hat u$.
+On définit une application \textit{transformée de Fourier} $\mathcal F : \mathcal S(\R^n) \to \mathcal S(\R^n) : u \mapsto \mathcal Fu \coloneqq \hat u$.
 
 \begin{prp} $\mathcal F$ est une bijection linéaire.
 \end{prp}
 
 \begin{proof} Par la formule d'inversion, $\mathcal F$ est injective~: si $\mathcal Fu = 0$, alors $u = 0$.
 
-De plus, $\mathcal F$ est surjective. Pour $f \in \mathcal S$, montrons qu'il existe $u \in \mathcal S \tq \mathcal Fu = f$.
+De plus, $\mathcal F$ est surjective. Pour $f \in \mathcal S(\R^n)$, montrons qu'il existe $u \in \mathcal S(\R^n) \tq \mathcal Fu = f$.
 Prenons $u(x) = (2\pi)^{-n}\int e^{i\scpr x\xi}f(\xi)\dif\xi$. Alors~:
 \[\mathcal Ff(x) = \int e^{-i\scpr x\xi}f(\xi)\dif\xi = (2\pi)^nu(-x).\]
 
 De plus~:
 \[\hat {\hat u}(\xi) = \int e^{-i\scpr x\xi}\hat u(x)\dx = (2\pi)^n(2\pi)^{-n}\int e^{-i\scpr x\xi}\hat u(x)\dx = (2\pi)^nu(-\xi),\]
-donc $\hat f = \hat {\hat u}$ pour tout $x$, et puisque $\mathcal F$ est injective, $f = \hat u$. Donc $\mathcal F$ est surjective, et donc surjective.
+donc $\hat f = \hat {\hat u}$ pour tout $x$, et puisque $\mathcal F$ est injective, $f = \hat u$. Donc $\mathcal F$ est surjective, et donc bijective.
 
 La linéarité est triviale~:
 \[\mathcal F(f+\lambda g)(\xi) = \int e^{-i\scpr x\xi}(f+\lambda g)(x)\dx = \int e^{-i\scpr x\xi}f(x)\dx + \lambda\int e^{-i\scpr x\xi}g(x)\dx
 	= \left(\hat f + \lambda \hat g\right)(\xi).\]
 \end{proof}
 
-En posant $\tilde {\mathcal F} : \mathcal S \to \mathcal S : u \mapsto \tilde {\mathcal F}u$ où $\tilde {\mathcal F}u(x) = (2\pi)^{-n}\int e^{i\scpr x\xi}u(\xi)\dif\xi$.
-Par un raisonnement similaire à la Proposition précédente, on trouve $\tilde {\mathcal F}$ est une bijection linéaire. De plus $\mathcal F^{-1} = \tilde {\mathcal F}$.
+Posons la transformation de Fourier inverse $\tilde {\mathcal F} : \mathcal S(\R^n) \to \mathcal S(\R^n) : u \mapsto \tilde {\mathcal F}u$ où
+$\tilde {\mathcal F}u(x) = (2\pi)^{-n}\int e^{i\scpr x\xi}u(\xi)\dif\xi$. Par un raisonnement similaire à la Proposition précédente,
+on trouve $\tilde {\mathcal F}$ est une bijection linéaire. De plus $\mathcal F^{-1} = \tilde {\mathcal F}$.
 
-De plus, puisque $\mathcal F$ transforme des suites convergentes en suites convergentes sur $\mathcal S$, $\tilde {\mathcal F}$ fait de même.
+Également, puisque $\mathcal F$ transforme des suites convergentes en suites convergentes sur $\mathcal S(\R^n)$, $\tilde {\mathcal F}$ fait de même.
 
-Cela veut dire que $\mathcal F$ est une homéomorphisme linéaire de $\mathcal S$ dans $\mathcal S$ pour la topologie non définie ici.
+\begin{rmq} Cela veut dire que $\mathcal F$ est une homéomorphisme linéaire de $\mathcal S(\R^n)$ dans $\mathcal S(\R^n)$ pour la topologie non définie ici.
+\end{rmq}
 
-\begin{prp} Pour $u, v \in \mathcal S$~:
+\begin{prp} Pour $u, v \in \mathcal S(\R^n)$~:
 \begin{enumerate}
 	\item $\int u\hat v = \int\hat uv$~;
 	\item $\int u\overline v = (2\pi)^{-n}\int \hat u\hat {\overline v}$. Cette égalité est appelée \textit{identité de Parseval}.
 \end{enumerate}
 \end{prp}
 
-\begin{proof} Le premier point se montre par la formule de la preuve du Théorème~\ref{thm:inversion Fourier} pour $u,\chi \in \mathcal S$~:
+\begin{proof} Le premier point se montre par la formule de la preuve du Théorème~\ref{thm:inversion Fourier} pour $u,\chi \in \mathcal S(\R^n)$~:
 \[\int e^{i\scpr x\xi}\chi(\xi)\hat u(\xi)\dif\xi = \int u(x+y)\hat \chi(y)\dif y\]
 en $x=0$.
 
-Le second point, prenons $u, w \in \mathcal S$ et posons $v \coloneqq (2\pi)^{-n}\overline {\hat w}$. Par le premier point~:
+Le second point, prenons $u, w \in \mathcal S(\R^n)$ et posons $v \coloneqq (2\pi)^{-n}\overline {\hat w}$. Par le premier point~:
 \[\int \hat uv = \int u\hat v = \int u(2\pi)^{-n}\hat {\overline {\hat w}}.\]
 
 On peut voir que~:
@@ -361,7 +365,7 @@ Dès lors~:
 \[\int \hat u(2\pi)^{-n}\overline {\hat w} = \int u\overline w.\]
 \end{proof}
 
-\begin{cor}[Formule de Plancherel] Pour $u \in \mathcal S$, on a~:
+\begin{cor}[Formule de Plancherel] Pour $u \in \mathcal S(\R^n)$, on a~:
 \begin{equation}\label{eq:Plancherel}
 	\int \abs u^2\dx = (2\pi)^{-n}\int\abs {\hat u}^2\dif\xi
 \end{equation}
@@ -381,38 +385,40 @@ Donc on peut choisir $a=1$ et $b=2\pi$ ou encore $a=(2\pi)^{n/2}$ et $b=1$ afin 
 
 Cependant le choix $a=b=1$ permet de ne pas avoir de terme $b^k$ lors des dérivations sous le signe intégral.
 
-\section{Extension de la transformée à $L^1 \cap L^2$}
+\section{Extension de la transformée à $L^2(\R^n)$}
 
-\begin{prp} Il existe une unique application linéaire continue $\mathbb F : L^2 \to L^2$ tel que $\mathbb F\sVert[2]_{\mathcal S} = \mathcal F$ et~:
-\[\int u\overline v = (2\pi)^{-n}\int \mathbb Fu\overline {\mathbb Fv}\dif\xi,\]
+\begin{prp} Il existe une unique application linéaire continue $\mathbb F : L^2(\R^n) \to L^2(\R^n)$ telle que $\mathbb F\sVert[2]_{\mathcal S} = \mathcal F$ et~:
+\[\int u\overline v\dif x = (2\pi)^{-n}\int \mathbb Fu\overline {\mathbb Fv}\dif\xi,\]
 i.e. $\mathbb F$ préserve l'identité de Parseval.
 \end{prp}
 
 \begin{proof} Admettons que $C_0^\infty(\R^n)$ est dense dans $L^2(\R^n)$. Puisque $C_0^\infty(\R^n) \subseteq \mathcal S(\R^n)$, on a $\mathcal S(\R^n)$ dense dans $L^2(\R^n)$.
-Par cette densité, pour $u \in \mathcal S$, il existe $(u_k)_{k \in \N} \in \mathcal S^\N$ tel que $u_k \xrightarrow[k \to \pinfty]{L^2} u$, et donc $(u_k)$ est de Cauchy
-pour cette norme. $(\hat {u_k})_{k \in \N}$ est également de Cauchy car~:
-\[\norm {\hat {u_k} - \hat {u_m}} = (2\pi)^{n/2}\norm {u_k - u_m}.\]
+Par cette densité, pour $u \in L^2(\R^n)$, il existe $(u_k)_{k \in \N} \subset \mathcal S(\R^n)$ telle que $u_k \xrightarrow[k \to \pinfty]{L^2} u$, et donc $(u_k)$ est de
+Cauchy pour cette norme. $(\widehat {u_k})_{k \in \N}$ est également de Cauchy car~:
+\[\norm {\widehat {u_k} - \widehat {u_m}}_{L^2} = (2\pi)^{n/2}\norm {u_k - u_m}_{L^2}.\]
 
-Par cette complétude, il existe $z \in \mathcal S \tq \hat {u_k} \xrightarrow[k \to \pinfty]{L^2} z$. On pose alors $\mathbb Fu \coloneqq z$. Montrons que $z$ ne dépend pas
-de la suite $(\hat {u_k})$ choisie pour montrer que $\mathbb F$ est bien définie.
+Par complétude de $L^2$, il existe $z \in L^2(\R^n) \tq \widehat {u_k} \xrightarrow[k \to \pinfty]{L^2} z$. On pose alors $\mathbb Fu \coloneqq z$. Montrons que $z$ ne dépend pas
+de la suite $(u_k)_k$ choisie pour montrer que $\mathbb F$ est bien définie.
 
-Soit $(v_k)_{k \in \N} \tq v_k \xrightarrow[k \to \pinfty]{L^2} z$. Alors $v_k-u_k \xrightarrow[k \to \pinfty]{L^2} 0$. Par Plancherel,
-$\hat {v_k}-\hat {u_k} \xrightarrow[k \to \pinfty]{L^2} 0$. Dès lors $\hat {v_k} \xrightarrow[k \to \pinfty]{L^2} z$.
+Soit $(v_k)_{k \in \N} \subset \mathcal S(\R^n) \tq v_k \xrightarrow[k \to \pinfty]{L^2} u$. Alors $v_k-u_k \xrightarrow[k \to \pinfty]{L^2} 0$. Par Plancherel,
+$\widehat {v_k}-\widehat {u_k} \xrightarrow[k \to \pinfty]{L^2} 0$. Dès lors $\widehat {v_k} \xrightarrow[k \to \pinfty]{L^2} z$.
 
-Montrons alors que $\mathbb F$ est linéaire.
+\textbf{Montrons que $\mathbb F$ est linéaire.}
 
-Soient $u, v \in L^2$. Soient $(u_k)_{k \in \N}, (v_k)_{k \in \N} \in \mathcal S^\N$ telles que $u_k \xrightarrow[k \to \pinfty]{L^2} u$ et $v_k \xrightarrow[k \to \pinfty]{L^2} v$.
-Alors $u_k+v_k \xrightarrow[k \to \pinfty]{L^2} u+v$. Par linéarité de $\mathcal F$, $\hat {u_k} + \hat {v_k} = \widehat {u_k + v_k} \xrightarrow[k \to \pinfty]{L^2} \mathbb F(u+v)$.
+Soient $u, v \in L^2(\R^n)$. Soient $(u_k)_{k \in \N}, (v_k)_{k \in \N} \subset \mathcal S(\R^n)$ telles que $u_k \xrightarrow[k \to \pinfty]{L^2(\R^n)} u$ et
+$v_k \xrightarrow[k \to \pinfty]{L^2(\R^n)} v$. Alors $u_k+v_k \xrightarrow[k \to \pinfty]{L^2(\R^n)} u+v$. Par linéarité de $\mathcal F$,
+$\widehat {u_k} + \widehat {v_k} = \widehat {u_k + v_k} \xrightarrow[k \to \pinfty]{L^2(\R^n)} \mathbb F(u+v)$.
 
-Donc $\hat {u_k} + \hat {v_k} \xrightarrow[k \to \pinfty]{L^2} \mathbb Fu + \mathbb Fv$ et $\hat {u_k} + \hat {v_k} \xrightarrow[k \to \pinfty]{L^2} \mathbb F(u+v)$.
-On en déduit $\mathbb F u + \mathbb F v = \mathbb F(u+v)$. Il est également trivial que pour $\lambda \in \R : \mathbb F(\lambda u) = \lambda \mathbb Fu$.
+Donc $\widehat {u_k} + \widehat {v_k} \xrightarrow[k \to \pinfty]{L^2(\R^n)} \mathbb Fu + \mathbb Fv$ et
+$\widehat {u_k} + \widehat {v_k} \xrightarrow[k \to \pinfty]{L^2(\R^n)} \mathbb F(u+v)$. Par unicité de la limite dans $L^2(\R^n)$, on en déduit
+$\mathbb F u + \mathbb F v = \mathbb F(u+v)$. Il est également trivial que pour $\lambda \in \R : \mathbb F(\lambda u) = \lambda \mathbb Fu$.
 
-Pour montrer que $\mathbb F\sVert[2]_{\mathcal S} = \mathcal F$, prenons $u \in \mathcal S$, et la suite $(u_k)_{k \in \N}$ constante $u_k = u$. Par définition de $\mathbb F$,
-on a $\mathbb Fu = \hat u$ car $\forall k \in \intint 1n : \hat {u_k} = \hat u$, donc $\hat {u_k} \xrightarrow[k \to \pinfty]{} \hat u$.
+Pour montrer que $\mathbb F\sVert[2]_{\mathcal S} = \mathcal F$, prenons $u \in \mathcal S(\R^n)$, et la suite $(u_k)_{k \in \N}$ constante $u_k = u$. Par définition de $\mathbb F$,
+on a $\mathbb Fu = \hat u$ car $\forall k \in \intint 1n : \widehat {u_k} = \hat u$, donc $\widehat {u_k} \xrightarrow[k \to \pinfty]{L^2(\R^n)} \hat u$.
 
-Montrons finalement que $\mathbb F$  vérifie Parseval.
+\textbf{Montrons alors que $\mathbb F$  vérifie Parseval.}
 
-Premier cas~: $u \in L^2$ et $v \in \mathcal S$. Il existe $\mathcal S^\N \ni (u_k)_{k \in \N} \xrightarrow[k \to \pinfty]{L^2} u$. Donc~:
+Premier cas~: $u \in L^2(\R^n)$ et $v \in \mathcal S(\R^n)$. Il existe $\mathcal S(\R^n) \supset (u_k)_{k \in \N} \xrightarrow[k \to \pinfty]{L^2} u$. Donc~:
 \[\int u\overline v = \int u_k\overline v + \int (u-u_k)\overline v.\]
 
 Puisque~:
@@ -420,27 +426,38 @@ Puisque~:
 on sait~:
 \[\int u_k\overline v \xrightarrow[k \to \pinfty]{} \int u\overline v.\]
 
-Or $u_k, v \in \mathcal S$. Donc pour $k \to \pinfty$, par Cauchy-Schwarz et par Parseval pour $\mathcal F$~:
-\[\int u\overline v = \int u_k\overline v \xrightarrow[k \to \pinfty]{L^2} (2\pi)^{-n}\int\mathbb Fu\overline {\hat v}.\]
+De même, puisque~:
+\[\abs {\int (\mathbb Fu - \widehat {u_k})\overline {\widehat v}\dif x} \leq \norm {\mathbb Fu - \widehat {u_k}}_{L^2}\norm {\overline {\widehat v}}_{L^2}
+\xrightarrow[k \to \pinfty]{} 0,\]
+on sait~:
+\[\int \widehat {u_k}\overline {\widehat v}\dif\xi \xrightarrow[k \to \pinfty]{} \int\mathbb Fu\overline {\widehat v}\dif\xi.\]
 
-Dans le cas général $u, v \in L^2$, par le premier point pour $(v_k)_{k \in \N} \tq v_k \xrightarrow[k \to \pinfty]{} v$~:
-\[\int u\overline {v_k} = (2\pi)^{-n}\int \mathbb Fu\overline {\hat {v_k}}.\]
+Or $u_k, v \in \mathcal S(\R^n)$. Donc pour $k \to \pinfty$, par Cauchy-Schwarz et par Parseval pour $\mathcal F$~:
+\[\int u\overline v\dif x = \lim_{k \to \pinfty} \int u_k\overline v\dif x = (2\pi)^{-n}\lim_{k \to \pinfty}\int \widehat {u_k}\overline {\widehat v}\dif\xi
+= (2\pi)^{-n}\int\mathbb Fu\overline {\hat v}\dif \xi.\]
+
+Dans le cas général $u, v \in L^2(\R^n)$, par le premier point pour $(v_k)_{k \in \N} \subset \mathcal S(\R^n) \tq v_k \xrightarrow[k \to \pinfty]{L^2} v$~:
+\[\int u\overline {v_k}\dif x = (2\pi)^{-n}\int \mathbb Fu\overline {\hat {v_k}}\dif x.\]
 
 Or $v_k \xrightarrow[k \to \pinfty]{L^2} \mathbb Fv$. Par Cauchy-Schwarz, on a~:
 \begin{enumerate}
-	\item $\int u\overline {v_k} \xrightarrow[k \to \pinfty]{L^2} \int u\overline v$~;
-	\item et $\int \mathbb Fu\overline {\hat {v_k}} \xrightarrow[k \to \pinfty]{L^2} \int \mathbb Fu\overline {\mathbb Fv}$.
+	\item $\int u\overline {v_k}\dif x \xrightarrow[k \to \pinfty]{L^2} \int u\overline v\dif x$~;
+	\item et $\int \mathbb Fu\overline {\hat {v_k}}\dif \xi \xrightarrow[k \to \pinfty]{L^2} \int \mathbb Fu\overline {\mathbb Fv}\dif\xi$.
 \end{enumerate}
 
 L'identité de Parseval est donc bien vérifiée pour $\mathbb F$. Il reste à vérifier que $\mathbb F$ est continue et qu'elle est unique.
+
+\textbf{Montrons que $\mathbb F$ est continue.}
 
 La continuité découle de Parseval~:
 \[\norm u_{L^2} = (2\pi)^{-n/2}\norm {\mathbb Fu}_{L^2},\]
 donc pour $\varepsilon > 0$, pour $\delta = (2\pi)^{-n/2}\varepsilon$, on a que si $\norm {u-v}_{L^2} < \delta$, alors $\norm {\mathbb Fu - \mathbb Fv}_{L^2} < \varepsilon$.
 
-Si il existe $\mathbb F_1 : L^2 \to L^2$ continue et linéaire telle que $\mathbb F_1\sVert[2]_{\mathcal S} = \mathcal F$, alors par densité, pour $u \in L^2$, il existe
-$(u_k)_{k \in \N} \in \mathcal S^\N \tq u_k \xrightarrow[k \to \pinfty]{} u$, et donc, par continuité~:
-\[\underbrace {\mathbb F(u_k)}_{\xrightarrow[k \to \pinfty]{} \mathbb F(u)} = \underbrace {\mathbb F_1(u_k)}_{\xrightarrow[k \to \pinfty]{} \mathbb F_1(u)}.\]
+\textbf{Montrons finalement que $\mathbb F$ est unique.}
+
+Si il existe $\mathbb F_1 : L^2(\R^n) \to L^2(\R^n)$ continue et linéaire telle que $\mathbb F_1\sVert[2]_{\mathcal S} = \mathcal F$, alors par densité de $\mathcal S(\R^n)$
+dans $^2(\R^n)$, pour $u \in L^2(\R^n)$, il existe $(u_k)_{k \in \N} \subset \mathcal S(\R^n) \tq u_k \xrightarrow[k \to \pinfty]{L^2} u$, et donc, par continuité~:
+\[\mathbb F(u) = \lim_{k \to \pinfty} \mathbb F(u_k) = \lim_{k \to \pinfty} \mathbb F_1(u_k) = \mathbb F_1(u).\]
 
 Donc puisque deux application continues qui coïncident sur une sous-ensemble dense coïncident partout, on a bien que $\mathbb F = \mathbb F_1$.
 \end{proof}
@@ -450,8 +467,8 @@ De la même manière, $\tilde {\mathcal F}$ se prolonge sur $L^2$ en $\tilde {\m
 \begin{prp} $\mathbb F \circ \tilde {\mathbb F} = \Id_{L^2} = \tilde {\mathbb F} \circ \mathbb F$.
 \end{prp}
 
-\begin{proof} Ceci vient directement de la même propriété sur $\mathcal F$ et $\tilde {\mathbb F}$. Soit $u \in L^2$ et soit
-$\mathcal S^\N \ni (u_k)_{k \in \N} \xrightarrow[k \to \pinfty]{L^2} u$. On sait~:
+\begin{proof} Ceci vient directement de la même propriété sur $\mathcal F$ et $\tilde {\mathcal F}$. Soit $u \in L^2(\R^n)$ et soit
+$(u_k)_{k \in \N} \subset \mathcal S(\R^n) \st u_k \xrightarrow[k \to \pinfty]{L^2} u$. On sait~:
 \[\mathcal S \ni \tilde {\mathcal F}(u_k) = \tilde {\mathbb F}(u_k) \xrightarrow[k \to \pinfty]{L^2} \tilde {\mathbb F}(u)\]
 par continuité de $\tilde {\mathbb F}$. Par continuité de $\mathbb F$, on a~:
 \[\mathcal F \circ \tilde {\mathcal F}(u_k) = \mathbb F \circ \tilde {\mathbb F}(u_k) \xrightarrow[k \to \pinfty]{L^2} \mathbb F \circ \tilde {\mathbb F}(u).\]
@@ -465,7 +482,7 @@ sont compatibles, i.e. si pour $u \in L^1 \cap L^2$ on a bien $\hat u = \mathbb 
 
 \section{Exemple d'application de la théorie de Fourier}
 
-Pour $\Delta = \sum_{j=1}^n\partial_j^2$ le Laplacien sur $\R^n$ et $f \in \mathcal S$, soit la PDE suivante~:
+Pour $\Delta = \sum_{j=1}^n\partial_j^2$ le Laplacien sur $\R^n$ et $f \in \mathcal S(\R^n)$, soit la PDE suivante~:
 \begin{equation}
 	(1+\sum_{j=1}^nD_j^2)u = u-\Delta u = f,
 \end{equation}
@@ -485,7 +502,7 @@ Formellement~:
 	u(x) &= (2\pi)^{-n}\int e^{i\scpr x\xi}\frac {\hat f(\xi)}{P(\xi)}\dif\xi.
 \end{align*}
 
-Plus rigoureusement, puisque $f \in \mathcal S$, on sait $\hat f \in \mathcal S$. De plus, $P$ est borné par dessous. Donc $\abs {\hat f/P} \leq C_N(1+\abs \xi)^{-N}$,
+Plus rigoureusement, puisque $f \in \mathcal S(\R^n)$, on sait $\hat f \in \mathcal S(\R^n)$. De plus, $P$ est borné par dessous. Donc $\abs {\hat f/P} \leq C_N(1+\abs \xi)^{-N}$,
 et du coup la fonction sous l'intégrale ($\xi  \mapsto e^{i\scpr x\xi}\frac {\hat f(\xi)}{P(\xi)}$) est $L^1$, et cette intégrale est bien définie pour $N > n$.
 
 De plus, puisque la dérivation selon $x$ sur $u$ fait juste descendre du $\xi$ de l'exponentielle, par récurrence avec le théorème de convergence dominée et par la borne supérieure
