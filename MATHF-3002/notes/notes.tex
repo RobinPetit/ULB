@@ -1961,7 +1961,7 @@ condition correspond exactement à la notion topologique de continuité. Cependa
 \begin{ex}\label{ex:L^1_loc}
 On introduit l'espace~:
 \[L^1_\loc(\Omega) \coloneqq \left\{f : \Omega \to \C \st \forall K \subset\subset \Omega : f\chi_K \in L^1(\Omega)\right\}.\]
-\textit{Note~:} $L^(\Omega) \subseteq L^1_\loc(\Omega)$ trivialement, mais $L^1_\loc(\Omega) \neq L^1(\Omega)$. En effet $x \mapsto e^x \in L^1_\loc(\Omega) \setminus L^1(\Omega)$.
+\textit{Note~:} $L^1(\Omega) \subseteq L^1_\loc(\Omega)$ trivialement, mais $L^1_\loc(\Omega) \neq L^1(\Omega)$. En effet $x \mapsto e^x \in L^1_\loc(\Omega) \setminus L^1(\Omega)$.
 
 Pour $f \in L^1_\loc(\Omega)$, on définit l'application~:
 \[u_f : C^\infty_0(\Omega) \to \C : \varphi \mapsto \int_\Omega\varphi f\dif x.\]
@@ -1970,7 +1970,7 @@ $u_f$ est bien une distribution. En effet, fixons pour une suite $(\varphi_k)_k$
 ponctuellement. De plus, $\exists M > 0 \st \forall k \geq 0 : \abs {\varphi_kf} \leq M\abs f\chi_K \in L^1(\Omega)$. Par la convergence dominée~:
 \[\lim_{k \to \pinfty}\int\varphi_k f\dif x = \int \lim_{k \to \pinfty}\varphi_k f\dif x = 0.\]
 
-De plus, $f \mapsto u_f$ est injective, donc on peut identifier $f$ à $u_f$. Les distributions généralisent donc la notion de fonction.o
+De plus, $f \mapsto u_f$ est injective, donc on peut identifier $f$ à $u_f$. Les distributions généralisent donc la notion de fonction.
 \end{ex}
 
 \begin{ex}
@@ -1992,7 +1992,7 @@ $u : C^\infty_0(\R) \to \C : \varphi \mapsto \varphi'(0)$ est une distribution p
 \section{Dérivées de distributions}
 
 \begin{déf} Soit $u \in \mathcal D'(\Omega)$. Pour $j \in \intint 1n$, on définit~:
-\[\partial_ju : C^\infty_0(\Omega) \to \C : \varphi \mapsto -\scpr {\partial_ju}\varphi \coloneqq -\scpr u{\partial_j\varphi}.\]
+\[\partial_ju : C^\infty_0(\Omega) \to \C : \varphi \mapsto \scpr {\partial_ju}\varphi \coloneqq -\scpr u{\partial_j\varphi}.\]
 \end{déf}
 
 \begin{prp}\label{prp:dérivation distribution} $\partial_ju \in \mathcal D'(\Omega)$ pour tout $u \in \mathcal D'(\Omega)$ et $j \in \intint 1n$.
@@ -2021,14 +2021,15 @@ on sait que $(\partial_j\varphi_k)_k$ satisfait les mêmes propriétés. Dès lo
 et~:
 \[\scpr {\partial u_f}\varphi = -\int_\Omega f\partial_j\varphi\dif x.\]
 
-Par intégration par partie, on trouve~:
-\[\int_\Omega\varphi\partial_jf\dif x + \int_\Omega\partial_j\varphi f\dif x = \int_\Omega \partial_j(\varphi f)\dif x = \int_K \partial_j(f\varphi)\dif x
-= f(-L)\varphi(-L) - f(L)\varphi(L) = 0-0 = 0,\]
-où $\Omega \supset [-L, L] = K \supseteq \supp \varphi$, donc $\varphi(\pm L) = 0$.
+Par intégration par partie, par un raisonnement similaire à celui dans la démonstration du Théorème~\ref{thm:Fourier continu sur Schwartz}, on trouve~:
+\[\int_\Omega\varphi\partial_jf\dif x + \int_\Omega\partial_j\varphi f\dif x = \int_\Omega \partial_j(\varphi f)\dif x = 0\]
+car par Fubini~:
+\[\int_K\partial(\varphi f)\dif x = \int_{-L_1}^{L_1}\ldots\underbrace {\int_{-L_n}^{L_n}\partial(\varphi f)\dif x_n}_{= 0}\ldots\dif x_1\]
+où $\Omega \supset \prod_{j=1}^n [-L_j, L_j] = K \supseteq \supp \varphi$, donc $\varphi(x_1, \ldots, x_n) = 0$ si $\abs {x_j} \geq L_j$.
 \end{proof}
 
 \begin{ex} Pour $f = \chi_{\overline {\R^+}}$~:
-\[(u_f)' : \varphi \mapsto -\int_{\overline {\R^+}}\varphi'(x)\dif x = -\left(\lim_{x \to \pinfty}\varphi(x) - \varphi(0)\right) = \varphi(0),\]
+\[\od {}xu_f = (u_f)' : \varphi \mapsto -\int_{\overline {\R^+}}\varphi'(x)\dif x = -\left(\lim_{x \to \pinfty}\varphi(x) - \varphi(0)\right) = \varphi(0),\]
 puisque $\varphi$ est à support compact.
 
 Donc $\od {}xu_{\chi_{\overline {\R^+}}} = \delta_0$ (la mesure de Dirac en 0).
@@ -2042,24 +2043,24 @@ Donc $\od {}xu_{\chi_{\overline {\R^+}}} = \delta_0$ (la mesure de Dirac en 0).
 = \scpr {\partial_k\partial_ju}\varphi.\]
 \end{proof}
 
-\begin{déf} Pour $a \in C^\infty_0$ et $u \in \mathcal D'(\Omega)$, on définit~:
+\begin{déf} Pour $a \in C^\infty_0(\Omega)$ et $u \in \mathcal D'(\Omega)$, on définit~:
 \[au : C^\infty_0(\Omega) \to \C : \varphi \mapsto \scpr {au}\varphi \coloneqq \scpr u{a\varphi}.\]
 \end{déf}
 
-\begin{prp} $au$ est une distribution.
+\begin{prp} Pour $a \in C^\infty_0(\Omega), u \in \mathcal D'(\Omega)$, $au$ est une distribution.
 \end{prp}
 
 \begin{proof} Par linéarité de $u$.
 \end{proof}
 
-\begin{prp} Soient $f \in L^1_\loc(\Omega)$ et $a \in C^\infty_0$. Alors $u_{af} = au_f$.
+\begin{prp} Soient $f \in L^1_\loc(\Omega)$ et $a \in C^\infty_0(\Omega)$. Alors $u_{af} = au_f$.
 \end{prp}
 
 \begin{proof} Soit $\varphi \in C^\infty_0(\Omega)$.
 \[\scpr {u_{af}}\varphi = \int_\Omega \varphi (af)\dif x = \int_\Omega(a\varphi)f\dif x = \scpr {u_f}{a\varphi} = \scpr {au_f}\varphi.\]
 \end{proof}
 
-\begin{ex} Soient $\delta_0$ la mesure de Dirac en 0 et $C^\infty_0(\Omega) \ni a : x \mapsto x_j$. Par définition de $a$~:
+\begin{ex} Soient $\delta_0$ la mesure de Dirac en 0, $u$ la distribution associée et $C^\infty_0(\Omega) \ni a : x \mapsto x_j$. Par définition de $a$~:
 \[\scpr {au}\varphi = (a\varphi)(0) = 0.\]
 \end{ex}
 
@@ -2104,7 +2105,7 @@ Soit $(\varphi_k)_k \subset C^\infty_0(\R^n)$ telle que $\varphi_k \xrightarrow[
 que $p_m(\varphi_k) \xrightarrow[k \to \pinfty]{} 0$. Dès lors, $\scpr u{\varphi_k} \leq Cp_m(\varphi_k) \xrightarrow[k \to \pinfty]{} 0$, et donc $u$ est tempérée.
 
 \underline {$\Rightarrow$~:} Par contraposée, supposons que~:
-\[\forall C > 0, m > 0 : \exists \varphi_{C,m} \in C^\infty_0(\R^n) \st \abs {u{\varphi_{C,m}}} > Cp_m(\varphi_{C,m}).\]
+\[\forall C > 0, m > 0 : \exists \varphi_{C,m} \in C^\infty_0(\R^n) \st \abs {\scpr u{\varphi_{C,m}}} > Cp_m(\varphi_{C,m}).\]
 
 En particulier, si $C=m=j$, il existe $\varphi_j \in C^\infty_0(\R^n) \st \abs {\scpr u{\varphi_j}} \gneqq jp_j(\varphi_j)$. WLOG supposons $\abs {\scpr u{\varphi_j}}=1$
 (quitte à normaliser $\varphi_j$). Alors $p_j(\varphi_j) < \frac 1j$, et donc pour $m \leq j$~: $p_m(\varphi_j) < \frac 1j$. On a donc construit une suite
@@ -2150,15 +2151,16 @@ Dès lors, tous les termes de la somme tendent uniformément vers 0 et~:
 \end{enumerate}
 \end{thm}
 
-\begin{proof} Par le Lemme~\ref{lem:C infty 0 dense dans Schwartz}, il existe $(\varphi_k)_k \subset C^\infty_0(\R^n) \st \varphi_k \xrightarrow[k \to \pinfty]{} \varphi$. Pour tout
-$k$, $\scpr u{\varphi_k}$ est bien défini et $(\scpr u{\varphi_k})_k$ est de Cauchy puisque~:
+\begin{proof} Par le Lemme~\ref{lem:C infty 0 dense dans Schwartz}, il existe
+$(\varphi_k)_k \subset C^\infty_0(\R^n) \st \varphi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} \varphi$. Pour tout $k$, $\scpr u{\varphi_k}$ est bien défini et
+$(\scpr u{\varphi_k})_k$ est de Cauchy puisque~:
 \[\abs {\scpr u{\varphi_k} - \scpr u{\varphi_\ell}} = \abs {\scpr u{\varphi_k-\varphi_\ell}} \leq Cp_m(\varphi_k-\varphi_\ell) \xrightarrow[k,\ell \to \pinfty]{} 0\]
 par la Proposition~\ref{prp:borné ssi continu distributions tempérées}. On pose alors~:
 \[\scpr {\widetilde u}\varphi \coloneqq \lim_{k \to \pinfty}\scpr u{\varphi_k}.\]
 
-Pour montrer que $\widetilde u$ est linéaire, on fixe $\varphi, \psi \in \mathcal S(\R^n)$. On prend $(\varphi_k)_k, (\psi_k)_k \subset C^\infty_0(\R^n)$ telles que
-$\varphi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} \varphi$ et $\psi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} \psi$.
-Alors $\varphi_k + \psi_k \xrightarrow[k \to \pinfty]{} \varphi + \psi$, et donc~:
+Pour montrer que $\widetilde u$ est linéaire, on fixe $\varphi, \psi \in \mathcal S(\R^n)$. On prend $(\varphi_k)_k, (\psi_k)_k \subset C^\infty_0(\R^n)$ telles que~:
+\[\varphi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} \varphi \qquad \text{ et } \qquad \psi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} \psi.\]
+Alors en particulier $\varphi_k + \psi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} \varphi + \psi$, et donc~:
 \[\scpr {\widetilde u}{\varphi + \psi} = \lim_{k \to \pinfty}\scpr u{\varphi_k+\psi_k} = \lim_{k \to \pinfty}\scpr u{\varphi_k}+\lim_{k \to \pinfty}\scpr u{\psi_k}
 = \scpr {\widetilde u}\varphi + \scpr {\widetilde u}\psi.\]
 
@@ -2174,7 +2176,7 @@ Or par convergence des $\varphi_k$ vers $\varphi$ dans $\mathcal S$, on a~:
 \[p_m(\varphi_k) = \sum_{\abs \alpha + \abs \beta \leq m}\norm {x^\alpha\partial^\beta\left(\varphi + [\varphi_k - \varphi]\right)}_{L^\infty}
 \leq \sum_{\abs \alpha + \abs \beta \leq m}\norm {x^\alpha\partial^\beta\varphi}_{L^\infty}
 	+ \sum_{\abs \alpha + \abs \beta \leq m}\norm {x^\alpha\partial^\beta(\varphi_k-\varphi)}_{L^\infty}
-\leq p_m(\varphi_k) + \varepsilon\]
+\leq p_m(\varphi) + \varepsilon\]
 pour $k > K_1$ suffisamment grand. De plus, par définition de $\widetilde u$, pour $k > K_2$~: $\abs {\scpr {\widetilde u}\varphi - \scpr u{\varphi_k}} \leq \varepsilon$.
 Pour $k > \max\{K_1, K_2\}$, on a donc~:
 \[\abs {\scpr {\widetilde u}\varphi} \leq Cp_m(\varphi) + (C+1)\varepsilon.\]
@@ -2197,7 +2199,8 @@ Dès lors~:
 i.e. $\scpr {\widetilde u}\varphi = \scpr {\bar u}\varphi$.
 \end{proof}
 
-\begin{prp}\label{prp:dérivée prolongement = prolongement dérivée} Pour $u \in \mathcal D'(\R^n)$ et $\widetilde u$, alors $\widetilde {\partial_j} = -\partial_j\widetilde u$.
+\begin{prp}\label{prp:dérivée prolongement = prolongement dérivée} Pour $u \in \mathcal D'(\R^n)$ et $\widetilde u$ son prolongement, alors
+$\widetilde {\partial_ju} = \partial_j\widetilde u$.
 \end{prp}
 
 \begin{proof}Soit $\varphi \in \mathcal S(\R^n)$ et soit $(\varphi_k)_k \subset C^\infty_0(\R^n) \st \varphi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} \varphi$. Alors~:
@@ -2244,7 +2247,7 @@ car $\varphi_k$ est continue.
 
 \begin{proof} La preuve repose sur le fait que si $\varphi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} 0$, alors pour tout $\alpha \in N^n$~:
 $\partial^\alpha \varphi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} 0$ et $x^\alpha \varphi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} 0$ par définition. Dès lors~:
-\[\scpr {\partial^\alpha u}{\varphi_k} = -\scpr u{\partial^\alpha \varphi_k} \xrightarrow[k \to \pinfty]{} 0,\]
+\[\scpr {\partial^\alpha u}{\varphi_k} = (-1)^{\abs \alpha}\scpr u{\partial^\alpha \varphi_k} \xrightarrow[k \to \pinfty]{} 0,\]
 et~:
 \[\scpr {x^\alpha u}{\varphi_k} = \scpr u{x^\alpha \varphi_k} \xrightarrow[k \to \pinfty]{} 0.\]
 \end{proof}
