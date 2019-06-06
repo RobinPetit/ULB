@@ -1366,7 +1366,7 @@ De plus, $T_2$ est continue car les projections sont toujours continues pour la 
 Dans le cadre des EDOs, on cherche une fonction $u : [-T, T] \to \C$ telle que~:
 \[F(t, u(t), u'(t), \ldots, u^{(m)}(t)) = 0.\]
 
-On généralise à $u : \R^m \to \C$, et une EDP est donc sous la forme~:
+On généralise à $u : \R^n \to \C$, et une EDP est donc sous la forme~:
 \[F\left(x, \left(\partial^\alpha u(x)\right)_{\abs \alpha \leq m}\right) = 0.\]
 
 Dans le cadre des EDOs, la solution du problème de Cauchy suivant~:
@@ -1397,6 +1397,9 @@ Or $x \mapsto \sum_{i=1}^m\sum_{j=1}^m\abs {x_j}^2$ est continue sur $\{x \in \C
 
 \begin{proof} Par propriété de la norme opérateur~:
 \[\norm {e^A} = \norm {\sum_{k \geq 0}\frac {A^k}{k!}} \leq \sum_{k \geq 0}\frac {\norm {A^k}}{k!} \leq \sum_{k \geq 0}\frac {\norm A^k}{k!} = e^{\norm A}.\]
+
+Plus précisément, puisque pour tout $k \in \N_0$, on a $\norm {A^k} \leq \norm A^k$ et par continuité de la norme opérateur~:
+\[\norm {e^A} = \lim_{K \to \pinfty}\norm {\sum_{k=0}^K\frac {A^k}{k!}} \leq \lim_{K \to \pinfty}\sum_{k=0}^K\frac {\norm A^k}{k!} = e^{\norm A}.\]
 \end{proof}
 
 \section{Fonctions holomorphes}
@@ -1419,14 +1422,14 @@ comme étant la matrice telle que~:
 \begin{proof}~
 \begin{enumerate}
 	\item Soit $\lambda \in \spectre S$. Il existe $v \neq 0 \st Sv = \lambda v$. Dès lors $\scpr {Sv}v = \lambda\abs v^2$. De plus, par Cauchy-Schwarz~:
-	$\abs {\scpr {Sv}v} \leq \abs {Sv}\abs v \le q\norm S\abs v\abs v = \norm S\abs v^2$. On en déduit $\lambda \leq \norm S$.
+	$\abs {\scpr {Sv}v} \leq \abs {Sv}\abs v \leq \norm S\abs v\abs v = \norm S\abs v^2$. On en déduit $\lambda \leq \norm S$.
 	\item ${(z-S)^{-1}}_{ij}$ est une fonction rationnelle complexe dont le dénominateur $z \mapsto \det(z-S)$ ne s'annule jamais sur $\C \setminus \spectre S$.
 	${(z-S)^{-1}}_{ij}$ est donc holomorphe dans $\C \setminus \spectre S$, et donc $(z-S)^{-1}$ également.
 \end{enumerate}
 \end{proof}
 
 \begin{proof}[\textnormal {\textbf {Démonstration alternative du point 1.}}]
-Soit $z \in \C$ tel que $\abs z \geq \norm S$. On pose $T \coloneqq \sum_{k \geq 0}s^{-k-1}S^k$. Cette série converge (en norme opérateur) car les sommes
+Soit $z \in \C$ tel que $\abs z \geq \norm S$. On pose $T \coloneqq \sum_{k \geq 0}z^{-k-1}S^k$. Cette série converge (en norme opérateur) car les sommes
 partielles forment une suite de Cauchy~:
 \[
 	\norm {\sum_{k=K_1}^{K_2}z^{-k-1}S^k} \leq \sum_{k=K_1}^{K_2}\abs z^{-k-1}\norm {S^k} \leq \sum_{k=K_1}^{K_2}\abs z^{-k-1}\norm S^k
@@ -1448,8 +1451,8 @@ homotopes dans $\Omega \setminus \spectre S$~:
 \[\int_{\gamma_1}f(z)(z-S)^{-1}\dif z = \int_{\gamma_2}f(z)(z-S)^{-1}\dif z.\]
 \end{cor}
 
-\begin{prp}[Forme matricielle de la forme intégrale de Cauchy] Soient $\Omega \subset \C$ un disque ouvert, $f(z) = \sum_{n \geq 0}\alpha_nz^n$, une série de puissance qui
-converge dans $\Omega \supset \overline {B(0, \norm S)}$. Considérons le chemin $\gamma_1 : [0, 2\pi] \to \Omega : t \mapsto (\norm S + \varepsilon)e^{it}$.
+\begin{prp}[Forme matricielle de la forme intégrale de Cauchy] Soient $\Omega \subset \C$ un disque ouvert, $S \in \C^{n \times n}$ et $f(z) = \sum_{n \geq 0}\alpha_nz^n$,
+une série de puissance qui converge dans $\Omega \supset \overline {B(0, \norm S)}$. Considérons le chemin $\gamma_1 : [0, 2\pi] \to \Omega : t \mapsto (\norm S + \varepsilon)e^{it}$.
 Soit $\gamma$, chemin $C^1$ par morceaux, homotope à $\gamma_1$ dans $\Omega \setminus \spectre S$. Alors~:
 \[\sum_{k =0}^K\alpha_kS^k \xrightarrow[K \to \pinfty]{} \frac 1{2\pi i}\int_\gamma f(z)(z-S)^{-1}\dif z.\]
 \end{prp}
@@ -1496,7 +1499,8 @@ $b_k \xrightarrow[k \to \pinfty]{} \int_\gamma \norm {A(z)}\abs {\dif z}$. Donc 
 \[\norm {\int_\gamma A(z)\dif z} \leq \int_\gamma\norm {A(z)}\abs {\dif z}.\]
 \end{proof}
 
-\begin{lem}\label{lem:majoration inverse (z-S)} Soit $S \in \C^{m \times m}$. Alors $\forall \delta > 0 : \exists C_m > 0 \st \forall z \in \C \st \dist(z, \spectre S) \geq \delta$~:
+\begin{lem}\label{lem:majoration inverse (z-S)} Soit $S \in \C^{m \times m}$. Alors $\forall \delta > 0 : \exists C_m > 0 \st \forall z \in \C$, si $\dist(z, \spectre S) \geq \delta$,
+alors~:
 \[\norm {(z-S)^{-1}} \leq C_m(1 + \abs z + \norm S)^{m-1}.\]
 \end{lem}
 
@@ -1522,12 +1526,12 @@ et donc~:
 \[\abs \lambda = \abs {z-(\lambda-z)} \geq \min_{s \in \spectre S}\abs {z-s} \geq \delta\]
 par hypothèse.
 
-posons alors $Q(\tau) \coloneqq \tau^m + \frac {a_{m-1}}{a_m}\tau^{m-1} + \ldots + \frac 1{a_m}$, et observons que pour $\tau \neq 0$~:
+Posons alors $Q(\tau) \coloneqq \tau^m + \frac {a_{m-1}}{a_m}\tau^{m-1} + \ldots + \frac 1{a_m}$, et observons que pour $\tau \neq 0$~:
 \[P(\tau^{-1}) = \tau^{-m}+\sum_{j=1}^{m-1}a_j\tau^{j-m} + a_m\tau^{-m} = a_m\tau^{-m}\left(\frac 1{a_m} + \sum_{j=1}^{m-1}\frac {a_j}{a_m}\tau^j + 1\right) = a_m\tau^{-m}Q(\tau).\]
 Donc $P(\tau^{-1}) = 0 \iff Q(\tau)$, et donc les racines de $Q$ satisfont $\abs \tau \leq \delta^{-1}$. On en déduit~:
 \[Q(\tau) = C\prod_{j=1}^m(\tau-\tau_j),\]
 où les $\tau_j \in \overline {B(0, 1/\delta)}$ sont les racines de $Q$ et sont des paramètres du polynôme. Par continuité sur le compact $\overline {B(0, 1/\delta)}$,
-les coefficients de $Q$ sotn uniformément bornés. Finalement, on conclut par~:
+les coefficients de $Q$ sont uniformément bornés. Finalement, on conclut par~:
 \[\norm {(z-S)^{-1}} = \norm {T^{-1}} \leq \sum_{j=0}^{m-1}\rho\norm T^j \leq \rho\sum_{j=0}^{m-1}(\abs z + \norm S)^j \leq C_m(1+\abs z + \norm S)^{m-1}.\]
 \end{proof}
 
@@ -1536,13 +1540,13 @@ On va étudier des problèmes sous la forme~\eqref{eq:PC EDP} avec $u = [u_1, \l
 $f_j : \R \times \R^n \to \C$, $A_j \in \C^{m \times m}$, et $u^0 : \R^n \to \C$.
 
 \begin{equation}\label{eq:PC EDP}\tag{P.C.}
-	\begin{cases}&\dpd ut + \sum_{j=1}^nA_j\dpd u{x_j} = f\\&\restr u{t=0} = u^0\end{cases}
+	\begin{cases}&\dpd ut + \displaystyle \sum_{j=1}^nA_j\dpd u{x_j} = f\\&\restr u{t=0} = u^0\end{cases}
 \end{equation}
 
-\begin{prp} Le problème de Cauchy suivant (équivalent )~\eqref{eq:PC EDP} pour $n=m=1$)~:
+\begin{prp} Le problème de Cauchy suivant (équivalent à~\eqref{eq:PC EDP} pour $n=m=1$)~:
 \[\begin{cases}&\dpd ut + a\dpd ux = f\\&\restr u{t=0} = u^0,\end{cases}\]
-pour $a \in \C$, $u^0 \in C^1(\R)$ et $f \in C^1(\R^2)$ possède une unique solution $C^1(\R^2)$ si $a \in \R$ et ne possède (en général) pas de solution $C^1(\R^2)$
-si $a \in \C \setminus \R$.
+pour $a \in \C$, $u^0 \in C^1(\R)$ et $f \in C^1(\R^2)$ possède une unique solution $C^1(\R^2)$ si $a \in \R$ (et ne possède en général pas de solution $C^1(\R^2)$
+si $a \in \C \setminus \R$).
 \end{prp}
 
 \begin{proof} Supposons que $a \in \R$. On procède au changement de variable $(t, x) \mapsto (t, y)$ (et $u(t, x) = U(t, y)$). On a alors~:
@@ -1582,7 +1586,8 @@ De manière similaire, pour $T > 0$, on introduit~:
 \end{déf}
 
 \begin{prp} L'application suivante est une norme sur $C^p_b(\R^n)$~:
-\[\norm \cdot_{C^p_b(\R^n)} : C^p_b(\R^n) \to \R^+ : v \mapsto \norm v_{C^p_b(\R^n)} \coloneqq \sum_{\abs \alpha \leq p}\sup_{x \in \R^n}\abs {\partial^\alpha v(x)}.\]
+\[\norm \cdot_{C^p_b(\R^n)} : C^p_b(\R^n) \to \R^+ : v \mapsto \norm v_{C^p_b(\R^n)} \coloneqq \sum_{\abs \alpha \leq p}\sup_{x \in \R^n}\abs {\partial^\alpha v(x)}
+= \sum_{\abs\alpha \leq p}\norm {\partial^\alpha v}_{L^\infty}.\]
 \end{prp}
 
 \begin{prp}\label{prp:C^p_b Banach} $C^p_b(\R^n)$ est un espace de Banach.
@@ -1597,11 +1602,11 @@ TODO
 \end{prp}
 
 \begin{proof} Par définition de l'exponentielle matricielle~:
-\[e^Bw = \left(\sum-{k \geq 0}\frac {B^k}{k!}\right)w = \sum_{k \geq 0}\frac {B^kw}{k!} = \sum_{k \geq 0}\frac {\mu^kw}{k!} = e^\mu w.\]
+\[e^Bw = \left(\sum_{k \geq 0}\frac {B^k}{k!}\right)w = \sum_{k \geq 0}\frac {B^kw}{k!} = \sum_{k \geq 0}\frac {\mu^kw}{k!} = e^\mu w.\]
 \end{proof}
 
 \section{Théorème de Petrowsky}
-\begin{thm}[Petrowsky, 1937] Supposons qu'il existe $T > 0$, $p \in \N$ tels que~:
+\begin{thm}[Petrowsky, 1937] Soient $A_1, \ldots, A_n \in \C^{m \times m}$. Si il existe $T > 0$, $p \in \N$ tels que~:
 \[\forall F \in C^p_b([-T, T] \times \R^n), u^0 \in C^p_b(\R^n) : \exists! u \in C^1_b(\R^n) \st:\]
 \[\begin{cases}\dpd ut + \sum_{j=1}^nA_j\dpd u{x_j} = F & \text{ si } \abs t \leq T, x \in \R^n\\u=u^0 &\text{ si }t=0, x \in \R^n.\end{cases}\]
 
@@ -1623,9 +1628,9 @@ Or par linéarité de l'opérateur $L$~:
 
 Dès lors $z$ et $z_1+z_2$ satisfont le même problème de Cauchy et par hypothèse, cette solution est unique, i.e. $z = z_1 + z_2$.
 
-Notons maintenant que $\Phi$ est une application linéaire entre des espaces de Banach (par la Proposition~\ref{prp:C^p_b Banach}). Notons $E = \dom \Phi$ et $G = \Imapp \phi$
+Notons maintenant que $\Phi$ est une application linéaire entre des espaces de Banach (par la Proposition~\ref{prp:C^p_b Banach}). Notons $E = \dom \Phi$ et $G = \Imapp \Phi$
 
-Montrons que $\Gamma_\Phi$, le graphe de $\Phi$ est fermé dans $E \times G$. Soit $(\zeta, \psi) \in \overline {\Gamma_\Phi}$. Il existe des suites $(\zeta_k)_k \subset E$
+Montrons que $\Gamma_\Phi$, le graphe de $\Phi$, est fermé dans $E \times G$. Soit $(\zeta, \psi) \in \overline {\Gamma_\Phi}$. Il existe des suites $(\zeta_k)_k \subset E$
 et $(\psi_k)_k \subset G$ telles que $\zeta_k \xrightarrow[k \to \pinfty]{E} \zeta$ et $\psi_k \xrightarrow[k \to \pinfty]{G} \psi$. En notant $\zeta_k = (F_k, u^0_k)$
 et $\zeta = (F, u^0)$, on a $F_k \xrightarrow[k \to \pinfty]{C^p_b([-T, T] \times \R^n)} F$ et $u^0_k \xrightarrow[k \to \pinfty]{C^p_b(\R^n)} u^0$.
 
@@ -1639,24 +1644,26 @@ est un opérateur borné de $C^0_b([-T, T] \times \R^n)$ dans lui-même, la conv
 
 Montrons donc que $\dpd {}t$ est un opérateur borné ($\dpd {}{x_j}$ se fait de manière similaire). Pour $v \in C^1_b([-T, T] \times \R^n)$~:
 \[\norm {\dpd vt}_{C^0_b([-T, T] \times \R^n)} = \sup_{t,x}\abs {\dpd vt(t, x)}
-\leq \sup_{t,x}\abs {\dpd vt(t, x)} + \sup_{t,x}\abs {v(t, x)} + \sum_{j=1}^n\sup_{t,x}\abs {\dpd v{x_j}(t,x)} = \norm v_{C^0_b([-T, T] \times \R^n)}.\]
+\leq \sup_{t,x}\abs {\dpd vt(t, x)} + \sup_{t,x}\abs {v(t, x)} + \sum_{j=1}^n\sup_{t,x}\abs {\dpd v{x_j}(t,x)} = \norm v_{C^1_b([-T, T] \times \R^n)}.\]
 
 Dès lors, puisque $F_k = L\Phi(\zeta_k)$~:
 \[F_k \xrightarrow[k \to \pinfty]{C^p_b(\R^n)} F \qquad \text{ et } \qquad L\Phi(\zeta_k) \xrightarrow[k \to \pinfty]{C^0_b(\R^n)} L\psi.\]
 
 Or la convergence dans $C^p_b(\R^n)$ implique la convergence $C^0_b(\R^n)$ car $C^p_b(\R^n) \subseteq C^0_b(\R^n)$ et~:
-\[\forall v \in C^p_b(\R^n) : \norm v_{C^p_b(\R^n)} \leq \norm v_{C^0_b(\R^n)}.\]
+\[\forall v \in C^p_b(\R^n) : \norm v_{C^0_b(\R^n)} \leq \norm v_{C^p_b(\R^n)}.\]
 
 Donc par unicité de la limite dans les espaces métriques (ici, dans $C^0_b(\R^n)$)~: $F = L\psi$. De la même manière, on a~:
-\[\restr{\Phi(\zeta_k)}{t=0} = \restr {\psi_k}{t=0} \xrightarrow[k \to \pinfty]{C^1_b(\R^n)} \psi \qquad \text{ et } \qquad \restr {\psi_k}{t=0} = u^0_k \xrightarrow[k \to \pinfty]{C^p_b(\R^n)} u^0.\]
+\[\restr{\Phi(\zeta_k)}{t=0} = \restr {\psi_k}{t=0} \xrightarrow[k \to \pinfty]{C^1_b(\R^n)} \psi
+\qquad \text{ et } \qquad \restr {\psi_k}{t=0} = u^0_k \xrightarrow[k \to \pinfty]{C^p_b(\R^n)} u^0.\]
+
 À nouveau, par unicité de la limite (cette fois dans $C^1_b(\R^n)$, puisque $p \geq 1$)~: $\restr {\psi}{t=0} = u^0$. Dès lors $\Phi(\zeta) = \Phi(F, u^0) = \psi$, et donc
 $(\zeta, \psi) \in \Gamma_\Phi$. Dès lors par le théorème du graphe fermé de Banach (Théorème~\ref{thm:graphe fermé}), on sait que $\Phi$ est bornée, i.e. $\exists C > 0$
-($C = \norm \Phi$) tel que pour tout $u \in E$~:
-\begin{equation}\label{eq:Phi bornée}
-	\norm {\Phi u}_{C^1_b(\R^n)} = \sum_{\abs \alpha \leq 1}\sup_{\abs t \leq T,x \in \R^n}\abs {\partial^\alpha u(t, x)}
-		\leq C\left[\sum_{\abs {\beta} \leq p}\left(\sup_{\abs t \leq T, x \in \R^n}\abs {\partial^\beta F(t, x)} + \sup_{x \in \R^n}\abs {\partial^\beta u^0(x)}\right)\right]
-		= \norm {u}_E
-\end{equation}
+($C = \norm \Phi$) tel que pour tout $(F, u^0) \in E$, si $u$ dénote $\Phi(F, u^0)$~:
+\begin{align}\label{eq:Phi bornée}
+	\norm u_G &= \norm {\Phi(F, u^0)}_{C^1_b(\R^n)} = \sum_{\abs \alpha \leq 1}\;\sup_{\abs t \leq T,x \in \R^n}\abs {\partial^\alpha u(t, x)} \nonumber \\
+		&\leq C\left[\sum_{\abs {\beta} \leq p}\left(\sup_{\abs t \leq T, x \in \R^n}\abs {\partial^\beta F(t, x)} + \sup_{x \in \R^n}\abs {\partial^\beta u^0(x)}\right)\right] \\
+		&= C\norm {(F, u^0)}_{C^p_b([-T, T] \times \R^n) \times C^p_b(\R^n)} = C\norm {(F, u^0)}_E. \nonumber
+\end{align}
 
 Finalement, raisonnons par l'absurde. Posons $F \equiv 0$ et $u^0 : \R^n \to \C : x \mapsto e^{i\scpr x\xi}v^0$ pour $v^0 \in \C^m$ et $\xi \in \R^n$. Fabriquons alors $u$, une
 solution du problème de Cauchy~:
@@ -1725,7 +1732,7 @@ Pour $m=n=1$~: $L = \pd {}t + a\pd {}x$. Pour $\xi \in \R : A(\xi) = a\xi$. Donc
 
 \begin{ex}
 On prend $L = \partial^2_t + 2b\partial^2_{t,x} + c\partial^2_x$ et l'EDP associée $Lu = f$. En posant $v = \partial_t u$ et $w = \partial_x u$, l'EDP devient~:
-\[\begin{cases}\dpd vt + 2b\dpd vx + c\dpd wx = f\\\dpd vx - \dpd wt = 0\end{cases}\]
+\[\begin{cases}\dpd vt + 2b\dpd vx + c\dpd wx = f\\&\\\dpd vx - \dpd wt = 0\end{cases}\]
 ou sous forme matricielle~:
 \[\dpd {}t\begin{bmatrix}v \\ w\end{bmatrix} + \begin{bmatrix}2b & c \\-1 & 0\end{bmatrix}\dpd {}x\begin{bmatrix}v \\ w\end{bmatrix} = \begin{bmatrix}f \\ 0\end{bmatrix}.\]
 
@@ -1737,18 +1744,20 @@ Par contre $\partial_t^2 - \partial_x^2$ est hyperbolique car $b^2 - c = 1 \geq 
 
 \begin{ex}
 Les équations de Maxwell~:
-\[\begin{cases}\dpd Et = \rot H\\\dpd Ht = \rot E\end{cases}\]
+\[\begin{cases}\dpd Et = \rot H\\&\\\dpd Ht = \rot E\end{cases}\]
 pour $E, H : \R^4 \to \C$ sont hyperboliques et peuvent s'écrire sous la forme~:
 \[\dpd ut + \sum_{j=1}^3\dpd u{x_j},\]
 pour $A_j = \begin{bmatrix}0 & \omega_j \\-\omega_j & 0\end{bmatrix}$ pour $\omega_1 = \begin{bmatrix}0 & 0 & 0\\0 & 0 & 1\\0 & -1 & 0\end{bmatrix}$,
-$\omega-2 = \begin{bmatrix}0 & 0 & -1\\0 & 0 & 0\\1 & 0 & 0\end{bmatrix}$, $\omega_3 = \begin{bmatrix}0 & 1 & 0\\-1 & 0 & 0\\0 & 0 & 0\end{bmatrix}$, et
+$\omega_2 = \begin{bmatrix}0 & 0 & -1\\0 & 0 & 0\\1 & 0 & 0\end{bmatrix}$, $\omega_3 = \begin{bmatrix}0 & 1 & 0\\-1 & 0 & 0\\0 & 0 & 0\end{bmatrix}$, et
 $u = \begin{bmatrix}E\\H\end{bmatrix}$. En effet, les $A_j$ sont symétriques réelles, donc pour tout $\xi \in \R^3$, les valeurs propres de $A(\xi) = \sum_{j=1}^3\xi_jA_j$
 sont réelles car $A(\xi)$ est également symétrique réelle.
 \end{ex}
 
 \begin{ex}
 Pour $\sigma_1 = \begin{bmatrix}0 & 1 \\1 & 0\end{bmatrix}$, $\sigma_2 = \begin{bmatrix}0 & i \\-i & 0\end{bmatrix}$, $\sigma_3 = \begin{bmatrix}1 & 0\\0 & -1\end{bmatrix}$,
-on pose $A_j \coloneqq \begin{bmatrix}0 & -\sigma_j\\-\sigma_j & 0\end{bmatrix}$. $L = \dpd {}t + \sum_{j=1}^3A_j\dpd {}{x_j}$ est l'\textit{opérateur de Dirac}.
+on pose $A_j \coloneqq \begin{bmatrix}0 & -\sigma_j\\-\sigma_j & 0\end{bmatrix}$. L'opérateur~:
+\[L = \dpd {}t + \sum_{j=1}^3A_j\dpd {}{x_j}\]
+est l'\textit{opérateur de Dirac}.
 $L$ est hyperbolique puisque pour $\xi \in \R^3 : \sum_{j=1}^3\xi_jA_j$ est hermitienne.
 \end{ex}
 
@@ -1757,11 +1766,11 @@ $L$ est hyperbolique puisque pour $\xi \in \R^3 : \sum_{j=1}^3\xi_jA_j$ est herm
 	x^\alpha\partial_x^\beta\partial_t^ku \in L^\infty([-T, T] \times \R^n)\right\}.\]
 \end{déf}
 
-\begin{rmq} $\widetilde{\mathcal S}([-T, T] \times \R^n)$ est une variante de l'espace de Schwartz où la première variable n'est pas définie sur $\R$ mais sur un compact $[-T, T]$.
+\begin{rmq} $\widetilde{\mathcal S}([-T, T] \times \R^n)$ est une variante de l'espace de Schwartz où la première variable n'est pas définie sur $\R^n$ mais sur un compact $[-T, T]$.
 \end{rmq}
 
-\begin{thm} Soit $L$ un opérateur hyperbolique dans la direction $\pd {}t$. Alors~:
-\[\forall F \in \widetilde {\mathcal S}([-T, T] \times \R^n : \forall u^0 \in \mathcal S(\R^n) : \exists! u \in \widetilde {\mathcal S}([-T, T] \times \R^n) \st\]
+\begin{thm}[Réciproque de Petrowsky] Soit $L$ un opérateur hyperbolique dans la direction $\pd {}t$. Alors~:
+\[\forall F \in \widetilde {\mathcal S}([-T, T] \times \R^n) : \forall u^0 \in \mathcal S(\R^n) : \exists! u \in \widetilde {\mathcal S}([-T, T] \times \R^n) \st\]
 \[\begin{cases}
 	Lu = F &\text{ pour } \abs t \leq T, x \in \R^n \\
 	\restr u{t=0} = u^0 &\text{ pour } x \in \R^n
@@ -1770,10 +1779,10 @@ $L$ est hyperbolique puisque pour $\xi \in \R^3 : \sum_{j=1}^3\xi_jA_j$ est herm
 
 \begin{proof}
 \exis Si une solution $u$ existe, alors à $t \in [-T, T]$ fixé, on peut appliquer Fourier en $x$~:
-\[\widetilde u(t, x) = \int_{\mathbb R^n}e^{-i\scpr x\xi}u(t, x)\dif x,\]
-et $\widetilde u$ dois satisfaire le problème de Cauchy suivant~:
+\[\mathcal F_\xi u(t, \xi) \coloneqq \widetilde u(t, \xi) = \int_{\mathbb R^n}e^{-i\scpr x\xi}u(t, x)\dif x,\]
+et $\widetilde u$ doit satisfaire le problème de Cauchy suivant~:
 \[\begin{cases}
-	\dpd {}t\widetilde u + iA(\xi)\widetilde u = \widetilde F \\
+	\dpd {}t\widetilde u + iA(\xi)\widetilde u = \widetilde F \\&\\
 	\restr {\widetilde u}{t=0} = \widehat {u^0},
 \end{cases}\]
 qui admet pour solution~:
@@ -1785,30 +1794,33 @@ Posons~:
 	Q(t, \xi) &\coloneqq \int_0^te^{-i(t-s)}\widetilde F(s, \xi)\dif s.
 \end{align*}
 
-\begin{claim}\label{claim 1} $\forall k \geq 0 : \partial_t^kP, \partial_t^kQ \in \mathcal S_\xi$, où $f \in \mathcal S_\xi$ veut dire
-$\forall t \in [-T, T] : \xi \mapsto f(t, \xi) \in \mathcal S_\xi$.
+\begin{claim}\label{claim 1} $\forall k \geq 0 : \partial_t^kP, \partial_t^kQ \in \mathcal S_\xi(\R^n)$, où $f \in \mathcal S_\xi(\R^n)$ veut dire~:
+\[\forall t \in [-T, T] : \xi \mapsto f(t, \xi) \in \mathcal S(\R^n).\]
 \end{claim}
 
 Par cette affirmation, $P+Q \in \mathcal S_\xi$. Posons alors $u \coloneqq \mathcal F_\xi^{-1}(P+Q)$. On trouve~:
-\[\dpd ut + \sum_{j=1}^nA_j\dpd u{x_j}
-	= \left(\dpd {}t + \sum_{j=1}^nA_j \dpd{}{x_j}\right)\mathcal F_\xi^{-1}P + \left(\dpd {}t + \sum_{j=1}^nA_j\dpd {}{x_j}\right)\mathcal F_\xi^{-1}Q
-	= \mathcal F_\xi^{-1}\left((\partial_t + iA(\xi))(P+Q)\right),\]
+\begin{align*}
+	\dpd ut + \sum_{j=1}^nA_j\dpd u{x_j}
+	&= \left(\dpd {}t + \sum_{j=1}^nA_j \dpd{}{x_j}\right)\mathcal F_\xi^{-1}P + \left(\dpd {}t + \sum_{j=1}^nA_j\dpd {}{x_j}\right)\mathcal F_\xi^{-1}Q \\
+	&= \mathcal F_\xi^{-1}\left(\left(\partial_t + iA(\xi)\right)(P+Q)\right),
+\end{align*}
 où la dernière égalité découle directement de~:
 \begin{align*}
 \left(\partial_t + \sum_{j=1}^nA_j\partial_{x_j}\right)\mathcal F_\xi^{-1}P &= \left(\partial_t + \sum_{j=1}^nA_j\partial_{x_j}\right)\int_{\R^n}e^{i\scpr x\xi}P(t,\xi)\dif\xi\\
 	&= \int_{\R^n}\left(\partial_t + \sum_{j=1}^nA_j\partial_{x_j}\right)\left(e^{i\scpr x\xi}P(t,\xi)\right)\dif\xi \\
 	&= \int_{\R^n}\partial_t\left(e^{i\scpr x\xi}P(t,\xi)\right) + \left(\sum_{j=1}^nA_j\partial_{x_j}e^{i\scpr x\xi}\right)P(t,\xi)\dif\xi \\
 	&= \int_{\R^n}e^{i\scpr x\xi}\partial_tP(t,\xi) + \sum_{j=1}^nA_ji\xi_je^{i\scpr x\xi}P(t,\xi)\dif \xi \\
-	&= \int_{\R^n}e^{i\scpr x\xi}\left(\partial_t + i\sum_{j=1}^n\xi_jA_j\right)P(t,\xi)\dif\xi.
+	&= \int_{\R^n}e^{i\scpr x\xi}\left(\partial_t + i\sum_{j=1}^n\xi_jA_j\right)P(t,\xi)\dif\xi \\
+	&= \mathcal F_\xi\left(\left(\partial_t + i\sum_{j=1}^n\xi_jA_j\right)P\right).
 \end{align*}
 
 Par symétrie, on a le même résultat sur $Q$. Donc $\partial_t u + \sum_{j=1}^nA_j\partial_{x_j}u = \mathcal F_\xi^{-1}\widetilde F = F$
-(car à $t$ fixé, $\xi \mapsto F(t, \xi) \in \mathcal S$). Donc $u$ est bien solution $Lu = F$, et par la formule d'inversion de Fourier (dans l'espace de Schwartz)~:
+(car à $t$ fixé, $\xi \mapsto F(t, \xi) \in \mathcal S$). Donc $u$ est bien solution de $Lu = F$, et par la formule d'inversion de Fourier (dans l'espace de Schwartz)~:
 \[\restr {P+Q}{t=0} = \restr P{t=0} + \restr Q{t=0} = \widehat {u^0} + \int_0^0\ldots\dif s = \widehat {u^0},\]
 et donc $\restr u{t=0} = u^0$.
 
 $u$ est donc bien solution du problème de Cauchy. Il reste à montrer que $u \in \widetilde {\mathcal S}([-T, T] \times \R^n)$. Pour cela, il est suffisant de montrer que
-$P, Q \in \widetilde {\mathcal S}$ puisque la transformée de Fourier est une bijection sur $\mathcal S$.
+$P, Q \in \widetilde {\mathcal S}([-T, T] \times \R^n)$ puisque la transformée de Fourier est une bijection sur $\mathcal S(\R^n)$.
 
 \begin{claim}\label{claim 2} $(t, \xi) \mapsto e^{-itA(\xi)}$ est $C^\infty$.
 \end{claim}
@@ -1817,15 +1829,15 @@ Donc $(t, \xi) \mapsto e^{-itA(\xi)}\widehat {u^0}(\xi)$ est $C^\infty$ égaleme
 Soient $\alpha, \beta \in \N^n, k \in \N$.
 
 \begin{align*}
-	\xi^\alpha\partial_t^kD_\xi^\alpha P
-	&= \xi^\alpha\partial_t^kD_\xi^\beta\left(e^{-itA(\xi)}\widehat {u^0}(\xi)\right)
-	= \xi^\alpha\partial_t^k\sum_{\beta'\leq\beta}\left[\binom \beta{\beta'}D_\xi^{\beta'}(e^{-itA(\xi)})D_\xi^{\beta-\beta'}\widehat {u^0}(\xi)\right] \\
-	&= \xi^\alpha\sum_{\beta'\leq\beta}\binom\beta{\beta'}\underbrace {\partial_t^kD_\xi^{\beta'}e^{-itA(\xi)}}_{(*)}D_\xi^{\beta-\beta'}\widehat {u^0}(\xi)
-	= \xi^\alpha\sum_{\beta'\leq\beta}\binom\beta{\beta'}D_\xi^{\beta'}\left(\left((-iA(\xi)\right)^ke^{-itA(\xi)}\right)D_\xi^{\beta-\beta'}\widehat {u^0}(\xi) \\
-	&= \xi^\alpha\sum_{\beta'\leq\beta}\left[\sum_{\gamma\leq\beta'}\binom{\beta'}\gamma D_\xi^\gamma\left(-iA(\xi)\right)^kD_\xi^{\beta'-\gamma}\left(e^{-itA(\xi)}\right)\right]D_\xi^{\beta-\beta'}\widehat{u^0}(\xi)
+	\xi^\alpha\partial_t^kD_\xi^\beta P
+	&= \xi^\alpha\partial_t^kD_\xi^\beta\left(e^{-itA(\xi)}\widehat {u^0}(\xi)\right) \\
+	&= \xi^\alpha\partial_t^k\sum_{\beta'\leq\beta}\left[\binom \beta{\beta'}D_\xi^{\beta'}(e^{-itA(\xi)})D_\xi^{\beta-\beta'}\widehat {u^0}(\xi)\right] \\
+	&= \xi^\alpha\sum_{\beta'\leq\beta}\binom\beta{\beta'}\underbrace {\partial_t^kD_\xi^{\beta'}e^{-itA(\xi)}}_{(*)}D_\xi^{\beta-\beta'}\widehat {u^0}(\xi) \\
+	&= \xi^\alpha\sum_{\beta'\leq\beta}\binom\beta{\beta'}D_\xi^{\beta'}\left(\left((-iA(\xi)\right)^ke^{-itA(\xi)}\right)D_\xi^{\beta-\beta'}\widehat {u^0}(\xi) \\
+	&= \xi^\alpha\sum_{\beta'\leq\beta}\binom \beta{\beta'}\left[\sum_{\gamma\leq\beta'}\binom{\beta'}\gamma D_\xi^\gamma\left(-iA(\xi)\right)^kD_\xi^{\beta'-\gamma}\left(e^{-itA(\xi)}\right)\right]D_\xi^{\beta-\beta'}\widehat{u^0}(\xi)
 \end{align*}
 
-{\tiny {$(*)$ les dérivées commutent puisque $(t, x) \mapsto e^{-itA(\xi)} \in C^\infty$.}}
+{\tiny {$(*)$ les dérivées commutent puisque $(t, \xi) \mapsto e^{-itA(\xi)} \in C^\infty$.}}
 
 \begin{claim}\label{claim 3} Pour $\mu \in \N^n$~: $\exists C > 0, e_\mu > 0 \st \abs {D_\xi^\mu e^{-itA(\xi)}} \leq C(1+\abs\xi)^{e_\mu}$.
 \end{claim}
@@ -1838,15 +1850,15 @@ Avec cette affirmation, on peut finalement majorer~:
 \end{align*}
 pour $N$ suffisamment grand.
 
-On a donc bien finalement $\xi^\alpha\partial_t^kD_\xi^\beta P$ borné. On a exactement la même chose pour $Q$. Dès lors, $u \in \widetilde {\mathcal S}([-T, T] \times \R^n)$ est
-une solution au problème de Cauchy, et l'existence est démontrée. De plus, cela montre l'Affirmation~\ref{claim 1}.
+On a donc bien finalement $\xi^\alpha\partial_t^kD_\xi^\beta P$ borné. On a exactement la même chose pour $Q$. Dès lors, $u$ est une solution au problème de Cauchy
+et $u \in \widetilde {\mathcal S}([-T, T] \times \R^n)$. L'existence est donc démontrée. De plus, cela montre l'Affirmation~\ref{claim 1}.
 
-\unic Soient $u_{(1)}, u_{(2)}$, solutions du problème de Cauchy dans $\widetilde {\mathcal S}([-T, T] \times \R^n)$, alors on pose $w \coloneqq u_{(1)} - u_{(2)}$.
-$w \in \widetilde {\mathcal S}(([-T, T] \times \R^n))$ est solution du problème de Cauchy~:
-\[\begin{cases}Lw = \\\restr w{t=0} = 0\end{cases}\]
+\unic Soient $u_{(1)}, u_{(2)}$, deux solutions du problème de Cauchy dans $\widetilde {\mathcal S}([-T, T] \times \R^n)$, alors on pose $w \coloneqq u_{(1)} - u_{(2)}$.
+$w \in \widetilde {\mathcal S}([-T, T] \times \R^n))$ est solution du problème de Cauchy~:
+\[\begin{cases}Lw = \\&\\\restr w{t=0} = 0\end{cases}\]
 
 En en prenant la transformée de Fourier à $\abs t \leq T$ fixé~:
-\[\begin{cases}\partial_t\widetilde w + iA(\xi)\widetilde w = 0\\\restr {\widetilde w}{t=0} = 0\end{cases}\]
+\[\begin{cases}\partial_t\widetilde w + iA(\xi)\widetilde w = 0\\&\\\restr {\widetilde w}{t=0} = 0\end{cases}\]
 qui admet pour unique solution $\widetilde w = 0$, et donc $w = 0$ par formule d'inversion de Fourier, et donc $u_{(1)} = u_{(2)}$.
 \end{proof}
 
@@ -1908,13 +1920,13 @@ que l'on majore comme suit~:
 \[\norm {\dpd {}{\xi_j}e^{-itA(\xi)}} \leq \frac 1{2\pi i}\int_{\gamma_{\xi^0}}\kappa_t\norm {(z-A(\xi))^{-1}}\norm {A_j}\norm {(z-A(\xi))^{-1}}\abs {\dif z}.\]
 
 De plus, par le Lemme~\ref{lem:majoration inverse (z-S)}~:
-\[\norm {(z-A(\xi))^{-1}} \leq C(1+\abs z + \norm {A(\xi)})^{m-1},\]
+\[\norm {(z-A(\xi))^{-1}} \leq C\left(1+\abs z + \norm {A(\xi)}\right)^{m-1},\]
 et par choix du chemin d'intégration~:
-\[\abs z \leq \left(\left(\norm {A(\xi^0)} + 1\right)^2 + 1\right)^{1/2} \leq C(\norm {A(\xi^0)}+1) \leq C(\abs {\xi^0}+1).\]
+\[\abs z \leq \left(\left(\norm {A(\xi^0)} + 1\right)^2 + 1\right)^{1/2} \leq C\left(\norm {A(\xi^0)}+1\right) \leq C\left(\abs {\xi^0}+1\right).\]
 
 Dès lors $\norm {(z-A(\xi))^{-1}} \leq C(1+\abs {\xi^0}+\abs {\xi})$, et donc~:
 \[\norm {\dpd {}{\xi_j}e^{-itA(\xi)}} \leq C\left(1+\abs {\xi^0}+\abs \xi\right)^{2(m-1)}\int_{\gamma_{\xi^0}}\abs {\dif z}
-	\leq C\left(1 + \abs {\xi^0} + \abs \xi\right)^{2(m-1)} \cdot K (1+\abs {\xi^0}).\]
+	\leq C\left(1 + \abs {\xi^0} + \abs \xi\right)^{2(m-1)} \cdot K \left(1+\abs {\xi^0}\right).\]
 
 Et finalement, puisque~:
 \[\abs {\xi^0} \leq \abs \xi + \abs {\xi-\xi^0} \leq \abs \xi + c \leq C(1+\abs \xi),\]
