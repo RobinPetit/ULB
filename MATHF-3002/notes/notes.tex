@@ -5,6 +5,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{fullpage}
+\usepackage[bottom]{footmisc}
 \usepackage{hyperref}
 
 \usepackage{amssymb}
@@ -582,8 +583,6 @@ On y définit le produit scalaire suivante pour $u, v \in H^s(\R^n)$~:
 \begin{rmq} Remarquons que $u \in H^s \iff \xi \mapsto (1+\abs \xi^2)^{s/2}\mathbb Fu(\xi)$ est dans $L^2$.
 \end{rmq}
 
-% Montrer que cette intégrale est bien définie
-
 \begin{prp} $(u, v) \mapsto \scpr uv_s$ est un produit scalaire.
 \end{prp}
 
@@ -600,16 +599,18 @@ et de plus, il est évident que $\scpr uu_s = 0 \iff u = 0$ puisque $\hat u = 0 
 
 Par linéarité de Fourier, $H^s(\R^n)$ est un espace vectoriel, et de plus il est normé par le produit scalaire défini ci-dessus. Montrons alors que c'est un espace ce Hilbert.
 
-Soit $(u_k)_{k \in \N} \in H^s$ une suite de Cauchy. $(1+\abs\xi^2)^{s/2}\mathbb Fu_k$ est de Cauchy dans $L^2$, qui est complet. Donc il en existe une limite
+Soit $(u_k)_{k \in \N} \subset H^s$ une suite de Cauchy. $(1+\abs\xi^2)^{s/2}\mathbb Fu_k$ est de Cauchy dans $L^2$, qui est complet. Donc il en existe une limite
 $V \in L^2 \tq (1+\abs\xi^2)^{s/2}\mathbb Fu_k \xrightarrow[k \to \pinfty]{L^2} V$. Il existe $u \in L^2 \tq (1+\abs\xi^2)^{s/2}\mathbb Fu = V$ car $(1+\abs\xi^2)^{-s/2}V \in L^2$,
 et $\mathbb F$ est une bijection sur $L^2$. De plus, $u \in H^s$ car $V = (1+\abs\xi^2)^{s/2}\mathbb Fu \in L^2$. Puisque $u_k \xrightarrow[k \to \pinfty]{H^s} u$,
 on a que $H^s$ est complet.
 
-Pour un contre-exemple, on a $C^\infty_0(\R^n)$ muni du produit scalaire $\scpr fg \coloneqq \int f\overline g\dx$ n'est pas un Hilbert. En effet, pour $f \in L^2 \setminus C^\infty_0$,
-par densité de $C^\infty_0$ dans $L^2$, $\exists (f_k)_{k \in \N} \in {C^\infty_0}^\N \tq f_k \xrightarrow[k \to \pinfty]{L^2} f$. De plus, $(f_k)$ est de Cauchy dans $C^\infty_0$.
-Par l'absurde, si $\exists g \in C^\infty_0 \tq f_k \xrightarrow[k \to \pinfty]{L^2} g$, par unicité de la limite, $g=f$, or $f \not \in C^\infty_0$.
+Pour un contre-exemple, on a $C^\infty_0(\R^n)$ muni du produit scalaire $\scpr fg \coloneqq \int f\overline g\dx$ n'est pas un Hilbert. En effet, pour
+$f \in L^2(\R^n) \setminus C^\infty_0(\R^n)$, par densité de $C^\infty_0(\R^n)$ dans $L^2(\R^n)$~:
+\[\exists (f_k)_{k \in \N} \subset C^\infty_0(\R^n) \tq f_k \xrightarrow[k \to \pinfty]{L^2(\R^n)} f.\]
+De plus, $(f_k)$ est de Cauchy dans $C^\infty_0(\R^n)$ pour la norme $\norm \cdot_{L^2}$, mais $(f_k)_k$ ne converge pas dans $C^\infty_0(\R^n)$. En effet, par l'absurde, si
+$\exists g \in C^\infty_0(\R^n) \tq f_k \xrightarrow[k \to \pinfty]{L^2(\R^n)} g$, par unicité de la limite, $g=f$, or $f \not \in C^\infty_0(\R^n)$.
 
-À partir d'ici, $H$ désigne un espace de Hilbert quelconque.
+À partir d'ici, $H$ désigne un espace de Hilbert quelconque muni d'un produit scalaire $\scpr \cdot\cdot$.
 
 \begin{déf} Soit $y \in H$. On définit~:
 \[\begin{cases}
@@ -622,31 +623,31 @@ Par l'absurde, si $\exists g \in C^\infty_0 \tq f_k \xrightarrow[k \to \pinfty]{
 \begin{prp} $f_i$ est continue pour $i=1,2,3$.
 \end{prp}
 
-\begin{proof}
+\begin{proof}~
 \begin{enumerate}
 	\item $\abs {f_1(x_1) - f_1(x_2)} = \abs {\scpr {x_1-x_2}y} \leq \norm {x_1-x_2}\norm y \xrightarrow[x_1 \to x_2]{} 0$. ($f_1$ est même uniformément continue et Lipschitzienne).
 	\item Idem pour $f_2$, à permutation près.
-	\item La continuité vient directement de $\abs {\norm x-\norm z} \leq \norm {x-z}$.
+	\item La continuité vient directement de $\abs {\norm x-\norm z} \leq \norm {x-z}$, et donc $\norm \cdot$ est Lipschitzienne.
 \end{enumerate}
 \end{proof}
 
 \begin{prp} Pour $F \leq H$, $\overline F \leq H$.
 \end{prp}
 
-\begin{proof} Pour $x, y \in \overline F$, il existe $(x_k), (y_k) \in F^\N \tq x_k \xrightarrow[k \to \pinfty]{} x$ et $y_k \xrightarrow[k \to \pinfty]{} y$.
+\begin{proof} Pour $x, y \in \overline F$, il existe $(x_k)_k, (y_k)_k \subset F \tq x_k \xrightarrow[k \to \pinfty]{} x$ et $y_k \xrightarrow[k \to \pinfty]{} y$.
 
 Donc $F \ni x_k+y_k \xrightarrow[k \to \pinfty]{} x+y$.
 De plus, pour $\lambda \in \C$, $\underbrace {\lambda x_k}_{\in F} \xrightarrow[k \to \pinfty]{} \lambda x \in \overline F$.
 \end{proof}
 
-\begin{rmq} Contrairement aux e.v. de dimension finie, en dimension infinie, il est possible d'avoir un sous-e.v. \textit{strict} dense (e.g. $C^\infty_0$ dans $L^2$).
+\begin{rmq} Contrairement aux e.v. de dimension finie, en dimension infinie, il est possible d'avoir un sous-e.v. \textit{strict} dense (e.g. $C^\infty_0(\R^n)$ dans $L^2(\R^n)$).
 \end{rmq}
 
-\begin{prp} $F \coloneqq \{f \in L^2 \tq f=0 \text{ sur } x_n > 0\}$ est un e.v. fermé dans $L^2$.
+\begin{prp} $F \coloneqq \{f \in L^2(\R^n) \tq f=0 \text{ sur } x_n > 0\}$ est un e.v. fermé dans $L^2(\R^n)$.
 \end{prp}
 
-\begin{proof} Soit $g \in \overline F$. Il existe $(f_k)_{k \in \N} \in F^\N \tq f_k \xrightarrow[k \to \pinfty]{L^2} g$. Pour $k \in \N$~:
-\[\int_{x_n > 0}\abs g^2\dx = \int_{x_n > 0}\abs {g-f_k}^2\dx \leq \abs {g-f_k}^2_{L^2} \xrightarrow[k \to \pinfty]{} 0\]
+\begin{proof} Soit $g \in \overline F$. Il existe $(f_k)_{k \in \N} \subset F \tq f_k \xrightarrow[k \to \pinfty]{L^2} g$. Pour $k \in \N$~:
+\[\int_{x_n > 0}\abs g^2\dx = \int_{x_n > 0}\abs {g-f_k}^2\dx \leq \norm {g-f_k}^2_{L^2} \xrightarrow[k \to \pinfty]{} 0\]
 car $f_k \in F$ et $f_k \xrightarrow[k \to \pinfty]{L^2} g$. Dès lors $\int_{x_n > 0}\abs g^2\dx = 0$, i.e. $g \in F$. Donc $\overline F = F$.
 \end{proof}
 
@@ -661,7 +662,7 @@ $M^\perp \coloneqq \{y \in H \tq \forall x \in M : \scpr xy = 0\} = \bigcap_{x \
 \begin{prp} Pour $x \in H$, $x^\perp \leq H$, et $x^\perp$ est fermé.
 \end{prp}
 
-\begin{proof} À $x \in H$ fixé, on remarque que $x^\perp = f_1^{-1}(\{0\})$, or $f_2$ est continue. Donc $x^\perp$ est fermé. Vérifier que $x^\perp$ est un sous-e.v. est trivial.
+\begin{proof} À $x \in H$ fixé, on remarque que $x^\perp = f_2^{-1}(\{0\})$, or $f_2$ est continue. Donc $x^\perp$ est fermé. Vérifier que $x^\perp$ est un sous-e.v. est trivial.
 \end{proof}
 
 \begin{cor} Pour $M \leq H$, $M^\perp$ est un sous-e.v. fermé de $H$.
@@ -669,7 +670,8 @@ $M^\perp \coloneqq \{y \in H \tq \forall x \in M : \scpr xy = 0\} = \bigcap_{x \
 
 Ce résultat découle directement du fait que $M^\perp$ est une intersection d'e.v. fermés.
 
-\begin{déf} $E \subseteq H$ est dit \textit{convexe} lorsque $\forall x, y \in E : \forall t \in [0, 1] : (1-t)x + ty \in E$.
+\begin{déf} $E \subseteq H$ est dit \textit{convexe} lorsque~:
+\[\forall x, y \in E : \forall t \in [0, 1] : (1-t)x + ty \in E.\]
 \end{déf}
 
 \begin{ex}~
@@ -679,11 +681,12 @@ Ce résultat découle directement du fait que $M^\perp$ est une intersection d'e
 	\item pour $\Omega \subseteq \R^n, u \in L^2(\Omega)$, $E = \{v \in L^2 \tq u=v \text{ sur } \Omega\}$ est convexe.
 \end{itemize}
 
-Montrons également que $E$ est fermé dans $L^2$. Soit $f \in \overline E$. Il existe $(f_k)_{k \in \N} \in E^\N \tq f_k \xrightarrow[k \to \pinfty]{L^2} f$.
-\[\int_\Omega \abs {u-f}^2\dx = \int_\Omega\abs {f_k-f}\dif x \leq \int_{\R^n}\abs {f_k-f}^2\dx \xrightarrow[k \to \pinfty]{} 0.\]
+Montrons également que $E$ est fermé dans $L^2$. Soit $f \in \overline E$. Il existe $(f_k)_{k \in \N} \subseteq E \tq f_k \xrightarrow[k \to \pinfty]{L^2} f$.
+\[\int_\Omega \abs {u-f}^2\dx = \int_\Omega\abs {f_k-f}^2\dif x \leq \int_{\R^n}\abs {f_k-f}^2\dx = \norm {f_k-f}_{L^2}^2 \xrightarrow[k \to \pinfty]{} 0.\]
 \end{ex}
 
-\begin{thm} Soit $E \neq \emptyset$ convexe fermé dans $H$. Alors $\exists! x \in E \tq \norm x = \min_{z \in E}\norm z = \inf_{z \in E}\norm z \eqqcolon \delta$.
+\begin{thm} Soit $E \neq \emptyset$ convexe fermé dans $H$. Alors~:
+\[\exists! x \in E \tq \norm x = \min_{z \in E}\norm z = \inf_{z \in E}\norm z \eqqcolon \delta.\]
 \end{thm}
 
 \begin{proof} \unic soient $x, y \in E \tq \norm x = \norm y = \delta$. Par la formule du parallélogramme~:
@@ -694,7 +697,7 @@ Par convexité de $E$, $\frac 12(x+y) \in E$. Donc $\norm {\frac 12(x+y)} \geq \
 
 On en déduit $\norm {x-y} = 0$, i.e. $x=y$.
 
-\exis Soit $(y_k)_{k \in \N} \in E^\N \tq \norm {y_k} \xrightarrow[k \to \pinfty]{} \delta$ qui existe par définition de l'infimum. Par la règle du parallélogramme~:
+\exis Soit $(y_k)_{k \in \N} \subset E \tq \norm {y_k} \xrightarrow[k \to \pinfty]{} \delta$ qui existe par définition de l'infimum. Par la règle du parallélogramme~:
 \[\norm {y_k - y_m}^2 \leq 2(\underbrace {\norm {y_k}^2+\norm {y_m}^2)}_{\xrightarrow[k, m \to \pinfty]{} 2\delta^2} - 4\delta^2 \xrightarrow[k, m \to \pinfty]{} 0.\]
 Donc $(y_k)$ est de Cauchy. Par complétude de $H$, $\exists x_0 \in H \tq y_k \xrightarrow[k \to \pinfty]{} x_0$, et par fermeture de $E$, $x_0 \in E$.
 
@@ -721,32 +724,31 @@ il existe un unique $u^* \in E$ qui minimise la norme~: $u^* = u$ sur $\Omega$ e
 	$\underbrace {y_1-y_2}_{\in M} = \underbrace {z_2-z_1}_{\in M^\perp}$. Or $M \cap M^\perp = \{0\}$. Donc $y_1=y_2$ et $z_1=z_2$.
 
  	\exis $x+M$ est convexe (trivial par le fait que $M \leq H$). Montrons que $x+M$ est fermé. Soit $u \in \overline {x+M}$.
-	Il existe $(u_k)_{k \in \N} \in {(x+M)^\N} \tq u_k \xrightarrow[k \to \pinfty]{} u$. $\forall k \in \N : x+M \ni u_k = x + y_k$. On en déduit
+	Il existe $(u_k)_{k \in \N} \subset x+M \tq u_k \xrightarrow[k \to \pinfty]{} u$. $\forall k \in \N : x+M \ni u_k = x + y_k$. On en déduit
 	$y_k \xrightarrow[k \to \pinfty]{} u-x$. Par fermeture de $M$, on a $u-x \in M$, et donc $u \in x+M$ (i.e. $x+M$ est fermé).
 
 	Soit $z \in x+M$ l'élément qui minimise la norme. On pose $y \coloneqq x-z \in M$. Montrons alors que $z \in x+M$. Soit $w \in M$~; WLOG, supposons $\norm w = 1$.
-	Puisque $z \in x+M$, $\forall \alpha \in \C : z-\alpha w \in x+M$. Donc~:
-	\[\norm z^2 \leq \norm {z-\alpha w}^2 = \norm z^2 - 2\Re\alpha\scpr wz + \abs\alpha^2.\]
-
-	$0 = 2\Re\alpha\scpr wz - \abs\alpha^2$. En particulier, pour $\alpha = \scpr zw$~: $0 = \norm {\scpr zw}^2$, donc $\scpr zw = 0$. Dès lors $z \in M^\perp$.
+	Puisque $z \in x+M$, $\forall \alpha \in \C : z-\alpha w \in x+M$. Dès lors~:
+	\[\norm z^2 \leq \norm {z-\alpha w}^2 = \norm z^2 - 2\Re(\alpha\scpr wz) + \abs\alpha^2,\]
+	et donc $0 = 2\Re(\alpha\scpr wz) - \abs\alpha^2$. En particulier, pour $\alpha = \scpr zw$~: $0 = \abs {\scpr zw}^2$, donc $\scpr zw = 0$. Dès lors $z \in M^\perp$.
 
 	\item Soit $Y \in M$. Montrons que $\norm {x-Y} \geq \norm {x-y} = \norm z$. Par Pythagore~:
 	\[\norm {x-Y}^2 = \norm {y+z-Y}^2 = \norm {(y-Y) + z}^2 = \norm {y-Y}^2 + \norm z^2 \geq \norm z^2.\]
 
-	Idem pour $Z \in M^\perp$~: $\norm {x-Z} \geq \norm {x-z} = y$.
+	Idem pour $Z \in M^\perp$~: $\norm {x-Z}^2 \geq \norm y^2$.
 
 	\item Soient $x_1, x_2 \in H, \alpha_1, \alpha_2 \in \C$. On a $\alpha_1x_1 = \alpha_1Px_1 + \alpha_1Qx_1$, et $\alpha_2x_2 = \alpha_2Px_2 + \alpha_2Qx_2$. Donc~:
 	\[P(\alpha_1x_1+\alpha_2x_2) + Q(\alpha_1x_1 + \alpha_2x_2) = \alpha_1x_1 + \alpha_2x_2 = \alpha_1Px_1 + \alpha_1Qx_1 + \alpha_2Px_2 + \alpha_2Qx_2,\]
 	et donc~:
-	\[\underbrace {P(\alpha_1x_1+\alpha_2x_2) - \alpha_1Px_1 - \alpha_2px_2}_{\in M} = \underbrace {\alpha_1Qx_1 + \alpha_2Qx_2 - Q(\alpha_1x_1 + \alpha_2x_2)}_{\in M^\perp}.\]
-	Or $M \cap M^\perp = \{0\}$, donc $P(\alpha_1x_1+\alpha_2x_2) = \alpha_1Px_1 - \alpha_2px_2$, et $\alpha_1Qx_1 + \alpha_2Qx_2 = Q(\alpha_1x_1 + \alpha_2x_2)$.
+	\[\underbrace {P(\alpha_1x_1+\alpha_2x_2) - \alpha_1Px_1 - \alpha_2Px_2}_{\in M} = \underbrace {\alpha_1Qx_1 + \alpha_2Qx_2 - Q(\alpha_1x_1 + \alpha_2x_2)}_{\in M^\perp}.\]
+	Or $M \cap M^\perp = \{0\}$, donc $P(\alpha_1x_1+\alpha_2x_2) = \alpha_1Px_1 + \alpha_2Px_2$, et $\alpha_1Qx_1 + \alpha_2Qx_2 = Q(\alpha_1x_1 + \alpha_2x_2)$.
 
 	\item Par Pythagore $\norm x^2 = \norm {Px}^2 + \norm {Qx}^2$. Donc $\norm {Px} \leq \norm x$ et $\norm {Qx} \leq \norm x$, i.e. $P$ et $Q$ sont Lipschitziennes,
 	donc en particulier continues.
 \end{enumerate}
 \end{proof}
 
-\begin{cor} Si $M \leq H$, avec $M \neq H$, il existe $y \in H \setminus \{0\} \tq y \perp M$.
+\begin{cor}\label{cor:sous-espace vectoriel fermé admet un orthogonal} Si $M \leq H$ est fermé, avec $M \neq H$, il existe $y \in H \setminus \{0\} \tq y \perp M$.
 \end{cor}
 
 \begin{proof} Pour $x \in H \setminus M$, $x = Px+Qx$, où $Qx \neq 0$, et $Qx \perp M$.
@@ -764,7 +766,8 @@ La seconde inclusion se démontre comme suit~: soit $x \in {M^\perp}^\perp \subs
 Or $0 = \scpr xz = \scpr {y+z}z = \scpr yz + \norm z^2$, et $\scpr yz = 0$ par définition d'orthogonalité. Donc $\abs z = 0$ et $z=0$, i.e. $x=y \in M$.
 \end{proof}
 
-\begin{lem}[Lemme de Riesz] Soit $L : H \to \C$, une forme linéaire continue. Alors $\exists! y \in H \tq L = \scpr \cdot y$.
+\begin{lem}[Lemme de Riesz]\label{lem:Riesz} Soit $L : H \to \C$, une forme linéaire continue. Alors~:
+\[\exists! y \in H \tq L = \scpr \cdot y.\]
 \end{lem}
 
 \begin{proof} \unic pour $y_1, y_2 \in H \tq \forall x \in H : \scpr x{y_1} = \scpr x{y_2}$, on a $\scpr x{y_1-y_2} = 0$, donc $y_1-y_2 \in H^\perp = \{0\}$, i.e. $y_1=y_2$.
@@ -821,10 +824,10 @@ Les $\hat x(\alpha)$ sont les coefficients de Fourier relativement au système $
 	si $s \neq s_F(x)$. Ensuite~:
 	\[\norm {s_F(x)}^2 \leq \norm {s_F(x)}^2 + \norm {x-s_F(x)}^2.\]
 	Par l'équation~\ref{eq:x-s in norm}~: si $s = 0$~:
-	\[\norm {s_F(x)}^2 \leq \norm {s_F(x)}^2 \leq \norm {s_F(x)}^2 + \norm {x-s_F(x)}^2 = \norm x^2.\]
+	\[\norm {s_F(x)}^2 \leq \norm {s_F(x)}^2 + \norm {x-s_F(x)}^2 = \norm x^2.\]
 	Or~:
-	\[\norm {s_F(x)}^2 = \sum_{\alpha \in F}\abs {\hat x(\alpha)}^2.\]
-	Dès lors $\norm {s_F(x)}^2 \leq \norm x^2$.
+	\[\norm {s_F(x)}^2 = \sum_{\alpha \in F}\abs {\hat x(\alpha)}^2,\]
+	et donc l'inégalité de Bessel est bien vérifiée.
 \end{enumerate}
 \end{proof}
 
@@ -837,7 +840,7 @@ Remarquons également que par définition de l'intégrale, si $\varphi : A \to [
 Et si $\varphi \in \ell^1(A)$ et $\varphi \geq 0$, alors pour $A_k = \{\varphi \geq k^{-1}\}$ ($k \geq 1$), on a $\abs {A_k} \lneqq \pinfty$ puisque $\varphi \in \ell^1(A)$.
 Or $\bigcup_{k \geq 1}A_k = \{\varphi \gneqq 0\}$, et donc $\{\varphi \neq 0\}$ est au plus dénombrable.
 
-Dans le cas général, pour $\varphi : A \to \C$, alors $(\Re \varphi)^\pm$ et $(\Im \varphi)^\pm$ sont non-nulles sur un ensemble au plus dénombrable, et donc $\{\varphi \neq 0\}$
+Dans le cas général, pour $\varphi \in \ell^1(A)$, alors $(\Re \varphi)^\pm$ et $(\Im \varphi)^\pm$ sont non-nulles sur un ensemble au plus dénombrable, et donc $\{\varphi \neq 0\}$
 est au plus dénombrable.
 \end{rmq}
 
@@ -849,14 +852,14 @@ $L^p(\Omega, \mathcal F, \mu)$ pour $p \in [1, \pinfty)$.
 Si $f \in C^0(X, Y)$ telle que $\restr f{X_0}$  une isométrie et $f(X_0)$ est dense dans $Y$, alors $f$ est surjective et est une isométrie.
 \end{lem}
 
-\begin{proof} Fixons $x, y \in X$. Il existe $(x_k)_{k \geq 0}, (y_k)_{k \geq 0} \in {X_0}^\N$ telles que $x_k \xrightarrow[k \to \pinfty]{} x$ et $y_k \xrightarrow[k \to \pinfty]{} y$.
+\begin{proof} Fixons $x, y \in X$. Il existe $(x_k)_{k \geq 0}, (y_k)_{k \geq 0} \subset X_0$ telles que $x_k \xrightarrow[k \to \pinfty]{} x$ et $y_k \xrightarrow[k \to \pinfty]{} y$.
 Pour $k \geq 0$~:
 \[d(x_k, y_k) \xrightarrow[k \to \pinfty]{} d(x, y)\]
 car la distance est continue sur un espace métrique. De plus~:
 \[d(x_k, y_k) = d\left(f(x_k), f(y_k)\right) \xrightarrow[k \to \pinfty]{} d\left(f(x), f(y)\right),\]
 à nouveau par continuité de la métrique, et par continuité de $f$. Donc par unicité de la limite, on a $d(x, y) = d(f(x), f(y))$, et donc $f$ est une isométrie.
 
-Il reste à montrer que $f$ est surjective. Soit $y \in Y$. $f(X_0)$ est dense dans $Y$, et donc par continuité de $f$, on sait~: $\exists (x_k)_{k \geq 0} \in {X_0}^\N$ telle que
+Il reste à montrer que $f$ est surjective. Soit $y \in Y$. $f(X_0)$ est dense dans $Y$, et donc par continuité de $f$, on sait~: $\exists (x_k)_{k \geq 0} \subset {X_0}$ telle que
 $f(x_k) \xrightarrow[k \to \pinfty]{} y$. $(f(x_k))_k$ est de Cauchy dans $Y$, et puisque $f$ est une isométrie, $(x_k)_k$ est de Cauchy dans $X$. Par complétude, on sait
 que $\exists x \in X \tq x_k \xrightarrow[k \to \pinfty]{} x$.
 
@@ -910,16 +913,16 @@ espaces métriques, on a $f(x) = y$, et donc $y$ admet une préimage par $f$.
 \begin{enumerate}
 	\item $(e_\alpha)_\alpha$ est un SOM.
 	\item $M \coloneqq \Span \{e_\alpha\}_\alpha$ est dense dans $H$.
-	\item $\forall x \in H : \sum_{\alpha \in A}\abs {\hat x(\alpha)}^2 = \norm x^2$.
-	\item $\forall x, y \in H : \sum_{\alpha \in A}\hat x(\alpha)\overline {\hat y(\alpha)} = \scpr xy \qquad$ (Identité de Parseval).
+	\item $\forall x \in H : \norm {\hat x}_{\ell^2(A)}^2 = \sum_{\alpha \in A}\abs {\hat x(\alpha)}^2 = \norm x^2_H$.
+	\item $\forall x, y \in H : \scpr {\hat x}{\hat y}_{\ell^2(A)} = \sum_{\alpha \in A}\hat x(\alpha)\overline {\hat y(\alpha)} = \scpr xy \qquad$ (Identité de Parseval).
 	\item $\forall x \in H : \forall \varepsilon > 0 : \exists A_0 \subset A$ fini tel que $\forall A_1 \supset A_0$ : si $A_1$ est fini, alors $\norm {x - \sum_{\alpha \in A_1}\hat x(\alpha)e_\alpha} \leq \varepsilon$.
 \end{enumerate}
 \end{thm}
 
 \begin{proof}~
 \begin{itemize}
-	\item[$1 \Rightarrow 2$] Par l'absurde, supposons que $M \subsetneqq A$. Alors il existe $y \in A \setminus \{0\}$ tel que $y \perp M$ et donc le système n'est pas maximal
-	car on peut lui ajouter $\frac y{\norm y_H}$.
+	\item[$1 \Rightarrow 2$] Par l'absurde, supposons que $\overline M \subsetneqq H$. Alors par le Corollaire~\ref{cor:sous-espace vectoriel fermé admet un orthogonal},
+	il existe $y \in H \setminus \{0\}$ tel que $y \perp \overline M$ et donc le système $\{e_\alpha\}_{\alpha \in A}$ n'est pas maximal car on peut lui ajouter $\frac y{\norm y_H}$.
 	\item[$2 \Rightarrow 3$] Par le Théorème~\ref{thm:cefficients Fourier isométrie} (point 3), on sait que $\overline M \to \ell^2(A) : x \mapsto \hat x$ est une isométrie,
 	ce qui revient à dire que si $x \in \overline M$, alors l'inégalité de Bessel est une égalité, i.e.~:
 	\[\norm x^2 = \sum_{\alpha \in A}\abs {\hat x(\alpha)}^2.\]
@@ -974,7 +977,7 @@ ou de manière équivalente $y_n \perp u_j$, et cette dernière formulation est 
 \begin{déf} Un espace topologique $E$ est dit \textit{séparable} s'il admet une partie dense dénombrable.
 \end{déf}
 
-\begin{thm} Un espace de Hilbert est séparable ssi il possède un système orthonormal maximal.
+\begin{thm} Un espace de Hilbert est séparable ssi il possède un système orthonormal maximal fini ou dénombrable.
 \end{thm}
 
 \begin{proof} \underline {$\Rightarrow$~:} Soit $\{a_1, a_2, \ldots\}$ une suite dense dans $H$. Soit $\{a'_1, a'_2, \ldots\}$ la suite partielle (possiblement finie) de
@@ -1039,10 +1042,11 @@ Soient $E, F$ deux espaces de Banach. Pour $T : E \to F$ linéaire, on dit que $
 \[\sup_{\norm x \leq 1}\norm {Tx} = \sup_{\norm x \lneqq 1}\norm {Tx} = \sup_{\norm x = 1}\norm {Tx}.\]
 \end{prp}
 
-\begin{proof} On note $A = \{\norm {Tx}\}_{\norm x \leq 1}$, $B = \{\norm {Tx}\}_{\norm x < 1}$, et $C = \{\norm {Tx}\}_{\norm x = 1}$.
+\begin{proof} On note $A \coloneqq \{\norm {Tx} \st \norm x \leq 1\}$, $B \coloneqq \{\norm {Tx} \st \norm x \lneqq 1\}$, et $C \coloneqq \{\norm {Tx} \st \norm x = 1\}$.
 Notons également $a = \sup A$, $b = \sup B$ et $c = \sup C$.
 
-Puisque $A \supset B \cup C$, on sait que $a \geq b$ et $a \geq c$. Maintenant, si $x \neq 0 \st \norm x \leq 1$, alors $B \ni T\frac x{\norm x} = \frac 1{\norm x}Tx \geq \norm {Tx}$.
+Puisque $A \supset B \cup C$, on sait que $a \geq b$ et $a \geq c$. Maintenant, si $x \neq 0 \st \norm x \leq 1$, alors~:
+\[C \ni \norm {T\frac x{\norm x}} = \frac 1{\norm x}\norm {Tx} \geq \norm {Tx} \in A.\]
 En particulier, $c \geq a$, et donc $c=a$.
 
 Si $a \lneqq \pinfty$, alors $\forall \delta > 0 : \exists x \st \norm x = 1$ et $\norm {Tx} \geq a-\delta$ (par définition du $\sup$ et puisque $a=c$). Pour $\varepsilon \in (0, 1)$~:
@@ -1135,16 +1139,16 @@ Dans $(\Omega, \mathcal A, \mu)$ un espace mesuré, on fixe $K \in L^2(\Omega \t
 Par Fubini, $\forall x \in \Omega : \int_\Omega \abs {K(x, y)}^2\dif\mu(y)$ est bien défini, et pour presque tout $x \in \Omega :
 \abs {K(x, \cdot)}^2 \in L^1(\Omega, \mathcal A, \mu)$. En particulier, $\abs {K(x, \cdot)} \in L^2(\Omega, \mathcal A, \mu)$.
 
-Dès lors, à $x \in \Omega$ fixé, $y \mapsto K(x, y)f(y)$ est $L^1$ par Hölder. Donc il existe $N \in \mathcal A \st \mu(N) = 0$ et $\forall x \not \in N :
+Dès lors, à $x \in \Omega$ fixé, $y \mapsto K(x, y)f(y)$ est $L^1$ par Hölder. Donc il existe $N \in \mathcal A \st \mu(N) = 0$ et $\forall x \in \Omega \setminus N :
 K(x, \cdot)f(\cdot) \in L^1(\Omega, \mathcal A, \mu)$. On pose alors~:
 \[g : x \mapsto \begin{cases}\displaystyle \int_\Omega K(x, y)f(y)\dif\mu(y) &\text{ si $x \not \in N$,} \\0 &\text{ sinon.}\end{cases}\]
 
-Montrons que $g = Tf \in L^2(\Omega, \mathcal A, \mu)$. Si $x \not \in N$, alors par Cauchy-Schwarz~:
+Montrons que $g = Tf \in L^2(\Omega, \mathcal A, \mu)$. Si $x \in \Omega \setminus N$, alors par Cauchy-Schwarz~:
 \[\abs {g(x)}^2 \leq \left(\int\abs {K(x, y)}\abs {f(y)}\dif\mu(y)\right)^2 \leq \int_\Omega \abs {K(x, y)}^2\dif\mu(y)\int_\Omega \abs {f(y)}^2\dif\mu(y).\]
-Or le second facteur ne dépend pas de $x$ (notons le $C$) et est fini puisque $f \in L^2(\Omega, \mathcal A, \mu)$. Dès lors~:
-\[\int\abs {g(x)}^2\dif\mu(x) = C\int_\Omega\left(\int_\Omega \abs {K(x, y)}^2\dif\mu(y)\right)\dif\mu(y).\]
+Or le second facteur ($= \norm f_{L^2}^2$) ne dépend pas de $x$ et est fini puisque $f \in L^2(\Omega, \mathcal A, \mu)$. Dès lors~:
+\[\norm {Tf}_{L^2}^2 = \int\abs {g(x)}^2\dif\mu(x) \leq \norm f_{L^2}^2\int_\Omega\left(\int_\Omega \abs {K(x, y)}^2\dif\mu(y)\right)\dif\mu(y).\]
 	Par Fubini (puisque $K \in L^2(\Omega \times \Omega, \mathcal A \otimes \mathcal A, \mu \otimes \mu)$), on a finalement~:
-\[\int_\Omega\abs {g(x)}^2\dif\mu(x) \leq C\int_{\Omega \times \Omega}\abs {K(x, y)}^2\dif(\mu \otimes \mu)(x, y) \lneqq \pinfty.\]
+\[\int_\Omega\abs {g(x)}^2\dif\mu(x) \leq \norm f_{L^2}^2\int_{\Omega \times \Omega}\abs {K(x, y)}^2\dif(\mu \otimes \mu)(x, y) \lneqq \pinfty.\]
 On en déduit également $\norm g_{L^2} \leq \norm f_{L^2}\norm K_{L^2}$, et donc $\norm T \leq \norm K_{L^2}$.
 \end{ex}
 
@@ -1153,10 +1157,11 @@ On en déduit également $\norm g_{L^2} \leq \norm f_{L^2}\norm K_{L^2}$, et don
 pour $K \in L^2(\Omega \times \Omega, \mathcal A \otimes \mathcal A, \mu \otimes \mu)$ est appelé \textit{opérateur intégral de Hilbert-Schmidt}.
 \end{déf}
 
-Soient $T \in \mathcal L(H), x \in H$ et $\Phi : H \to \C : y \mapsto \scpr {Ty}x$, une forme linéaire bornée. Par Cauchy-Schwarz~:
-$\abs {\Phi y} \leq \norm {Ty}\norm x \leq \norm T\norm y\norm x$.
+\begin{déf} Soient $H$ un espace de Hilbert, $T \in \mathcal L(H)$, $x \in H$ et $\Phi : H \to \C : y \mapsto \scpr {Ty}x$, une forme linéaire bornée. Par Cauchy-Schwarz~:
+$\abs {\Phi y} \leq \norm {Ty}\norm x \leq \norm T\norm y\norm x$. Par le lemme de Riesz (Lemme~\ref{lem:Riesz}), on sait qu'il existe un unique $z_x \in H$ tel que
+$\forall y \in H : \Phi y = \scpr y{z_x}$. On a alors une application $x \mapsto z_x$. Notons-la $T^*$. Cet opérateur $T^*$ est appelé \textit{l'opérateur adjoint de $T$}.
+\end{déf}
 
-Par le lemme de Riesz, on sait qu'il existe un unique $z_x \in H$ tel que $\forall y \in H : \Phi y = \scpr y{z}$. On a alors une application $x \mapsto z_x$. Notons-la $T^*$.
 
 \begin{prp} $T^*$ est une application linéaire.
 \end{prp}
@@ -1186,9 +1191,6 @@ En posant $z \coloneqq \frac {Tx}{\norm {Tx}}$, on observe~:
 	= \sup_{\substack {\norm x \leq 1 \\ \norm y \leq 1}}\abs {\scpr y{T^*x}} = \sup_{\substack {\norm x \leq 1 \\ \norm y \leq 1}}\abs {\scpr {Ty}x}
 	= \sup_{\norm x \leq 1}\norm {Tx} = \norm T\]
 \end{proof}
-
-\begin{déf} Cet opérateur $T^*$ est appelé \textit{l'opérateur adjoint de $T$}.
-\end{déf}
 
 \begin{prp} Soient $S, T \in \mathcal L(H)$. Pour $\alpha, \beta \in \C$, on a~:
 \begin{enumerate}
@@ -1273,7 +1275,7 @@ Or $x \in E$ et par unicité de la limite, $Tx = y$. Dès lors, $(x, y) \in \Gam
 \end{thm}
 
 \begin{proof} Soient $(V_n)_n$ ouverts denses dans $X$. Si pour tout $W \subset X$ ouvert non vide, $W \cap \bigcap_{n \geq 0}V_n \neq \emptyset$, alors $\bigcap_{n \geq 0}V_n$
-ests dense dans $X$. Fixons donc $W \subset X$ ouvert de $X$ non vide et trouvons $x \in W \cap \bigcap_{n \geq 0}V_n$.
+est dense dans $X$. Fixons donc $W \subset X$ ouvert de $X$ non vide et trouvons $x \in W \cap \bigcap_{n \geq 0}V_n$.
 
 $V_1$ est dense. Donc $\exists x_1 \in W \cap V_1$ et $r_1 \in (0, 1)$ tel que $\overline {B(x_1, r_1)} \subset W \cap V_1$. $B(x_X1, r_1)$ est un ouvert de $X$, donc
 $\exists x_2 \in B(x_1, r_1) \cap V_2$ et $r_2 \in (0, 1/2)$ tel que $\overline {B(x_2, r_2)} \subset B(x_1, r_1) \cap V_2$, etc. On construit ainsi une suite $(x_n)_{n \geq 1}$
@@ -1310,35 +1312,42 @@ et $r > 0 \st y_0 + rB_F \subset W$. Fixons également $y \in F \st \norm y < r$
 
 Puisque $y_0+y \in W \subset \overline {T(nB_E)}$, prenons une autre suite $(x''_k)_{k \geq 0} \subset nB_E \st Tx''_k \xrightarrow[k \to \pinfty]{} y_0+y$.
 
-On note $x_k \coloneqq x'_k - x''_k$. $\norm {x_k} \leq \norm {x''_k} + \norm {x'_k} \leq 2n$ et $Tx_k = Tx''_k - Tx'_k \xrightarrow[k \to \pinfty]{} y_0+y-y_0 = y$.
+On note $x_k \coloneqq x''_k - x'_k$. $\norm {x_k} \leq \norm {x'_k} + \norm {x''_k} \leq 2n$ et $Tx_k = Tx''_k - Tx'_k \xrightarrow[k \to \pinfty]{} y_0+y-y_0 = y$.
 Dès lors $\forall \varepsilon > 0 : \forall y \in rB_F : \exists x \in E \st \norm x \leq 2n$ et $\norm {Tx-y} \leq \varepsilon$. Ce qui est équivalent à~:
 \begin{equation}\tag{$\Delta$}\label{eq:Delta}
 	\forall y \in F : \forall \varepsilon > 0 : \exists x \in E \st \norm x \leq \frac {4n}r\norm y \text{ et } \norm {Tx - y} \leq \varepsilon.
 \end{equation}
-En effet, si $y = 0$, on prend $x=0$, et si $y \neq 0$, on sait qu'il existe $\tilde x \in E \st \norm x \leq 2n$ et $\norm {T\tilde x - \frac {2}{2\norm y}y} \leq \varepsilon$.
-On peut dès lors poser $x \coloneqq \frac {2\norm y}{r}x$.
+En effet, si $y = 0$, on prend $x=0$, et si $y \neq 0$, on pose $\widetilde y \coloneqq \frac r{2\norm y}y$ et on sait qu'il existe
+$\widetilde x \in E \st \norm x \leq 2n$ et $\norm {T\tilde x - \widetilde y} \leq \frac {\varepsilon r}{2\norm y}$. On peut dès lors poser $x \coloneqq \frac {2\norm y}r\widetilde x$.
+Dans ce cas, on a $\norm x = \frac {2\norm y}r\norm {\tilde x} \leq \frac {4n}r\norm y$ et~:
+\[\norm {Tx-y} = \norm {T\left(\frac {2\norm y}y\widetilde x\right) - \frac {2\norm y}r\widetilde y} = \frac {2\norm y}r\norm {T\widetilde x - \widetilde y}
+\leq \frac {2\norm y}r\frac {\varepsilon r}{2\norm y} = \varepsilon.\]
 
 Posons $\delta \coloneqq \frac r{4n}$, et prenons $\omega > 0$. Montrons alors que~:
 \begin{equation}\tag{$\sharp$}\label{eq:sharp}
 	\forall y \in F : \norm y \leq \delta \Rightarrow \exists x \in E \st \norm x \leq 1+\omega \text{ et } Tx = y.
 \end{equation}
 
-Par~\eqref{eq:Delta}~:
-\[\exists x_1 \in E \st \norm {x_1} \leq \frac 1\delta\norm y \leq 1 \text{ et } \norm {Tx_1-y} \frac {\delta\omega}2.\]
+Fixons $y \in \delta B_F$. Par~\eqref{eq:Delta}~:
+\[\exists x_1 \in E \st \norm {x_1} \leq \frac 1\delta\norm y \leq 1 \text{ et } \norm {Tx_1-y} \leq \frac {\delta\omega}2.\]
 
 De même~:
-\[\exists x_2 \in E \st \norm {x_2} \leq \frac {4n}r\norm {Tx_1 - y} \leq \frac \omega2 \text{ et } \norm {(y-Tx_1 - Tx_2} \leq \frac {\delta\omega}{2^2}.\]
+\[\exists x_2 \in E \st \norm {x_2} \leq \frac {4n}r\norm {Tx_1 - y} \leq \frac \omega2 \text{ et } \norm {(y-Tx_1) - Tx_2} \leq \frac {\delta\omega}{2^2}.\]
 On construit ainsi $x_1, \ldots, x_n$ tels que $\norm {x_n} \leq 2^{-(n-1)}\omega$. Pour $\varepsilon = 2^{-n}\delta\omega$, on a l'existence de
 $x_n \st \norm {x_n} \leq 2^{-(n-1)}\omega$ et $\norm {y-Tx_1-\ldots-Tx_n} \leq \varepsilon$.
 
-De plus, puisque $(x_n)_n$ est de Cauchy, la suite $(\sum_{j=1}^nx_j)_n$ est également de Cauchy. Donc~:
+De plus, puisque $(x_n)_n$ est de Cauchy, la suite $(\sum_{j=1}^nx_j)_n$ est également de Cauchy. Donc par complétude de $E$~:
 \[\exists x \in E \st \sum_{j=1}^nx_j \xrightarrow[n \to \pinfty]{} x.\]
 
-Par continuité de la norme $\norm \cdot$, on a également $\norm {\sum_{j=1}^nx_j} \xrightarrow[n \to \pinfty]{} \norm x$. or
-$\exists \eta > 0 \st \norm {\sum_{j=1}^nx_j} \leq 1+\omega-\eta$ et donc $\norm x \leq 1+\omega$. Finalement, par continuité de $T$, on a
+Par continuité de la norme $\norm \cdot$, on a également $\norm {\sum_{j=1}^nx_j} \xrightarrow[n \to \pinfty]{} \norm x$. Or~:
+\[\norm {\sum_{j=1}^nx_j} \leq \sum_{j=1}^n\norm {x_j} \leq 1 + \sum_{j=2}^n\norm {x_j} \leq 1 + \sum_{j=1}^n\omega 2^{-(n-1)} = 1 + \omega(1 - 2^{-(+1)}) \leq 1+\omega,\]
+donc $\norm x \leq 1+\omega$. Finalement, par continuité de $T$, on a
 $T(\sum_{j=1}^nx_j) \xrightarrow[n \to \pinfty]{} Tx$. Or puisque $T(\sum_{j=1}^nx_j) = \sum_{j=1}^nTx_j \xrightarrow[n \to \pinfty]{} y$, par unicité de la limite
 (dans les espaces métriques complets), on a $Tx=y$,
 ce qui montre bien~\eqref{eq:sharp}.
+
+Finalement, par~\eqref{eq:sharp}, on a bien $\delta B_F \subset T(B_E)$ puisque pour tout $y \in \delta B_F$ (i.e. $\norm y \leq \delta$), on a $x \in E \st \norm x \leq 1$
+et $Tx = y$.
 \end{proof}
 
 \begin{thm}[du graphe fermé, Banach]\label{thm:graphe fermé} Soient $E, F$ espaces de Banach, $T : E \to F$ linéaire. Si $\Gamma_T$ est fermé dans $E \times F$, alors $T$ est bornée.
@@ -1347,7 +1356,7 @@ ce qui montre bien~\eqref{eq:sharp}.
 \begin{proof} $\Gamma_T$ est un sous-espace vectoriel fermé de $E \times F$. Or $E \times F$ est un espace de Banach puisque le produit d'espaces de Banach en est un.
 Dès lors $\Gamma_T$ est un espace de Banach également. On décompose $T$ en $T_1 : E \to \Gamma_T : x \mapsto (x, Tx)$ et $T_2 : E \times F \to F : (x, y) \mapsto y$ ($T = T_2T_1$).
 $T_1$ est bijective par définition du graphe d'une application et ${T_1}^{-1} : (x, Tx) \mapsto x$ est bornée (donc continue). Par le théorème de l'application ouverte de Banach,
-on déduit que ${T_1}^{-1}$ est ouverte, i.e. $T_2$ est continue.
+on déduit que ${T_1}^{-1}$ est ouverte, i.e. $T_1$ est continue.
 
 De plus, $T_2$ est continue car les projections sont toujours continues pour la topologie produit. Donc $T = T_2T_1$ est composition d'applications continues, et est donc continue.
 \end{proof}
