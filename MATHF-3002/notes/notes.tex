@@ -137,7 +137,7 @@ par le théorème de la convergence dominée, on sait~:
 \end{proof}
 \vspace{1cm}
 
-\begin{prp} Soit $u \in L^1(\R^n)$. Si $\forall j \in \intint 1n : x_jf \in L^1$, alors~: $\hat u \in C^1$ et~:
+\begin{prp} Soit $u \in L^1(\R^n)$. Si $\forall j \in \intint 1n : x_jf \in L^1$, alors~: $\hat u \in \mathcal C^1$ et~:
 \begin{equation}\label{eq:pd transformée Fourier}
 	\forall j \in \intint 1n : \dpd {\hat u}{\xi_j}\sVert[3]_\xi = \int e^{-i\scpr x\xi}(-ix_j)u(x)\dif x.
 \end{equation}
@@ -155,7 +155,7 @@ En effet, si $x_j = 0$, alors tout est nul et l'inégalité devient une égalit�
 Dès lors, par le théorème de convergence dominée, la limite passe sous l'intégrale et on a~\eqref{eq:pd transformée Fourier}.
 \end{proof}
 
-\begin{cor} Pour $m \in \N^*$, si $(1+\abs x)^mu \in L^1$, alors $u \in C^m$ et on peut dériver $m$ fois sous le signe:
+\begin{cor} Pour $m \in \N^*$, si $(1+\abs x)^mu \in L^1$, alors $u \in \mathcal C^m$ et on peut dériver $m$ fois sous le signe:
 \[\partial^\alpha\hat u(\xi) = \int e^{-i\scpr x\xi}(-i)^{\abs \alpha}x^\alpha u(x)\dif x\]
 \end{cor}
 
@@ -164,8 +164,8 @@ Dès lors, par le théorème de convergence dominée, la limite passe sous l'int
 
 \begin{déf} On définit l'ensemble de Schwartz~:
 \begin{equation}\begin{aligned}
-	\mathcal S(\R^n) \coloneqq &\left\{u \in C^\infty(\R^n) \tq \forall \alpha, \beta \in \N^n : x^\alpha\partial^\beta u \text{ est borné dans } \R^n\right\} \\
-		= &\left\{u \in C^\infty(\R^n) \tq \forall \alpha, \beta \in \N^n : x^\alpha\partial^\beta u \in L^\infty(\R^n)\right\}.
+	\mathcal S(\R^n) \coloneqq &\left\{u \in \mathcal C^\infty(\R^n) \tq \forall \alpha, \beta \in \N^n : x^\alpha\partial^\beta u \text{ est borné dans } \R^n\right\} \\
+		= &\left\{u \in \mathcal C^\infty(\R^n) \tq \forall \alpha, \beta \in \N^n : x^\alpha\partial^\beta u \in L^\infty(\R^n)\right\}.
 \end{aligned}\end{equation}
 \end{déf}
 
@@ -174,11 +174,11 @@ Dans l'idée, $\mathcal S$ est l'ensemble des fonctions dont toutes les dérivé
 \begin{prp} $\mathcal S(\R^n)$ est un $\C$-espace vectoriel.
 \end{prp}
 
-\begin{proof} Immédiat par le fait que $C^\infty(\R^n)$ et $L^\infty(\R^n)$ sont des $\C$-evs.
+\begin{proof} Immédiat par le fait que $\mathcal C^\infty(\R^n)$ et $L^\infty(\R^n)$ sont des $\C$-evs.
 \end{proof}
 
-\begin{prp}\label{prp:C^infty_0 dans Schartz dans l'intersection des L^p} Si $C^\infty_0(\R^n) = C^\infty_c(\R^n)$ désigne l'ensemble des fonctions $C^\infty$ à support compact, alors~:
-\[C^\infty_0(\R^n) \subseteq \mathcal S(\R^n) \subseteq \bigcap_{1 \leq p \leq \pinfty} L^p(\R^n).\]
+\begin{prp}\label{prp:C^infty_0 dans Schartz dans l'intersection des L^p} Si $\mathcal C^\infty_0(\R^n) = \mathcal C^\infty_c(\R^n)$ désigne l'ensemble des fonctions $\mathcal C^\infty$ à support compact, alors~:
+\[\mathcal C^\infty_0(\R^n) \subseteq \mathcal S(\R^n) \subseteq \bigcap_{1 \leq p \leq \pinfty} L^p(\R^n).\]
 \end{prp}
 
 \begin{proof}~
@@ -192,7 +192,7 @@ Dans l'idée, $\mathcal S$ est l'ensemble des fonctions dont toutes les dérivé
 	Le cas $p = \pinfty$ vient uniquement du fait que pour $u \in \mathcal S$, pour $\alpha = \beta = (0, \ldots, 0) \in \N^n$:
 	\[u = x^\alpha\partial^\beta u \in L^\infty.\]
 
-	\item[$(ii)$] Soit $u \in C^\infty_0(\R^n)$. Pour $\alpha, \beta \in \N^n$~: $x^\alpha\partial^\beta u \neq 0 \subseteq \supp u$ compact. Par Heine-Cantor,
+	\item[$(ii)$] Soit $u \in \mathcal C^\infty_0(\R^n)$. Pour $\alpha, \beta \in \N^n$~: $x^\alpha\partial^\beta u \neq 0 \subseteq \supp u$ compact. Par Heine-Cantor,
 	$u$ est uniformément continue sur $\supp u$.
 \end{itemize}
 \end{proof}
@@ -507,7 +507,7 @@ Plus rigoureusement, puisque $f \in \mathcal S(\R^n)$, on sait $\hat f \in \math
 et du coup la fonction sous l'intégrale ($\xi  \mapsto e^{i\scpr x\xi}\frac {\hat f(\xi)}{P(\xi)}$) est $L^1$, et cette intégrale est bien définie pour $N > n$.
 
 De plus, puisque la dérivation selon $x$ sur $u$ fait juste descendre du $\xi$ de l'exponentielle, par récurrence avec le théorème de convergence dominée et par la borne supérieure
-ci-dessus, on trouve que $u \in C^\infty(\R^n)$. On peut alors vérifier que la fonction $u$ ainsi trouvée est bien une solution de~\eqref{eq:PDE générale Fourier}~:
+ci-dessus, on trouve que $u \in \mathcal C^\infty(\R^n)$. On peut alors vérifier que la fonction $u$ ainsi trouvée est bien une solution de~\eqref{eq:PDE générale Fourier}~:
 \[\sum_{\abs \alpha \leq m}a_\alpha D^\alpha u = (2\pi)^{-n}\int e^{i\scpr x\xi}\underbrace {\sum_{\abs \alpha \leq m}a_\alpha \xi^\alpha}_{=P(\xi)} \frac {\hat f(\xi)}{P(\xi)}\dif\xi
 	= (2\pi)^{-n} \int e^{i\scpr x\xi}\hat f(\xi)\dif\xi = f(x).\]
 
@@ -604,11 +604,11 @@ $V \in L^2 \tq (1+\abs\xi^2)^{s/2}\mathbb Fu_k \xrightarrow[k \to \pinfty]{L^2} 
 et $\mathbb F$ est une bijection sur $L^2$. De plus, $u \in H^s$ car $V = (1+\abs\xi^2)^{s/2}\mathbb Fu \in L^2$. Puisque $u_k \xrightarrow[k \to \pinfty]{H^s} u$,
 on a que $H^s$ est complet.
 
-Pour un contre-exemple, on a $C^\infty_0(\R^n)$ muni du produit scalaire $\scpr fg \coloneqq \int f\overline g\dx$ n'est pas un Hilbert. En effet, pour
-$f \in L^2(\R^n) \setminus C^\infty_0(\R^n)$, par densité de $C^\infty_0(\R^n)$ dans $L^2(\R^n)$~:
-\[\exists (f_k)_{k \in \N} \subset C^\infty_0(\R^n) \tq f_k \xrightarrow[k \to \pinfty]{L^2(\R^n)} f.\]
-De plus, $(f_k)$ est de Cauchy dans $C^\infty_0(\R^n)$ pour la norme $\norm \cdot_{L^2}$, mais $(f_k)_k$ ne converge pas dans $C^\infty_0(\R^n)$. En effet, par l'absurde, si
-$\exists g \in C^\infty_0(\R^n) \tq f_k \xrightarrow[k \to \pinfty]{L^2(\R^n)} g$, par unicité de la limite, $g=f$, or $f \not \in C^\infty_0(\R^n)$.
+Pour un contre-exemple, on a $\mathcal C^\infty_0(\R^n)$ muni du produit scalaire $\scpr fg \coloneqq \int f\overline g\dx$ n'est pas un Hilbert. En effet, pour
+$f \in L^2(\R^n) \setminus \mathcal C^\infty_0(\R^n)$, par densité de $\mathcal C^\infty_0(\R^n)$ dans $L^2(\R^n)$~:
+\[\exists (f_k)_{k \in \N} \subset \mathcal C^\infty_0(\R^n) \tq f_k \xrightarrow[k \to \pinfty]{L^2(\R^n)} f.\]
+De plus, $(f_k)$ est de Cauchy dans $\mathcal C^\infty_0(\R^n)$ pour la norme $\norm \cdot_{L^2}$, mais $(f_k)_k$ ne converge pas dans $\mathcal C^\infty_0(\R^n)$. En effet, par l'absurde, si
+$\exists g \in \mathcal C^\infty_0(\R^n) \tq f_k \xrightarrow[k \to \pinfty]{L^2(\R^n)} g$, par unicité de la limite, $g=f$, or $f \not \in \mathcal C^\infty_0(\R^n)$.
 
 À partir d'ici, $H$ désigne un espace de Hilbert quelconque muni d'un produit scalaire $\scpr \cdot\cdot$.
 
@@ -640,7 +640,7 @@ Donc $F \ni x_k+y_k \xrightarrow[k \to \pinfty]{} x+y$.
 De plus, pour $\lambda \in \C$, $\underbrace {\lambda x_k}_{\in F} \xrightarrow[k \to \pinfty]{} \lambda x \in \overline F$.
 \end{proof}
 
-\begin{rmq} Contrairement aux e.v. de dimension finie, en dimension infinie, il est possible d'avoir un sous-e.v. \textit{strict} dense (e.g. $C^\infty_0(\R^n)$ dans $L^2(\R^n)$).
+\begin{rmq} Contrairement aux e.v. de dimension finie, en dimension infinie, il est possible d'avoir un sous-e.v. \textit{strict} dense (e.g. $\mathcal C^\infty_0(\R^n)$ dans $L^2(\R^n)$).
 \end{rmq}
 
 \begin{prp} $F \coloneqq \{f \in L^2(\R^n) \tq f=0 \text{ sur } x_n > 0\}$ est un e.v. fermé dans $L^2(\R^n)$.
@@ -849,7 +849,7 @@ $L^p(\Omega, \mathcal F, \mu)$ pour $p \in [1, \pinfty)$.
 \end{lem}
 
 \begin{lem}\label{lem:isométrie dense} Soient $X$ un espace métrique complet, $Y$ un espace métrique, et $X_0 \subset X$, un sous-ensemble dense.
-Si $f \in C^0(X, Y)$ telle que $\restr f{X_0}$  une isométrie et $f(X_0)$ est dense dans $Y$, alors $f$ est surjective et est une isométrie.
+Si $f \in \mathcal C^0(X, Y)$ telle que $\restr f{X_0}$  une isométrie et $f(X_0)$ est dense dans $Y$, alors $f$ est surjective et est une isométrie.
 \end{lem}
 
 \begin{proof} Fixons $x, y \in X$. Il existe $(x_k)_{k \geq 0}, (y_k)_{k \geq 0} \subset X_0$ telles que $x_k \xrightarrow[k \to \pinfty]{} x$ et $y_k \xrightarrow[k \to \pinfty]{} y$.
@@ -1027,8 +1027,8 @@ Finalement, remarquons~:
 \[\norm {f-S_kf}_{L^2} \leq \norm {f-S_k\varphi}_{L^2} \leq \norm {f-\varphi}_{L^2} + \norm {\varphi - S_k\varphi} \leq 2\varepsilon\]
 si $k$ est assez grand.
 
-Attention, $\{e_k\}_k$ n'est \textbf{pas} une base au sens algébrique car $\forall k \in \Z : e_k \in C^\infty$. Donc si $\{e_k\}_k$ est une base, toute fonction $f \in L^2$ est
-égale à $\sum_{j=1}^Nc_je_{k_j} \in C^\infty$. Or $L^2 \not \subseteq C^\infty$.
+Attention, $\{e_k\}_k$ n'est \textbf{pas} une base au sens algébrique car $\forall k \in \Z : e_k \in \mathcal C^\infty$. Donc si $\{e_k\}_k$ est une base, toute fonction $f \in L^2$ est
+égale à $\sum_{j=1}^Nc_je_{k_j} \in \mathcal C^\infty$. Or $L^2 \not \subseteq \mathcal C^\infty$.
 \end{ex}
 
 \section{Applications linéaires entre espaces vectoriels normés}
@@ -1407,7 +1407,7 @@ Plus précisément, puisque pour tout $k \in \N_0$, on a $\norm {A^k} \leq \norm
 pour tous $1 \leq i, j \leq m$. On note cela $A \in \mathscr H(\Omega)$.
 \end{déf}
 
-\begin{déf} Pour $A \in \mathscr H(\Omega)$ et $\gamma$ un chemin $C^1$ par morceaux dont l'image est dans $\Omega$, on définit $\int_\gamma A(z)\dif z$
+\begin{déf} Pour $A \in \mathscr H(\Omega)$ et $\gamma$ un chemin $\mathcal C^1$ par morceaux dont l'image est dans $\Omega$, on définit $\int_\gamma A(z)\dif z$
 comme étant la matrice telle que~:
 \[\forall\, 1 \leq i, j \leq m : \left(\int_\gamma A(z)\dif z\right)_{ij} = \int_\gamma A_{ij}(z)\dif z.\]
 \end{déf}
@@ -1446,14 +1446,14 @@ dans les espaces métriques, on a $T = (z-S)^{-1}$, i.e. $(z-S)$ est inversible.
 \end{proof}
 
 \begin{cor}\label{cor:intégrales chemins homotopes} Soient $\Omega$ un disque ouvert, $S \in \C^{m \times m} \st \spectre S \subset \Omega$ et $f \in \mathscr H(\Omega)$.
-Alors $z \mapsto f(z)(z-S)^{-1} \in \mathscr H(\Omega \setminus \spectre S)$ et pour $\gamma_1, \gamma_2$ chemins $C^1$ par morceaux à valeurs dans $\Omega \setminus \spectre S$
+Alors $z \mapsto f(z)(z-S)^{-1} \in \mathscr H(\Omega \setminus \spectre S)$ et pour $\gamma_1, \gamma_2$ chemins $\mathcal C^1$ par morceaux à valeurs dans $\Omega \setminus \spectre S$
 homotopes dans $\Omega \setminus \spectre S$~:
 \[\int_{\gamma_1}f(z)(z-S)^{-1}\dif z = \int_{\gamma_2}f(z)(z-S)^{-1}\dif z.\]
 \end{cor}
 
 \begin{prp}[Forme matricielle de la forme intégrale de Cauchy] Soient $\Omega \subset \C$ un disque ouvert, $S \in \C^{n \times n}$ et $f(z) = \sum_{n \geq 0}\alpha_nz^n$,
 une série de puissance qui converge dans $\Omega \supset \overline {B(0, \norm S)}$. Considérons le chemin $\gamma_1 : [0, 2\pi] \to \Omega : t \mapsto (\norm S + \varepsilon)e^{it}$.
-Soit $\gamma$, chemin $C^1$ par morceaux, homotope à $\gamma_1$ dans $\Omega \setminus \spectre S$. Alors~:
+Soit $\gamma$, chemin $\mathcal C^1$ par morceaux, homotope à $\gamma_1$ dans $\Omega \setminus \spectre S$. Alors~:
 \[\sum_{k =0}^K\alpha_kS^k \xrightarrow[K \to \pinfty]{} \frac 1{2\pi i}\int_\gamma f(z)(z-S)^{-1}\dif z.\]
 \end{prp}
 
@@ -1479,11 +1479,11 @@ On conclut alors par~:
 \[\sum_{k=0}^K\alpha_kS^k = \frac 1{2\pi i}\sum_{k=0}^K\alpha_k\int_\gamma z^k(z-S)^{-1}\dif z \xrightarrow[K \to \pinfty]{} \frac 1{2\pi i}\int_\gamma f(z)(z-S)^{-1}\dif z.\]
 \end{proof}
 
-\begin{cor}\label{cor:Cauchy e^(mu S)} Pour $\mu \in \C$, $f(z) = e^{\mu z}$, $S \in \C^{m \times m}$, $\gamma$ un chemin $C^1$ par morceaux, homotope au cercle $\gamma_1$ dans $\C \setminus \spectre S$~:
+\begin{cor}\label{cor:Cauchy e^(mu S)} Pour $\mu \in \C$, $f(z) = e^{\mu z}$, $S \in \C^{m \times m}$, $\gamma$ un chemin $\mathcal C^1$ par morceaux, homotope au cercle $\gamma_1$ dans $\C \setminus \spectre S$~:
 \[e^{\mu S} = \frac 1{2\pi i}\int_\gamma e^{\mu z}(z-S)^{-1}\dif z.\]
 \end{cor}
 
-\begin{lem} Soient $A(z)$ holomorphe et $\gamma$ un chemin $C^1$ par morceaux. Alors~:
+\begin{lem} Soient $A(z)$ holomorphe et $\gamma$ un chemin $\mathcal C^1$ par morceaux. Alors~:
 \[\norm {\int_\gamma A(z)\dif z} \leq \int_\gamma\norm {A(z)}\abs {\dif z} \coloneqq \int_\gamma \norm {A(\gamma(t))}\abs {\gamma'(t)}\dif t.\]
 \end{lem}
 
@@ -1545,7 +1545,7 @@ $f_j : \R \times \R^n \to \C$, $A_j \in \C^{m \times m}$, et $u^0 : \R^n \to \C$
 
 \begin{prp} Le problème de Cauchy suivant (équivalent à~\eqref{eq:PC EDP} pour $n=m=1$)~:
 \[\begin{cases}&\dpd ut + a\dpd ux = f\\&\restr u{t=0} = u^0,\end{cases}\]
-pour $a \in \C$, $u^0 \in C^1(\R)$ et $f \in C^1(\R^2)$ possède une unique solution $C^1(\R^2)$ si $a \in \R$ (et ne possède en général pas de solution $C^1(\R^2)$
+pour $a \in \C$, $u^0 \in \mathcal C^1(\R)$ et $f \in \mathcal C^1(\R^2)$ possède une unique solution $\mathcal C^1(\R^2)$ si $a \in \R$ (et ne possède en général pas de solution $\mathcal C^1(\R^2)$
 si $a \in \C \setminus \R$).
 \end{prp}
 
@@ -1573,28 +1573,28 @@ La première équation est celle de Cauchy-Riemann en $t + ix$, et donc $u$ doit
 qui converge uniformément en les variables d'origine. En particulier, pour $t=0$~:
 \[u^0(x) = u(0, x) = \sum_{k \geq 0}c_k(ix)^k.\]
 
-Dès lors $u^0$ est analytique, et donc $u^0 \in C^\infty(\R)$. On a donc une condition extrêmement restrictive sur le choix de $u^0$~: il est nécessaire (mais pas suffisant~!)
-que $u^0 \in C^\infty(\R)$ pour que le système admette une solution.
+Dès lors $u^0$ est analytique, et donc $u^0 \in \mathcal C^\infty(\R)$. On a donc une condition extrêmement restrictive sur le choix de $u^0$~: il est nécessaire (mais pas suffisant~!)
+que $u^0 \in \mathcal C^\infty(\R)$ pour que le système admette une solution.
 \end{proof}
 
 Définissons alors des espaces dans lesquelles on espère pouvoir résoudre~\eqref{eq:PC EDP}
 
 \begin{déf} Pour $p \in \N$, on définit~:
-\[C^p_b(\R^n) \coloneqq \left\{v \in C^p(\R^n) \st \forall \alpha \in \N^n : \abs \alpha \leq p \Rightarrow \partial^\alpha v \in L^\infty(\R^n)\right\}.\]
+\[\mathcal C^p_b(\R^n) \coloneqq \left\{v \in \mathcal C^p(\R^n) \st \forall \alpha \in \N^n : \abs \alpha \leq p \Rightarrow \partial^\alpha v \in L^\infty(\R^n)\right\}.\]
 De manière similaire, pour $T > 0$, on introduit~:
-\[C^p_b([-T, T] \times \R^n) \coloneqq \left\{v \in C^p([-T, T] \times \R^n) \st \forall \alpha \in \N^n : \abs \alpha \leq p \Rightarrow \partial^\alpha v \in L^\infty([-T, T] \times \R^n)\right\}.\]
+\[\mathcal C^p_b([-T, T] \times \R^n) \coloneqq \left\{v \in \mathcal C^p([-T, T] \times \R^n) \st \forall \alpha \in \N^n : \abs \alpha \leq p \Rightarrow \partial^\alpha v \in L^\infty([-T, T] \times \R^n)\right\}.\]
 \end{déf}
 
-\begin{prp} L'application suivante est une norme sur $C^p_b(\R^n)$~:
-\[\norm \cdot_{C^p_b(\R^n)} : C^p_b(\R^n) \to \R^+ : v \mapsto \norm v_{C^p_b(\R^n)} \coloneqq \sum_{\abs \alpha \leq p}\sup_{x \in \R^n}\abs {\partial^\alpha v(x)}
+\begin{prp} L'application suivante est une norme sur $\mathcal C^p_b(\R^n)$~:
+\[\norm \cdot_{\mathcal C^p_b(\R^n)} : \mathcal C^p_b(\R^n) \to \R^+ : v \mapsto \norm v_{\mathcal C^p_b(\R^n)} \coloneqq \sum_{\abs \alpha \leq p}\sup_{x \in \R^n}\abs {\partial^\alpha v(x)}
 = \sum_{\abs\alpha \leq p}\norm {\partial^\alpha v}_{L^\infty}.\]
 \end{prp}
 
-\begin{prp}\label{prp:C^p_b Banach} $C^p_b(\R^n)$ est un espace de Banach.
+\begin{prp}\label{prp:C^p_b Banach} $\mathcal C^p_b(\R^n)$ est un espace de Banach.
 \end{prp}
 
 \begin{proof}
-%\textbf{Cas $p=0$.} Soit $(v_k)_k \subset C^p_b(\R^n)$ de Cauchy, i.e. $\sup\abs {v_k-v_\ell} \xrightarrow[k,\ell \to \pinfty]{} 0$.
+%\textbf{Cas $p=0$.} Soit $(v_k)_k \subset \mathcal C^p_b(\R^n)$ de Cauchy, i.e. $\sup\abs {v_k-v_\ell} \xrightarrow[k,\ell \to \pinfty]{} 0$.
 TODO
 \end{proof}
 
@@ -1607,7 +1607,7 @@ TODO
 
 \section{Théorème de Petrowsky}
 \begin{thm}[Petrowsky, 1937] Soient $A_1, \ldots, A_n \in \C^{m \times m}$. Si il existe $T > 0$, $p \in \N$ tels que~:
-\[\forall F \in C^p_b([-T, T] \times \R^n), u^0 \in C^p_b(\R^n) : \exists! u \in C^1_b(\R^n) \st:\]
+\[\forall F \in \mathcal C^p_b([-T, T] \times \R^n), u^0 \in \mathcal C^p_b(\R^n) : \exists! u \in \mathcal C^1_b(\R^n) \st:\]
 \[\begin{cases}\dpd ut + \sum_{j=1}^nA_j\dpd u{x_j} = F & \text{ si } \abs t \leq T, x \in \R^n\\u=u^0 &\text{ si }t=0, x \in \R^n.\end{cases}\]
 
 Alors $\forall \xi \in \R^n : \spectre {\sum_{j=1}^m\xi_j A_j} \subset \R$.
@@ -1617,11 +1617,11 @@ Alors $\forall \xi \in \R^n : \spectre {\sum_{j=1}^m\xi_j A_j} \subset \R$.
 \end{rmq}
 
 \begin{proof} Le problème de Cauchy induit une application (l'application \textit{solution})~:
-\[\Phi : C^p_b([-T, T] \times \R^n) \times C^p_b(\R^n) \to C^1_b(\R^n) : (F, u^0) \mapsto \Phi(F, u^0) \coloneqq u.\]
+\[\Phi : \mathcal C^p_b([-T, T] \times \R^n) \times \mathcal C^p_b(\R^n) \to \mathcal C^1_b(\R^n) : (F, u^0) \mapsto \Phi(F, u^0) \coloneqq u.\]
 
-Montrons que $\Phi$ est linéaire. Soient $(F, u^0), (\tilde F, \tilde u^0) \in C^p_b([-T, T] \times \R^n) \times C^p_b(\R^n)$.
+Montrons que $\Phi$ est linéaire. Soient $(F, u^0), (\tilde F, \tilde u^0) \in \mathcal C^p_b([-T, T] \times \R^n) \times \mathcal C^p_b(\R^n)$.
 
-On prend $C^1_b(\R^n) \ni z \coloneqq \Phi\left((F, u^0) + (\tilde F, \tilde u^0)\right) = \Phi(F+\tilde F, u^0 + \tilde u^0)$ qui satisfait $Lz = F+\tilde F$
+On prend $\mathcal C^1_b(\R^n) \ni z \coloneqq \Phi\left((F, u^0) + (\tilde F, \tilde u^0)\right) = \Phi(F+\tilde F, u^0 + \tilde u^0)$ qui satisfait $Lz = F+\tilde F$
 (pour $\abs t \leq T, x \in \R^n$) et $\restr z{t=0} = u^0+\tilde u^0$ (pour $x \in \R$). Prenons également $z_1 = \Phi(F, u^0)$ et $z_2 = \Phi(\tilde F, \tilde u^0)$.
 Or par linéarité de l'opérateur $L$~:
 \[\begin{cases}&L(z_1+z_2) = Lz_1 + Lz_2 = F+\tilde F\\&\restr {(z_1+z_2)}{t=0} = u^0 + \tilde u^0.\end{cases}\]
@@ -1632,37 +1632,37 @@ Notons maintenant que $\Phi$ est une application linéaire entre des espaces de 
 
 Montrons que $\Gamma_\Phi$, le graphe de $\Phi$, est fermé dans $E \times G$. Soit $(\zeta, \psi) \in \overline {\Gamma_\Phi}$. Il existe des suites $(\zeta_k)_k \subset E$
 et $(\psi_k)_k \subset G$ telles que $\zeta_k \xrightarrow[k \to \pinfty]{E} \zeta$ et $\psi_k \xrightarrow[k \to \pinfty]{G} \psi$. En notant $\zeta_k = (F_k, u^0_k)$
-et $\zeta = (F, u^0)$, on a $F_k \xrightarrow[k \to \pinfty]{C^p_b([-T, T] \times \R^n)} F$ et $u^0_k \xrightarrow[k \to \pinfty]{C^p_b(\R^n)} u^0$.
+et $\zeta = (F, u^0)$, on a $F_k \xrightarrow[k \to \pinfty]{\mathcal C^p_b([-T, T] \times \R^n)} F$ et $u^0_k \xrightarrow[k \to \pinfty]{\mathcal C^p_b(\R^n)} u^0$.
 
 Par définition de l'application $\Phi$~: $L\Phi(\zeta_k) = F_k$ et $\restr{\Phi(\zeta_k)}{t=0} = u^0_k$. Or, puisque $\Phi(\zeta_k) \xrightarrow[k \to \pinfty]{G} \psi$~:
-\[L\Phi(\zeta_k) \xrightarrow[k \to \pinfty]{C^0_b(\R^n)} L\psi \qquad \text{ et } \qquad \restr {\Phi(\zeta_k)}{t=0} \xrightarrow[k \to \pinfty]{C^1_b(\R^n)} \restr \psi{t=0},\]
-et donc, en sachant $\Phi(\zeta_k) \xrightarrow[k \to \pinfty]{C^1_b(\R^n)} \psi$~:
-\[\dpd {}t\Phi(\zeta_k) + \sum_{j=1}^nA_j\dpd {}{x_j}\Phi(\zeta_k) \xrightarrow[k \to \pinfty]{C^0_b(\R^n)} \dpd {}t\psi + \sum_{j=1}^nA_j\dpd {}{x_j}\psi.\]
+\[L\Phi(\zeta_k) \xrightarrow[k \to \pinfty]{\mathcal C^0_b(\R^n)} L\psi \qquad \text{ et } \qquad \restr {\Phi(\zeta_k)}{t=0} \xrightarrow[k \to \pinfty]{\mathcal C^1_b(\R^n)} \restr \psi{t=0},\]
+et donc, en sachant $\Phi(\zeta_k) \xrightarrow[k \to \pinfty]{\mathcal C^1_b(\R^n)} \psi$~:
+\[\dpd {}t\Phi(\zeta_k) + \sum_{j=1}^nA_j\dpd {}{x_j}\Phi(\zeta_k) \xrightarrow[k \to \pinfty]{\mathcal C^0_b(\R^n)} \dpd {}t\psi + \sum_{j=1}^nA_j\dpd {}{x_j}\psi.\]
 
-En effet, puisque $\dpd {}t$ et $\dpd {}{x_j}$ sont des opérateurs bornés de $C^1_b([-T, T] \times \R^n)$ dans $C^0_b([-T, T] \times \R^n)$ et que $A_j$
-est un opérateur borné de $C^0_b([-T, T] \times \R^n)$ dans lui-même, la convergence se fait terme à terme car borné $\equiv$ continu.
+En effet, puisque $\dpd {}t$ et $\dpd {}{x_j}$ sont des opérateurs bornés de $\mathcal C^1_b([-T, T] \times \R^n)$ dans $\mathcal C^0_b([-T, T] \times \R^n)$ et que $A_j$
+est un opérateur borné de $\mathcal C^0_b([-T, T] \times \R^n)$ dans lui-même, la convergence se fait terme à terme car borné $\equiv$ continu.
 
-Montrons donc que $\dpd {}t$ est un opérateur borné ($\dpd {}{x_j}$ se fait de manière similaire). Pour $v \in C^1_b([-T, T] \times \R^n)$~:
-\[\norm {\dpd vt}_{C^0_b([-T, T] \times \R^n)} = \sup_{t,x}\abs {\dpd vt(t, x)}
-\leq \sup_{t,x}\abs {\dpd vt(t, x)} + \sup_{t,x}\abs {v(t, x)} + \sum_{j=1}^n\sup_{t,x}\abs {\dpd v{x_j}(t,x)} = \norm v_{C^1_b([-T, T] \times \R^n)}.\]
+Montrons donc que $\dpd {}t$ est un opérateur borné ($\dpd {}{x_j}$ se fait de manière similaire). Pour $v \in \mathcal C^1_b([-T, T] \times \R^n)$~:
+\[\norm {\dpd vt}_{\mathcal C^0_b([-T, T] \times \R^n)} = \sup_{t,x}\abs {\dpd vt(t, x)}
+\leq \sup_{t,x}\abs {\dpd vt(t, x)} + \sup_{t,x}\abs {v(t, x)} + \sum_{j=1}^n\sup_{t,x}\abs {\dpd v{x_j}(t,x)} = \norm v_{\mathcal C^1_b([-T, T] \times \R^n)}.\]
 
 Dès lors, puisque $F_k = L\Phi(\zeta_k)$~:
-\[F_k \xrightarrow[k \to \pinfty]{C^p_b(\R^n)} F \qquad \text{ et } \qquad L\Phi(\zeta_k) \xrightarrow[k \to \pinfty]{C^0_b(\R^n)} L\psi.\]
+\[F_k \xrightarrow[k \to \pinfty]{\mathcal C^p_b(\R^n)} F \qquad \text{ et } \qquad L\Phi(\zeta_k) \xrightarrow[k \to \pinfty]{\mathcal C^0_b(\R^n)} L\psi.\]
 
-Or la convergence dans $C^p_b(\R^n)$ implique la convergence $C^0_b(\R^n)$ car $C^p_b(\R^n) \subseteq C^0_b(\R^n)$ et~:
-\[\forall v \in C^p_b(\R^n) : \norm v_{C^0_b(\R^n)} \leq \norm v_{C^p_b(\R^n)}.\]
+Or la convergence dans $\mathcal C^p_b(\R^n)$ implique la convergence $\mathcal C^0_b(\R^n)$ car $\mathcal C^p_b(\R^n) \subseteq \mathcal C^0_b(\R^n)$ et~:
+\[\forall v \in \mathcal C^p_b(\R^n) : \norm v_{\mathcal C^0_b(\R^n)} \leq \norm v_{\mathcal C^p_b(\R^n)}.\]
 
-Donc par unicité de la limite dans les espaces métriques (ici, dans $C^0_b(\R^n)$)~: $F = L\psi$. De la même manière, on a~:
-\[\restr{\Phi(\zeta_k)}{t=0} = \restr {\psi_k}{t=0} \xrightarrow[k \to \pinfty]{C^1_b(\R^n)} \psi
-\qquad \text{ et } \qquad \restr {\psi_k}{t=0} = u^0_k \xrightarrow[k \to \pinfty]{C^p_b(\R^n)} u^0.\]
+Donc par unicité de la limite dans les espaces métriques (ici, dans $\mathcal C^0_b(\R^n)$)~: $F = L\psi$. De la même manière, on a~:
+\[\restr{\Phi(\zeta_k)}{t=0} = \restr {\psi_k}{t=0} \xrightarrow[k \to \pinfty]{\mathcal C^1_b(\R^n)} \psi
+\qquad \text{ et } \qquad \restr {\psi_k}{t=0} = u^0_k \xrightarrow[k \to \pinfty]{\mathcal C^p_b(\R^n)} u^0.\]
 
-À nouveau, par unicité de la limite (cette fois dans $C^1_b(\R^n)$, puisque $p \geq 1$)~: $\restr {\psi}{t=0} = u^0$. Dès lors $\Phi(\zeta) = \Phi(F, u^0) = \psi$, et donc
+À nouveau, par unicité de la limite (cette fois dans $\mathcal C^1_b(\R^n)$, puisque $p \geq 1$)~: $\restr {\psi}{t=0} = u^0$. Dès lors $\Phi(\zeta) = \Phi(F, u^0) = \psi$, et donc
 $(\zeta, \psi) \in \Gamma_\Phi$. Dès lors par le théorème du graphe fermé de Banach (Théorème~\ref{thm:graphe fermé}), on sait que $\Phi$ est bornée, i.e. $\exists C > 0$
 ($C = \norm \Phi$) tel que pour tout $(F, u^0) \in E$, si $u$ dénote $\Phi(F, u^0)$~:
 \begin{align}\label{eq:Phi bornée}
-	\norm u_G &= \norm {\Phi(F, u^0)}_{C^1_b(\R^n)} = \sum_{\abs \alpha \leq 1}\;\sup_{\abs t \leq T,x \in \R^n}\abs {\partial^\alpha u(t, x)} \nonumber \\
+	\norm u_G &= \norm {\Phi(F, u^0)}_{\mathcal C^1_b(\R^n)} = \sum_{\abs \alpha \leq 1}\;\sup_{\abs t \leq T,x \in \R^n}\abs {\partial^\alpha u(t, x)} \nonumber \\
 		&\leq C\left[\sum_{\abs {\beta} \leq p}\left(\sup_{\abs t \leq T, x \in \R^n}\abs {\partial^\beta F(t, x)} + \sup_{x \in \R^n}\abs {\partial^\beta u^0(x)}\right)\right] \\
-		&= C\norm {(F, u^0)}_{C^p_b([-T, T] \times \R^n) \times C^p_b(\R^n)} = C\norm {(F, u^0)}_E. \nonumber
+		&= C\norm {(F, u^0)}_{\mathcal C^p_b([-T, T] \times \R^n) \times \mathcal C^p_b(\R^n)} = C\norm {(F, u^0)}_E. \nonumber
 \end{align}
 
 Finalement, raisonnons par l'absurde. Posons $F \equiv 0$ et $u^0 : \R^n \to \C : x \mapsto e^{i\scpr x\xi}v^0$ pour $v^0 \in \C^m$ et $\xi \in \R^n$. Fabriquons alors $u$, une
@@ -1762,7 +1762,7 @@ $L$ est hyperbolique puisque pour $\xi \in \R^3 : \sum_{j=1}^3\xi_jA_j$ est herm
 \end{ex}
 
 \begin{déf} on pose l'ensemble~:
-\[\widetilde {\mathcal S}([-T, T] \times \R^n) \coloneqq \left\{u \in C^\infty([-T, T] \times \R^n) \st \forall \alpha, \beta \in \N^n : \forall k \in \N :
+\[\widetilde {\mathcal S}([-T, T] \times \R^n) \coloneqq \left\{u \in \mathcal C^\infty([-T, T] \times \R^n) \st \forall \alpha, \beta \in \N^n : \forall k \in \N :
 	x^\alpha\partial_x^\beta\partial_t^ku \in L^\infty([-T, T] \times \R^n)\right\}.\]
 \end{déf}
 
@@ -1822,10 +1822,10 @@ et donc $\restr u{t=0} = u^0$.
 $u$ est donc bien solution du problème de Cauchy. Il reste à montrer que $u \in \widetilde {\mathcal S}([-T, T] \times \R^n)$. Pour cela, il est suffisant de montrer que
 $P, Q \in \widetilde {\mathcal S}([-T, T] \times \R^n)$ puisque la transformée de Fourier est une bijection sur $\mathcal S(\R^n)$.
 
-\begin{claim}\label{claim 2} $(t, \xi) \mapsto e^{-itA(\xi)}$ est $C^\infty$.
+\begin{claim}\label{claim 2} $(t, \xi) \mapsto e^{-itA(\xi)}$ est $\mathcal C^\infty$.
 \end{claim}
 
-Donc $(t, \xi) \mapsto e^{-itA(\xi)}\widehat {u^0}(\xi)$ est $C^\infty$ également, i.e. $P \in C^\infty$.
+Donc $(t, \xi) \mapsto e^{-itA(\xi)}\widehat {u^0}(\xi)$ est $\mathcal C^\infty$ également, i.e. $P \in \mathcal C^\infty$.
 Soient $\alpha, \beta \in \N^n, k \in \N$.
 
 \begin{align*}
@@ -1837,7 +1837,7 @@ Soient $\alpha, \beta \in \N^n, k \in \N$.
 	&= \xi^\alpha\sum_{\beta'\leq\beta}\binom \beta{\beta'}\left[\sum_{\gamma\leq\beta'}\binom{\beta'}\gamma D_\xi^\gamma\left(-iA(\xi)\right)^kD_\xi^{\beta'-\gamma}\left(e^{-itA(\xi)}\right)\right]D_\xi^{\beta-\beta'}\widehat{u^0}(\xi)
 \end{align*}
 
-{\tiny {$(*)$ les dérivées commutent puisque $(t, \xi) \mapsto e^{-itA(\xi)} \in C^\infty$.}}
+{\tiny {$(*)$ les dérivées commutent puisque $(t, \xi) \mapsto e^{-itA(\xi)} \in \mathcal C^\infty$.}}
 
 \begin{claim}\label{claim 3} Pour $\mu \in \N^n$~: $\exists C > 0, e_\mu > 0 \st \abs {D_\xi^\mu e^{-itA(\xi)}} \leq C(1+\abs\xi)^{e_\mu}$.
 \end{claim}
@@ -1883,7 +1883,7 @@ Dès lors~:
 	\leq \frac {C\kappa(\norm S + 1)^{m-1}}\pi(\norm S + 2) \leq C(1+\norm S)^m.\]
 \end{proof}
 
-\begin{proof}[\textnormal {\textbf {Démonstration} (de l'Affirmation~\ref{claim 2})}] Montrons que $(t, \xi) \mapsto e^{-itA(\xi)}$ est $C^\infty$ sur $[-T, T] \times \R^n$.
+\begin{proof}[\textnormal {\textbf {Démonstration} (de l'Affirmation~\ref{claim 2})}] Montrons que $(t, \xi) \mapsto e^{-itA(\xi)}$ est $\mathcal C^\infty$ sur $[-T, T] \times \R^n$.
 
 On fixe $\xi^0 \in \R^n$. Si $\spectre {A(\xi)} \subset (-\chi^0, \chi^0)$ où
 $\chi^0 = \norm {A(\xi^0)}+1$, on peut prendre le chemin $\gamma_{\xi^0}$ défini par~:
@@ -1898,10 +1898,10 @@ Donc, par le Corollaire~\ref{cor:Cauchy e^(mu S)}~:
 	e^{-itA(\xi)} = \frac 1{2\pi i}\int_{\gamma_{\xi^0}}e^{-itz}(z-A(\xi))^{-1}\dif z.
 \end{equation}
 
-Il faut donc voir que $\xi \mapsto (z-A(\xi))^{-1}$ est bien $C^\infty$ pour $z \in \Imapp \gamma_{\xi^0}$. Or par choix de $\xi^0$, on sait que
+Il faut donc voir que $\xi \mapsto (z-A(\xi))^{-1}$ est bien $\mathcal C^\infty$ pour $z \in \Imapp \gamma_{\xi^0}$. Or par choix de $\xi^0$, on sait que
 $\forall z \in \Imapp \gamma : z \not \in \spectre {A(\xi)}$. Dès lors, pour $1 \leq j, k \leq m$~:
 \[{(z-A(\xi))^{-1}}_{jk} = \frac {\text{polynôme en $\xi$ et $z$}}{\det(z-A(\xi))}\]
-est une fonction rationnelle complexe dont le dénominateur ne s'annule pas. Dès lors elle est bien $C^\infty$.
+est une fonction rationnelle complexe dont le dénominateur ne s'annule pas. Dès lors elle est bien $\mathcal C^\infty$.
 \end{proof}
 
 \begin{proof}[\textnormal {\textbf {Démonstration} (de l'Affirmation~\ref{claim 3})}] Il reste donc unoquement à vérifier que les dérivées de $\xi \mapsto z^{-itA(\xi)}$ sont à
@@ -1941,17 +1941,17 @@ que toutes les dérivées de $\xi \mapsto e^{-itA(\xi)}$ sont à croissance poly
 On pose $\Omega \subseteq \R^n$, un ouvert quelconque.
 
 \section{Introduction}
-\begin{déf} Soit $u : C^\infty_0(\Omega) \to \C$ linéaire. On dit que $u$ est une \textit{distribution} sur $\Omega$ si pour toute suite $(\varphi_k)_k \subset C^\infty_0(\Omega)$
+\begin{déf} Soit $u : \mathcal C^\infty_0(\Omega) \to \C$ linéaire. On dit que $u$ est une \textit{distribution} sur $\Omega$ si pour toute suite $(\varphi_k)_k \subset \mathcal C^\infty_0(\Omega)$
 telle que $\exists K \subset\subset \Omega \st \forall k \geq 0 : \supp \varphi_k \subset K$ et~:
 \[\forall \alpha \in \N^n : \partial^\alpha\varphi_k \xrightarrow[k \to \pinfty]{\text{CVU}} 0,\]
 on a~:
 \[\scpr u{\varphi_k} \coloneqq u(\varphi_k) \xrightarrow[k \to \pinfty]{} 0 \qquad\text{ dans } \C.\]
 
-On note $\mathcal D'(\Omega)$ l'ensemble des distributions sur $\Omega$.\footnote{Cette notation vient du fait que $\mathcal D'(\Omega)$ est le \textit{dual} de $C^\infty_0(\Omega)$,
+On note $\mathcal D'(\Omega)$ l'ensemble des distributions sur $\Omega$.\footnote{Cette notation vient du fait que $\mathcal D'(\Omega)$ est le \textit{dual} de $\mathcal C^\infty_0(\Omega)$,
 qui est aussi noté $\mathcal D(\Omega)$.}
 \end{déf}
 
-\begin{rmq} Cette condition correspond à une forme de \textit{continuité généralisée}. De fait, on peut construire une topologie sur $C^\infty_0(\Omega)$ telle que cette
+\begin{rmq} Cette condition correspond à une forme de \textit{continuité généralisée}. De fait, on peut construire une topologie sur $\mathcal C^\infty_0(\Omega)$ telle que cette
 condition correspond exactement à la notion topologique de continuité. Cependant, les résultats sont plus généraux car ce n'est pas une topologie d'espace normé.
 \end{rmq}
 
@@ -1964,7 +1964,7 @@ On introduit l'espace~:
 \textit{Note~:} $L^1(\Omega) \subseteq L^1_\loc(\Omega)$ trivialement, mais $L^1_\loc(\Omega) \neq L^1(\Omega)$. En effet $x \mapsto e^x \in L^1_\loc(\Omega) \setminus L^1(\Omega)$.
 
 Pour $f \in L^1_\loc(\Omega)$, on définit l'application~:
-\[u_f : C^\infty_0(\Omega) \to \C : \varphi \mapsto \int_\Omega\varphi f\dif x.\]
+\[u_f : \mathcal C^\infty_0(\Omega) \to \C : \varphi \mapsto \int_\Omega\varphi f\dif x.\]
 
 $u_f$ est bien une distribution. En effet, fixons pour une suite $(\varphi_k)_k$ satisfaisant les hypothèses. On sait que $\varphi_kf \xrightarrow[k \to \pinfty]{} 0$
 ponctuellement. De plus, $\exists M > 0 \st \forall k \geq 0 : \abs {\varphi_kf} \leq M\abs f\chi_K \in L^1(\Omega)$. Par la convergence dominée~:
@@ -1975,9 +1975,9 @@ De plus, $f \mapsto u_f$ est injective, donc on peut identifier $f$ à $u_f$. Le
 
 \begin{ex}
 Soit $\mu$ une mesure borélienne sur $\Omega$ et finie sur les compacts. On définit~:
-\[u_\mu : C^\infty_0(\Omega) \to \C : \varphi \mapsto \int_\Omega\varphi\dif\mu.\]
+\[u_\mu : \mathcal C^\infty_0(\Omega) \to \C : \varphi \mapsto \int_\Omega\varphi\dif\mu.\]
 
-Montrons que $u_\mu$ est une distribution. La linéarité vient de la linéarité de l'intégrale. Soit $(\varphi_k)_k \subset C^\infty_0(\Omega)$ satisfaisant les hypothèses.
+Montrons que $u_\mu$ est une distribution. La linéarité vient de la linéarité de l'intégrale. Soit $(\varphi_k)_k \subset \mathcal C^\infty_0(\Omega)$ satisfaisant les hypothèses.
 Le support de toutes les applications $\varphi_k$ est contenu dans un compact $K$, donc $\exists M > 0 \st \forall k \geq 0 : \varphi_k \leq M\chi_K \in L^1(\mu)$.
 Dès lors par la convergence dominée~: $\int_\Omega\varphi_k\dif\mu \xrightarrow[k \to \pinfty]{} 0$.
 
@@ -1985,20 +1985,20 @@ Dès lors par la convergence dominée~: $\int_\Omega\varphi_k\dif\mu \xrightarro
 \end{ex}
 
 \begin{ex}
-$u : C^\infty_0(\R) \to \C : \varphi \mapsto \varphi'(0)$ est une distribution puisque~:
+$u : \mathcal C^\infty_0(\R) \to \C : \varphi \mapsto \varphi'(0)$ est une distribution puisque~:
 \[u(\varphi_k) = \varphi_k'(0) \xrightarrow[k \to \pinfty]{} 0.\]
 \end{ex}
 
 \section{Dérivées de distributions}
 
 \begin{déf} Soit $u \in \mathcal D'(\Omega)$. Pour $j \in \intint 1n$, on définit~:
-\[\partial_ju : C^\infty_0(\Omega) \to \C : \varphi \mapsto \scpr {\partial_ju}\varphi \coloneqq -\scpr u{\partial_j\varphi}.\]
+\[\partial_ju : \mathcal C^\infty_0(\Omega) \to \C : \varphi \mapsto \scpr {\partial_ju}\varphi \coloneqq -\scpr u{\partial_j\varphi}.\]
 \end{déf}
 
 \begin{prp}\label{prp:dérivation distribution} $\partial_ju \in \mathcal D'(\Omega)$ pour tout $u \in \mathcal D'(\Omega)$ et $j \in \intint 1n$.
 \end{prp}
 
-\begin{proof} $\partial_ju$ est bien une forme linéaire par linéarité de $u$ et de $\partial_j$. Pour $(\varphi_k)_k \subset C^\infty_0(\Omega)$, si il existe
+\begin{proof} $\partial_ju$ est bien une forme linéaire par linéarité de $u$ et de $\partial_j$. Pour $(\varphi_k)_k \subset \mathcal C^\infty_0(\Omega)$, si il existe
 $K \subset\subset \Omega \st \forall k \geq 0 : \supp \varphi_k \subseteq K$ et si $\forall \alpha \in \N^n : \partial^\alpha\varphi_k \xrightarrow[k \to \pinfty]{\text{CVU}} 0$,
 on sait que $(\partial_j\varphi_k)_k$ satisfait les mêmes propriétés. Dès lors, par définition de $u$~:
 \[-\scpr u{\partial_j\varphi_k} \xrightarrow[k \to \pinfty]{} 0.\]
@@ -2013,10 +2013,10 @@ on sait que $(\partial_j\varphi_k)_k$ satisfait les mêmes propriétés. Dès lo
 \begin{proof} par récurrence avec la Proposition~\ref{prp:dérivation distribution}.
 \end{proof}
 
-\begin{prp} Pour $f \in C^1(\Omega)$, $u_{\partial_jf} = \partial_ju_f$ (au sens de l'exemple~\ref{ex:L^1_loc}).
+\begin{prp} Pour $f \in \mathcal C^1(\Omega)$, $u_{\partial_jf} = \partial_ju_f$ (au sens de l'exemple~\ref{ex:L^1_loc}).
 \end{prp}
 
-\begin{proof} Soit $\varphi \in C^\infty_0(\Omega)$. On calcule~:
+\begin{proof} Soit $\varphi \in \mathcal C^\infty_0(\Omega)$. On calcule~:
 \[\scpr {u_{\partial_jf}}\varphi = \int_\Omega \varphi\partial_jf\dif x,\]
 et~:
 \[\scpr {\partial u_f}\varphi = -\int_\Omega f\partial_j\varphi\dif x.\]
@@ -2038,37 +2038,37 @@ Donc $\od {}xu_{\chi_{\overline {\R^+}}} = \delta_0$ (la mesure de Dirac en 0).
 \begin{prp} Pour $u \in \mathcal D'(\Omega)$, $\partial_j\partial_ku = \partial_k\partial_ju$.
 \end{prp}
 
-\begin{proof} $u$ est définie sur $C^\infty_0(\Omega)$ donc pour $\varphi \in C^\infty_0(\Omega)$, les dérivées commutent. Donc~:
+\begin{proof} $u$ est définie sur $\mathcal C^\infty_0(\Omega)$ donc pour $\varphi \in \mathcal C^\infty_0(\Omega)$, les dérivées commutent. Donc~:
 \[\scpr {\partial_j\partial_ku}\varphi = -\scpr {\partial_ku}{\partial_j\varphi} = \scpr u{\partial_k\partial_j\varphi} = \scpr u{\partial_j\partial_k\varphi}
 = \scpr {\partial_k\partial_ju}\varphi.\]
 \end{proof}
 
-\begin{déf} Pour $a \in C^\infty_0(\Omega)$ et $u \in \mathcal D'(\Omega)$, on définit~:
-\[au : C^\infty_0(\Omega) \to \C : \varphi \mapsto \scpr {au}\varphi \coloneqq \scpr u{a\varphi}.\]
+\begin{déf} Pour $a \in \mathcal C^\infty_0(\Omega)$ et $u \in \mathcal D'(\Omega)$, on définit~:
+\[au : \mathcal C^\infty_0(\Omega) \to \C : \varphi \mapsto \scpr {au}\varphi \coloneqq \scpr u{a\varphi}.\]
 \end{déf}
 
-\begin{prp} Pour $a \in C^\infty_0(\Omega), u \in \mathcal D'(\Omega)$, $au$ est une distribution.
+\begin{prp} Pour $a \in \mathcal C^\infty_0(\Omega), u \in \mathcal D'(\Omega)$, $au$ est une distribution.
 \end{prp}
 
 \begin{proof} Par linéarité de $u$.
 \end{proof}
 
-\begin{prp} Soient $f \in L^1_\loc(\Omega)$ et $a \in C^\infty_0(\Omega)$. Alors $u_{af} = au_f$.
+\begin{prp} Soient $f \in L^1_\loc(\Omega)$ et $a \in \mathcal C^\infty_0(\Omega)$. Alors $u_{af} = au_f$.
 \end{prp}
 
-\begin{proof} Soit $\varphi \in C^\infty_0(\Omega)$.
+\begin{proof} Soit $\varphi \in \mathcal C^\infty_0(\Omega)$.
 \[\scpr {u_{af}}\varphi = \int_\Omega \varphi (af)\dif x = \int_\Omega(a\varphi)f\dif x = \scpr {u_f}{a\varphi} = \scpr {au_f}\varphi.\]
 \end{proof}
 
-\begin{ex} Soient $\delta_0$ la mesure de Dirac en 0, $u$ la distribution associée et $C^\infty_0(\Omega) \ni a : x \mapsto x_j$. Par définition de $a$~:
+\begin{ex} Soient $\delta_0$ la mesure de Dirac en 0, $u$ la distribution associée et $\mathcal C^\infty_0(\Omega) \ni a : x \mapsto x_j$. Par définition de $a$~:
 \[\scpr {au}\varphi = (a\varphi)(0) = 0.\]
 \end{ex}
 
-\begin{prp} Les distributions vérifient la formule de Leibniz~: si $u \in \mathcal D'(\Omega)$ et $a \in C^\infty_0(\Omega)$, alors~:
+\begin{prp} Les distributions vérifient la formule de Leibniz~: si $u \in \mathcal D'(\Omega)$ et $a \in \mathcal C^\infty_0(\Omega)$, alors~:
 \[\partial_j(au) = \partial_jau + a\partial_ju\]
 \end{prp}
 
-\begin{proof} Soit $\varphi \in C^\infty_0(\Omega)$.
+\begin{proof} Soit $\varphi \in \mathcal C^\infty_0(\Omega)$.
 \begin{align*}
 	\scpr {\partial_j(au)}\varphi &= -\scpr {au}{\partial_j\varphi} = \scpr u{-a\partial_j\varphi} = \scpr u{-\partial_j(au)+\partial_ja\varphi}
 		= \scpr {\partial_ju}{a\varphi} + \scpr{\partial_jau}\varphi \\
@@ -2080,54 +2080,54 @@ Donc $\od {}xu_{\chi_{\overline {\R^+}}} = \delta_0$ (la mesure de Dirac en 0).
 On se place dans le cas $\Omega = \R^n$.
 
 \begin{déf} Soit $u \in \mathcal D'(\R^n)$. $u$ est dite \textit{tempérée} si pour toute suite
-$(\varphi_k)_k \subset C^\infty_0(\R^n) \st \varphi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} 0$ (au sens de la Définition~\ref{déf:convergence Schwartz}), on a~:
+$(\varphi_k)_k \subset \mathcal C^\infty_0(\R^n) \st \varphi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} 0$ (au sens de la Définition~\ref{déf:convergence Schwartz}), on a~:
 \[\scpr u{\varphi_k} \xrightarrow[k \to \pinfty]{} 0.\]
 
 On note $\mathcal S'(\R^n)$ l'espace des distributions tempérées.
 \end{déf}
 
-\begin{rmq} Si $(\varphi_k)_k \subset C^\infty_0(\R^n)$ telle qu'il existe $K \subset\subset \R^n$ avec $\forall k \geq 0 : \supp \varphi_k \subset K$ et~:
+\begin{rmq} Si $(\varphi_k)_k \subset \mathcal C^\infty_0(\R^n)$ telle qu'il existe $K \subset\subset \R^n$ avec $\forall k \geq 0 : \supp \varphi_k \subset K$ et~:
 \[\forall \alpha \in \N^n : \partial^\alpha \varphi_k \xrightarrow[k \to \pinfty]{\text{CVU}} 0,\]
-alors $\varphi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} 0$, i.e. la topologie sur $C^\infty_0(\R^n)$ est plus fine que celle de $\mathcal S(\R^n)$.
+alors $\varphi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} 0$, i.e. la topologie sur $\mathcal C^\infty_0(\R^n)$ est plus fine que celle de $\mathcal S(\R^n)$.
 \end{rmq}
 
-\begin{prp}\label{prp:borné ssi continu distributions tempérées} Soit $u : C^\infty_0(\R^n) \to \C$ une forme linéaire. $u$ est tempérée ssi~:
-\[\exists C, m > 0 \st \forall \varphi \in C^\infty_0(\R^n) : \abs {\scpr u\varphi} \leq C\sum_{\abs \alpha + \abs \beta \leq m}\norm {x^\alpha\partial^\beta\varphi}_{L^\infty(\R^n)}.\]
+\begin{prp}\label{prp:borné ssi continu distributions tempérées} Soit $u : \mathcal C^\infty_0(\R^n) \to \C$ une forme linéaire. $u$ est tempérée ssi~:
+\[\exists C, m > 0 \st \forall \varphi \in \mathcal C^\infty_0(\R^n) : \abs {\scpr u\varphi} \leq C\sum_{\abs \alpha + \abs \beta \leq m}\norm {x^\alpha\partial^\beta\varphi}_{L^\infty(\R^n)}.\]
 \end{prp}
 
 \begin{rmq}Cette proposition est une généralisation du Théorème~\ref{thm:opérateur continu ssi borné}.
 \end{rmq}
 
-\begin{proof} \underline {$\Leftarrow$~:} Pour tout $\varphi \in C^\infty_0(\R^n)$, on note~:
+\begin{proof} \underline {$\Leftarrow$~:} Pour tout $\varphi \in \mathcal C^\infty_0(\R^n)$, on note~:
 \[p_m(\varphi) \coloneqq \sum_{\abs \alpha + \abs\beta \leq m}\norm {x^\alpha\partial^\beta\varphi}_{L^\infty(\R^n)}.\]
 
-Soit $(\varphi_k)_k \subset C^\infty_0(\R^n)$ telle que $\varphi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} 0$. Par définition de la convergence dans $\mathcal S(\R^n)$, on sait
+Soit $(\varphi_k)_k \subset \mathcal C^\infty_0(\R^n)$ telle que $\varphi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} 0$. Par définition de la convergence dans $\mathcal S(\R^n)$, on sait
 que $p_m(\varphi_k) \xrightarrow[k \to \pinfty]{} 0$. Dès lors, $\scpr u{\varphi_k} \leq Cp_m(\varphi_k) \xrightarrow[k \to \pinfty]{} 0$, et donc $u$ est tempérée.
 
 \underline {$\Rightarrow$~:} Par contraposée, supposons que~:
-\[\forall C > 0, m > 0 : \exists \varphi_{C,m} \in C^\infty_0(\R^n) \st \abs {\scpr u{\varphi_{C,m}}} > Cp_m(\varphi_{C,m}).\]
+\[\forall C > 0, m > 0 : \exists \varphi_{C,m} \in \mathcal C^\infty_0(\R^n) \st \abs {\scpr u{\varphi_{C,m}}} > Cp_m(\varphi_{C,m}).\]
 
-En particulier, si $C=m=j$, il existe $\varphi_j \in C^\infty_0(\R^n) \st \abs {\scpr u{\varphi_j}} \gneqq jp_j(\varphi_j)$. WLOG supposons $\abs {\scpr u{\varphi_j}}=1$
+En particulier, si $C=m=j$, il existe $\varphi_j \in \mathcal C^\infty_0(\R^n) \st \abs {\scpr u{\varphi_j}} \gneqq jp_j(\varphi_j)$. WLOG supposons $\abs {\scpr u{\varphi_j}}=1$
 (quitte à normaliser $\varphi_j$). Alors $p_j(\varphi_j) < \frac 1j$, et donc pour $m \leq j$~: $p_m(\varphi_j) < \frac 1j$. On a donc construit une suite
-$(\varphi_j)_j \subset C^\infty_0(\R^n)$ qui converge vers 0 dans $\mathcal S(\R^n)$. Cependant pour tout $j$, $\abs {\scpr u{\varphi_j}} = 1$, et donc $\scpr u{\varphi_j}$
+$(\varphi_j)_j \subset \mathcal C^\infty_0(\R^n)$ qui converge vers 0 dans $\mathcal S(\R^n)$. Cependant pour tout $j$, $\abs {\scpr u{\varphi_j}} = 1$, et donc $\scpr u{\varphi_j}$
 ne converge pas vers 0. Donc $u$ n'est pas tempérée.
 \end{proof}
 
 \begin{prp}\label{prp:distributions tempérées e.v.} $\mathcal S'(\R^n) \subset \mathcal D'(\R^n)$ et $\mathcal S'(\R^n)$ est un $\C$-e.v.
 \end{prp}
 
-\begin{lem}\label{lem:C^infty_0 Lipschitz} Soit $\psi \in C^\infty_0(\R^n)$. Il existe $C > 0$ tel que~:
+\begin{lem}\label{lem:C^infty_0 Lipschitz} Soit $\psi \in \mathcal C^\infty_0(\R^n)$. Il existe $C > 0$ tel que~:
 \[\forall y, z \in \R^n : \abs {\psi(y)-\psi(z)} \leq C\abs {y-z}.\]
 \end{lem}
 
 %PROOF?
 
 \begin{lem}\label{lem:C infty 0 dense dans Schwartz} Si $\varphi \in \mathcal S(\R^n)$, alors
-$\exists (\varphi_k)_k \subset C^\infty_0(\R^n) \st \varphi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} \varphi$,
-i.e. $C^\infty_0(\R^n)$ est dense dans $\mathcal S(\R^n)$ pour la topologie de $\mathcal S(\R^n)$.
+$\exists (\varphi_k)_k \subset \mathcal C^\infty_0(\R^n) \st \varphi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} \varphi$,
+i.e. $\mathcal C^\infty_0(\R^n)$ est dense dans $\mathcal S(\R^n)$ pour la topologie de $\mathcal S(\R^n)$.
 \end{lem}
 
-\begin{proof} Soit $\psi \in C^\infty_0(\R^n) \st \psi(x) = 1$ si $\abs x \leq 1$. Pour $k \geq 1$, on pose~:
+\begin{proof} Soit $\psi \in \mathcal C^\infty_0(\R^n) \st \psi(x) = 1$ si $\abs x \leq 1$. Pour $k \geq 1$, on pose~:
 \[\varphi_k : \R^n \to \C : x \mapsto \varphi(x)\psi\left(\frac xk\right).\]
 
 On a alors $(\varphi_k-\varphi)(x) = \varphi(x)\left(\psi\left(\frac xk\right)-1\right)$. Par Leibniz~:
@@ -2152,13 +2152,13 @@ Dès lors, tous les termes de la somme tendent uniformément vers 0 et~:
 \end{thm}
 
 \begin{proof} Par le Lemme~\ref{lem:C infty 0 dense dans Schwartz}, il existe
-$(\varphi_k)_k \subset C^\infty_0(\R^n) \st \varphi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} \varphi$. Pour tout $k$, $\scpr u{\varphi_k}$ est bien défini et
+$(\varphi_k)_k \subset \mathcal C^\infty_0(\R^n) \st \varphi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} \varphi$. Pour tout $k$, $\scpr u{\varphi_k}$ est bien défini et
 $(\scpr u{\varphi_k})_k$ est de Cauchy puisque~:
 \[\abs {\scpr u{\varphi_k} - \scpr u{\varphi_\ell}} = \abs {\scpr u{\varphi_k-\varphi_\ell}} \leq Cp_m(\varphi_k-\varphi_\ell) \xrightarrow[k,\ell \to \pinfty]{} 0\]
 par la Proposition~\ref{prp:borné ssi continu distributions tempérées}. On pose alors~:
 \[\scpr {\widetilde u}\varphi \coloneqq \lim_{k \to \pinfty}\scpr u{\varphi_k}.\]
 
-Pour montrer que $\widetilde u$ est linéaire, on fixe $\varphi, \psi \in \mathcal S(\R^n)$. On prend $(\varphi_k)_k, (\psi_k)_k \subset C^\infty_0(\R^n)$ telles que~:
+Pour montrer que $\widetilde u$ est linéaire, on fixe $\varphi, \psi \in \mathcal S(\R^n)$. On prend $(\varphi_k)_k, (\psi_k)_k \subset \mathcal C^\infty_0(\R^n)$ telles que~:
 \[\varphi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} \varphi \qquad \text{ et } \qquad \psi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} \psi.\]
 Alors en particulier $\varphi_k + \psi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} \varphi + \psi$, et donc~:
 \[\scpr {\widetilde u}{\varphi + \psi} = \lim_{k \to \pinfty}\scpr u{\varphi_k+\psi_k} = \lim_{k \to \pinfty}\scpr u{\varphi_k}+\lim_{k \to \pinfty}\scpr u{\psi_k}
@@ -2168,7 +2168,7 @@ De plus, pour $\lambda \in \R$, $\lambda\varphi_k \xrightarrow[k \to \pinfty]{\m
 \[\scpr {\widetilde u}{\lambda \varphi} = \lim_{k \to \pinfty}\scpr u{\lambda\varphi_k} = \lambda\lim_{k \to \pinfty}\scpr u{\varphi_k} = \lambda\scpr {\widetilde u}\varphi.\]
 
 Montrons alors le deuxième point et fixons $\varepsilon > 0$. Pour $\varphi \in \mathcal S(\R^n)$,
-$(\varphi_k)_k \subset C^\infty_0(\R^n) \st \varphi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} \varphi$, on a à $k$ fixé~:
+$(\varphi_k)_k \subset \mathcal C^\infty_0(\R^n) \st \varphi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} \varphi$, on a à $k$ fixé~:
 \[\abs {\scpr {\widetilde u}\varphi} \leq \abs {\scpr {\widetilde u}{\varphi_k}} + \abs {\scpr {\widetilde u}{\varphi-\varphi_k}}
 = \abs {\scpr u{\varphi_k}} + \abs {\scpr {\widetilde u}{\varphi-\varphi_k}} \leq Cp_m(\varphi_k) + \abs {\scpr {\widetilde u}\varphi - \scpr u{\varphi_k}}.\]
 
@@ -2183,8 +2183,8 @@ Pour $k > \max\{K_1, K_2\}$, on a donc~:
 Or le résultat tient pour tout $\varepsilon > 0$, donc~:
 \[\abs {\scpr {\widetilde u}\varphi} \leq Cp_m(\varphi).\]
 
-Il reste à montrer que $\widetilde u$ est unique. Soit $\bar u : \mathcal S(\R^n) \to \C$ telle que $\restr {\bar u}{C^\infty_0(\R^n)} = u$ et telle que $\exists C_1, m_1 \st
-\forall \varphi \in C^\infty_0(\R^n) : \abs {\scpr {\bar u}\varphi} \leq C_1p_{m_1}(\varphi)$. Alors en posant $\hat C \coloneqq \max\{C, C_1\}$ et $\hat m \coloneqq \max\{m, m_1\}$,
+Il reste à montrer que $\widetilde u$ est unique. Soit $\bar u : \mathcal S(\R^n) \to \C$ telle que $\restr {\bar u}{\mathcal C^\infty_0(\R^n)} = u$ et telle que $\exists C_1, m_1 \st
+\forall \varphi \in \mathcal C^\infty_0(\R^n) : \abs {\scpr {\bar u}\varphi} \leq C_1p_{m_1}(\varphi)$. Alors en posant $\hat C \coloneqq \max\{C, C_1\}$ et $\hat m \coloneqq \max\{m, m_1\}$,
 à $\varepsilon > 0$ fixé, pour tout $k$, on trouve~:
 \begin{align*}
 	\abs {\scpr {\widetilde u}\varphi - \scpr {\bar u}\varphi} &= \abs {\scpr {\widetilde u}\varphi - \scpr u{\varphi_k} - \scpr {\bar u}\varphi + \scpr u{\varphi_k}}
@@ -2203,19 +2203,19 @@ i.e. $\scpr {\widetilde u}\varphi = \scpr {\bar u}\varphi$.
 $\widetilde {\partial_ju} = \partial_j\widetilde u$.
 \end{prp}
 
-\begin{proof}Soit $\varphi \in \mathcal S(\R^n)$ et soit $(\varphi_k)_k \subset C^\infty_0(\R^n) \st \varphi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} \varphi$. Alors~:
+\begin{proof}Soit $\varphi \in \mathcal S(\R^n)$ et soit $(\varphi_k)_k \subset \mathcal C^\infty_0(\R^n) \st \varphi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} \varphi$. Alors~:
 \[\scpr {\widetilde {\partial_ju}}\varphi = \lim_{k \to \pinfty}\scpr {\partial_ju}{\varphi_k} = \lim_{k \to \pinfty}\scpr u{-\partial_j\varphi_k}
 = \scpr {\widetilde u}{-\partial_j\varphi} = \scpr {\partial_j\widetilde u}\varphi\]
 car $\partial_j\varphi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} \partial_j\varphi$.
 \end{proof}
 
 \begin{ex} Pour $p \in [1, \pinfty]$, si $f \in L^p(\R^n)$, alors $f \in L^\infty(\R^n)$, et donc $f \in L^1_\loc(\R^n)$. Montrons que la distribution associée~:
-\[u_f : C^\infty_0(\R^n) \to \C : \varphi \mapsto \int_{\R^n}f\varphi\dif x\]
+\[u_f : \mathcal C^\infty_0(\R^n) \to \C : \varphi \mapsto \int_{\R^n}f\varphi\dif x\]
 est une distribution tempérée.
 
-Soit $(\varphi_k)_k \subset C^\infty_0(\R^n) \st \varphi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} 0$. Pour $q$ conjugué à $p$~:
+Soit $(\varphi_k)_k \subset \mathcal C^\infty_0(\R^n) \st \varphi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} 0$. Pour $q$ conjugué à $p$~:
 \[\abs {\scpr {u_f}{\varphi_k}} = \abs {\int_{\R^n}f\varphi_k\dif x} \leq \int_{\R^n}\abs {f\varphi_k}\dif x = \norm {f\varphi_k}_{L^1} \leq \norm f_{L^p}\norm {\varphi_k}_{L^q}\]
-car $C^\infty_0(\R^n) \subset \bigcap_{q \in [1, \pinfty]}L^q(\R^n)$. Distinguons les deux cas~:
+car $\mathcal C^\infty_0(\R^n) \subset \bigcap_{q \in [1, \pinfty]}L^q(\R^n)$. Distinguons les deux cas~:
 \begin{itemize}
 	\item si $q = \pinfty$, alors $\norm {\varphi_k}_{L^\infty} \xrightarrow[k \to \pinfty]{} 0$ puisque $\varphi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} 0$,
 	\item et si $q \in [1, \pinfty)$, alors~:
@@ -2227,7 +2227,7 @@ car $C^\infty_0(\R^n) \subset \bigcap_{q \in [1, \pinfty]}L^q(\R^n)$. Distinguon
 Dans tous les cas, $\abs {\scpr {u_f}{\varphi_k}} \xrightarrow[k \to \pinfty]{} 0$.
 \end{ex}
 
-\begin{ex} Pour $\alpha \in \N^n$ un multi-indice, $f : x \mapsto x^\alpha \in L^1_\loc(\R^n)$. Montrons que $u_f \in \mathcal S'(\R^n)$. Soit $(\varphi_k)_k \subset C^\infty_0(\R^n)$.
+\begin{ex} Pour $\alpha \in \N^n$ un multi-indice, $f : x \mapsto x^\alpha \in L^1_\loc(\R^n)$. Montrons que $u_f \in \mathcal S'(\R^n)$. Soit $(\varphi_k)_k \subset \mathcal C^\infty_0(\R^n)$.
 Par un raisonnement similaire~:
 \[\abs {\scpr {u_f}{\varphi_k}} \leq \int_{\R^n} \left(x^\alpha(1+\abs x)^{-N}\right)\left((1+\abs x)^N\varphi_k\right)\dif x \xrightarrow[k \to \pinfty]{} 0\]
 pour $N > \abs \alpha + n$.
@@ -2236,8 +2236,8 @@ pour $N > \abs \alpha + n$.
 \begin{rmq} Par la Proposition~\ref{prp:distributions tempérées e.v.} et par l'exemple précédent, on trouve que la distribution associée à un polynôme quelconque est tempérée.
 \end{rmq}
 
-\begin{ex} Soient $\delta_0$ la mesure de Dirac en $0$ et $u_\delta : C^\infty_0(\R^n) \to \C : \varphi \mapsto \varphi(0)$, sa distribution associée. Montrons que $u_\delta$
-est tempérée. Soit $(\varphi_k)_k \subset C^\infty_0(\R^n) \st \varphi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} 0$.
+\begin{ex} Soient $\delta_0$ la mesure de Dirac en $0$ et $u_\delta : \mathcal C^\infty_0(\R^n) \to \C : \varphi \mapsto \varphi(0)$, sa distribution associée. Montrons que $u_\delta$
+est tempérée. Soit $(\varphi_k)_k \subset \mathcal C^\infty_0(\R^n) \st \varphi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} 0$.
 \[\scpr {u_\delta}{\varphi_k} = \varphi_k(0) \leq \sup_{x \in \R^n}\varphi_k(x) = \norm {\varphi_k}_{L^\infty} \xrightarrow[k \to \pinfty]{} 0\]
 car $\varphi_k$ est continue.
 \end{ex}
@@ -2255,9 +2255,9 @@ et~:
 \section{Transformations de Fourier de distributions tempérées}
 
 \begin{déf} Soit $u \in \mathcal S'(\R^n)$. On définit~:
-\[\mathcal Fu : C^\infty_0(\R^n) \to \C : \varphi \mapsto \scpr {\widetilde u}{\widehat \varphi},\]
+\[\mathcal Fu : \mathcal C^\infty_0(\R^n) \to \C : \varphi \mapsto \scpr {\widetilde u}{\widehat \varphi},\]
 où $\widehat \varphi$ est la transformée de Fourier \textit{classique} (au sens de la définition~\ref{déf:Fourier dans L^1}) et est dans $\mathcal S(\R^n)$ car
-par la Proposition~\ref{prp:C^infty_0 dans Schartz dans l'intersection des L^p}, on sait que $C^\infty_0(\R^n) \subset \mathcal S(\R^n)$.
+par la Proposition~\ref{prp:C^infty_0 dans Schartz dans l'intersection des L^p}, on sait que $\mathcal C^\infty_0(\R^n) \subset \mathcal S(\R^n)$.
 \end{déf}
 
 \begin{prp} Pour $u \in \mathcal S'(\R^n)$, $\mathcal Fu \in \mathcal S'(\R^n)$.
@@ -2265,7 +2265,7 @@ par la Proposition~\ref{prp:C^infty_0 dans Schartz dans l'intersection des L^p},
 
 \begin{proof} $\mathcal Fu$ est bien une application linéaire par linéarité de la transformée de Fourier sur $\mathcal S(\R^n)$ et par linéarité de $\widetilde u$.
 
-De plus, pour $(\varphi_k)_k \subset C^\infty_0(\R^n) \st \varphi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} 0$~:
+De plus, pour $(\varphi_k)_k \subset \mathcal C^\infty_0(\R^n) \st \varphi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} 0$~:
 \[\abs {\scpr {\widetilde u}{\widehat {\varphi_k}}} \leq Cp_m(\widehat {\varphi_k}) \xrightarrow[k \to \pinfty]{} 0,\]
 car $\widehat {\varphi_k} \xrightarrow[k \to \pinfty]{} \widehat 0 = 0$ par le Théorème~\ref{thm:Fourier continu sur Schwartz}.
 \end{proof}
@@ -2273,7 +2273,7 @@ car $\widehat {\varphi_k} \xrightarrow[k \to \pinfty]{} \widehat 0 = 0$ par le T
 \begin{prp} Soit $u \in \mathcal S'(\R^n)$. Alors $\mathcal FD_ju = x_j\mathcal Fu$.
 \end{prp}
 
-\begin{proof} Soit $\varphi \in C^\infty_0(\R^n)$. Alors~:
+\begin{proof} Soit $\varphi \in \mathcal C^\infty_0(\R^n)$. Alors~:
 \[\scpr {\mathcal FD_ju}\varphi = \scpr {\widetilde {D_ju}}{\widehat \varphi} = \scpr {\widetilde u}{-D_j\widehat \varphi} = \scpr {\mathcal Fu}{x_j\varphi}
 = \scpr {x_j\mathcal Fu}\varphi\]
 par la Propriété~\ref{prp:dérivée prolongement = prolongement dérivée}.
@@ -2282,7 +2282,7 @@ par la Propriété~\ref{prp:dérivée prolongement = prolongement dérivée}.
 \begin{prp} pour $f \in L^2(\R^n) \subset L^1_\loc(\R^n)$~: $u_{\mathbb Ff} = \mathcal Fu_f$.
 \end{prp}
 
-\begin{proof} Soit $\varphi \in C^\infty_0(\R^n)$. Pour $(\psi_k)_k \subset C^\infty_0(\R^n) \st \psi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} \widehat {\varphi}$.
+\begin{proof} Soit $\varphi \in \mathcal C^\infty_0(\R^n)$. Pour $(\psi_k)_k \subset \mathcal C^\infty_0(\R^n) \st \psi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} \widehat {\varphi}$.
 \[\scpr {\mathcal Fu_f}\varphi = \scpr {\widetilde {u_f}}{\widehat \varphi} = \lim_{k \to \pinfty}\scpr {u_f}{\psi_k} = \lim_{k \to \pinfty}\int_{\R^n}f\psi_k\dif x.\]
 
 Or~:
@@ -2320,7 +2320,7 @@ Dès lors, par unicité de la limite dans $L^1(\R^n)$~:
 \begin{déf} Pour $\varphi \in \mathcal S(\R^n)$, on définit l'application~:
 \[\widecheck \varphi : \R^n \to \C : x \mapsto \varphi(-x).\]
 Pour $u \in \mathcal D'(\R^n)$, On définit également~:
-\[\widecheck u : C^\infty_0(\R^n) \to \C : \varphi \mapsto \scpr u{\widecheck \varphi}.\]
+\[\widecheck u : \mathcal C^\infty_0(\R^n) \to \C : \varphi \mapsto \scpr u{\widecheck \varphi}.\]
 \end{déf}
 
 \begin{rmq} $\widecheck \varphi \in \mathcal S(\R^n)$.
@@ -2329,7 +2329,7 @@ Pour $u \in \mathcal D'(\R^n)$, On définit également~:
 \begin{prp} Si $u \in \mathcal D'(\R^n)$, alors $\widecheck u \in \mathcal D'(\R^n)$. De plus, si $u \in \mathcal S'(\R^n)$, alors $\widecheck u \in \mathcal S'(\R^n)$.
 \end{prp}
 
-\begin{proof} Soient $K \subset\subset \R^n, (\varphi_k)_k \subset C^\infty_0(\R^n) \st K \supset \bigcup_{k \in \N}\supp\varphi_k$. Alors on pose
+\begin{proof} Soient $K \subset\subset \R^n, (\varphi_k)_k \subset \mathcal C^\infty_0(\R^n) \st K \supset \bigcup_{k \in \N}\supp\varphi_k$. Alors on pose
 $\widecheck K \coloneqq -K$ tel que $\widecheck K \supset \bigcup_{k \in \N}\supp\widecheck {\varphi_k}$. Alors, pour $\alpha \in \N^n$~:
 \[\norm {\partial^\alpha\widecheck{\varphi_k}}_{L^\infty} = \sup_{x \in \widecheck K}\partial^\alpha\widecheck {\varphi_k}(x) = \sup_{x \in K}\partial^\alpha\varphi_k(x)
 = \norm {\partial^\alpha\varphi_k}_{L^\infty} \xrightarrow[k \to \pinfty]{} 0.\]
@@ -2343,7 +2343,7 @@ puisque $\widecheck {\varphi_k} \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} 0$
 Alors $\scpr {\widetilde {\mathcal Fu}}\psi = \scpr {\widetilde u}{\widehat \psi}$
 \end{lem}
 
-\begin{proof} Soit $(\psi_k)_k \subset C^\infty_0(\R^n) \st \psi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} \psi$. Alors~:
+\begin{proof} Soit $(\psi_k)_k \subset \mathcal C^\infty_0(\R^n) \st \psi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} \psi$. Alors~:
 \[\scpr {\widetilde {\mathcal Fu}}\psi = \lim_{k \to \pinfty}\scpr {\mathcal Fu}{\psi_k} = \lim_{k \to \pinfty}\scpr u{\widehat {\psi_k}} = \scpr u{\widehat \psi}\]
 car $\widehat {\psi_k} \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} \widehat \psi$.
 \end{proof}
@@ -2360,7 +2360,7 @@ Or par la formule d'inversion de Fourier~:
 
 Donc~:
 \[\scpr {\mathcal F^2u}\varphi = (2\pi)^n\scpr {\widetilde u}{\widecheck \varphi} = (2\pi)^n\scpr u{\widecheck \varphi}\]
-car $\varphi \in C^\infty_0(\R^n)$ et $\widetilde u = u$ sur $C^\infty_0(\R^n)$.
+car $\varphi \in \mathcal C^\infty_0(\R^n)$ et $\widetilde u = u$ sur $\mathcal C^\infty_0(\R^n)$.
 \end{proof}
 
 \begin{cor} $\mathcal F$ est une bijection de $\mathcal S'(\R^n)$ sur $\mathcal S'(\R^n)$.
@@ -2368,7 +2368,7 @@ car $\varphi \in C^\infty_0(\R^n)$ et $\widetilde u = u$ sur $C^\infty_0(\R^n)$.
 
 \begin{proof}~
 \begin{description}
-	\item[Injectivité] $\mathcal F$ est linéaire, donc il est suffisant de montrer que $\Ker\mathcal F = \{0\}$. Soit $u \in C^\infty_0(\R^n) \st \mathcal Fu = 0$. Alors~:
+	\item[Injectivité] $\mathcal F$ est linéaire, donc il est suffisant de montrer que $\Ker\mathcal F = \{0\}$. Soit $u \in \mathcal C^\infty_0(\R^n) \st \mathcal Fu = 0$. Alors~:
 	\[\widecheck u = \mathcal F^2u = \mathcal F0 = 0,\]
 	et donc $u = 0$.
 	\item[Surjectivité] Soit $f \in \mathcal S'(\R^n)$. On pose $u \coloneqq \mathcal F\left((2\pi)^{-n}\widecheck f\right)$. On a alors~:
@@ -2376,7 +2376,7 @@ car $\varphi \in C^\infty_0(\R^n)$ et $\widetilde u = u$ sur $C^\infty_0(\R^n)$.
 \end{description}
 \end{proof}
 
-\begin{ex} Soit $\delta$ la mesure de Dirac en 0 sur $\R^n$. Pour $\varphi \in C^\infty_0(\R^n)$~:
+\begin{ex} Soit $\delta$ la mesure de Dirac en 0 sur $\R^n$. Pour $\varphi \in \mathcal C^\infty_0(\R^n)$~:
 \[\scpr {\mathcal Fu_\delta}\varphi = \scpr {\widetilde {u_\delta}}{\widehat \varphi} = \widehat \varphi(0) = \int_{\R^n}\varphi(x)\dif x = \scpr {u_\mathbf 1}\varphi.\]
 
 De plus~:
@@ -2385,27 +2385,27 @@ De plus~:
 
 \section{Convolution et distributions}
 
-\begin{déf} Pour $f \in L^1(\R^n), \varphi \in C^\infty_0(\R^n)$, on définit la \textit{convolution} de $f$ et $\varphi$ par~:
+\begin{déf} Pour $f \in L^1(\R^n), \varphi \in \mathcal C^\infty_0(\R^n)$, on définit la \textit{convolution} de $f$ et $\varphi$ par~:
 \[(f * \varphi) : \R^n \to \C : x \mapsto \int_{\R^n}f(y)\varphi(x-y)\dif y.\]
 \end{déf}
 
-\begin{déf} Pour $u \in \mathcal D'(\R^n)$ et $\varphi \in C^\infty_0(\R^n)$, on définit l'application convolution par~:
+\begin{déf} Pour $u \in \mathcal D'(\R^n)$ et $\varphi \in \mathcal C^\infty_0(\R^n)$, on définit l'application convolution par~:
 \[u*\varphi : \R^n \to \C : x \mapsto \scpr u{\varphi(x-\cdot)}.\]
 \end{déf}
 
-\begin{ex} Pour $\delta$ la mesure de Dirac en 0 sur $\R^n$ et $\varphi \in C^\infty_0(\R^n)$~:
+\begin{ex} Pour $\delta$ la mesure de Dirac en 0 sur $\R^n$ et $\varphi \in \mathcal C^\infty_0(\R^n)$~:
 \[\forall x \in \R^n : (\delta * \varphi)(x) = \varphi(x),\]
 i.e. $\delta * \varphi = \varphi$.
 \end{ex}
 
-\begin{lem}\label{lem:C^infty_0 Lipschitz^2} Si $\psi \in C^\infty_0(\R^n)$, alors pour $x, y \in \R^n$~:
+\begin{lem}\label{lem:C^infty_0 Lipschitz^2} Si $\psi \in \mathcal C^\infty_0(\R^n)$, alors pour $x, y \in \R^n$~:
 \[\abs {\psi(x) - \psi(y) - \sum_{j=1}^n\partial_j\psi(y)(x_j-y_j)} \leq C\abs {x-y}^2.\]
 \end{lem}
 
 \begin{rmq} Ce lemme généralise le Lemme~\ref{lem:C^infty_0 Lipschitz}.
 \end{rmq}
 
-\begin{thm} Soient $u \in \mathcal D'(\R^n), \varphi \in C^\infty_0(\R^n)$. Alors $u * \varphi \in C^\infty(\R^n)$ et~:
+\begin{thm} Soient $u \in \mathcal D'(\R^n), \varphi \in \mathcal C^\infty_0(\R^n)$. Alors $u * \varphi \in \mathcal C^\infty(\R^n)$ et~:
 \[\forall \alpha \in \N^n : \partial^\alpha(u * \delta) = (\partial^\alpha u) * \varphi = u * (\partial^\alpha\varphi).\]
 \end{thm}
 
@@ -2427,7 +2427,7 @@ Dès lors, par définition des distributions~:
 i.e.
 \[(u*\varphi)(x_k) = \scpr u{\varphi_k} \xrightarrow[k \to \pinfty]{} \scpr u{\varphi(x-\cdot)} = (u*\varphi)(x).\]
 
-Montrons alors que $u * \varphi$ est de classe $C^1$. Soient $(h_\ell)_\ell \subset \R \st h_\ell \xrightarrow[\ell \to \pinfty]{} 0$ et $k \in \{1, \ldots, n\}$.
+Montrons alors que $u * \varphi$ est de classe $\mathcal C^1$. Soient $(h_\ell)_\ell \subset \R \st h_\ell \xrightarrow[\ell \to \pinfty]{} 0$ et $k \in \{1, \ldots, n\}$.
 \[\frac {(u*\varphi)(x+h_\ell e_k) - (u*\varphi)(x)}{h_\ell} = \scpr u{\underbrace {\frac {\varphi(x+h_\ell e_k - \cdot) - \varphi(x-\cdot)}{h_\ell}}_{\eqqcolon \varphi_{k,h_\ell}}}.\]
 Par le Lemme~\ref{lem:C^infty_0 Lipschitz^2}~:
 \begin{align*}
@@ -2452,6 +2452,6 @@ Donc par définition des distributions, on a~:
 Il reste à montrer que $\partial_k(u*\varphi) = (\partial_ku) * \varphi$, or cela suit directement de la définition de $\partial_ku$~:
 \[((\partial_ku)*\varphi)(x) = \scpr {\partial_ku}\varphi = -\scpr u{\pd{}{y_k}\varphi(x-y)} = \scpr u{\partial_k\varphi(x-y)} = (u * \partial_k\varphi)(x).\]
 
-On fonctionne ensuite par récurrence pour montrer que $u*\varphi$ est bien $C^\infty$~: exercice.
+On fonctionne ensuite par récurrence pour montrer que $u*\varphi$ est bien $\mathcal C^\infty$~: exercice.
 \end{proof}
 \end{document}
