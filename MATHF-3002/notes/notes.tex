@@ -169,7 +169,7 @@ Dès lors, par le théorème de convergence dominée, la limite passe sous l'int
 \end{aligned}\end{equation}
 \end{déf}
 
-Dans l'idée, $\mathcal S$ est l'ensemble des fonctions dont toutes les dérivées décroissent plus vite vers 0 aux infinis que tout polynôme.
+Dans l'idée, $\mathcal S(\R^n)$ est l'ensemble des fonctions dont toutes les dérivées décroissent plus vite vers 0 aux infinis que tout polynôme.
 
 \begin{prp} $\mathcal S(\R^n)$ est un $\C$-espace vectoriel.
 \end{prp}
@@ -183,28 +183,28 @@ Dans l'idée, $\mathcal S$ est l'ensemble des fonctions dont toutes les dérivé
 
 \begin{proof}~
 \begin{itemize}
-	\item[$(i)$] Pour $u \in \mathcal S$ et $\pinfty > p \geq 1$~:
+	\item[$(i)$] Pour $u \in \mathcal S(\R^n)$ et $\pinfty > p \geq 1$~:
 	\[\int \abs u^p\dif x = \int \Big(\underbrace{\abs u(1+\abs x)^N}_{\text{borné pour tout $N$}}\Big)^p(1+\abs x)^{-Np}\dif x
 		\leq \int (C_N)^p\underbrace {(1+\abs x)^{-Np}}_{\text{intégrable pour $Np > n$}}\dif x.\]
 
-	Dès lors, pour $N$ suffisamment grand ($Np>n$), on a $\int \abs u\dif x \leq \cste$
+	Dès lors, pour $N$ suffisamment grand ($Np>n$), on a $\norm u^p_{L^p} = \int \abs u^p\dif x < \pinfty$.
 
 	Le cas $p = \pinfty$ vient uniquement du fait que pour $u \in \mathcal S$, pour $\alpha = \beta = (0, \ldots, 0) \in \N^n$:
-	\[u = x^\alpha\partial^\beta u \in L^\infty.\]
+	\[u = x^\alpha\partial^\beta u \in L^\infty(\R^n).\]
 
-	\item[$(ii)$] Soit $u \in \mathcal C^\infty_0(\R^n)$. Pour $\alpha, \beta \in \N^n$~: $x^\alpha\partial^\beta u \neq 0 \subseteq \supp u$ compact. Par Heine-Cantor,
-	$u$ est uniformément continue sur $\supp u$.
+	\item[$(ii)$] Soit $u \in \mathcal C^\infty_0(\R^n)$. Pour $\alpha, \beta \in \N^n$~: $\{x^\alpha\partial^\beta u \neq 0\} \subseteq \supp u$ compact. Par Heine-Cantor,
+	$u$ est uniformément continue sur $\supp u$, donc uniformément bornée (et donc dans $L^\infty(\R^n)$).
 \end{itemize}
 \end{proof}
 
-\begin{prp} Pour $u \in \mathcal S$ et $\alpha, \beta \in \N^n$, alors~: $x^\alpha\partial^\beta u \in \mathcal S$.
+\begin{prp} Pour $u \in \mathcal S(\R^n)$ et $\alpha, \beta \in \N^n$, alors~: $x^\alpha\partial^\beta u \in \mathcal S(\R^n)$.
 \end{prp}
 
 \begin{proof} Soient $\lambda, \mu \in \N^n$. Par Leibniz~:
 \[\partial^\mu(fg) = \sum_{\sigma \leq \mu}\binom \mu\sigma\partial^\sigma f \partial^{\mu-\sigma} g.\]
 
 Donc~:
-\[x^\lambda\partial^\mu(x^\alpha\partial^\beta u) = \sum_{\sigma \leq \mu}\binom \mu\sigma x^\lambda\partial^\sigma(x^\alpha)\partial^{\mu-\sigma}u,\]
+\[x^\lambda\partial^\mu(x^\alpha\partial^\beta u) = \sum_{\sigma \leq \mu}\binom \mu\sigma x^\lambda\partial^\sigma(x^\alpha)\partial^{\mu-\sigma+\beta}u,\]
 où $x^\lambda\partial^\sigma(x^\alpha) \leq \cste x^\gamma$. On en déduit que $x^\lambda\partial^\mu(x^\alpha\partial^\beta u)$ est une somme finie de termes
 essentiellement bornés et est donc essentiellement bornée.
 \end{proof}
@@ -215,24 +215,24 @@ essentiellement bornés et est donc essentiellement bornée.
 $\mathcal S(\R^n)$ lorsque $k \to \pinfty$} (noté $u_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} u$) lorsque~:
 \[\forall \alpha, \beta \in \N^n : \sup_{x \in \R^n}\abs {x^\alpha\partial^\beta(u-u_k)} \xrightarrow[k \to \pinfty]{} 0,\]
 i.e. lorsque~:
-\[\forall \alpha, \beta \N^n : \norm {x^\alpha\partial^\beta(u_k-u)}_{L^\infty} \xrightarrow[k \to \pinfty]{} 0.\]
+\[\forall \alpha, \beta \in \N^n : \norm {x^\alpha\partial^\beta(u_k-u)}_{L^\infty} \xrightarrow[k \to \pinfty]{} 0.\]
 \end{déf}
 
 \begin{thm}\label{thm:Fourier continu sur Schwartz} Soit $u \in \mathcal S(\R^n)$. Alors~:
 \begin{enumerate}
-	\item $\hat u \in \mathcal S(\R^n)$. De plus si $u_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} u$, alors $\hat {u_k} \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} \hat u$.
+	\item $\hat u \in \mathcal S(\R^n)$. De plus si $u_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} u$, alors $\widehat {u_k} \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} \hat u$.
 	\item $\widehat {D_ju}(\xi) = \xi_j\hat u(\xi)\quad$ (de plus $\widehat {x_ju} = -D_j \hat u$) où $D_j = \frac 1i\partial_j$.
 \end{enumerate}
 \end{thm}
 
 \begin{proof} Pour le premier point, on calcule~:
-\[D^\alpha_\xi\hat u(\xi) = \int D^\alpha_\xi(e^{-i\scpr x\xi})u(x)\dif x = \int e^{-i\scpr x\xi}(-x)^\alpha u(x)\dif x.\]
+\[D^\alpha_\xi\hat u(\xi) = \int D^\alpha_\xi\left(e^{-i\scpr x\xi}\right)u(x)\dif x = \int e^{-i\scpr x\xi}(-x)^\alpha u(x)\dif x.\]
 
 Donc~:
 \[\xi^\beta D^\alpha_\xi\hat u(\xi) = \int \xi^\beta e^{-i\scpr x\xi}(-x)^\alpha u(x)\dif x = \int (-D_x)^\beta(e^{-i\scpr x\xi})(-x)^\alpha u(x)\dif x
 	= \int e^{-i\scpr x\xi} D^\beta_x\left((-x)^\alpha u(x)\right)\dif x.\]
 
-Pour montrer cette dernière égalité, intégrons par partie. D'abord observons pour $\phi \in \mathcal S$ et $j \in \intint 1n$~:
+Pour montrer cette dernière égalité, intégrons par partie. D'abord observons pour $\phi \in \mathcal S(\R^n)$ et $j \in \intint 1n$~:
 \[\int \partial_j\phi\dx = \idotsint\left(\int \partial_j\phi\dx_j\right)\dx_1\ldots\dx_{j-1}\dx_{j+1}\ldots\dx_n.\]
 En effet, $\partial_j\phi$ est Borélienne, donc par Fubini, on peut passer de l'intégrale sur $\R^n$ à $n$ intégrale itérées sur $\R$. Or~:
 \begin{align*}
@@ -250,11 +250,13 @@ Montrons alors que $\forall N \in \N : \exists C_N \geq 0 \tq \abs {D_x^\beta\le
 est borné car $u \in \mathcal S(\R^n)$. Dès lors~:
 \[\abs {\xi^\beta D_\xi^\alpha \hat u(x)} \leq C_N\int(1 + \abs x)^{-N}\dx.\]
 
-Pour $N$ suffisamment grand ($N > n$), on a $\abs {\xi^\beta D_\xi^\alpha \hat u(x)} \leq \cste$.
+Pour $N$ suffisamment grand ($N > n$), on a $\abs {\xi^\beta D_\xi^\alpha \hat u(x)} < \pinfty$, et donc on en déduit $\hat u \in \mathcal S(\R^n)$.
 
-Dès lors, on trouve~:
-\[\abs {\xi^\beta D_\xi^\alpha\hat u(x)} \leq \sup_{x \in \R^n}(1 + \abs x)^{-N}\abs {D_x^\beta\left((-x)^\alpha(u - u_k)\right)} \xrightarrow[k \to \pinfty]{} 0.\]
-On en déduit donc $\hat {u_k} \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} \hat u$.
+Pour montrer que $\widehat {u_k} \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} \hat u$ si $u_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} u$~:
+\[\abs {\xi^\beta D_\xi^\alpha\left((\widehat {u_k} - u)\right)(\xi)} = \abs {\int e^{-i\scpr x\xi}D_x^\beta\left((-x)^\alpha(u_k-u)\right)\dif x}
+	\leq \int\abs {D_x^\beta\left((-x)^\alpha(u_k-u)\right)}\dif x \xrightarrow[k \to \pinfty]{} 0,\]
+puisque $f_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} 0$ implique $f_k \xrightarrow[k \to \pinfty]{L^1(\R^n)} 0$. Par passage au $\sup$ sur $\xi$, on
+déduit $\widehat {u_k} - \hat u \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} 0$.
 
 Pour le second point, la seconde formule découle directement du premier pour $\alpha = e_j$~:
 \[D_j\hat u(\xi) = \int e^{-i\scpr x\xi}(-x_j)u(x)\dx = -\widehat {x_ju}(\xi).\]
@@ -274,14 +276,16 @@ La première égalité se démontre par~:
 La fonction $(y, \xi) \mapsto e^{i\scpr x\xi}e^{-i\scpr y\xi}u(y)$ n'est pas intégrable pour $(y, \xi)$. On ne va donc pas pouvoir appliquer Fubini naïvement.
 
 \begin{proof} Pour $\chi \in \mathcal S(\R^n)$, $(y, \xi) \mapsto e^{-i\scpr y\xi}e^{i\scpr x\xi}\chi(\xi)u(y)$, à $x$ fixé, est intégrable. Donc par Fubini~:
-\[\int e^{i\scpr x\xi}\chi(\xi)\hat u(\xi)\dif\xi = \int e^{i\scpr x\xi}\chi(\xi)\int e^{-i\scpr y\xi}u(y)\dif y\dif\xi
-	= \int u(y)\int e^{-i\scpr {y-x}\xi}\chi(\xi)\dif\xi \dif y = \int u(y)\hat \chi(y-x)\dif y.\]
+\begin{align*}
+	\int e^{i\scpr x\xi}\chi(\xi)\hat u(\xi)\dif\xi &= \int e^{i\scpr x\xi}\chi(\xi)\int e^{-i\scpr y\xi}u(y)\dif y\dif\xi \\
+	&= \int u(y)\int e^{-i\scpr {y-x}\xi}\chi(\xi)\dif\xi \dif y = \int u(y)\hat \chi(y-x)\dif y.
+\end{align*}
 
-Pour $\psi \in \mathcal S(\R^n)$, $\delta > 0$ tels que $\chi(\xi) = \psi(\delta\xi)$~:
-\[\hat \chi(\xi) = \int e^{-i\scpr y\xi}\psi(\delta\xi)\dif\xi = \delta^{-n}\hat \psi(\xi/\delta).\]
+Pour $\psi \in \mathcal S(\R^n)$, $\delta > 0$ tels que $\chi(\xi) = \psi(\delta\xi)$, par changement de variable~:
+\[\hat \chi(\xi) = \int e^{-i\scpr y\xi}\psi(\delta\xi)\dif\xi = \delta^{-n}\hat \psi\left(\frac y\delta\right).\]
 
 Alors~:
-\[\int e^{i\scpr x\xi}\psi(\delta\xi)\hat u(\xi)\dif\xi = \int u(x+y)\delta^{-n}\psi(y/\delta)\dif y = \int u(x+\delta y)\hat \psi(y)\dif y.\]
+\[\int e^{i\scpr x\xi}\psi(\delta\xi)\hat u(\xi)\dif\xi = \int u(x+y)\delta^{-n}\hat \psi\left(\frac y\delta\right)\dif y = \int u(x+\delta y)\hat \psi(y)\dif y.\]
 
 Par le théorème de convergence dominée~:
 \[\int u(x+\delta y)\hat \psi(y)\dif y \xrightarrow[\delta \to \pinfty]{} u(x)\int \hat \psi(y)\dif y,\]
@@ -289,28 +293,33 @@ or~:
 \[\int e^{i\scpr x\xi}\psi(\delta \xi)\hat u(\xi)\dif\xi \xrightarrow[\delta \to \pinfty]{} \psi(0)\int e^{i\scpr x\xi}\hat u(\xi)\dif\xi.\]
 
 Par unicité de la limite, si $\int \hat \psi \dif y\neq 0$~:
-\[u(x) = \frac {\psi(0)}{\int\hat \psi(y)\dif y}\int e^{i\scpr x\xi}\hat u(\xi)\dif\xi\]
+\begin{equation}\label{eq:inversion Fourier proof}
+	u(x) = \frac {\psi(0)}{\int\hat \psi(y)\dif y}\int e^{i\scpr x\xi}\hat u(\xi)\dif\xi.
+\end{equation}
 
-Dans le cas $n=1$, on prend $\psi_1 : x \mapsto e^{-x^2/2}$. En intégrant $z \mapsto e^{-z^2/2}$ sur un chemin rectangulaire $[a,b,c,d] \subset \C$, on trouve~:
+Dans le cas $n=1$, on prend $\psi_1 : x \mapsto e^{-x^2/2}$. En intégrant $z \mapsto e^{-z^2/2}$ sur un chemin rectangulaire $[a,b,c,d] \subset \C$,
+avec $b = M \in \R^+, a=-b, c = b+it, d = a+it$, on trouve~:
 \[\int_a^b e^{-x^2/2}\dx + \int_b^c e^{-z^2/2}\dif z + \int_c^d e^{-z^2/2}\dif z + \int_d^a e^{-z^2/2}\dif z = 0\]
-par Cauchy. Pour $(a, b) \to (\minfty, \pinfty)$, on trouve que $\int_b^c e^{-z^2/2}$ et $\int_d^a e^{-z^2/2}$ tendent vers $0$. Donc à la limite~:
-\[\int_a^b e^{-x^2/2}\dx = \int_{\Im z = t}e^{-z^2/2}\dif z = \int e^{(x^2-t^2)/2}e^{-itx}\dx.\]
+par Cauchy. Si $z = x+it$~: $\abs {e^{-z^2/2}} = e^{-\frac 12(x^2-t^2)} \xrightarrow[\abs x \to \pinfty]{} 0$. Donc $\int_b^c e^{-z^2/2}\dif z$ et $\int_d^a e^{-z^2/2}\dif z$
+tendent uniformément vers $0$ pour $\abs a, \abs b \to \pinfty$. Donc à la limite, pour tout $t \in \R$~:
+\[\int_a^b e^{-x^2/2}\dx = \int_{\Im z = t}e^{-z^2/2}\dif z = \int e^{-\frac 12(x^2-t^2)}e^{-itx}\dx = e^{t^2/2}\int e^{-itx}e^{-x^2/2}\dif x = \psi_1(-t)\hat\psi_1(t)
+	= \frac 1{\psi_1(t)}\hat\psi_1(t).\]
 
-Donc $\hat \psi(t) = \psi(t)\int\psi\dx$. On en déduit~:
-\[\int \hat \psi(t)\dif t = \left(\int \psi(x)\dx\right)^2 = \left(\int e^{-x^2/2}\right)^2 = 2\pi.\]
+Donc $\hat \psi_1(t) = \psi_1(t)\int\psi_1\dx$. On en déduit~:
+\[\int \hat \psi_1(t)\dif t = \int\psi_1(t)\int\psi_1(s)\dif s\dif t = \left(\int \psi_1(x)\dx\right)^2 = \left(\int e^{-x^2/2}\right)^2 = 2\pi.\]
 
-Dès lors $\psi(0) = 1$ et $\int\hat\psi\dx = 2\pi$, qui donne bien la formule.
+Dès lors $\psi_1(0) = 1$ et $\int\hat\psi_1\dx = 2\pi$. Dès lors, par~\eqref{eq:inversion Fourier proof}, on a bien la formule d'inversion~\eqref{eq:inversion Fourier}.
 
 Dans le cas général $n > 1$, on prend $\psi(x) = e^{-\abs x^2/2} = \prod_{j=1}^n\psi_1(x_j)$. Donc~:
 \[\hat\psi(\xi) = \int e^{-i\scpr x\xi}\psi(x)\dx = \int e^{-i\scpr x\xi}\prod_{j=1}^ne^{-x_j^2/2}\dx = \int\prod_{j=1}^ne^{-ix_j\xi_j}\prod_{j=1}^ne^{-x_j^2/2}\dx
-	= \int\prod_{j=1}^n\left(e^{-ix_j\xi_j}e^{-x_k^2/2}\right)\dx.\]
+	= \int\prod_{j=1}^n\left(e^{-ix_j\xi_j}e^{-x_j^2/2}\right)\dx.\]
 
 Par Fubini~:
-\[\hat\psi(\xi) = \prod_{j=1}^n\int e^{-ix_j\xi_j}e^{-x_j^2/2}\dx = \prod_{j=1}^n\hat \psi_1(\xi_j).\]
+\[\hat\psi(\xi) = \prod_{j=1}^n\int e^{-ix_j\xi_j}e^{-x_j^2/2}\dx_j = \prod_{j=1}^n\hat \psi_1(\xi_j).\]
 
 On trouve alors~:
-\[\int \hat \psi(\xi)\dif\xi = \int \prod_{j=1}^n\hat\psi_j(\xi_j)\dif\xi = \prod_{j=1}^n\int\hat \psi_1(\xi_j)\dif\xi_j = (2\pi)^{-n},\]
-où l'avant dernière égalité s'obtient en appliquant Fubini.
+\[\int \hat \psi(\xi)\dif\xi = \int \prod_{j=1}^n\hat\psi_1(\xi_j)\dif\xi = \prod_{j=1}^n\int\hat \psi_1(\xi_j)\dif\xi_j = \left(\int \hat\psi_1\dif x\right)^2 = (2\pi)^n,\]
+en réappliquant Fubini.
 
 Puisque $\hat \psi(0) = 1$, on a bien~\eqref{eq:inversion Fourier}.
 \end{proof}
@@ -328,7 +337,7 @@ Prenons $u(x) = (2\pi)^{-n}\int e^{i\scpr x\xi}f(\xi)\dif\xi$. Alors~:
 
 De plus~:
 \[\hat {\hat u}(\xi) = \int e^{-i\scpr x\xi}\hat u(x)\dx = (2\pi)^n(2\pi)^{-n}\int e^{-i\scpr x\xi}\hat u(x)\dx = (2\pi)^nu(-\xi),\]
-donc $\hat f = \hat {\hat u}$ pour tout $x$, et puisque $\mathcal F$ est injective, $f = \hat u$. Donc $\mathcal F$ est surjective, et donc bijective.
+donc $\hat f = \hat {\hat u}$ sur $\R^n$, et puisque $\mathcal F$ est injective, $f = \hat u = \mathcal Fu$. Donc $\mathcal F$ est surjective, et donc bijective.
 
 La linéarité est triviale~:
 \[\mathcal F(f+\lambda g)(\xi) = \int e^{-i\scpr x\xi}(f+\lambda g)(x)\dx = \int e^{-i\scpr x\xi}f(x)\dx + \lambda\int e^{-i\scpr x\xi}g(x)\dx
@@ -347,7 +356,7 @@ on trouve $\tilde {\mathcal F}$ est une bijection linéaire. De plus $\mathcal F
 \begin{prp} Pour $u, v \in \mathcal S(\R^n)$~:
 \begin{enumerate}
 	\item $\int u\hat v = \int\hat uv$~;
-	\item $\int u\overline v = (2\pi)^{-n}\int \hat u\hat {\overline v}$. Cette égalité est appelée \textit{identité de Parseval}.
+	\item $\int u\overline v = (2\pi)^{-n}\int \hat u\overline {\hat v}$. Cette égalité est appelée \textit{identité de Parseval}.
 \end{enumerate}
 \end{prp}
 
@@ -355,10 +364,10 @@ on trouve $\tilde {\mathcal F}$ est une bijection linéaire. De plus $\mathcal F
 \[\int e^{i\scpr x\xi}\chi(\xi)\hat u(\xi)\dif\xi = \int u(x+y)\hat \chi(y)\dif y\]
 en $x=0$.
 
-Le second point, prenons $u, w \in \mathcal S(\R^n)$ et posons $v \coloneqq (2\pi)^{-n}\overline {\hat w}$. Par le premier point~:
+Pour le second point, prenons $u, w \in \mathcal S(\R^n)$ et posons $v \coloneqq (2\pi)^{-n}\overline {\hat w}$. Par le premier point~:
 \[\int \hat uv = \int u\hat v = \int u(2\pi)^{-n}\hat {\overline {\hat w}}.\]
 
-On peut voir que~:
+Par la formule d'inversion de Fourier, on peut voir que~:
 \[(2\pi)^{-n}\hat {\overline {\hat w}}(\xi) = (2\pi)^{-n}\int e^{-i\scpr x\xi}\overline {\hat w}(x)\dx =
 	(2\pi)^{-n}\overline {\int e^{i\scpr x\xi}\hat w(x)\dx} = \overline {w(\xi)}.\]
 
@@ -372,9 +381,13 @@ Dès lors~:
 \end{equation}
 \end{cor}
 
+\begin{proof} Par Parseval~:
+\[\norm u_{L^2(\R^n)}^2 = \int u\overline u\dif x = (2\pi)^{-n}\int \hat u\overline {\hat u}\dif x = (2\pi)^{-n}\norm {\hat u}_{L^2(\R^n)}^2\]
+\end{proof}
+
 \section{Discussion sur la définition de la transformée}
 
-On peut définir la transformée de Fourier de plusieurs manières, paramétrisé par $a, b \in \R$~:
+On peut définir la transformée de Fourier de plusieurs manières, paramétrisées par $a, b \in \R$~:
 \[\mathcal F_{a,b}u(\xi) = a\int e^{-ib\scpr x\xi}u(x)\dx.\]
 
 La théorie reste la même à homothétie près puisque~:
@@ -395,7 +408,7 @@ i.e. $\mathbb F$ préserve l'identité de Parseval.
 
 \begin{proof} Admettons que $C_0^\infty(\R^n)$ est dense dans $L^2(\R^n)$. Puisque $C_0^\infty(\R^n) \subseteq \mathcal S(\R^n)$, on a $\mathcal S(\R^n)$ dense dans $L^2(\R^n)$.
 Par cette densité, pour $u \in L^2(\R^n)$, il existe $(u_k)_{k \in \N} \subset \mathcal S(\R^n)$ telle que $u_k \xrightarrow[k \to \pinfty]{L^2} u$, et donc $(u_k)$ est de
-Cauchy pour cette norme. $(\widehat {u_k})_{k \in \N}$ est également de Cauchy car~:
+Cauchy pour cette norme. $(\widehat {u_k})_{k \in \N}$ est également de Cauchy car par Plancherel~:
 \[\norm {\widehat {u_k} - \widehat {u_m}}_{L^2} = (2\pi)^{n/2}\norm {u_k - u_m}_{L^2}.\]
 
 Par complétude de $L^2$, il existe $z \in L^2(\R^n) \tq \widehat {u_k} \xrightarrow[k \to \pinfty]{L^2} z$. On pose alors $\mathbb Fu \coloneqq z$. Montrons que $z$ ne dépend pas
@@ -457,7 +470,7 @@ donc pour $\varepsilon > 0$, pour $\delta = (2\pi)^{-n/2}\varepsilon$, on a que 
 \textbf{Montrons finalement que $\mathbb F$ est unique.}
 
 Si il existe $\mathbb F_1 : L^2(\R^n) \to L^2(\R^n)$ continue et linéaire telle que $\mathbb F_1\sVert[2]_{\mathcal S} = \mathcal F$, alors par densité de $\mathcal S(\R^n)$
-dans $^2(\R^n)$, pour $u \in L^2(\R^n)$, il existe $(u_k)_{k \in \N} \subset \mathcal S(\R^n) \tq u_k \xrightarrow[k \to \pinfty]{L^2} u$, et donc, par continuité~:
+dans $L^2(\R^n)$, pour $u \in L^2(\R^n)$, il existe $(u_k)_{k \in \N} \subset \mathcal S(\R^n) \tq u_k \xrightarrow[k \to \pinfty]{L^2} u$, et donc, par continuité~:
 \[\mathbb F(u) = \lim_{k \to \pinfty} \mathbb F(u_k) = \lim_{k \to \pinfty} \mathbb F_1(u_k) = \mathbb F_1(u).\]
 
 Donc puisque deux application continues qui coïncident sur une sous-ensemble dense coïncident partout, on a bien que $\mathbb F = \mathbb F_1$.
@@ -478,8 +491,28 @@ Or $\mathcal F \circ \tilde {\mathcal F}(u_k) = u_k \xrightarrow[k \to \pinfty]{
 L'autre égalité se démontre de la même manière.
 \end{proof}
 
-À ce stade, il est légitime de se demander si les définitions que l'on a sur $L^1$ (la formule intégrale définie depuis $\mathcal S$) et sur $L^2$ (la définition de $\mathbb F$)
-sont compatibles, i.e. si pour $u \in L^1 \cap L^2$ on a bien $\hat u = \mathbb Fu$. Cette égalité tient bien (démonstration à venir).
+À ce stade, il est légitime de se demander si les définitions que l'on a sur $L^1(\R^n)$ (la formule intégrale définie depuis $\mathcal S$) et sur $L^2(\R^n)$
+(la définition de $\mathbb F$) sont compatibles.
+
+\begin{prp} Si $u \in L^1(\R^n) \cap L^2(\R^n)$, alors $\hat u = \mathbb Fu$ dans $L^2\left({B(0, R)}\right)$ pour tout $R > 0$.
+\end{prp}
+
+\begin{proof} Soit $u \in L^1(\R^n) \cap L^2(\R^n)$. $\hat u \in L^\infty(\R^n)$ car~:
+\[\forall \xi \in \R^n : \abs {\hat u(\xi)} \leq \int\abs u\dif x = \norm u_{L^1(\R^n)} < \pinfty.\]
+
+Supposons d'abord que $u$ est à support compact. On prend $(u_k)_k \subset \mathcal C^\infty_0(\R^n)$ telle que $u_k \xrightarrow[k \to \pinfty]{L^1(\R^n)} u$ et
+$u_k \xrightarrow[k \to \pinfty]{L^2(\R^n)} u$. Par linéarité de $\mathcal F$~:
+\[\norm {\widehat {u_k} - \hat u}_{L^\infty} = \norm {\widehat {u_k - u}}_{L^\infty} \leq \norm {u_k-u}_{L^1} \xrightarrow[k \to \pinfty]{} 0\]
+par convergence des $u_k$ vers $u$ dans $L^1(\R^n)$. De plus~: $\widehat {u_k} \xrightarrow[k \to \pinfty]{L^2(\R^n)} \mathbb Fu$. Puisque les intégrales sont faites
+sur le support de $u$ (car $u$ est nulle sur $\R^n \setminus \supp u$) qui est de mesure finie, on a que la convergence dans $L^\infty(\R^n)$ implique la convergence dans $L^2(\R^n)$.
+Donc par unicité de la limite dans $L^2(\R^n)$, on a bien $\hat u = \mathbb Fu$ dans $L^2(\R^n)$.
+
+Dans le cas général $u \in L^1(\R) \cap L^2(\R^n)$, on pose pour tout $k \in \N$~: $u_k \coloneqq u\chi_{B(0, k)}$. $u_k \xrightarrow[k \to \pinfty]{L^{1,2}(\R^n)} u$
+et $u_k \in L^1(\R^n) \cap L^2(\R^n)$ pour tout $k \in \N$. Puisque $\supp u_k$ est compact pour tout $k$, par le point précédent, on a~:
+\[\forall k \in \N : \widehat {u_k} = \mathbb Fu_k \qquad \text{dans } L^2(\R^n).\]
+Or $\widehat {u_k} \xrightarrow[k \to \pinfty]{L^\infty(\R^n)} \hat u$ et $\mathbb Fu_k \xrightarrow[k \to \pinfty]{L^2(\R^n)} \mathbb Fu$. Pour $R > 0$,
+on a donc $\widehat {u_k}\chi_{B(0, R)} \xrightarrow[k \to \pinfty]{L^2(B(0, R))} \hat u\chi_{B(0, R)}$, et donc, sur $B(0, R)$, on a bien $\hat u = \mathbb Fu$ dans $L^2$.
+\end{proof}
 
 \section{Exemple d'application de la théorie de Fourier}
 
@@ -631,7 +664,7 @@ $\exists g \in \mathcal C^\infty_0(\R^n) \tq f_k \xrightarrow[k \to \pinfty]{L^2
 \end{enumerate}
 \end{proof}
 
-\begin{prp} Pour $F \leq H$, $\overline F \leq H$.
+\begin{prp} Si $F \leq H$, alors $\overline F \leq H$.
 \end{prp}
 
 \begin{proof} Pour $x, y \in \overline F$, il existe $(x_k)_k, (y_k)_k \subset F \tq x_k \xrightarrow[k \to \pinfty]{} x$ et $y_k \xrightarrow[k \to \pinfty]{} y$.
@@ -2454,4 +2487,8 @@ Il reste à montrer que $\partial_k(u*\varphi) = (\partial_ku) * \varphi$, or ce
 
 On fonctionne ensuite par récurrence pour montrer que $u*\varphi$ est bien $\mathcal C^\infty$~: exercice.
 \end{proof}
+
+\begin{déf} Pour $P(\partial) = \sum_{\abs\alpha \leq m}a_\alpha\partial^\alpha$, on dit que $E \in \mathcal D'(\R^n)$ est une \textit{solution élémentaire} de $P(\partial)$
+lorsque $P(\partial)E = \delta$ où $\delta$ est la mesure de Dirac en $0$.
+\end{déf}
 \end{document}
