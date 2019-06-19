@@ -76,4 +76,4 @@ Les résumés/résolutions de TPs disponibles sont les suivants :
 
 #### Q2
 
-+ [MATH-F-3002 : Espaces fonctionnels et analyse de Fourier](https://github.com/RobinPetit/ULB/blob/master/MATHF-3002/notes/notes.pdf).
++ [MATH-F-3002 : Espaces fonctionnels et analyse de Fourier](https://github.com/RobinPetit/ULB/blob/master/MATHF-3002/notes/notes.pdf) (**complet**).
