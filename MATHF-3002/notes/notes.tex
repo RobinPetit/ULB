@@ -282,7 +282,7 @@ La fonction $(y, \xi) \mapsto e^{i\scpr x\xi}e^{-i\scpr y\xi}u(y)$ n'est pas int
 \end{align*}
 
 Pour $\psi \in \mathcal S(\R^n)$, $\delta > 0$ tels que $\chi(\xi) = \psi(\delta\xi)$, par changement de variable~:
-\[\hat \chi(\xi) = \int e^{-i\scpr y\xi}\psi(\delta\xi)\dif\xi = \delta^{-n}\hat \psi\left(\frac y\delta\right).\]
+\[\hat \chi(\xi) = \int e^{-i\scpr y\xi}\psi(\delta y)\dif y = \delta^{-n}\hat \psi\left(\frac \xi\delta\right).\]
 
 Alors~:
 \[\int e^{i\scpr x\xi}\psi(\delta\xi)\hat u(\xi)\dif\xi = \int u(x+y)\delta^{-n}\hat \psi\left(\frac y\delta\right)\dif y = \int u(x+\delta y)\hat \psi(y)\dif y.\]
@@ -306,7 +306,7 @@ tendent uniformément vers $0$ pour $\abs a, \abs b \to \pinfty$. Donc à la lim
 	= \frac 1{\psi_1(t)}\hat\psi_1(t).\]
 
 Donc $\hat \psi_1(t) = \psi_1(t)\int\psi_1\dx$. On en déduit~:
-\[\int \hat \psi_1(t)\dif t = \int\psi_1(t)\int\psi_1(s)\dif s\dif t = \left(\int \psi_1(x)\dx\right)^2 = \left(\int e^{-x^2/2}\right)^2 = 2\pi.\]
+\[\int \hat \psi_1(t)\dif t = \int\psi_1(t)\int\psi_1(s)\dif s\dif t = \left(\int \psi_1(x)\dx\right)^2 = \left(\int e^{-x^2/2}\dif x\right)^2 = 2\pi.\]
 
 Dès lors $\psi_1(0) = 1$ et $\int\hat\psi_1\dx = 2\pi$. Dès lors, par~\eqref{eq:inversion Fourier proof}, on a bien la formule d'inversion~\eqref{eq:inversion Fourier}.
 
@@ -401,14 +401,14 @@ Cependant le choix $a=b=1$ permet de ne pas avoir de terme $b^k$ lors des dériv
 
 \section{Extension de la transformée à $L^2(\R^n)$}
 
-\begin{prp} Il existe une unique application linéaire continue $\mathbb F : L^2(\R^n) \to L^2(\R^n)$ telle que $\mathbb F\sVert[2]_{\mathcal S} = \mathcal F$ et~:
+\begin{prp} Il existe une unique application linéaire continue $\mathbb F : L^2(\R^n) \to L^2(\R^n)$ telle que $\mathbb F\sVert[2]_{\mathcal S(\R^n)} = \mathcal F$ et~:
 \[\int u\overline v\dif x = (2\pi)^{-n}\int \mathbb Fu\overline {\mathbb Fv}\dif\xi,\]
 i.e. $\mathbb F$ préserve l'identité de Parseval.
 \end{prp}
 
-\begin{proof} Admettons que $C_0^\infty(\R^n)$ est dense dans $L^2(\R^n)$. Puisque $C_0^\infty(\R^n) \subseteq \mathcal S(\R^n)$, on a $\mathcal S(\R^n)$ dense dans $L^2(\R^n)$.
-Par cette densité, pour $u \in L^2(\R^n)$, il existe $(u_k)_{k \in \N} \subset \mathcal S(\R^n)$ telle que $u_k \xrightarrow[k \to \pinfty]{L^2} u$, et donc $(u_k)$ est de
-Cauchy pour cette norme. $(\widehat {u_k})_{k \in \N}$ est également de Cauchy car par Plancherel~:
+\begin{proof} Admettons que $\mathcal C_0^\infty(\R^n)$ est dense dans $L^2(\R^n)$. Puisque $\mathcal C_0^\infty(\R^n) \subseteq \mathcal S(\R^n)$, on a $\mathcal S(\R^n)$
+dense dans $L^2(\R^n)$. Par cette densité, pour $u \in L^2(\R^n)$, il existe $(u_k)_{k \in \N} \subset \mathcal S(\R^n)$ telle que $u_k \xrightarrow[k \to \pinfty]{L^2} u$,
+et donc $(u_k)$ est de Cauchy pour cette norme. $(\widehat {u_k})_{k \in \N}$ est également de Cauchy car par Plancherel~:
 \[\norm {\widehat {u_k} - \widehat {u_m}}_{L^2} = (2\pi)^{n/2}\norm {u_k - u_m}_{L^2}.\]
 
 Par complétude de $L^2$, il existe $z \in L^2(\R^n) \tq \widehat {u_k} \xrightarrow[k \to \pinfty]{L^2} z$. On pose alors $\mathbb Fu \coloneqq z$. Montrons que $z$ ne dépend pas
@@ -427,8 +427,8 @@ Donc $\widehat {u_k} + \widehat {v_k} \xrightarrow[k \to \pinfty]{L^2(\R^n)} \ma
 $\widehat {u_k} + \widehat {v_k} \xrightarrow[k \to \pinfty]{L^2(\R^n)} \mathbb F(u+v)$. Par unicité de la limite dans $L^2(\R^n)$, on en déduit
 $\mathbb F u + \mathbb F v = \mathbb F(u+v)$. Il est également trivial que pour $\lambda \in \R : \mathbb F(\lambda u) = \lambda \mathbb Fu$.
 
-Pour montrer que $\mathbb F\sVert[2]_{\mathcal S} = \mathcal F$, prenons $u \in \mathcal S(\R^n)$, et la suite $(u_k)_{k \in \N}$ constante $u_k = u$. Par définition de $\mathbb F$,
-on a $\mathbb Fu = \hat u$ car $\forall k \in \intint 1n : \widehat {u_k} = \hat u$, donc $\widehat {u_k} \xrightarrow[k \to \pinfty]{L^2(\R^n)} \hat u$.
+Pour montrer que $\mathbb F\sVert[2]_{\mathcal S(\R^n)} = \mathcal F$, prenons $u \in \mathcal S(\R^n)$, et la suite $(u_k)_{k \in \N}$ constante $u_k = u$.
+Par définition de $\mathbb F$, on a $\mathbb Fu = \hat u$ car $\forall k \in \N : \widehat {u_k} = \hat u$, donc $\widehat {u_k} \xrightarrow[k \to \pinfty]{L^2(\R^n)} \hat u$.
 
 \textbf{Montrons alors que $\mathbb F$  vérifie Parseval.}
 
@@ -928,7 +928,7 @@ espaces métriques, on a $f(x) = y$, et donc $y$ admet une préimage par $f$.
 
 	De plus $\restr fP$ est une isométrie. En effet, pour $x \in P$, on sait qu'il existe $F \subset A$ fini et $\lambda_\alpha \in \C$ ($\alpha \in F$) tels que
 	$x = \sum_{\alpha \in F}\lambda_\alpha e_\alpha$. Dès lors~:
-	\[\norm {f(x)}_{\ell^2(A)}^2 = \norm x_{\ell^2(A)}^2 = \sum_{\alpha \in A}\abs {\hat x(\alpha)}^2 = \sum_{\alpha \in F}\abs {\hat x(\alpha)}^2
+	\[\norm {f(x)}_{\ell^2(A)}^2 = \norm {\hat x}_{\ell^2(A)}^2 = \sum_{\alpha \in A}\abs {\hat x(\alpha)}^2 = \sum_{\alpha \in F}\abs {\hat x(\alpha)}^2
 	= \sum_{\alpha \in A}\abs {\sum_{\beta \in F}\lambda_\beta \scpr {e_\beta}{e_\alpha}}^2 = \sum_{\alpha \in F}\abs {\lambda_\alpha}^2,\]
 	et~:
 	\[\norm x_H^2 = \scpr xx_H = \scpr {\sum_{\alpha \in F}\lambda_\alpha e_\alpha}{\sum_{\beta \in F}\lambda_\beta e_\beta}
@@ -1053,7 +1053,7 @@ Pour le produit scalaire usuel de $L^2$, on a~:
 \[\scpr {e_k}{e_\ell}_{L^2} = \int_0^{2\pi}\frac {e^{i(k-\ell)t}}{2\pi}\dif t = \begin{cases}1 &\text{ si } k-\ell = 0 \\0 &\text{ sinon}\end{cases}.\]
 
 Pour montrer que $(e_k)_{k \in \Z}$ est maximal, prenons $f \in L^2[0, 2\pi)$. $S_kf \coloneqq \sum_{m=-k}^k\scpr f{e_m}e_m.$ Montrons que $S_kf \xrightarrow[k \to \pinfty]{L^2} f$.
-Pour $\varepsilon > 0, \exists \varphi \in C_0^\infty((0, 2\pi)) : \norm {f-\varphi}_{L^2} \leq \varepsilon$ (par densité de $C_0^\infty$ dans $L^2$).
+Pour $\varepsilon > 0, \exists \varphi \in \mathcal C_0^\infty((0, 2\pi)) : \norm {f-\varphi}_{L^2} \leq \varepsilon$ (par densité de $\mathcal C_0^\infty$ dans $L^2$).
 
 On a $S_k\varphi \xrightarrow[k \to \pinfty]{\text{CVU}} \varphi$ (théorème de Dirichlet global), ce qui implique $S_k\varphi \xrightarrow[k \to \pinfty]{L^2} \varphi$.
 Finalement, remarquons~:
@@ -1227,7 +1227,7 @@ En posant $z \coloneqq \frac {Tx}{\norm {Tx}}$, on observe~:
 
 \begin{prp} Soient $S, T \in \mathcal L(H)$. Pour $\alpha, \beta \in \C$, on a~:
 \begin{enumerate}
-	\item $(\alpha S + \beta T)^*x = \overline \alpha S^* + \overline \beta T^*$~;
+	\item $(\alpha S + \beta T)^* = \overline \alpha S^* + \overline \beta T^*$~;
 	\item $(ST)^* = T^*S^*$.
 \end{enumerate}
 \end{prp}
@@ -1310,7 +1310,7 @@ Or $x \in E$ et par unicité de la limite, $Tx = y$. Dès lors, $(x, y) \in \Gam
 \begin{proof} Soient $(V_n)_n$ ouverts denses dans $X$. Si pour tout $W \subset X$ ouvert non vide, $W \cap \bigcap_{n \geq 0}V_n \neq \emptyset$, alors $\bigcap_{n \geq 0}V_n$
 est dense dans $X$. Fixons donc $W \subset X$ ouvert de $X$ non vide et trouvons $x \in W \cap \bigcap_{n \geq 0}V_n$.
 
-$V_1$ est dense. Donc $\exists x_1 \in W \cap V_1$ et $r_1 \in (0, 1)$ tel que $\overline {B(x_1, r_1)} \subset W \cap V_1$. $B(x_X1, r_1)$ est un ouvert de $X$, donc
+$V_1$ est dense. Donc $\exists x_1 \in W \cap V_1$ et $r_1 \in (0, 1)$ tel que $\overline {B(x_1, r_1)} \subset W \cap V_1$. $B(x_1, r_1)$ est un ouvert de $X$, donc
 $\exists x_2 \in B(x_1, r_1) \cap V_2$ et $r_2 \in (0, 1/2)$ tel que $\overline {B(x_2, r_2)} \subset B(x_1, r_1) \cap V_2$, etc. On construit ainsi une suite $(x_n)_{n \geq 1}$
 et $(r_n)_{n \geq 1}$ tels que~:
 \[\forall n \geq 2 : x_n \in B(x_{n-1}, r_{n-1}) \cap V_n \text{ et } r_n \in (0, 1/n) \st \overline {B(x_n, r_n)} \subset B(x_{n-1}, r_{n-1}) \cap V_n.\]
@@ -1318,7 +1318,7 @@ et $(r_n)_{n \geq 1}$ tels que~:
 À $n$ fixé, pour $k \geq n$, $x_k \in B(x_n, r_n)$ et donc pour $k, \ell \geq n : d(x_k, x_\ell) \leq d(x_k, x_n) + d(x_\ell, x_n) \leq 2r_n = \frac 2n$.
 Donc la suite $(x_n)_n$ est de Cauchy dans $X$. Dès lors $\exists x \in X \st x_n \xrightarrow[n \to \pinfty]{} x$. De plus, pour $k \geq n$~:
 \[x_k \in \overline {B(x_n, r_n)} \subset B(x_{n-1}, r_{n-1}) \cap V_n \subset V_n.\]
-Dès lors $\forall n \geq 1 : \forall k \geq n : x_k \in V_n$, et donc $\forall k \geq 1 : x_k \in \bigcap_{k=1}^nV_n$. En particulier~: $x \in \bigcap_{n \geq 1}V_n$.
+Dès lors $\forall n \geq 1 : \forall k \geq n : x_k \in V_n$, et donc $\forall k \geq 1 : x_k \in \bigcap_{n=1}^kV_n$. En particulier~: $x \in \bigcap_{n \geq 1}V_n$.
 
 Finalement, puisque $x \in \overline {B(x_1, r_1)} \subset W$, on a bien $x \in W \cap \bigcap_{n \geq 1}V_n$.
 \end{proof}
@@ -1340,7 +1340,7 @@ Montrons donc qu'il existe un tel $\delta > 0$. On sait que $E = \bigcup_{n \geq
 
 Supposons alors par l'absure que $\forall n \geq 0 : \mathring {\overline {T(nB_E)}} = \emptyset$. Par Baire, on a $F = \mathring F = \emptyset$, ce qui est une contradiction.
 
-Dès lors, il existe $n > 0$ te que $T(nB_E) \supseteq \mathring {\overline {T(nB_E)}} \neq \emptyset$, et donc il existe un ouvert $W \subset \overline {T(nB_E)}$. Soient $y_0 \in W$
+Dès lors, il existe $n > 0$ tel que $T(nB_E) \supseteq \mathring {\overline {T(nB_E)}} \neq \emptyset$, et donc il existe un ouvert $W \subset \overline {T(nB_E)}$. Soient $y_0 \in W$
 et $r > 0 \st y_0 + rB_F \subset W$. Fixons également $y \in F \st \norm y < r$. Soit également $(x'_k)_{k \geq 0} \subset nB_E \st Tx'_k \xrightarrow[k \to \pinfty]{} y_0$.
 
 Puisque $y_0+y \in W \subset \overline {T(nB_E)}$, prenons une autre suite $(x''_k)_{k \geq 0} \subset nB_E \st Tx''_k \xrightarrow[k \to \pinfty]{} y_0+y$.
@@ -1373,7 +1373,7 @@ De plus, puisque $(x_n)_n$ est de Cauchy, la suite $(\sum_{j=1}^nx_j)_n$ est ég
 \[\exists x \in E \st \sum_{j=1}^nx_j \xrightarrow[n \to \pinfty]{} x.\]
 
 Par continuité de la norme $\norm \cdot$, on a également $\norm {\sum_{j=1}^nx_j} \xrightarrow[n \to \pinfty]{} \norm x$. Or~:
-\[\norm {\sum_{j=1}^nx_j} \leq \sum_{j=1}^n\norm {x_j} \leq 1 + \sum_{j=2}^n\norm {x_j} \leq 1 + \sum_{j=1}^n\omega 2^{-(n-1)} = 1 + \omega(1 - 2^{-(+1)}) \leq 1+\omega,\]
+\[\norm {\sum_{j=1}^nx_j} \leq \sum_{j=1}^n\norm {x_j} \leq 1 + \sum_{j=2}^n\norm {x_j} \leq 1 + \sum_{j=1}^n\omega 2^{-(j-1)} = 1 + \omega(1 - 2^{-(n+1)}) \leq 1+\omega,\]
 donc $\norm x \leq 1+\omega$. Finalement, par continuité de $T$, on a
 $T(\sum_{j=1}^nx_j) \xrightarrow[n \to \pinfty]{} Tx$. Or puisque $T(\sum_{j=1}^nx_j) = \sum_{j=1}^nTx_j \xrightarrow[n \to \pinfty]{} y$, par unicité de la limite
 (dans les espaces métriques complets), on a $Tx=y$,
@@ -1455,7 +1455,7 @@ comme étant la matrice telle que~:
 \begin{proof}~
 \begin{enumerate}
 	\item Soit $\lambda \in \spectre S$. Il existe $v \neq 0 \st Sv = \lambda v$. Dès lors $\scpr {Sv}v = \lambda\abs v^2$. De plus, par Cauchy-Schwarz~:
-	$\abs {\scpr {Sv}v} \leq \abs {Sv}\abs v \leq \norm S\abs v\abs v = \norm S\abs v^2$. On en déduit $\lambda \leq \norm S$.
+	$\abs {\scpr {Sv}v} \leq \abs {Sv}\abs v \leq \norm S\abs v\abs v = \norm S\abs v^2$. On en déduit $\abs \lambda \leq \norm S$.
 	\item ${(z-S)^{-1}}_{ij}$ est une fonction rationnelle complexe dont le dénominateur $z \mapsto \det(z-S)$ ne s'annule jamais sur $\C \setminus \spectre S$.
 	${(z-S)^{-1}}_{ij}$ est donc holomorphe dans $\C \setminus \spectre S$, et donc $(z-S)^{-1}$ également.
 \end{enumerate}
@@ -1866,7 +1866,7 @@ Soient $\alpha, \beta \in \N^n, k \in \N$.
 	&= \xi^\alpha\partial_t^kD_\xi^\beta\left(e^{-itA(\xi)}\widehat {u^0}(\xi)\right) \\
 	&= \xi^\alpha\partial_t^k\sum_{\beta'\leq\beta}\left[\binom \beta{\beta'}D_\xi^{\beta'}(e^{-itA(\xi)})D_\xi^{\beta-\beta'}\widehat {u^0}(\xi)\right] \\
 	&= \xi^\alpha\sum_{\beta'\leq\beta}\binom\beta{\beta'}\underbrace {\partial_t^kD_\xi^{\beta'}e^{-itA(\xi)}}_{(*)}D_\xi^{\beta-\beta'}\widehat {u^0}(\xi) \\
-	&= \xi^\alpha\sum_{\beta'\leq\beta}\binom\beta{\beta'}D_\xi^{\beta'}\left(\left((-iA(\xi)\right)^ke^{-itA(\xi)}\right)D_\xi^{\beta-\beta'}\widehat {u^0}(\xi) \\
+	&= \xi^\alpha\sum_{\beta'\leq\beta}\binom\beta{\beta'}D_\xi^{\beta'}\left(\left(-iA(\xi)\right)^ke^{-itA(\xi)}\right)D_\xi^{\beta-\beta'}\widehat {u^0}(\xi) \\
 	&= \xi^\alpha\sum_{\beta'\leq\beta}\binom \beta{\beta'}\left[\sum_{\gamma\leq\beta'}\binom{\beta'}\gamma D_\xi^\gamma\left(-iA(\xi)\right)^kD_\xi^{\beta'-\gamma}\left(e^{-itA(\xi)}\right)\right]D_\xi^{\beta-\beta'}\widehat{u^0}(\xi)
 \end{align*}
 
@@ -1888,7 +1888,7 @@ et $u \in \widetilde {\mathcal S}([-T, T] \times \R^n)$. L'existence est donc d�
 
 \unic Soient $u_{(1)}, u_{(2)}$, deux solutions du problème de Cauchy dans $\widetilde {\mathcal S}([-T, T] \times \R^n)$, alors on pose $w \coloneqq u_{(1)} - u_{(2)}$.
 $w \in \widetilde {\mathcal S}([-T, T] \times \R^n))$ est solution du problème de Cauchy~:
-\[\begin{cases}Lw = \\&\\\restr w{t=0} = 0\end{cases}\]
+\[\begin{cases}Lw = 0\\&\\\restr w{t=0} = 0\end{cases}\]
 
 En en prenant la transformée de Fourier à $\abs t \leq T$ fixé~:
 \[\begin{cases}\partial_t\widetilde w + iA(\xi)\widetilde w = 0\\&\\\restr {\widetilde w}{t=0} = 0\end{cases}\]
@@ -1937,7 +1937,7 @@ $\forall z \in \Imapp \gamma : z \not \in \spectre {A(\xi)}$. Dès lors, pour $1
 est une fonction rationnelle complexe dont le dénominateur ne s'annule pas. Dès lors elle est bien $\mathcal C^\infty$.
 \end{proof}
 
-\begin{proof}[\textnormal {\textbf {Démonstration} (de l'Affirmation~\ref{claim 3})}] Il reste donc unoquement à vérifier que les dérivées de $\xi \mapsto z^{-itA(\xi)}$ sont à
+\begin{proof}[\textnormal {\textbf {Démonstration} (de l'Affirmation~\ref{claim 3})}] Il reste donc uniquement à vérifier que les dérivées de $\xi \mapsto z^{-itA(\xi)}$ sont à
 croissance polynômiale.
 
 Puisque~:
@@ -2076,17 +2076,17 @@ Donc $\od {}xu_{\chi_{\overline {\R^+}}} = \delta_0$ (la mesure de Dirac en 0).
 = \scpr {\partial_k\partial_ju}\varphi.\]
 \end{proof}
 
-\begin{déf} Pour $a \in \mathcal C^\infty_0(\Omega)$ et $u \in \mathcal D'(\Omega)$, on définit~:
+\begin{déf} Pour $a \in \mathcal C^\infty(\Omega)$ et $u \in \mathcal D'(\Omega)$, on définit~:
 \[au : \mathcal C^\infty_0(\Omega) \to \C : \varphi \mapsto \scpr {au}\varphi \coloneqq \scpr u{a\varphi}.\]
 \end{déf}
 
-\begin{prp} Pour $a \in \mathcal C^\infty_0(\Omega), u \in \mathcal D'(\Omega)$, $au$ est une distribution.
+\begin{prp} Pour $a \in \mathcal C^\infty(\Omega), u \in \mathcal D'(\Omega)$, $au$ est une distribution.
 \end{prp}
 
 \begin{proof} Par linéarité de $u$.
 \end{proof}
 
-\begin{prp} Soient $f \in L^1_\loc(\Omega)$ et $a \in \mathcal C^\infty_0(\Omega)$. Alors $u_{af} = au_f$.
+\begin{prp} Soient $f \in L^1_\loc(\Omega)$ et $a \in \mathcal C^\infty(\Omega)$. Alors $u_{af} = au_f$.
 \end{prp}
 
 \begin{proof} Soit $\varphi \in \mathcal C^\infty_0(\Omega)$.
@@ -2097,7 +2097,7 @@ Donc $\od {}xu_{\chi_{\overline {\R^+}}} = \delta_0$ (la mesure de Dirac en 0).
 \[\scpr {au}\varphi = (a\varphi)(0) = 0.\]
 \end{ex}
 
-\begin{prp} Les distributions vérifient la formule de Leibniz~: si $u \in \mathcal D'(\Omega)$ et $a \in \mathcal C^\infty_0(\Omega)$, alors~:
+\begin{prp} Les distributions vérifient la formule de Leibniz~: si $u \in \mathcal D'(\Omega)$ et $a \in \mathcal C^\infty(\Omega)$, alors~:
 \[\partial_j(au) = \partial_jau + a\partial_ju\]
 \end{prp}
 
@@ -2446,7 +2446,7 @@ i.e. $\delta * \varphi = \varphi$.
 $\varphi_k \coloneqq \varphi(x_k-\cdot)$.
 \[(u * \varphi)(x_k) = \scpr u{\varphi_k}\]
 
-De plus, comme la suite $(x_k)_k$ est convergente, elle est bornée, i.e. $\exists > 0 \st \forall k \in \N : \abs {x_k} \leq M$, et donc~:
+De plus, comme la suite $(x_k)_k$ est convergente, elle est bornée, i.e. $\exists M > 0 \st \forall k \in \N : \abs {x_k} \leq M$, et donc~:
 \[\bigcup_{k \in \N}\supp\varphi_k = \bigcup_{k \in \N}\left(x_k-\supp\varphi\right) = \bigcup_{k \in \N}\{x_k\} - \supp\varphi \subseteq \overline {B(0, M)} - \supp\varphi.\]
 Donc $K \coloneqq \overline {B(0, M)} - \supp\varphi = \left\{x-y \st x \in \overline {B(0, M)}, y \in \supp\varphi\right\}$ est un compact (car $\overline {B(0, M)}$
 et $\supp\varphi$ sont compacts) qui contient le support de tous les $\varphi_k$.
