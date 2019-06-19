@@ -353,7 +353,7 @@ on trouve $\tilde {\mathcal F}$ est une bijection linéaire. De plus $\mathcal F
 \begin{rmq} Cela veut dire que $\mathcal F$ est une homéomorphisme linéaire de $\mathcal S(\R^n)$ dans $\mathcal S(\R^n)$ pour la topologie non définie ici.
 \end{rmq}
 
-\begin{prp} Pour $u, v \in \mathcal S(\R^n)$~:
+\begin{prp}\label{prp:id de Parseval} Pour $u, v \in \mathcal S(\R^n)$~:
 \begin{enumerate}
 	\item $\int u\hat v = \int\hat uv$~;
 	\item $\int u\overline v = (2\pi)^{-n}\int \hat u\overline {\hat v}$. Cette égalité est appelée \textit{identité de Parseval}.
@@ -494,7 +494,7 @@ L'autre égalité se démontre de la même manière.
 À ce stade, il est légitime de se demander si les définitions que l'on a sur $L^1(\R^n)$ (la formule intégrale définie depuis $\mathcal S$) et sur $L^2(\R^n)$
 (la définition de $\mathbb F$) sont compatibles.
 
-\begin{prp} Si $u \in L^1(\R^n) \cap L^2(\R^n)$, alors $\hat u = \mathbb Fu$ dans $L^2\left({B(0, R)}\right)$ pour tout $R > 0$.
+\begin{prp}\label{prp:Fourier L1 cap L2} Si $u \in L^1(\R^n) \cap L^2(\R^n)$, alors $\hat u = \mathbb Fu$ dans $L^2\left({B(0, R)}\right)$ pour tout $R > 0$.
 \end{prp}
 
 \begin{proof} Soit $u \in L^1(\R^n) \cap L^2(\R^n)$. $\hat u \in L^\infty(\R^n)$ car~:
@@ -2312,7 +2312,7 @@ car $\widehat {\varphi_k} \xrightarrow[k \to \pinfty]{} \widehat 0 = 0$ par le T
 par la Propriété~\ref{prp:dérivée prolongement = prolongement dérivée}.
 \end{proof}
 
-\begin{prp} pour $f \in L^2(\R^n) \subset L^1_\loc(\R^n)$~: $u_{\mathbb Ff} = \mathcal Fu_f$.
+\begin{prp}\label{prp:Fourier distributions L1} pour $f \in L^2(\R^n) \subset L^1_\loc(\R^n)$~: $u_{\mathbb Ff} = \mathcal Fu_f$.
 \end{prp}
 
 \begin{proof} Soit $\varphi \in \mathcal C^\infty_0(\R^n)$. Pour $(\psi_k)_k \subset \mathcal C^\infty_0(\R^n) \st \psi_k \xrightarrow[k \to \pinfty]{\mathcal S(\R^n)} \widehat {\varphi}$.
@@ -2348,6 +2348,29 @@ De plus, puisque $\widehat {f_k} = \mathbb Ff_k \xrightarrow[k \to \pinfty]{L^2(
 
 Dès lors, par unicité de la limite dans $L^1(\R^n)$~:
 \[\int\mathbb Ff\varphi\dif x = \int f\widehat \varphi\dif x.\]
+\end{proof}
+
+\begin{prp} Pour $f \in L^1(\R^n) \subset L^1_\loc(\R^n)$ : $u_{\hat f} = \mathcal Fu_f$.
+\end{prp}
+
+\begin{proof} Soit $(f_k)_k \subset \mathcal S(\R^n) \st f_k \xrightarrow[k \to \pinfty]{L^1} f$. Pour $\varphi \in \mathcal C^\infty_0(\R^n)$~:
+\[\abs {\int f_k\hat \varphi\dx - \int f\hat \varphi\dx} \leq \int\abs {f_k-f}\abs {\hat \varphi}\dx \leq \norm {f_k-f}_{L^1}\norm {\hat \varphi}_{L^\infty}
+	\xrightarrow[k \to \pinfty]{} 0,\]
+i.e.~:
+\[\lim_{k \to \pinfty}\int f_k\hat\varphi\dx = \int f\hat\varphi\dx.\]
+Or pour $k \in \N$, $\widehat {f_k} \in \mathcal S(\R^n)$, donc par la Proposition~\ref{prp:id de Parseval}~:
+\[\forall k \in \N : \int f_k\hat\varphi\dx = \int \widehat {f_k}\varphi\dx.\]
+
+De plus~:
+\[\abs {\int \widehat {f_k}\varphi\dx - \int\hat f\varphi\dx} \leq \int \abs {\widehat {f_k} - \hat f}\abs \varphi\dx
+\leq \norm {\widehat {f_k} - \hat f}_{L^\infty}\norm \varphi_{L^1} \leq \norm {f_k-f}_{L^1}\norm \varphi_{L^1} \xrightarrow[k \to \pinfty]{} 0,\]
+car $\forall \theta \in L^1(\R^n) : \norm {\hat \theta}_{L^\infty} \leq \norm \theta_{L^1}$ (voir Proposition~\ref{prp:Fourier L1 cap L2}).
+Dès lors~:
+\[\lim_{k \to \pinfty}\int \widehat {f_k}\varphi\dx = \int\hat f\varphi\dx.\]
+
+Par unicité de la limite dans les espaces métriques (ici dans $L^1(\R^n)$), puisque comme montré dans la démonstration de la Proposition~\ref{prp:Fourier distributions L1}
+on sait que $\scpr {\mathcal Fu_f}\varphi = \int f\hat\varphi\dx$, on déduit~:
+\[\scpr {u_{\hat f}}\varphi = \int\hat f\varphi\dx = \int f\hat \varphi\dx = \scpr {\mathcal Fu_f}\varphi.\]
 \end{proof}
 
 \begin{déf} Pour $\varphi \in \mathcal S(\R^n)$, on définit l'application~:
